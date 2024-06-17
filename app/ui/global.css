@@ -36,7 +36,7 @@ body {
   position: fixed;
   left: calc(50% - 4.5rem);
   z-index: 100;
-  top: 15rem;
+  top: 12rem;
   transform-origin: center -7rem;
   animation: sway-sm 5s infinite linear;
 }
@@ -57,6 +57,7 @@ body {
   animation: arm-wave-right 0.6s 0.45s infinite;
 }
 .waddle-body {
+  top: -1.1rem;
   position: relative;
   height: 7.75rem;
   width: 8.5rem;
@@ -67,6 +68,7 @@ body {
   border-bottom-right-radius: 3.5rem 40%;
   border: solid 4px #e2940a;
   overflow: hidden;
+  transform: scale(0.8);
 }
 .waddle-face {
   position: absolute;
@@ -144,7 +146,7 @@ body {
 }
 .waddle-arm {
   position: absolute;
-  top: -1.75rem;
+  top: -2.75rem;
   height: 3.5rem;
   width: 3.25rem;
   border-top-left-radius: 60% 85%;
@@ -155,6 +157,7 @@ body {
   background-color: #e2940a;
   transform-origin: center 5rem;
   transition: 0.25s ease-out;
+  transform: scale(0.8);
 }
 .waddle-arm-left {
   left: 1.5rem;
@@ -164,9 +167,9 @@ body {
 }
 .waddle-foot {
   position: absolute;
-  bottom: -0.5rem;
-  height: 4.25rem;
-  width: 3.25rem;
+  bottom: 1.4rem;
+  height: 3.4rem;
+  width: 2.6rem;
   border-top-left-radius: 50% 60%;
   border-top-right-radius: 50% 60%;
   border-bottom-left-radius: 50% 30%;
@@ -175,13 +178,13 @@ body {
   background-color: #ffde5a;
 }
 .waddle-foot-left {
-  left: -0.75rem;
+  left: 0.35rem;
   transform: rotate(-40deg);
   transform-origin: center 70%;
   animation: foot-rotate-left 3s infinite linear;
 }
 .waddle-foot-right {
-  right: -0.75rem;
+  right: 0.35rem;
   transform-origin: center 70%;
   transform: rotate(40deg);
   animation: foot-rotate-right 3s infinite linear;
@@ -223,7 +226,7 @@ body {
   position: absolute;
   bottom: 100%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) scale(0.8);
   transition: transform 0.5s ease-out;
 }
 .parasol::after {
