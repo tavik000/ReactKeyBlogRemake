@@ -191,19 +191,19 @@ body {
 }
 .waddle-dee-the-second {
   position: absolute;
-  top: -4.5rem;
+  top: -4rem;
   z-index: -1;
-  transform: scale(0.6);
+  transform: scale(0.8);
 }
 .waddle-dee-the-second .sign {
   position: absolute;
-  left: calc(100% + 0.75rem);
-  bottom: calc(100% - 2.625rem);
-  padding: 0 0.25rem;
+  left: calc(100% + 0.1rem);
+  bottom: calc(100% - 1.3rem);
+  padding: 0.3rem 0.3rem;
   border-radius: 1rem;
   border: solid 4px #e2940a;
   background-color: #ffeed5;
-  font-size: 3rem;
+  font-size: 2.5rem;
   line-height: 1;
   text-transform: uppercase;
   color: #f6ac29;
@@ -215,11 +215,12 @@ body {
   animation-delay: 0.4s;
 }
 .waddle-dee-the-second .waddle-arm-left {
-  transform: rotate(-120deg);
+  transform: rotate(-120deg) scale(0.8);
 }
 .waddle-dee-the-second .waddle-arm-right {
-  transform: rotate(120deg);
+  transform: rotate(120deg) scale(0.8);
   animation: arm-flick 0.3s 1s forwards;
+  right: 2.3rem;
 }
 
 .parasol {
@@ -324,6 +325,7 @@ body {
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
   background-color: #ffeed5;
+  transform: scale(0.8);
 }
 .cloud::before, .cloud::after {
   position: absolute;
@@ -408,6 +410,7 @@ body {
   border: solid 12px #ffeed5;
   background-color: #f6ac29;
   opacity: 0.5;
+  transform: scale(0.8);
 }
 .star-block-star {
   position: relative;
