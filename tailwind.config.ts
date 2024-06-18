@@ -18,6 +18,9 @@ const config: Config = {
           600: '#2F6FEB',
         },
       },
+      boxShadow: {
+        '0550': '0 5px 5px 0 rgba(0, 0, 0, 0.3)',
+      },
     },
     keyframes: {
       shimmer: {
