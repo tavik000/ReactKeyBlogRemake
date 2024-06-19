@@ -20,6 +20,7 @@ const config: Config = {
       },
       boxShadow: {
         '0550': '0 5px 5px 0 rgba(0, 0, 0, 0.3)',
+        '02': '0 2px rgba(0, 0, 0, 0.2)',
       },
     },
     keyframes: {

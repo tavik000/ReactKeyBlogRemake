@@ -15,9 +15,9 @@ export default function PostSection() {
             <div className="options flex flex-row">
                 <div className="flex flex-row w-1/2"></div>
                 <div className="flex flex-row justify-end w-1/2">
-                    <RoundButton className="m-5 pl-5 pr-5">Home</RoundButton>
-                    <RoundButton className="m-5 pl-5 pr-5">Login</RoundButton>
-                    <RoundButton className="m-5 pl-5 pr-5">EN</RoundButton>
+                    <RoundButton>Home</RoundButton>
+                    <RoundButton>Login</RoundButton>
+                    <RoundButton>EN</RoundButton>
                 </div>
             </div>
             <div className="category flex md:flex-row mt-14">
