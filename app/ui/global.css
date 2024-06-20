@@ -967,7 +967,7 @@ img {
 }
 
 .round-button:hover {
-   */der-color: white;
+  border-color: white;
 }
 
 .round-button:hover::after {
