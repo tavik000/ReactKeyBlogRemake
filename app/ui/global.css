@@ -219,7 +219,7 @@ body {
 
 .waddle-dee-the-second .sign {
   position: absolute;
-  left: calc(100% + 0.1rem);
+  left: calc(100% - 1rem);
   bottom: calc(100% - 1.3rem);
   padding: 0.3rem 0.3rem;
   border-radius: 1rem;
