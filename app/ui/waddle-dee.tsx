@@ -1,24 +1,55 @@
 'use client';
-import React, { UIEvent, useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 export default function WaddleDee() {
-  const [isSitting, setSit] = useState(false);
+  const [isSitting, setSit] = useState<boolean>(false);
+  const waddleDeeRef = useRef<HTMLDivElement | null>(null);
+  const groundPosHeight = 6000;
+  const offset = 200;
 
-  const toggleSit = () => {
-    setSit(true);
+  const toggleSit = (value: boolean) => {
+    if (isSitting === value) {
+      return;
+    }
+
+    if (waddleDeeRef.current) {
+      if (value) {
+        const deeBottom =
+          waddleDeeRef.current.getBoundingClientRect().height +
+          waddleDeeRef.current.getBoundingClientRect().top;
+        waddleDeeRef.current.style.top = groundPosHeight + offset + 'px';
+      } else {
+        waddleDeeRef.current.style.top = '';
+      }
+    }
+    setSit(value);
   };
 
   const handleScroll = () => {
-    console.log('Scrolling...');
-    toggleSit();
+    // console.log(window.scrollY, groundPosHeight, isSitting, isSit);
+
+    if (window.scrollY >= groundPosHeight) {
+      if (waddleDeeRef.current) {
+        if (!waddleDeeRef.current.classList.contains('is-sitting')) {
+          toggleSit(true);
+        }
+      }
+    } else {
+      if (waddleDeeRef.current) {
+        if (waddleDeeRef.current.classList.contains('is-sitting')) {
+          toggleSit(false);
+        }
+      }
+    }
   };
-  
+
   window.addEventListener('scroll', handleScroll);
 
   return (
     <div
       id="waddleDee"
-      className={`waddle-dee ${isSitting ? "is-sitting" : ""}`}
+      className={`waddle-dee ${isSitting ? 'is-sitting' : ''}`}
+      ref={waddleDeeRef}
     >
       <div className="parasol">
         <div className="parasol-top">
