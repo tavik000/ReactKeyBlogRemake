@@ -922,7 +922,7 @@ img {
   position: absolute;
   content: '';
   height: 217px;
-  width: 9775px;
+  width: 100%;
   top: -200px;
   overflow-x: hidden;
 }
