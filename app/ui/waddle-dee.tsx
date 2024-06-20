@@ -1,6 +1,25 @@
+'use client';
+import React, { UIEvent, useState } from 'react';
+
 export default function WaddleDee() {
+  const [isSitting, setSit] = useState(false);
+
+  const toggleSit = () => {
+    setSit(true);
+  };
+
+  const handleScroll = () => {
+    console.log('Scrolling...');
+    toggleSit();
+  };
+  
+  window.addEventListener('scroll', handleScroll);
+
   return (
-    <div id="waddleDee" className="waddle-dee">
+    <div
+      id="waddleDee"
+      className={`waddle-dee ${isSitting ? "is-sitting" : ""}`}
+    >
       <div className="parasol">
         <div className="parasol-top">
           <div className="parasol-top-material"></div>

@@ -53,11 +53,11 @@ body {
 }
 
 .waddle-dee.is-sitting .waddle-arm-left {
-  transform: rotate(-90deg);
+  transform: scale(0.8) rotate(-90deg);
 }
 
 .waddle-dee.is-sitting .waddle-arm-right {
-  transform: rotate(70deg);
+  transform: scale(0.8) rotate(70deg);
   animation: arm-wave-right 0.6s 0.45s infinite;
 }
 
@@ -623,11 +623,11 @@ body {
 @keyframes arm-wave-right {
   0%,
   100% {
-    transform: rotate(70deg);
+    transform: scale(0.8) rotate(70deg);
   }
 
   50% {
-    transform: rotate(30deg);
+    transform: scale(0.8) rotate(30deg);
   }
 }
 
@@ -652,11 +652,11 @@ body {
 
 @keyframes arm-flick {
   0% {
-    transform: rotate(120deg);
+    transform: scale(0.8) rotate(120deg);
   }
 
   100% {
-    transform: rotate(80deg);
+    transform: scale(0.8) rotate(80deg);
   }
 }
 
