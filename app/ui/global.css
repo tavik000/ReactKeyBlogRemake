@@ -999,6 +999,12 @@ img {
   transition: transform 0.2s;
 }
 
+.article-link:hover {
+  --card-scale: 1.05;
+  transform: scale(var(--card-scale));
+  transition: transform 0.2s;
+}
+
 .blog-title {
   color: #ffbd15;
 }
