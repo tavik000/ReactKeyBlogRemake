@@ -1,7 +1,7 @@
 import AcmeLogo from '@/app/ui/acme-logo';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { lusitana } from '@/app/ui/fonts';
+import { lusitana, sniglet } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { RoundButton } from './button';
 import Category from './category';
@@ -11,7 +11,7 @@ export default function PostSection() {
     return (
         <div className="post-section" >
             <div className="divide-line">
-                <h1 className="absolute ml-10 -top-20 text-4xl">Key Blog</h1>
+                <h1 className={`blog-title ${sniglet.className} absolute ml-10 -top-20 text-5xl font-extrabold`}>Key Blog</h1>
             </div>
             <span className="bg"></span>
             <div className="options flex flex-row">

@@ -1,3 +1,4 @@
+import { sniglet } from "./fonts";
 
 export default function SkyBackground() {
     return (
@@ -5,7 +6,7 @@ export default function SkyBackground() {
             <div className="cloud cloud-large cloud-1"></div>
             <div className="cloud cloud-medium cloud-2">
                 <div className="waddle-dee-the-second">
-                    <div className="sign">
+                    <div className={`${sniglet.className} sign`}>
                         scroll
                     </div>
                     <div className="waddle-arm waddle-arm-left"></div>

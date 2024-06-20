@@ -223,7 +223,7 @@ body {
   bottom: calc(100% - 1.3rem);
   padding: 0.3rem 0.3rem;
   border-radius: 1rem;
-  border: solid 4px #e2940a;
+  border: solid 5px #e2940a;
   background-color: #ffeed5;
   font-size: 2.5rem;
   line-height: 1;
@@ -997,4 +997,8 @@ img {
   --card-scale: 1;
   transform: scale(var(--card-scale));
   transition: transform 0.2s;
+}
+
+.blog-title {
+  color: #ffbd15;
 }
