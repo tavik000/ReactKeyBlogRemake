@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { lusitana } from '@/app/ui/fonts';
 import Image from 'next/image';
 import { RoundButton } from './button';
+import Category from './category';
+import PostItem from './post-item';
 
 export default function PostSection() {
     return (
@@ -20,71 +22,15 @@ export default function PostSection() {
                     <RoundButton>EN</RoundButton>
                 </div>
             </div>
-            <div className="category flex md:flex-row mt-14">
-                <div className="flex w-10/12 bg-white rounded-xl shadow-0550 pt-8 pl-6 pb-8 pr-6">
-                    <div className="flex flex-col">
-                        <p className="flex tracking-widest text-xl pb-4">CATEGORY</p>
-                        <div className="flex flex-col">
-                            <div className="flex flex-row">
-                                <ul className="w-80">
-                                    <li>
-                                        <a className="text-sm" href="">All</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">Game Design</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">Game Dev General</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE5</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE/ Beginner</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE/ Audio</a>
-                                    </li>
-                                </ul>
-                                <ul className="w-80">
-                                    <li>
-                                        <a className="text-sm" href="">UE/ C++</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE/ Blueprint</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE/ Animation</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE/ Visual Effect</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE/ Debug</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE/ Localization</a>
-                                    </li>
-                                </ul>
-                                <ul className="w-80">
-                                    <li>
-                                        <a className="text-sm" href="">UE/ Lighting</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE/ Material</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE/ UMG</a>
-                                    </li>
-                                    <li>
-                                        <a className="text-sm" href="">UE/ Optimization</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+            <Category />
+            <ul className="post-items flex flex-row flex-wrap mt-6 mx-auto p-0 justify-start max-w-1140px w-full">
+                <PostItem/>
+                <PostItem/>
+                <PostItem/>
+                <PostItem/>
+
+            </ul>
 
             <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
                 <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">

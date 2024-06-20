@@ -967,7 +967,7 @@ img {
 }
 
 .round-button:hover {
-  border-color: white;
+   */der-color: white;
 }
 
 .round-button:hover::after {
@@ -991,4 +991,10 @@ img {
   left: 0;
   height: 50%;
   width: 100%;
+}
+
+.article-link {
+  --card-scale: 1;
+  transform: scale(var(--card-scale));
+  transition: transform 0.2s;
 }

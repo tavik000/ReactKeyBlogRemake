@@ -22,6 +22,17 @@ const config: Config = {
         '0550': '0 5px 5px 0 rgba(0, 0, 0, 0.3)',
         '02': '0 2px rgba(0, 0, 0, 0.2)',
       },
+      maxWidth: {
+        '400px': '25rem',
+        '1140px': '1140px',
+      },
+      padding: {
+        '11px': '11px',
+        '1em': '1em',
+      },
+      margin: {
+        '5px': '5px',
+      },
     },
     keyframes: {
       shimmer: {
