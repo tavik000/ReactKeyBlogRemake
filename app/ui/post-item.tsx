@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import Image from 'next/image';
+import PostTag from './post-tag';
 
 export default function PostItem() {
   return (
@@ -20,8 +21,8 @@ export default function PostItem() {
               of fun in cities across the U.S.
             </span>
             <span className="text-right">
-              <span className="w-auto px-1em mb-5px ml-5px static inline-block rounded-md text-sm text-center text-white font-normal bg-orange-500">UE</span>
-              <span className="w-auto px-1em mb-5px ml-5px static inline-block rounded-md text-sm text-center text-white font-normal bg-orange-500">Other</span>
+              <PostTag>UE</PostTag>
+              <PostTag>Other</PostTag>
             </span>
           </div>
         </Link>
