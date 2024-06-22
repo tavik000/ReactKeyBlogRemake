@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 export default function WaddleDee() {
   const [isSitting, setSit] = useState<boolean>(false);
@@ -7,43 +7,47 @@ export default function WaddleDee() {
   const groundPosHeight = 6000;
   const offset = 200;
 
-  const toggleSit = (value: boolean) => {
-    if (isSitting === value) {
-      return;
-    }
-
-    if (waddleDeeRef.current) {
-      if (value) {
-        const deeBottom =
-          waddleDeeRef.current.getBoundingClientRect().height +
-          waddleDeeRef.current.getBoundingClientRect().top;
-        waddleDeeRef.current.style.top = groundPosHeight + offset + 'px';
-      } else {
-        waddleDeeRef.current.style.top = '';
-      }
-    }
-    setSit(value);
-  };
-
-  const handleScroll = () => {
-    // console.log(window.scrollY, groundPosHeight, isSitting, isSit);
-
-    if (window.scrollY >= groundPosHeight) {
-      if (waddleDeeRef.current) {
-        if (!waddleDeeRef.current.classList.contains('is-sitting')) {
-          toggleSit(true);
+  useEffect(function onFirstMount() {
+    if (typeof window !== 'undefined') {
+      const toggleSit = (value: boolean) => {
+        if (isSitting === value) {
+          return;
         }
-      }
-    } else {
-      if (waddleDeeRef.current) {
-        if (waddleDeeRef.current.classList.contains('is-sitting')) {
-          toggleSit(false);
-        }
-      }
-    }
-  };
 
-  window.addEventListener('scroll', handleScroll);
+        if (waddleDeeRef.current) {
+          if (value) {
+            const deeBottom =
+              waddleDeeRef.current.getBoundingClientRect().height +
+              waddleDeeRef.current.getBoundingClientRect().top;
+            waddleDeeRef.current.style.top = groundPosHeight + offset + 'px';
+          } else {
+            waddleDeeRef.current.style.top = '';
+          }
+        }
+        setSit(value);
+      };
+
+      const handleScroll = () => {
+        // console.log(window.scrollY, groundPosHeight, isSitting, isSit);
+
+        if (window.scrollY >= groundPosHeight) {
+          if (waddleDeeRef.current) {
+            if (!waddleDeeRef.current.classList.contains('is-sitting')) {
+              toggleSit(true);
+            }
+          }
+        } else {
+          if (waddleDeeRef.current) {
+            if (waddleDeeRef.current.classList.contains('is-sitting')) {
+              toggleSit(false);
+            }
+          }
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+    }
+  }, []);
 
   return (
     <div
