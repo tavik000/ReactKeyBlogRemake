@@ -7,7 +7,7 @@ export default function WaddleDee() {
   const groundPosHeight = 6000;
   const offset = 200;
 
-  useEffect(function onFirstMount() {
+  useEffect(() => {
     if (typeof window !== 'undefined') {
       const toggleSit = (value: boolean) => {
         if (isSitting === value) {
