@@ -92,7 +92,7 @@ async function seedPosts(client, locale) {
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         title TEXT NOT NULL,
         thumbnail_img VARCHAR(255) NOT NULL,
-        tag VARCHAR(255)[] NOT NULL,
+        tags VARCHAR(255)[] NOT NULL,
         content TEXT NOT NULL,
         author TEXT NOT NULL,
         comment_id_list VARCHAR(255)[] NOT NULL,
@@ -130,13 +130,13 @@ async function seedPosts(client, locale) {
       posts.map(async (post) => {
         const insertPostTableQuery = format(
           `
-          INSERT INTO posts_%s (id, title, thumbnail_img, tag, content, author, comment_id_list, create_date)
+          INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date)
           VALUES ('${post.id}', '${post.title}', '${post.thumbnail_img}', ARRAY[%L]::VARCHAR[], '${post.content}', '${post.author}', ARRAY[%L]::VARCHAR[], '${post.create_date}')
           ON CONFLICT (id) DO NOTHING;
           `,
           locale,
-          post.tag.join(', '),
-          post.comments.join(', '),
+          post.tags,
+          post.comments,
         );
 
         return client.query(insertPostTableQuery);
