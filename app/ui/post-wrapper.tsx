@@ -1,25 +1,20 @@
 import PostItem from './post-item';
-// import { fetchPostPages } from '@/app/lib/data';
+import { fetchFilteredPosts } from '@/app/lib/data';
 
 export default async function PostWrapper({
-  searchParams,
+  query,
+  currentPage,
+  locale,
 }: {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
+  query: string;
+  currentPage: number;
+  locale: string;
 }) {
-  const query = searchParams?.query || '';
-  const currentPage = Number(searchParams?.page) || 1;
-
-  // const totalPages = await fetchInvoicesPages(query);
+  const posts = await fetchFilteredPosts(query, currentPage, locale);
 
   return (
     <ul className="post-items mx-auto mt-6 flex w-full max-w-1140px flex-row flex-wrap justify-start p-0">
-      <PostItem />
-      <PostItem />
-      <PostItem />
-      <PostItem />
+      {posts?.map((post) => <PostItem key={post.id} post={post} />)}
     </ul>
   );
 }
