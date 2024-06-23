@@ -6,8 +6,9 @@ import Image from 'next/image';
 import { RoundButton } from './button';
 import Category from './category';
 import PostItem from './post-item';
+import PostWrapper from './post-wrapper';
 
-export default function PostSection() {
+export default async function PostSection() {
     return (
         <div className="post-section" >
             <div className="divide-line">
@@ -24,13 +25,7 @@ export default function PostSection() {
             </div>
 
             <Category />
-            <ul className="post-items flex flex-row flex-wrap mt-6 mx-auto p-0 justify-start max-w-1140px w-full">
-                <PostItem/>
-                <PostItem/>
-                <PostItem/>
-                <PostItem/>
-
-            </ul>
+            <PostWrapper />
 
             <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
                 <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">
