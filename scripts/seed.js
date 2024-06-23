@@ -6,6 +6,7 @@ const {
   posts_kr,
   posts_zh,
   users,
+  comments,
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
 const format = require('pg-format');
@@ -94,7 +95,7 @@ async function seedPosts(client, locale) {
         tag VARCHAR(255)[] NOT NULL,
         content TEXT NOT NULL,
         author TEXT NOT NULL,
-        comments JSONB[] NOT NULL,
+        comment_id_list VARCHAR(255)[] NOT NULL,
         create_date DATE NOT NULL
       );
     `,
@@ -127,19 +128,15 @@ async function seedPosts(client, locale) {
     }
     const insertedPosts = await Promise.all(
       posts.map(async (post) => {
-        if (!Array.isArray(post.comments) || !post.comments.every(comment => typeof comment === 'object' && comment !== null)) {
-          throw new Error('post.comments must be an array of objects');
-        }
-
         const insertPostTableQuery = format(
           `
-          INSERT INTO posts_%s (id, title, thumbnail_img, tag, content, author, comments, create_date)
-          VALUES ('${post.id}', '${post.title}', '${post.thumbnail_img}', ARRAY[%L]::VARCHAR[], '${post.content}', '${post.author}', ARRAY[%L]::JSONB[], '${post.create_date}')
+          INSERT INTO posts_%s (id, title, thumbnail_img, tag, content, author, comment_id_list, create_date)
+          VALUES ('${post.id}', '${post.title}', '${post.thumbnail_img}', ARRAY[%L]::VARCHAR[], '${post.content}', '${post.author}', ARRAY[%L]::VARCHAR[], '${post.create_date}')
           ON CONFLICT (id) DO NOTHING;
           `,
           locale,
           post.tag.join(', '),
-          post.comments.map(JSON.stringify)
+          post.comments.join(', '),
         );
 
         return client.query(insertPostTableQuery);
@@ -158,6 +155,46 @@ async function seedPosts(client, locale) {
   }
 }
 
+async function seedComments(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS comments (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        post_id UUID NOT NULL,
+        author VARCHAR(255) NOT NULL,
+        author_img VARCHAR(255) NOT NULL,
+        author_email VARCHAR(255) NOT NULL,
+        content TEXT NOT NULL,
+        create_date DATE NOT NULL
+      );
+    `;
+
+    console.log(`Created "comments" table`);
+
+    const insertedComments = await Promise.all(
+      comments.map((comment) => {
+        return client.sql`
+          INSERT INTO comments (id, post_id, author, author_img, author_email, content, create_date)
+          VALUES (${comment.id}, ${comment.post_id}, ${comment.author}, ${comment.author_img}, ${comment.author_email}, ${comment.content}, ${comment.create_date})
+          ON CONFLICT (id) DO NOTHING;
+        `;
+      }),
+    );
+
+    console.log(`Seeded ${insertedComments.length} comments`);
+
+    return {
+      createTable,
+      comments: insertedComments,
+    };
+  } catch (error) {
+    console.error('Error seeding comments:', error);
+    throw error;
+  }
+}
+
 async function main() {
   const client = await db.connect();
 
@@ -167,6 +204,7 @@ async function main() {
   await seedPosts(client, 'ja');
   await seedPosts(client, 'zh');
   await seedPosts(client, 'kr');
+  await seedComments(client);
 
   await client.end();
 }
