@@ -94,6 +94,16 @@ export default function Category() {
                 </li>
                 <li>
                   <a className="text-sm hover:text-orange-500" href="">
+                    Unity
+                  </a>
+                </li>
+                <li>
+                  <a className="text-sm hover:text-orange-500" href="">
+                    Web
+                  </a>
+                </li>
+                <li>
+                  <a className="text-sm hover:text-orange-500" href="">
                     Other
                   </a>
                 </li>
