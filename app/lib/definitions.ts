@@ -10,9 +10,22 @@ export type User = {
 };
 
 export interface BlogComment {
-  body: string;
+  id: string;
+  post_id: string;
   author: string;
+  author_img: string;
+  author_email: string;
+  content: string;
+  create_date: Date;
 }
+
+export type PostCard = {
+  id: string;
+  title: string;
+  thumbnail_img: string;
+  tags: string[];
+  create_date: Date;
+};
 
 export type Post = {
   id: string;
@@ -21,7 +34,6 @@ export type Post = {
   tag: string[];
   content: string;
   author: string;
-  comments: BlogComment[];
+  comments: string[];
   create_date: Date;
 };
-
