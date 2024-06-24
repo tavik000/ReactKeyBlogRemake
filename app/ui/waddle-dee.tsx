@@ -20,9 +20,7 @@ export default function WaddleDee() {
         setSit(value);
       };
 
-      const handleScroll = () => {
-        // console.log(window.scrollY, groundPosHeight, isSitting);
-
+      const checkAndToggleSit = () => {
         if (window.scrollY >= groundPosHeight) {
           if (waddleDeeRef.current) {
             if (!waddleDeeRef.current.classList.contains('is-sitting')) {
@@ -38,6 +36,12 @@ export default function WaddleDee() {
         }
       };
 
+      const handleScroll = () => {
+        // console.log(window.scrollY, groundPosHeight, isSitting);
+        checkAndToggleSit();
+      };
+
+      checkAndToggleSit();
       window.addEventListener('scroll', handleScroll);
     }
   }, []);
