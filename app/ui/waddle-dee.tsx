@@ -10,15 +10,8 @@ export default function WaddleDee() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const toggleSit = (value: boolean) => {
-        if (isSitting === value) {
-          return;
-        }
-
         if (waddleDeeRef.current) {
           if (value) {
-            const deeBottom =
-              waddleDeeRef.current.getBoundingClientRect().height +
-              waddleDeeRef.current.getBoundingClientRect().top;
             waddleDeeRef.current.style.top = groundPosHeight + offset + 'px';
           } else {
             waddleDeeRef.current.style.top = '';
@@ -28,7 +21,7 @@ export default function WaddleDee() {
       };
 
       const handleScroll = () => {
-        // console.log(window.scrollY, groundPosHeight, isSitting, isSit);
+        console.log(window.scrollY, groundPosHeight, isSitting);
 
         if (window.scrollY >= groundPosHeight) {
           if (waddleDeeRef.current) {
