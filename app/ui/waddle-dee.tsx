@@ -21,7 +21,7 @@ export default function WaddleDee() {
       };
 
       const handleScroll = () => {
-        console.log(window.scrollY, groundPosHeight, isSitting);
+        // console.log(window.scrollY, groundPosHeight, isSitting);
 
         if (window.scrollY >= groundPosHeight) {
           if (waddleDeeRef.current) {
