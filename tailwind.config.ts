@@ -22,6 +22,12 @@ const config: Config = {
           600: '#2F6FEB',
         },
       },
+      minWidth: {
+        '54px': '54px',
+      },
+      minHeight: {
+        '32px': '32px',
+      },
       boxShadow: {
         '0550': '0 5px 5px 0 rgba(0, 0, 0, 0.3)',
         '02': '0 2px rgba(0, 0, 0, 0.2)',
@@ -31,6 +37,8 @@ const config: Config = {
         '1140px': '1140px',
       },
       padding: {
+        '3px': '3px',
+        '5px': '5px',
         '11px': '11px',
         '1em': '1em',
       },

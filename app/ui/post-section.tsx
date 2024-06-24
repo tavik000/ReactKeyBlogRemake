@@ -7,6 +7,7 @@ import { RoundButton } from './button';
 import Category from './category';
 import PostItem from './post-item';
 import PostWrapper from './post-wrapper';
+import PageNavigation from './page-navigation';
 
 export default async function PostSection({
   searchParams,
@@ -41,11 +42,8 @@ export default async function PostSection({
       </div>
 
       <Category />
-      <PostWrapper
-        query={query}
-        currentPage={currentPage}
-        locale="en"
-      />
+      <PostWrapper query={query} currentPage={currentPage} locale="en" />
+      <PageNavigation />
 
       <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
         <div className="flex flex-col justify-center gap-6 rounded-lg bg-gray-50 px-6 py-10 md:w-2/5 md:px-20">

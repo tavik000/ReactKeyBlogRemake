@@ -10,11 +10,13 @@ export default async function PostWrapper({
   currentPage: number;
   locale: string;
 }) {
-  const posts = await fetchFilteredPosts(query, currentPage, locale);
+    const posts = await fetchFilteredPosts(query, currentPage, locale);
 
   return (
-    <ul className="post-items mx-auto mt-6 flex w-full max-w-1140px flex-row flex-wrap justify-start p-0">
-      {posts?.map((post) => <PostItem key={post.id} post={post} />)}
+    <ul className="post-items mx-auto mt-6 mb-16 flex w-full max-w-1140px flex-row flex-wrap justify-start p-0 clear-both">
+        {posts?.map((post) => (
+            <PostItem key={post.id} post={post} />
+        ))}
     </ul>
   );
 }
