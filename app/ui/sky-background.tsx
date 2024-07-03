@@ -1,8 +1,9 @@
 import { sniglet } from "./fonts";
+import { forwardRef } from "react";
 
-export default function SkyBackground() {
+export const SkyBackground = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(function SkyBackground(_, ref) {
     return (
-        <div className="sky-background">
+        <div className="sky-background" ref={ref}>
             <div className="cloud cloud-large cloud-1"></div>
             <div className="cloud cloud-medium cloud-2">
                 <div className="waddle-dee-the-second">
@@ -38,5 +39,5 @@ export default function SkyBackground() {
             <div className="star-block star-block-5"><div className="star-block-star"></div></div>
         </div>
 
-    );
-}
+    )
+});
