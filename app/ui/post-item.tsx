@@ -12,7 +12,7 @@ export default function PostItem(
     <li className="post-item mb-6 flex w-1/3 max-w-400px basis-1/3 list-none flex-col px-11px">
       <article className="block h-full flex-row">
         <Link href="/login" className="article-link flex flex-row">
-          <div className="post-article flex h-full flex-col rounded-xl bg-white px-3 pb-4 pt-6 font-bold shadow-0550">
+          <div className="post-article flex h-full w-full flex-col rounded-xl bg-white px-3 pb-4 pt-6 font-bold shadow-0550">
             <Image
               src={post.thumbnail_img}
               width={333}
