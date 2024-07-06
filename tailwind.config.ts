@@ -22,11 +22,17 @@ const config: Config = {
           600: '#2F6FEB',
         },
       },
+      height: {
+        '400px': '400px',
+      },
       minWidth: {
+        '32px': '32px',
+        '40px': '40px',
         '54px': '54px',
       },
       minHeight: {
         '32px': '32px',
+        '40px': '40px',
       },
       boxShadow: {
         '0550': '0 5px 5px 0 rgba(0, 0, 0, 0.3)',
