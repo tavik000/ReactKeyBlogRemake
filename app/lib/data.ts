@@ -43,7 +43,7 @@ export async function fetchFilteredPosts(
   const offset: number = (currentPage - 1) * ITEMS_PER_PAGE;
 
   try {
-    var posts;
+    let posts;
     switch (locale) {
       case 'en':
         posts = await sql<PostCard>`
@@ -126,4 +126,52 @@ export async function getUser(email: string) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');
   }
+}
+
+export async function fetchPostsPages(query: string, locale: string) {
+  noStore();
+  try {
+    let count;
+    switch (locale) {
+      case 'en':
+        count = await sql`SELECT COUNT(*)
+          FROM posts_en
+          WHERE
+            title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`}
+        `;
+        break;
+      case 'ja':
+        count = await sql`SELECT COUNT(*)
+          FROM posts_jp
+          WHERE
+            title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`}
+        `;
+        break;
+      case 'kr':
+        count = await sql`SELECT COUNT(*)
+          FROM posts_kr
+          WHERE
+            title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`}
+        `;
+      case 'zh':
+        count = await sql`SELECT COUNT(*)
+          FROM posts_zh
+          WHERE
+            title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`}
+        `;
+      default:
+        throw new Error('Unsupported locale.');
+    }
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch total number of posts.');
+  }
+
 }

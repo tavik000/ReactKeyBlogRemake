@@ -8,6 +8,7 @@ import Category from './category';
 import PostItem from './post-item';
 import PostWrapper from './post-wrapper';
 import PageNavigation from './page-navigation';
+import { fetchPostsPages } from '@/app/lib/data';
 
 export default async function PostSection({
   searchParams,
@@ -19,8 +20,9 @@ export default async function PostSection({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+  let locale = 'en';
 
-  //   const totalPages = await fetchInvoicesPages(query);
+  const totalPages = await fetchPostsPages(query, locale);
 
   return (
     <div className="post-section">
@@ -43,8 +45,8 @@ export default async function PostSection({
 
       <div className="post-main">
         <Category />
-        <PostWrapper query={query} currentPage={currentPage} locale="en" />
-        <PageNavigation />
+        <PostWrapper query={query} currentPage={currentPage} locale={locale} />
+          <PageNavigation totalPages={totalPages} />
       </div>
 
       {/* <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
