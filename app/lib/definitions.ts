@@ -6,6 +6,7 @@ export type User = {
   id: string;
   name: string;
   email: string;
+  twitter?: string;
   password: string;
 };
 
@@ -25,6 +26,7 @@ export type PostCard = {
   thumbnail_img: string;
   tags: string[];
   create_date: Date;
+  modify_date: Date;
 };
 
 export type Post = {
@@ -36,4 +38,5 @@ export type Post = {
   author: string;
   comments: string[];
   create_date: Date;
+  modify_date: Date;
 };

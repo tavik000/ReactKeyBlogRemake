@@ -20,6 +20,7 @@ async function seedUsers(client) {
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         email TEXT NOT NULL UNIQUE,
+        twitter_id TEXT NOT NULL UNIQUE,
         password TEXT NOT NULL
       );
     `;
@@ -31,8 +32,8 @@ async function seedUsers(client) {
       users.map(async (user) => {
         const hashedPassword = await bcrypt.hash(user.password, 10);
         return client.sql`
-        INSERT INTO users (id, name, email, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${hashedPassword})
+        INSERT INTO users (id, name, email, twitter_id, password)
+        VALUES (${user.id}, ${user.name}, ${user.email}, ${user.twitter_id}, ${hashedPassword})
         ON CONFLICT (id) DO NOTHING;
       `;
       }),
@@ -96,7 +97,8 @@ async function seedPosts(client, locale) {
         content TEXT NOT NULL,
         author TEXT NOT NULL,
         comment_id_list VARCHAR(255)[] NOT NULL,
-        create_date DATE NOT NULL
+        create_date DATE NOT NULL,
+        modify_date DATE NOT NULL
       );
     `,
       locale,
@@ -130,8 +132,8 @@ async function seedPosts(client, locale) {
       posts.map(async (post) => {
         const insertPostTableQuery = format(
           `
-          INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date)
-          VALUES ('${post.id}', '${post.title}', '${post.thumbnail_img}', ARRAY[%L]::VARCHAR[], '${post.content}', '${post.author}', ARRAY[%L]::VARCHAR[], '${post.create_date}')
+          INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date, modify_date)
+          VALUES ('${post.id}', '${post.title}', '${post.thumbnail_img}', ARRAY[%L]::VARCHAR[], '${post.content}', '${post.author}', ARRAY[%L]::VARCHAR[], '${post.create_date}', '${post.modify_date}')
           ON CONFLICT (id) DO NOTHING;
           `,
           locale,

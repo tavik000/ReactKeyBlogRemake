@@ -1,10 +1,13 @@
 // This file contains placeholder data that you'll be replacing with real data in the Data Fetching chapter:
+
+
 // https://nextjs.org/learn/dashboard-app/fetching-data
 const users = [
   {
     id: '410544b2-4001-4271-9855-fec4b6a6442a',
     name: 'User',
     email: 'user@nextmail.com',
+    twitter_id: 'kiikey4',
     password: '123456',
   },
 ];
@@ -49,6 +52,7 @@ const posts_en = [
     author: 'Key',
     comments: ['3958dc9e-712f-4377-85e9-fec4b6a64420', '3958dc9e-712f-4377-85e9-fec4b6a64430'],
     create_date: '2022-12-06',
+    modify_date: '2022-12-06',
   },
   {
     id: '86b93c2d-9d95-4c14-b05f-6e7e4e167c44',
@@ -59,6 +63,7 @@ const posts_en = [
     author: 'Key',
     comments: [],
     create_date: '2022-12-06',
+    modify_date: '2022-12-06',
   },
   {
     id: 'e4189b55-9232-4e56-97ec-3d67bf7351d5',
@@ -69,6 +74,7 @@ const posts_en = [
     author: 'Key',
     comments: [],
     create_date: '2022-12-06',
+    modify_date: '2022-12-06',
   },
   {
     id: 'a8e2fa8e-5a5c-4a3e-9a38-8b3a160f3e15',
@@ -79,6 +85,7 @@ const posts_en = [
     author: 'Key',
     comments: [],
     create_date: '2022-12-06',
+    modify_date: '2022-12-06',
   },
   {
     id: '4fca8134-1d33-4f97-b761-1089de3d3f13',
@@ -89,6 +96,7 @@ const posts_en = [
     author: 'Key',
     comments: [],
     create_date: '2022-12-06',
+    modify_date: '2022-12-06',
   },
   {
     id: 'c92bc4a3-4f34-45b1-b66f-e7c64fc8b39e',
@@ -99,6 +107,7 @@ const posts_en = [
     author: 'Key',
     comments: [],
     create_date: '2022-12-06',
+    modify_date: '2022-12-06',
   },
   {
     id: "f7a9e3b7-8fd4-4b3f-bd7a-79a712f5f1a1",
@@ -108,7 +117,8 @@ const posts_en = [
     content: "Machine learning algorithms are at the core of AI applications, allowing systems to learn from data and make predictions...",
     author: "Alex",
     comments: [],
-    create_date: "2023-01-15"
+    create_date: "2023-01-15",
+    modify_date: '2022-12-06',
   },
   {
     id: "9a2f4c51-7c2d-4b07-bd06-8fc6e6dbd1c9",
@@ -118,7 +128,8 @@ const posts_en = [
     content: "Renewable energy technologies like solar and wind power are crucial in the transition to sustainable energy sources...",
     author: "Emma",
     comments: [],
-    create_date: "2023-02-28"
+    create_date: "2023-02-28",
+    modify_date: '2022-12-06',
   },
   {
     id: "b0f4a1a8-9b67-4820-9cf3-25d7bcb6b1f5",
@@ -128,7 +139,8 @@ const posts_en = [
     content: "Robotics technology is revolutionizing manufacturing processes, improving efficiency and precision...",
     author: "Sophia",
     comments: [],
-    create_date: "2023-04-10"
+    create_date: "2023-04-10",
+    modify_date: '2022-12-06',
   },
   {
     id: "a7d5e0f2-38ef-4d02-bc11-1d332f9b5b49",
@@ -138,7 +150,8 @@ const posts_en = [
     content: "AI plays a crucial role in the development of autonomous vehicles, enhancing safety and navigation capabilities...",
     author: "Daniel",
     comments: [],
-    create_date: "2023-05-05"
+    create_date: "2023-05-05",
+    modify_date: '2022-12-06',
   },
   {
     id: "c3a7b1f9-cc8d-45b0-b7ac-9811e43c83b4",
@@ -148,7 +161,8 @@ const posts_en = [
     content: "Quantum computing holds immense potential to solve complex problems that are beyond the reach of classical computers...",
     author: "Olivia",
     comments: [],
-    create_date: "2023-06-15"
+    create_date: "2023-06-15",
+    modify_date: '2022-12-06',
   },
   {
     id: "e2c6f5a0-8744-4b21-bd4a-9f06a458b03f",
@@ -158,7 +172,8 @@ const posts_en = [
     content: "As IoT devices proliferate, cybersecurity becomes increasingly crucial to protect data and ensure privacy...",
     author: "Liam",
     comments: [],
-    create_date: "2023-07-20"
+    create_date: "2023-07-20",
+    modify_date: '2022-12-06',
   },
   {
     id: "d8f9e2c3-64e2-42aa-96d1-8e47245ac5ae",
@@ -168,7 +183,8 @@ const posts_en = [
     content: "AR technology overlays digital information onto the physical world, transforming how we interact with our environment...",
     author: "Ava",
     comments: [],
-    create_date: "2023-08-10"
+    create_date: "2023-08-10",
+    modify_date: '2022-12-06',
   },
   {
     id: "f1d8c4b5-5ef8-4327-b2e3-6f0bf2a1d7a7",
@@ -178,7 +194,8 @@ const posts_en = [
     content: "Blockchain enhances transparency and traceability in supply chains, reducing fraud and improving efficiency...",
     author: "Noah",
     comments: [],
-    create_date: "2023-09-05"
+    create_date: "2023-09-05",
+    modify_date: '2022-12-06',
   },
   {
     id: "b6d5e8a3-ec75-4e7d-b62b-9e8e3c907a16",
@@ -188,7 +205,8 @@ const posts_en = [
     content: "3D printing is revolutionizing manufacturing, healthcare, and even construction, enabling customized production...",
     author: "Ethan",
     comments: [],
-    create_date: "2023-10-15"
+    create_date: "2023-10-15",
+    modify_date: '2022-12-06',
   },
   {
     id: "a9b8c7d6-e5f4-4a3b-8c2d-1f0e9b0d0a1b",
@@ -198,7 +216,8 @@ const posts_en = [
     content: "CRISPR technology allows precise genetic editing, revolutionizing agriculture, medicine, and biotechnology...",
     author: "Isabella",
     comments: [],
-    create_date: "2023-11-20"
+    create_date: "2023-11-20",
+    modify_date: '2022-12-06',
   },
   {
     id: "f3e4d5c6-b7a8-4c9e-8d2f-0e1a2b3c4d5e",
@@ -208,7 +227,8 @@ const posts_en = [
     content: "Advancements in space technology are enabling humanity to explore distant planets and understand the cosmos like never before...",
     author: "Mia",
     comments: [],
-    create_date: "2023-12-10"
+    create_date: "2023-12-10",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6a",
@@ -218,7 +238,8 @@ const posts_en = [
     content: "As AI advances, ethical questions about bias, privacy, and accountability become increasingly important...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-01-05"
+    create_date: "2024-01-05",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6b",
@@ -228,7 +249,8 @@ const posts_en = [
     content: "The rapid development of AI technologies raises significant concerns about user privacy...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-01-10"
+    create_date: "2024-01-10",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6c",
@@ -238,7 +260,8 @@ const posts_en = [
     content: "Transparency in AI is crucial for building trust and ensuring accountability...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-01-12"
+    create_date: "2024-01-12",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6d",
@@ -248,7 +271,8 @@ const posts_en = [
     content: "Bias in AI systems can lead to unfair outcomes and reinforce existing inequalities...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-01-15"
+    create_date: "2024-01-15",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6e",
@@ -258,7 +282,8 @@ const posts_en = [
     content: "Implementing ethical principles in AI development is essential for responsible innovation...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-01-18"
+    create_date: "2024-01-18",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6f",
@@ -268,7 +293,8 @@ const posts_en = [
     content: "As AI systems become more autonomous, questions about accountability arise...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-01-20"
+    create_date: "2024-01-20",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f70",
@@ -278,7 +304,8 @@ const posts_en = [
     content: "The increasing use of AI technologies brings significant privacy concerns...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-01-22"
+    create_date: "2024-01-22",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f71",
@@ -288,7 +315,8 @@ const posts_en = [
     content: "Trustworthiness is a key factor in the adoption and success of AI technologies...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-01-25"
+    create_date: "2024-01-25",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f72",
@@ -298,7 +326,8 @@ const posts_en = [
     content: "AI systems must be designed to respect and uphold human rights...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-01-28"
+    create_date: "2024-01-28",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f73",
@@ -308,7 +337,8 @@ const posts_en = [
     content: "Autonomous AI systems present unique ethical challenges that need careful consideration...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-01-30"
+    create_date: "2024-01-30",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f74",
@@ -318,7 +348,8 @@ const posts_en = [
     content: "The use of AI in healthcare brings both opportunities and ethical dilemmas...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-02-02"
+    create_date: "2024-02-02",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f75",
@@ -328,7 +359,8 @@ const posts_en = [
     content: "The deployment of AI in surveillance raises critical ethical questions...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-02-05"
+    create_date: "2024-02-05",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f76",
@@ -338,7 +370,8 @@ const posts_en = [
     content: "Understanding and addressing the causes of algorithmic bias is crucial for fair AI...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-02-08"
+    create_date: "2024-02-08",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f77",
@@ -348,7 +381,8 @@ const posts_en = [
     content: "The impact of AI on employment necessitates ethical considerations and responses...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-02-10"
+    create_date: "2024-02-10",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f78",
@@ -358,7 +392,8 @@ const posts_en = [
     content: "Translating ethical principles into practical AI applications is a complex but necessary task...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-02-13"
+    create_date: "2024-02-13",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f79",
@@ -368,7 +403,8 @@ const posts_en = [
     content: "The future of work in the age of AI involves numerous ethical considerations...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-02-15"
+    create_date: "2024-02-15",
+    modify_date: '2022-12-06',
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f80",
@@ -378,7 +414,52 @@ const posts_en = [
     content: "Protecting user rights in the context of AI and data usage is a critical ethical issue...",
     author: "Jacob",
     comments: [],
-    create_date: "2024-02-18"
+    create_date: "2024-02-18",
+    modify_date: '2022-12-06',
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f81",
+    title: "17. Power of man: Protecting User Rights",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Data Ethics", "Tech"],
+    content: "Protecting user rights in the context of AI and data usage is a critical ethical issue...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-18",
+    modify_date: '2022-12-06',
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f82",
+    title: "18. Power of man: Protecting User Rights",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Data Ethics", "Tech"],
+    content: "Protecting user rights in the context of AI and data usage is a critical ethical issue...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-18",
+    modify_date: '2022-12-06',
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f83",
+    title: "19. Power of man: Protecting User Rights",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Data Ethics", "Tech"],
+    content: "Protecting user rights in the context of AI and data usage is a critical ethical issue...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-18",
+    modify_date: '2022-12-06',
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f84",
+    title: "20. Power of man: Protecting User Rights",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Data Ethics", "Tech"],
+    content: "Protecting user rights in the context of AI and data usage is a critical ethical issue...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-18",
+    modify_date: '2022-12-06',
   },
 ];
 
@@ -392,6 +473,7 @@ const posts_ja = [
     author: 'Key',
     comments: ['3958dc9e-712f-4377-85e9-fec4b6a64420', '3958dc9e-712f-4377-85e9-fec4b6a64430'],
     create_date: '2022-12-06',
+    modify_date: '2022-12-06',
   },
 ];
 
@@ -405,6 +487,7 @@ const posts_kr = [
     author: 'Key',
     comments: ['3958dc9e-712f-4377-85e9-fec4b6a64420', '3958dc9e-712f-4377-85e9-fec4b6a64430'],
     create_date: '2022-12-06',
+    modify_date: '2022-12-06',
   },
 ];
 
@@ -418,6 +501,7 @@ const posts_zh = [
     author: 'Key',
     comments: ['3958dc9e-712f-4377-85e9-fec4b6a64420', '3958dc9e-712f-4377-85e9-fec4b6a64430'],
     create_date: '2022-12-06',
+    modify_date: '2022-12-06',
   },
 ];
 
