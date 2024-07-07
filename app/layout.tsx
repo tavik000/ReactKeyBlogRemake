@@ -2,6 +2,7 @@ import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 import { Metadata } from 'next';
 import Sky from './ui/sky';
+import PostSection from './ui/post-section';
 
 export const experimental_ppr = true;
 
@@ -23,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
         <Sky />
-        {children}
+        <PostSection>{children}</PostSection>
       </body>
     </html>
   );

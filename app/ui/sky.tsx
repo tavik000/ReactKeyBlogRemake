@@ -24,9 +24,6 @@ export default function Sky() {
 
       const waddleDeeTop = waddleDeeRef.current.getBoundingClientRect().top;
 
-      console.log("groundPosHeight - waddleDeeTop: ", groundPosHeight - waddleDeeTop);
-      console.log("waddleDeeTop: ", waddleDeeTop);
-      console.log("groundPosHeight: ", groundPosHeight);
       if (value) {
         waddleDeeRef.current.style.top = groundPosHeight - waddleDeeTop + 'px';
       } else {

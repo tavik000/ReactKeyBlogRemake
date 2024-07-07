@@ -7,11 +7,14 @@ export default function PostItem(
   { post }: { post: PostCard }
 ) {
 
-  
+  console.log("post title: ", post.title);
+  const urlRegex = /\s/g;
+  const url_title = post.title.toLowerCase().replace(urlRegex, '-'); 
+
   return (
     <li className="post-item mb-6 flex w-1/3 max-w-400px basis-1/3 list-none flex-col px-11px h-400px">
       <article className="block h-full flex-row">
-        <Link href="/login" className="article-link flex flex-row h-full">
+        <Link href={`/posts/${url_title}/${post.id}`} className="article-link flex flex-row h-full">
           <div className="post-article flex h-full w-full justify-between flex-col rounded-xl bg-white px-3 pb-4 pt-6 font-bold shadow-0550">
             <Image
               src={post.thumbnail_img}
