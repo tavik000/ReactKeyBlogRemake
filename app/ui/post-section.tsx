@@ -1,6 +1,4 @@
 import { lusitana, sniglet } from '@/app/ui/fonts';
-import PostSearch from './post-search';
-import { RoundButton } from './button';
 import Link from 'next/link';
 
 export default function PostSection({
@@ -19,16 +17,6 @@ export default function PostSection({
         </h1>
       </div>
       <span className="bg"></span>
-      <div className="options flex flex-row">
-        <div className="flex w-1/2 flex-row">
-          <PostSearch placeholder="Search posts..." />
-        </div>
-        <div className="flex w-1/2 flex-row justify-end">
-          <RoundButton>Home</RoundButton>
-          <RoundButton>Login</RoundButton>
-          <RoundButton>EN</RoundButton>
-        </div>
-      </div>
       <div className="page-path relative z-10 mb-0 py-3">
         <ul className="w-1200px mx-auto list-none rounded-md bg-white">
           <PagePathItem url={homepageURL} shouldShowArrow={true}>Key Homepage</PagePathItem>

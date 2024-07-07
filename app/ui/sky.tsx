@@ -2,12 +2,15 @@
 import { SkyBackground } from './sky-background';
 import { WaddleDee } from './waddle-dee';
 import React, { useState, useRef, useEffect } from 'react';
+import PostHeader from './post-header';
+import { set } from 'zod';
 
-export default function Sky() {
+export default function Sky({ locale }: { locale: string }) {
   const skyBackgroundRef = useRef<HTMLDivElement | null>(null);
 
   const [isWaddleActive, setWaddleActive] = useState<boolean>(false);
   const [isSitting, setSit] = useState<boolean>(false);
+  const [groundPosHeight, setGroundPosHeight] = useState<number>(0);
   const waddleDeeRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -47,6 +50,7 @@ export default function Sky() {
 
       const groundPosHeight =
         skyBackgroundRef.current.getBoundingClientRect().height;
+      setGroundPosHeight(groundPosHeight);
 
       const scrollOffset = groundPosHeight * 0.04888;
       // console.log(window.scrollY, scrollOffset, groundPosHeight);
@@ -71,16 +75,21 @@ export default function Sky() {
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [groundPosHeight]);
 
   return (
-    <main className="flex min-h-screen flex-col">
-      <WaddleDee
-        isSitting={isSitting}
-        isActive={isWaddleActive}
-        ref={waddleDeeRef}
-      />
-      <SkyBackground ref={skyBackgroundRef} />
-    </main>
+    <>
+      <header>
+        <PostHeader locale={locale} groundPosHeight={groundPosHeight}/>
+      </header>
+      <main className="flex min-h-screen flex-col">
+        <WaddleDee
+          isSitting={isSitting}
+          isActive={isWaddleActive}
+          ref={waddleDeeRef}
+        />
+        <SkyBackground ref={skyBackgroundRef} />
+      </main>
+    </>
   );
 }

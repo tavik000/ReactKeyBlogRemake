@@ -20,10 +20,11 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const locale = 'en';
   return (
     <html lang="en">
       <body className={`${inter.className} antialiased`}>
-        <Sky />
+        <Sky locale={locale}/>
         <PostSection>{children}</PostSection>
       </body>
     </html>
