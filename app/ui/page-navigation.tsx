@@ -11,6 +11,10 @@ export default function PageNavigation({ totalPages }: { totalPages: number }) {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 
+  console.log('currentPage', currentPage);
+  console.log('totalPages', totalPages);
+  console.log('searchParams', searchParams);
+
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
     params.set('page', pageNumber.toString());
