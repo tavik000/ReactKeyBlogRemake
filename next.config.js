@@ -4,6 +4,9 @@ const nextConfig = {
     locales: ['en-US', 'ja-JP', 'zh-HK', 'ko-KR'],
     defaultLocale: 'en-US',
   },
+  experimental: {
+    ppr: 'incremental'
+  },
 };
 
 module.exports = nextConfig;
