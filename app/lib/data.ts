@@ -41,8 +41,6 @@ export async function fetchFilteredPosts(
   noStore();
 
   const offset: number = (currentPage - 1) * ITEMS_PER_PAGE;
-  console.log('offset: ' + offset + ', query: ' + query);
-  console.log("currentPage: " + currentPage + ", locale: " + locale);
 
   try {
     let posts;
@@ -175,5 +173,4 @@ export async function fetchPostsPages(query: string, locale: string) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch total number of posts.');
   }
-
 }

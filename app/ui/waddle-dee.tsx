@@ -3,13 +3,16 @@ import clsx from 'clsx';
 
 interface WaddleDeeProps {
   isSitting: boolean;
+  isActive: boolean;
 }
 
 export const WaddleDee = forwardRef<HTMLDivElement, React.PropsWithChildren<WaddleDeeProps>>(
-  function WaddleDee({ isSitting }, ref) {
+  function WaddleDee({ isSitting, isActive }, ref) {
 
     const className = clsx('waddle-dee', {
       'is-sitting': isSitting,
+      'hidden': !isActive,
+      '': isActive,
     });
 
     return (

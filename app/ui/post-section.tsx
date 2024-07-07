@@ -21,7 +21,6 @@ export default async function PostSection({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  console.log('post-section currentPage: ', currentPage);
   let locale = 'en';
 
   const totalPages = await fetchPostsPages(query, locale);
