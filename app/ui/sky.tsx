@@ -49,7 +49,7 @@ export default function Sky() {
           skyBackgroundRef.current.getBoundingClientRect().height;
 
         const scrollOffset = groundPosHeight * 0.04888;
-        console.log(window.scrollY, scrollOffset, groundPosHeight);
+        // console.log(window.scrollY, scrollOffset, groundPosHeight);
         if (window.scrollY + scrollOffset >= groundPosHeight) {
           if (!waddleDeeRef.current.classList.contains('is-sitting')) {
             toggleSit(true);

@@ -37,7 +37,7 @@ export default async function PostSection({
       <span className="bg"></span>
       <div className="options flex flex-row">
         <div className="flex w-1/2 flex-row">
-          <PostSearch placeholder="Search posts..."/>
+          <PostSearch placeholder="Search posts..." />
         </div>
         <div className="flex w-1/2 flex-row justify-end">
           <RoundButton>Home</RoundButton>
@@ -49,7 +49,7 @@ export default async function PostSection({
       <div className="post-main">
         <Category />
         <PostWrapper query={query} currentPage={currentPage} locale={locale} />
-          <PageNavigation totalPages={totalPages} />
+        <PageNavigation totalPages={totalPages} />
       </div>
 
       {/* <div className="mt-4 flex grow flex-col gap-4 md:flex-row">

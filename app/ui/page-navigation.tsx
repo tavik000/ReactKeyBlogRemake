@@ -11,9 +11,6 @@ export default function PageNavigation({ totalPages }: { totalPages: number }) {
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
 
-  console.log('currentPage', currentPage);
-  console.log('totalPages', totalPages);
-  console.log('searchParams', searchParams);
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
@@ -94,13 +91,13 @@ function PaginationNumber({
   isActive: boolean;
 }) {
   const className = clsx(
-    'flex h-10 w-10 bg-white items-center justify-center text-sm border',
+    'flex h-10 w-10 items-center justify-center text-sm border',
     {
       'rounded-l-md': position === 'first' || position === 'single',
       'rounded-r-md': position === 'last' || position === 'single',
       'z-10 bg-orange-500 border-orange-500 text-white': isActive,
-      'hover:bg-orange-100': !isActive && position !== 'middle',
-      'text-sky-400/75': position === 'middle',
+      'bg-white hover:bg-orange-100': !isActive && position !== 'middle',
+      'bg-white text-sky-400/75': position === 'middle',
     },
   );
 
