@@ -8,8 +8,10 @@ function useScrollDirection() {
     null,
   );
   const [lastScrollY, setLastScrollY] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    setIsLoaded(true);
     let lastY = window.scrollY;
 
     const updateScrollDirection = () => {
@@ -27,13 +29,16 @@ function useScrollDirection() {
 
     if (typeof window !== 'undefined') {
       window.addEventListener('scroll', updateScrollDirection); // add event listener
+      setTimeout(() => {
+        setLastScrollY(window.scrollY);
+      }, 0);
     }
     return () => {
       window.removeEventListener('scroll', updateScrollDirection); // clean up
     };
   }, [scrollDirection]);
 
-  return { scrollDirection, lastScrollY };
+  return { scrollDirection, lastScrollY, isLoaded };
 }
 
 export default function PostHeader({
@@ -43,10 +48,10 @@ export default function PostHeader({
   locale: string;
   groundPosHeight: number;
 }) {
-  const { scrollDirection, lastScrollY } = useScrollDirection();
+  const { scrollDirection, lastScrollY, isLoaded } = useScrollDirection();
 
-//   const isHidden = lastScrollY < groundPosHeight || scrollDirection === 'down';
-  const isHidden = lastScrollY < groundPosHeight;
+  //   const isHidden = lastScrollY < groundPosHeight || scrollDirection === 'down';
+  const isHidden = lastScrollY < groundPosHeight || !isLoaded;
 
   return (
     <div
