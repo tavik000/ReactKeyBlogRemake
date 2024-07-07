@@ -7,7 +7,7 @@ import { InvoicesTableSkeleton } from '@/app/ui/skeletons';
 import { Suspense } from 'react';
 import { fetchInvoicesPages } from '@/app/lib/data_backup';
 import { Metadata } from 'next';
-import PageNavigation from '@/app/ui/page-navigation';
+// import PageNavigation from '@/app/ui/page-navigation';
 
 export const metadata: Metadata = {
   title: 'Invoices',
@@ -43,9 +43,9 @@ export default async function Page({
         <Pagination totalPages={5} />
       </div>
 
-      <div className="mt-5 flex w-full justify-center">
+      {/* <div className="mt-5 flex w-full justify-center">
         <PageNavigation totalPages={5} />
-      </div>
+      </div> */}
     </div>
   );
 }

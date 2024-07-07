@@ -6,11 +6,10 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { generatePagination } from '@/app/lib/utils';
 
-export default function PageNavigation({ totalPages }: { totalPages: number }) {
+export default function Pagination({ totalPages }: { totalPages: number }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get('page')) || 1;
-
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
@@ -38,7 +37,7 @@ export default function PageNavigation({ totalPages }: { totalPages: number }) {
 
     <div
       className="
-      page-navigation mt-20 flex flex-wrap z-10 content-center w-full justify-center relative clear-both text-center text-xs
+      page-navigation relative z-10 clear-both mt-20 flex w-full flex-wrap content-center justify-center text-center text-xs
       "
     >
       <div className="inline-flex">

@@ -7,7 +7,7 @@ import { RoundButton } from './button';
 import Category from './category';
 import PostItem from './post-item';
 import PostWrapper from './post-wrapper';
-import PageNavigation from './page-navigation';
+import Pagination from './pagination';
 import { fetchPostsPages } from '@/app/lib/data';
 import PostSearch from './post-search';
 
@@ -21,6 +21,7 @@ export default async function PostSection({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
+  console.log('post-section currentPage: ', currentPage);
   let locale = 'en';
 
   const totalPages = await fetchPostsPages(query, locale);
@@ -48,8 +49,9 @@ export default async function PostSection({
 
       <div className="post-main">
         <Category />
+        {/* TODO: add Suspense */}
         <PostWrapper query={query} currentPage={currentPage} locale={locale} />
-        <PageNavigation totalPages={totalPages} />
+        <Pagination totalPages={totalPages} />
       </div>
 
       {/* <div className="mt-4 flex grow flex-col gap-4 md:flex-row">

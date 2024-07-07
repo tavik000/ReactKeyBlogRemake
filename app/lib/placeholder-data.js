@@ -219,8 +219,167 @@ const posts_en = [
     author: "Jacob",
     comments: [],
     create_date: "2024-01-05"
-  }
-
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6b",
+    title: "1. AI and Privacy: Balancing Innovation with User Rights",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Privacy", "Tech"],
+    content: "The rapid development of AI technologies raises significant concerns about user privacy...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-01-10"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6c",
+    title: "2. The Role of Transparency in AI Systems",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Transparency", "Tech"],
+    content: "Transparency in AI is crucial for building trust and ensuring accountability...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-01-12"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6d",
+    title: "3. Bias in AI: Understanding and Mitigating Risks",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Bias", "Tech"],
+    content: "Bias in AI systems can lead to unfair outcomes and reinforce existing inequalities...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-01-15"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6e",
+    title: "4. Ethical AI: Principles and Practices",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Ethics", "Tech"],
+    content: "Implementing ethical principles in AI development is essential for responsible innovation...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-01-18"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6f",
+    title: "5. AI and Accountability: Who is Responsible?",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Accountability", "Tech"],
+    content: "As AI systems become more autonomous, questions about accountability arise...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-01-20"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f70",
+    title: "6. Privacy Concerns in the Age of AI",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Privacy", "Tech"],
+    content: "The increasing use of AI technologies brings significant privacy concerns...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-01-22"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f71",
+    title: "7. Building Trustworthy AI Systems",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Trust", "Tech"],
+    content: "Trustworthiness is a key factor in the adoption and success of AI technologies...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-01-25"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f72",
+    title: "8. AI and Human Rights: Ensuring Fair Treatment",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Human Rights", "Tech"],
+    content: "AI systems must be designed to respect and uphold human rights...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-01-28"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f73",
+    title: "9. Ethical Challenges in Autonomous AI",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Ethics", "Tech"],
+    content: "Autonomous AI systems present unique ethical challenges that need careful consideration...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-01-30"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f74",
+    title: "10. AI in Healthcare: Ethical Considerations",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Healthcare", "Tech"],
+    content: "The use of AI in healthcare brings both opportunities and ethical dilemmas...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-02"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f75",
+    title: "11. AI and Surveillance: Ethical Implications",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Surveillance", "Tech"],
+    content: "The deployment of AI in surveillance raises critical ethical questions...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-05"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f76",
+    title: "12. Algorithmic Bias: Causes and Solutions",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Bias", "Tech"],
+    content: "Understanding and addressing the causes of algorithmic bias is crucial for fair AI...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-08"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f77",
+    title: "13. AI and Job Displacement: Ethical Responses",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Employment", "Tech"],
+    content: "The impact of AI on employment necessitates ethical considerations and responses...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-10"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f78",
+    title: "14. Ethical AI: From Theory to Practice",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Ethics", "Tech"],
+    content: "Translating ethical principles into practical AI applications is a complex but necessary task...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-13"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f79",
+    title: "15. AI and the Future of Work: Ethical Perspectives",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Future of Work", "Tech"],
+    content: "The future of work in the age of AI involves numerous ethical considerations...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-15"
+  },
+  {
+    id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f80",
+    title: "16. AI and Data Ethics: Protecting User Rights",
+    thumbnail_img: "/1920x1080_KirbyBday.png",
+    tags: ["AI", "Data Ethics", "Tech"],
+    content: "Protecting user rights in the context of AI and data usage is a critical ethical issue...",
+    author: "Jacob",
+    comments: [],
+    create_date: "2024-02-18"
+  },
 ];
 
 const posts_ja = [

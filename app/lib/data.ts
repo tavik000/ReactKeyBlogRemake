@@ -41,6 +41,8 @@ export async function fetchFilteredPosts(
   noStore();
 
   const offset: number = (currentPage - 1) * ITEMS_PER_PAGE;
+  console.log('offset: ' + offset + ', query: ' + query);
+  console.log("currentPage: " + currentPage + ", locale: " + locale);
 
   try {
     let posts;
