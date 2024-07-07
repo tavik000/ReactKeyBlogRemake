@@ -9,7 +9,7 @@ import { generatePagination } from '@/app/lib/utils';
 export default function PageNavigation({ totalPages }: { totalPages: number }) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentPage = Number(searchParams?.page) || 1;
+  const currentPage = Number(searchParams.get('page')) || 1;
 
   const createPageURL = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);

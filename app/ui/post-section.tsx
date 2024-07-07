@@ -9,6 +9,7 @@ import PostItem from './post-item';
 import PostWrapper from './post-wrapper';
 import PageNavigation from './page-navigation';
 import { fetchPostsPages } from '@/app/lib/data';
+import PostSearch from './post-search';
 
 export default async function PostSection({
   searchParams,
@@ -35,7 +36,9 @@ export default async function PostSection({
       </div>
       <span className="bg"></span>
       <div className="options flex flex-row">
-        <div className="flex w-1/2 flex-row"></div>
+        <div className="flex w-1/2 flex-row">
+          <PostSearch placeholder="Search posts..."/>
+        </div>
         <div className="flex w-1/2 flex-row justify-end">
           <RoundButton>Home</RoundButton>
           <RoundButton>Login</RoundButton>
