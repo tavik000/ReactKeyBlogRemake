@@ -1,7 +1,7 @@
 
 export default function Category() {
   return (
-    <div className="category mt-14 flex md:flex-row">
+    <div className="category mt-6 flex md:flex-row">
       <div className="flex w-10/12 basis-2/3 max-w-1140px rounded-xl bg-white pb-8 px-12 pt-8 shadow-0550">
         <div className="flex flex-col">
           <p className="flex pb-4 text-xl tracking-widest">CATEGORY</p>

@@ -29,7 +29,7 @@ export default function PostSection({
           <RoundButton>EN</RoundButton>
         </div>
       </div>
-      <div className="page-path relative z-10 mb-20 py-3">
+      <div className="page-path relative z-10 mb-0 py-3">
         <ul className="w-1200px mx-auto list-none rounded-md bg-white">
           <PagePathItem url={homepageURL} shouldShowArrow={true}>Key Homepage</PagePathItem>
           <PagePathItem url='/' shouldShowArrow={false}>Blog</PagePathItem>

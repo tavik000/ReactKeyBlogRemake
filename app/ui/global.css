@@ -926,7 +926,7 @@ img {
 }
 
 .post-section {
-  background-image: linear-gradient(-180deg, #ffbd15 0%, #fce5bb 100%);
+  background-image: linear-gradient(-180deg, #ffbd15 0%, #ffc862 100%);
   padding: 60px 0 205px 0;
   position: relative;
 }
