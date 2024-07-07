@@ -25,6 +25,9 @@ const config: Config = {
       height: {
         '400px': '400px',
       },
+      width: {
+        '1200px': '1200px',
+      },
       minWidth: {
         '32px': '32px',
         '40px': '40px',

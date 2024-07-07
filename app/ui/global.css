@@ -337,33 +337,27 @@ body {
 .parasol-top-footer-center {
   width: 60%;
   height: 120%;
-  background-image: radial-gradient(
-    at bottom,
-    rgba(238, 49, 49, 0) 70%,
-    #ee3131 70%
-  );
+  background-image: radial-gradient(at bottom,
+      rgba(238, 49, 49, 0) 70%,
+      #ee3131 70%);
 }
 
 .parasol-top-footer-left {
   left: 0;
   width: 20%;
   height: 120%;
-  background-image: radial-gradient(
-    at bottom left,
-    rgba(255, 255, 255, 0) 70%,
-    white 70%
-  );
+  background-image: radial-gradient(at bottom left,
+      rgba(255, 255, 255, 0) 70%,
+      white 70%);
 }
 
 .parasol-top-footer-right {
   right: 0;
   width: 20%;
   height: 120%;
-  background-image: radial-gradient(
-    at bottom right,
-    rgba(255, 255, 255, 0) 70%,
-    white 70%
-  );
+  background-image: radial-gradient(at bottom right,
+      rgba(255, 255, 255, 0) 70%,
+      white 70%);
 }
 
 .cloud {
@@ -560,15 +554,14 @@ body {
   top: 100%;
   width: 100%;
   height: 30px;
-  background-image: radial-gradient(
-    at top,
-    #d5cd31 70%,
-    rgba(213, 205, 49, 0) 70%
-  );
+  background-image: radial-gradient(at top,
+      #d5cd31 70%,
+      rgba(213, 205, 49, 0) 70%);
   background-size: 80px 100%;
 }
 
 @keyframes sway {
+
   0%,
   100% {
     transform: rotate(0deg);
@@ -584,6 +577,7 @@ body {
 }
 
 @keyframes sway-sm {
+
   0%,
   100% {
     transform: rotate(0deg);
@@ -599,6 +593,7 @@ body {
 }
 
 @keyframes foot-rotate-left {
+
   0%,
   100% {
     transform: rotate(-40deg);
@@ -610,6 +605,7 @@ body {
 }
 
 @keyframes foot-rotate-right {
+
   0%,
   100% {
     transform: rotate(40deg);
@@ -621,6 +617,7 @@ body {
 }
 
 @keyframes arm-wave-right {
+
   0%,
   100% {
     transform: scale(0.8) rotate(70deg);
@@ -632,6 +629,7 @@ body {
 }
 
 @keyframes blinky {
+
   0%,
   9%,
   11%,
@@ -943,6 +941,7 @@ img {
   left: 0;
   opacity: 0.1;
 }
+
 .divide-line {
   position: absolute;
   background: url(/zig-zag-border.png);
@@ -954,6 +953,7 @@ img {
   z-index: 3;
   opacity: 1;
 }
+
 .category {
   justify-content: center;
   position: relative;
@@ -978,10 +978,12 @@ img {
   background-color: #2457e4;
   padding-top: 4px;
 }
+
 .button-span::before {
   border-radius: 50%;
   background-color: #1646c9;
 }
+
 .round-button::after {
   background-color: #1646c9;
   content: '';
