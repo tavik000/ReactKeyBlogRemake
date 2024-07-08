@@ -1,3 +1,7 @@
 export default function Page() {
-  return <div>Create Post</div>;
+  return (
+    <div>
+      <h1>Create Page</h1>
+    </div>
+  );
 }
