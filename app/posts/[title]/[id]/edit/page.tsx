@@ -1,4 +1,4 @@
 
 export default async function Page() {
-  return <></>;
+  return <div>Edit Page</div>;
 }
