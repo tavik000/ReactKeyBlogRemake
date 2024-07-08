@@ -1,7 +1,7 @@
 'use client';
 import PostSearch from './post-search';
 import { RoundButton } from './button';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 
 function useScrollDirection() {
   const [scrollDirection, setScrollDirection] = useState<null | 'down' | 'up'>(
@@ -56,7 +56,9 @@ export default function PostHeader({
     ${isHidden ? '-top-24' : 'top-0'}`}
     >
       <div className="flex w-1/2 flex-row">
-        <PostSearch placeholder="Search posts..." />
+        <Suspense>
+          <PostSearch placeholder="Search posts..." />
+        </Suspense>
       </div>
       <div className="flex w-1/2 flex-row justify-end">
         <RoundButton>Home</RoundButton>

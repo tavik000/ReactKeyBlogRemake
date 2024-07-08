@@ -3,6 +3,7 @@ import Category from './category';
 import PostWrapper from './post-wrapper';
 import Pagination from './pagination';
 import { fetchPostsPages } from '@/app/lib/data';
+import { Suspense } from 'react';
 
 export default async function PostOverview({
   searchParams,
@@ -24,7 +25,9 @@ export default async function PostOverview({
         <Category />
         {/* TODO: add Suspense */}
         <PostWrapper query={query} currentPage={currentPage} locale={locale} />
-        <Pagination totalPages={totalPages} />
+        <Suspense>
+          <Pagination totalPages={totalPages} />
+        </Suspense>
       </div>
 
       {/* <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
