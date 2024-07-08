@@ -3,6 +3,7 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
+import { Suspense } from 'react';
 
 export default function PostSearch({ placeholder }: { placeholder: string }) {
   const searchParams = useSearchParams();
@@ -25,19 +26,21 @@ export default function PostSearch({ placeholder }: { placeholder: string }) {
   }, 300);
 
   return (
-    <div className="relative flex flex-1 flex-shrink-0 max-h-16 ml-10 mr-60 my-5 py-0.5 z-auto">
+    <div className="relative z-auto my-5 ml-10 mr-60 flex max-h-16 flex-1 flex-shrink-0 py-0.5">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
-      <input
-        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
-        placeholder={placeholder}
-        onChange={(e) => {
-          handleSearch(e.target.value);
-        }}
-        defaultValue={searchParams.get('query')?.toString()}
-      />
-      <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+      <Suspense>
+        <input
+          className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+          placeholder={placeholder}
+          onChange={(e) => {
+            handleSearch(e.target.value);
+          }}
+          defaultValue={searchParams.get('query')?.toString()}
+        />
+        <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+      </Suspense>
     </div>
   );
 }

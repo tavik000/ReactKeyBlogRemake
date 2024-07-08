@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { generatePagination } from '@/app/lib/utils';
+import { Suspense } from 'react';
 
 export default function Pagination({ totalPages }: { totalPages: number }) {
   const pathname = usePathname();
@@ -20,60 +21,46 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
   const allPages = generatePagination(currentPage, totalPages);
 
   return (
-    // <div className="page-navigation flex flex-wrap z-10 content-center relative justify-center clear-both mb-20 text-center text-xs">
-    //   <Link
-    //     href="/login"
-    //     className="min-w-54px min-h-40px cursor-pointer rounded-md text-center py-2.5 px-5px m-0.5 bg-white inline-block hover:bg-orange-500 visited:border-black"
-    //   >
-    //     Prev
-    //   </Link>
-    // </div>
-
-    // <div
-    //   className="
-    //     m-0.5 mt-5 inline-block min-h-40px w-full min-w-54px cursor-pointer justify-center rounded-md bg-white px-5px py-2.5
-    //     text-center visited:border-black hover:bg-orange-500"
-    // >
-
     <div
       className="
       page-navigation relative z-10 clear-both mt-20 flex w-full flex-wrap content-center justify-center text-center text-xs
       "
     >
-      <div className="inline-flex">
-        <PaginationArrow
-          direction="left"
-          href={createPageURL(currentPage - 1)}
-          isDisabled={currentPage <= 1}
-        />
+      <Suspense>
+        <div className="inline-flex">
+          <PaginationArrow
+            direction="left"
+            href={createPageURL(currentPage - 1)}
+            isDisabled={currentPage <= 1}
+          />
+          <div className="flex -space-x-px">
+            {allPages.map((page, index) => {
+              let position: 'first' | 'last' | 'single' | 'middle' | undefined;
 
-        <div className="flex -space-x-px">
-          {allPages.map((page, index) => {
-            let position: 'first' | 'last' | 'single' | 'middle' | undefined;
+              if (index === 0) position = 'first';
+              if (index === allPages.length - 1) position = 'last';
+              if (allPages.length === 1) position = 'single';
+              if (page === '...') position = 'middle';
 
-            if (index === 0) position = 'first';
-            if (index === allPages.length - 1) position = 'last';
-            if (allPages.length === 1) position = 'single';
-            if (page === '...') position = 'middle';
+              return (
+                <PaginationNumber
+                  key={page}
+                  href={createPageURL(page)}
+                  page={page}
+                  position={position}
+                  isActive={currentPage === page}
+                />
+              );
+            })}
+          </div>
 
-            return (
-              <PaginationNumber
-                key={page}
-                href={createPageURL(page)}
-                page={page}
-                position={position}
-                isActive={currentPage === page}
-              />
-            );
-          })}
+          <PaginationArrow
+            direction="right"
+            href={createPageURL(currentPage + 1)}
+            isDisabled={currentPage >= totalPages}
+          />
         </div>
-
-        <PaginationArrow
-          direction="right"
-          href={createPageURL(currentPage + 1)}
-          isDisabled={currentPage >= totalPages}
-        />
-      </div>
+      </Suspense>
     </div>
   );
 }
