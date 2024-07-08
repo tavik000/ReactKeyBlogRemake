@@ -65,13 +65,11 @@ export default function Sky({ locale }: { locale: string }) {
       }
     };
 
-    if (typeof window !== 'undefined') {
-      // isWaddleActiveRef.current = true;
-      // console.log('isWaddleActiveRef.current: ', isWaddleActiveRef.current);
-      setWaddleActive(true);
-      setTimeout(() => checkAndToggleSit(), 0);
-      window.addEventListener('scroll', handleScroll);
-    }
+    // isWaddleActiveRef.current = true;
+    // console.log('isWaddleActiveRef.current: ', isWaddleActiveRef.current);
+    setWaddleActive(true);
+    setTimeout(() => checkAndToggleSit(), 0);
+    window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -80,7 +78,7 @@ export default function Sky({ locale }: { locale: string }) {
   return (
     <>
       <header>
-        <PostHeader locale={locale} groundPosHeight={groundPosHeight}/>
+        <PostHeader locale={locale} groundPosHeight={groundPosHeight} />
       </header>
       <main className="flex min-h-screen flex-col">
         <WaddleDee

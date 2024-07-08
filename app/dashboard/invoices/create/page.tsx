@@ -12,7 +12,7 @@ export default async function Page() {
 
   return (
     <main>
-      {/* <Breadcrumbs
+      <Breadcrumbs
         breadcrumbs={[
           { label: 'Invoices', href: '/dashboard/invoices' },
           {
@@ -22,7 +22,7 @@ export default async function Page() {
           },
         ]}
       />
-      <Form customers={customers} /> */}
+      {/* <Form customers={customers} /> */}
     </main>
   );
 }

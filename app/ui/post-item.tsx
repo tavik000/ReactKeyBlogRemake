@@ -7,7 +7,6 @@ export default function PostItem(
   { post }: { post: PostCard }
 ) {
 
-  console.log("post title: ", post.title);
   const urlRegex = /\s/g;
   const url_title = post.title.toLowerCase().replace(urlRegex, '-'); 
 

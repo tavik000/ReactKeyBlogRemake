@@ -27,12 +27,10 @@ function useScrollDirection() {
       lastY = scrollY > 0 ? scrollY : 0;
     };
 
-    if (typeof window !== 'undefined') {
-      window.addEventListener('scroll', updateScrollDirection); // add event listener
-      setTimeout(() => {
-        setLastScrollY(window.scrollY);
-      }, 0);
-    }
+    window.addEventListener('scroll', updateScrollDirection); // add event listener
+    setTimeout(() => {
+      setLastScrollY(window.scrollY);
+    }, 0);
     return () => {
       window.removeEventListener('scroll', updateScrollDirection); // clean up
     };
