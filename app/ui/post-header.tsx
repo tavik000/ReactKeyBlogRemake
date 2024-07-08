@@ -48,7 +48,6 @@ export default function PostHeader({
 }) {
   const { scrollDirection, lastScrollY, isLoaded } = useScrollDirection();
 
-  //   const isHidden = lastScrollY < groundPosHeight || scrollDirection === 'down';
   const isHidden = lastScrollY < groundPosHeight || !isLoaded;
 
   return (

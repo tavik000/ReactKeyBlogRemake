@@ -65,8 +65,6 @@ export default function Sky({ locale }: { locale: string }) {
       }
     };
 
-    // isWaddleActiveRef.current = true;
-    // console.log('isWaddleActiveRef.current: ', isWaddleActiveRef.current);
     setWaddleActive(true);
     setTimeout(() => checkAndToggleSit(), 0);
     window.addEventListener('scroll', handleScroll);
