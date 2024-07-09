@@ -6,7 +6,6 @@ const nextConfig = {
   },
   experimental: {
     ppr: 'incremental',
-    serverComponents: true,
   },
 };
 
