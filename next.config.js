@@ -5,7 +5,7 @@ const nextConfig = {
     defaultLocale: 'en-US',
   },
   experimental: {
-    ppr: 'incremental',
+    // ppr: 'incremental',
   },
 };
 
