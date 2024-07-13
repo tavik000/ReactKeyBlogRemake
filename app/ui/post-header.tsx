@@ -1,7 +1,10 @@
 'use client';
 import PostSearch from './post-search';
-import { RoundButton } from './button';
+import { LanguageButton, RoundButton, UserButton } from './button';
 import { Suspense, useEffect, useState } from 'react';
+import { sniglet } from '@/app/ui/fonts';
+import Link from 'next/link';
+import { homepageURL } from '@/app/lib/constants';
 
 function useScrollDirection() {
   const [scrollDirection, setScrollDirection] = useState<null | 'down' | 'up'>(
@@ -56,12 +59,17 @@ export default function PostHeader({
     ${isHidden ? '-top-24' : 'top-0'}`}
     >
       <div className="flex w-1/2 flex-row">
+        <Link
+          href={homepageURL}
+          className={`blog-title flex ${sniglet.className} my-2 ml-4 text-4xl font-semibold`}
+        >
+          Key
+        </Link>
         <PostSearch placeholder="Search posts..." />
       </div>
       <div className="flex w-1/2 flex-row justify-end">
-        <RoundButton>Home</RoundButton>
-        <RoundButton>Login</RoundButton>
-        <RoundButton>EN</RoundButton>
+        <LanguageButton href="/" />
+        <UserButton href="/" />
       </div>
     </div>
   );

@@ -24,14 +24,13 @@ export default function PostSearch({ placeholder }: { placeholder: string }) {
     }
     replace(`${pathname}?${params.toString()}`);
   }, 300);
-
   return (
-    <div className="relative z-auto my-5 ml-10 mr-60 flex max-h-16 flex-1 flex-shrink-0 py-0.5">
+    <div className="relative z-auto h-10 my-2 ml-6 mr-96 flex max-h-16 flex-1 flex-shrink-0 py-0.5 rounded-full">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
       <input
-        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
+        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 bg-stone-50 placeholder:text-gray-500"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);

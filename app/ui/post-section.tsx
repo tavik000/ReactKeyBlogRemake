@@ -1,12 +1,12 @@
 import { lusitana, sniglet } from '@/app/ui/fonts';
 import Link from 'next/link';
+import { homepageURL } from '@/app/lib/constants';
 
 export default function PostSection({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const homepageURL = 'https://master.d2qyb13wnib5il.amplifyapp.com';
   return (
     <div className="post-section">
       <div className="divide-line">

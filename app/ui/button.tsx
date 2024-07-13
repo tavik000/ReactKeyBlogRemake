@@ -1,4 +1,6 @@
 import clsx from 'clsx';
+import Link from 'next/link';
+import { GlobeAltIcon, UserCircleIcon } from '@heroicons/react/24/outline';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -31,5 +33,32 @@ export function RoundButton({ children, className, ...rest }: ButtonProps) {
         {children}
       </span>
     </button>
+  );
+}
+
+export function LanguageButton({
+  href,
+}: {
+  href: string;
+}) {
+
+  return  (
+    <Link className="flex my-2 h-10 w-10 items-center justify-center rounded-md" href={href}>
+      <GlobeAltIcon className="h-5 w-5 text-gray-500" />
+    </Link>
+  );
+}
+
+
+export function UserButton({
+  href,
+}: {
+  href: string;
+}) {
+
+  return  (
+    <Link className="flex my-2 h-10 w-10 items-center justify-center rounded-md" href={href}>
+      <UserCircleIcon className="h-5 w-5 text-gray-500" />
+    </Link>
   );
 }
