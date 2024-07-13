@@ -174,3 +174,40 @@ export async function fetchPostsPages(query: string, locale: string) {
     throw new Error('Failed to fetch total number of posts.');
   }
 }
+
+export async function fetchPostById(id: string, locale: string) {
+  noStore();
+
+  console.log("id: " + id + ", locale: " + locale);
+  try {
+    let data;
+
+    switch (locale) {
+      case 'en':
+        data = await sql<Post>`
+          SELECT
+            id,
+            title,
+            thumbnail_img,
+            tags,
+            content,
+            author,
+            comment_id_list,
+            create_date,
+            modify_date
+          FROM posts_en
+          WHERE id=${id};
+        `;
+        break;
+      default:
+        throw new Error('Unsupported locale.');
+    }
+
+    let post = data.rows[0];
+
+    return post;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch post.');
+  }
+}

@@ -138,7 +138,7 @@ async function seedPosts(client, locale) {
           `,
           locale,
           post.tags,
-          post.comments,
+          post.comment_id_list,
         );
 
         return client.query(insertPostTableQuery);
