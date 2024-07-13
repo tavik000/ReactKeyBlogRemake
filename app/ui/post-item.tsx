@@ -22,6 +22,7 @@ export default function PostItem(
               height={188}
               alt="Screenshot of the dashboard project showing mobile version"
               className="post-article-thumbnail mb-3 block w-full flex-row rounded-xl"
+              priority={true}
             />
             <span className="article-title items-start px-4 pb-3 text-lg font-bold flex-grow">
               {post.title}

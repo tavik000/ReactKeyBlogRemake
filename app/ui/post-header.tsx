@@ -56,10 +56,7 @@ export default function PostHeader({
     ${isHidden ? '-top-24' : 'top-0'}`}
     >
       <div className="flex w-1/2 flex-row">
-      <Suspense>
-
         <PostSearch placeholder="Search posts..." />
-      </Suspense>
       </div>
       <div className="flex w-1/2 flex-row justify-end">
         <RoundButton>Home</RoundButton>
