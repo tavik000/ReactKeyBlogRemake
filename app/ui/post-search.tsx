@@ -22,15 +22,16 @@ export default function PostSearch({ placeholder }: { placeholder: string }) {
     } else {
       params.delete('query');
     }
-    replace(`${pathname}?${params.toString()}`);
+    replace(`/?${params.toString()}`);
   }, 300);
+
   return (
-    <div className="relative z-auto h-10 my-2 ml-6 max-w-sm flex max-h-16 flex-1 flex-shrink-0 py-0.5 rounded-full">
+    <div className="relative z-auto my-2 ml-6 flex h-10 max-h-16 max-w-sm flex-1 flex-shrink-0 rounded-full py-0.5">
       <label htmlFor="search" className="sr-only">
         Search
       </label>
       <input
-        className="peer block w-full rounded-md border border-gray-200 py-[9px] pl-10 text-sm outline-2 bg-gray-100 placeholder:text-gray-500"
+        className="peer block w-full rounded-md border border-gray-200 bg-gray-100 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
         placeholder={placeholder}
         onChange={(e) => {
           handleSearch(e.target.value);
