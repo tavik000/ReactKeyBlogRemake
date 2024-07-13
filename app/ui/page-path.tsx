@@ -3,7 +3,6 @@
 import { homepageURL } from '@/app/lib/constants';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import path from 'path';
 
 export function PagePath() {
   const pathname = usePathname();
