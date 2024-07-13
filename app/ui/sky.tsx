@@ -27,6 +27,10 @@ export default function Sky({ locale }: { locale: string }) {
 
       const waddleDeeTop = waddleDeeRef.current.getBoundingClientRect().top;
 
+      if (waddleDeeTop === 0) {
+        return;
+      }
+
       if (value) {
         waddleDeeRef.current.style.top = groundPosHeight - waddleDeeTop + 'px';
       } else {
@@ -66,12 +70,13 @@ export default function Sky({ locale }: { locale: string }) {
     };
 
     setWaddleActive(true);
-    setTimeout(() => checkAndToggleSit(), 0);
+    checkAndToggleSit();
+    // setTimeout(() => checkAndToggleSit(), 10);
     window.addEventListener('scroll', handleScroll);
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [groundPosHeight]);
+  }, [groundPosHeight, isWaddleActive]);
 
   return (
     <>
