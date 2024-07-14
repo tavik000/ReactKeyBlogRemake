@@ -199,6 +199,57 @@ export async function fetchPostById(id: string, locale: string) {
           WHERE id=${id};
         `;
         break;
+        case 'ja':
+          data = await sql<Post>`
+            SELECT
+              id,
+              title,
+              thumbnail_img,
+              tags,
+              content,
+              author,
+              comment_id_list,
+              create_date,
+              modify_date,
+              likes
+            FROM posts_jp
+            WHERE id=${id};
+          `;
+          break;
+        case 'kr':
+          data = await sql<Post>`
+            SELECT
+              id,
+              title,
+              thumbnail_img,
+              tags,
+              content,
+              author,
+              comment_id_list,
+              create_date,
+              modify_date,
+              likes
+            FROM posts_kr
+            WHERE id=${id};
+          `;
+          break;
+        case 'zh':
+          data = await sql<Post>`
+            SELECT
+              id,
+              title,
+              thumbnail_img,
+              tags,
+              content,
+              author,
+              comment_id_list,
+              create_date,
+              modify_date,
+              likes
+            FROM posts_zh
+            WHERE id=${id};
+          `;
+          break;
       default:
         throw new Error('Unsupported locale.');
     }

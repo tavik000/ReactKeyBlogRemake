@@ -7,6 +7,7 @@ import PostTag from '@/app/ui/post-tag';
 import PostInteraction from '@/app/ui/post-interaction';
 import { Post } from '@/app/lib/definitions';
 import PostContent from '@/app/ui/post-content';
+import PostContainer from '@/app/ui/post-container';
 
 export const metadata: Metadata = {
   title: 'post',
@@ -21,37 +22,31 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <main>
-      <div className="flex min-h-screen flex-col">
-        <div className="relative mt-6 flex justify-center md:flex-row">
-          <div className="flex w-10/12 max-w-1140px basis-2/3 rounded-xl bg-white px-12 pb-8 pt-8 shadow-0550">
-            <div className="flex w-full flex-col">
-              <div className="mb-12 flex flex-col">
-                <AuthorInfo post={post} />
-                <h1 className="mt-2 flex text-28px font-semibold leading-normal">
-                  {post.title}
-                </h1>
-                <span className="3/5 mt-2 flex flex-wrap justify-start">
-                  {post.tags.map((tag) => (
-                    <PostTag key={tag}>{tag}</PostTag>
-                  ))}
-                </span>
-                <PostDate post={post} />
+      <PostContainer>
+        <div className="mb-12 flex flex-col">
+          <AuthorInfo post={post} />
+          <h1 className="mt-2 flex text-28px font-semibold leading-normal">
+            {post.title}
+          </h1>
+          <span className="3/5 mt-2 flex flex-wrap justify-start">
+            {post.tags.map((tag) => (
+              <PostTag key={tag}>{tag}</PostTag>
+            ))}
+          </span>
+          <PostDate post={post} />
 
-                <PostInteraction
-                  likeCount={post.likes}
-                  commentCount={post.comment_id_list.length}
-                />
-              </div>
-              <PostContent post={post} />
-
-              <PostInteraction
-                likeCount={post.likes}
-                commentCount={post.comment_id_list.length}
-              />
-            </div>
-          </div>
+          <PostInteraction
+            likeCount={post.likes}
+            commentCount={post.comment_id_list.length}
+          />
         </div>
-      </div>
+        <PostContent post={post} />
+
+        <PostInteraction
+          likeCount={post.likes}
+          commentCount={post.comment_id_list.length}
+        />
+      </PostContainer>
     </main>
   );
 }
