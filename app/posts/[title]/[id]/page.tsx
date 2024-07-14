@@ -6,6 +6,7 @@ import Link from 'next/link';
 import PostTag from '@/app/ui/post-tag';
 import PostInteraction from '@/app/ui/post-interaction';
 import { Post } from '@/app/lib/definitions';
+import ReactMarkdown from 'react-markdown';
 
 export const metadata: Metadata = {
   title: 'post',
@@ -39,6 +40,9 @@ export default async function Page({ params }: { params: { id: string } }) {
                 likeCount={post.likes}
                 commentCount={post.comment_id_list.length}
               />
+              <article className="prose">
+                <ReactMarkdown>{post.content}</ReactMarkdown>
+              </article>
             </div>
           </div>
         </div>

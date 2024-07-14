@@ -60,7 +60,7 @@ const posts_en = [
     title: 'Example Post 2',
     thumbnail_img: '/1920x1080_KirbyBday.png',
     tags: ['UE', 'Other'],
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    content: '# Markdown  \n## Markdown  \n### Markdown  \n#### Markdown  \n##### Markdown  \n###### Markdown  \n\n**Bold**  \n*Italic*  \n~~Strikethrough~~  \n\n1. First item  \n2. Second item  \n3. Third item  \n\n- Unordered item  \n- Unordered item  \n- Unordered item  \n\n[Link](https://www.example.com)  \n\n![Image](https://www.example.com/image.jpg)  \n\n```javascript  \nconsole.log("Hello, World!");  \n```  \n\n> Blockquote  \n\n---  \n\n- [ ] Task 1  \n- [x] Task 2  \n\n---  \n\n| Header 1 | Header 2 |  \n| -------- | -------- |  \n| Data 1   | Data 2   |  \n\n---  \n\n<details>  \n<summary>Details</summary>  \nDetails content  \n</details>',
     author: 'Key',
     comment_id_list: [],
     create_date: '2022-12-06',
