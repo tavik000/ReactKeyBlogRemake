@@ -43,6 +43,11 @@ export default async function Page({ params }: { params: { id: string } }) {
                 />
               </div>
               <PostContent post={post} />
+
+              <PostInteraction
+                likeCount={post.likes}
+                commentCount={post.comment_id_list.length}
+              />
             </div>
           </div>
         </div>

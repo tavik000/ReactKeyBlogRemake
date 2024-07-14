@@ -72,7 +72,7 @@ const posts_en = [
     title: 'Example Post 3',
     thumbnail_img: '/1920x1080_KirbyBday.png',
     tags: ['UE', 'Other'],
-    content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    content: '<video src="https://player.cloudinary.com/embed/?public_id=v1624176389%2Fnext-mdx-video-blog%2Fhello-world_wwpzts&cloud_name=dpkreativ&player%5Bfluid%5D=true&player%5Bcontrols%5D=true&source%5Bsource_types%5D%5B0%5D=mp4" />\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
     author: 'Key',
     comment_id_list: [],
     create_date: '2022-12-06',
