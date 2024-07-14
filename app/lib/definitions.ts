@@ -33,10 +33,10 @@ export type Post = {
   id: string;
   title: string;
   thumbnail_img: string;
-  tag: string[];
+  tags: string[];
   content: string;
   author: string;
-  comments: string[];
+  comment_id_list: string[];
   create_date: Date;
   modify_date: Date;
   likes: number;

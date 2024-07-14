@@ -11,6 +11,7 @@ const config: Config = {
       fontSize: {
         '13px': '13px',
         '14px': '14px',
+        '28px': '28px',
       },
       gridTemplateColumns: {
         '13': 'repeat(13, minmax(0, 1fr))',
