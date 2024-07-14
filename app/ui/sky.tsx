@@ -12,6 +12,7 @@ export default function Sky({ locale }: { locale: string }) {
   const [isSitting, setSit] = useState<boolean>(false);
   const [groundPosHeight, setGroundPosHeight] = useState<number>(0);
   const waddleDeeRef = useRef<HTMLDivElement | null>(null);
+  const waddleDeeTopCache = useRef<number>(0);
 
   useEffect(() => {
     const toggleSit = (value: boolean) => {
@@ -26,13 +27,17 @@ export default function Sky({ locale }: { locale: string }) {
         skyBackgroundRef.current.getBoundingClientRect().height;
 
       const waddleDeeTop = waddleDeeRef.current.getBoundingClientRect().top;
+      if (waddleDeeTopCache.current === 0) {
+        waddleDeeTopCache.current = waddleDeeTop;
+      }
 
       if (waddleDeeTop === 0) {
         return;
       }
 
       if (value) {
-        waddleDeeRef.current.style.top = groundPosHeight - waddleDeeTop + 'px';
+        waddleDeeRef.current.style.top =
+          groundPosHeight - waddleDeeTopCache.current + 'px';
       } else {
         waddleDeeRef.current.style.top = '';
       }
@@ -41,6 +46,24 @@ export default function Sky({ locale }: { locale: string }) {
 
     const handleScroll = () => {
       checkAndToggleSit();
+    };
+
+    const handleResize = () => {
+
+      if (!skyBackgroundRef.current) {
+        throw new Error('skyBackgroundRef is not defined');
+      }
+
+      if (!waddleDeeRef.current) {
+        throw new Error('checkAndToggleSit: waddleDeeRef is not defined');
+      }
+      if (waddleDeeRef.current.classList.contains('is-sitting')) {
+        const groundPosHeight =
+          skyBackgroundRef.current.getBoundingClientRect().height;
+
+        waddleDeeRef.current.style.top =
+          groundPosHeight - waddleDeeTopCache.current + 'px';
+      }
     };
 
     const checkAndToggleSit = () => {
@@ -56,8 +79,11 @@ export default function Sky({ locale }: { locale: string }) {
         skyBackgroundRef.current.getBoundingClientRect().height;
       setGroundPosHeight(groundPosHeight);
 
-      const scrollOffset = groundPosHeight * 0.06;
+      const defaultZoomLevel = 1.5;
+      const zoomLevel = window.devicePixelRatio;
+      const scrollOffset = groundPosHeight * 0.048 * (zoomLevel / defaultZoomLevel);
       // console.log(window.scrollY, scrollOffset, groundPosHeight);
+
       if (window.scrollY + scrollOffset >= groundPosHeight) {
         if (!waddleDeeRef.current.classList.contains('is-sitting')) {
           toggleSit(true);
@@ -73,8 +99,10 @@ export default function Sky({ locale }: { locale: string }) {
     checkAndToggleSit();
     // setTimeout(() => checkAndToggleSit(), 10);
     window.addEventListener('scroll', handleScroll);
+    window.addEventListener('resize', handleResize);
     return () => {
       window.removeEventListener('scroll', handleScroll);
+      window.removeEventListener('resize', handleResize);
     };
   }, [groundPosHeight, isWaddleActive]);
 
