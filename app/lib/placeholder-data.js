@@ -53,6 +53,7 @@ const posts_en = [
     comment_id_list: ['3958dc9e-712f-4377-85e9-fec4b6a64420', '3958dc9e-712f-4377-85e9-fec4b6a64430'],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: '86b93c2d-9d95-4c14-b05f-6e7e4e167c44',
@@ -64,6 +65,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: 'e4189b55-9232-4e56-97ec-3d67bf7351d5',
@@ -75,6 +77,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: 'a8e2fa8e-5a5c-4a3e-9a38-8b3a160f3e15',
@@ -86,6 +89,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: '4fca8134-1d33-4f97-b761-1089de3d3f13',
@@ -97,6 +101,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: 'c92bc4a3-4f34-45b1-b66f-e7c64fc8b39e',
@@ -108,6 +113,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "f7a9e3b7-8fd4-4b3f-bd7a-79a712f5f1a1",
@@ -119,17 +125,19 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-01-15",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "9a2f4c51-7c2d-4b07-bd06-8fc6e6dbd1c9",
     title: "The Impact of Renewable Energy Technologies",
     thumbnail_img: '/1920x1080_KirbyBday.png',
     tags: ["Environment", "Energy", "Tech"],
-    content: "Renewable energy technologies like solar and wind power are crucial in the transition to sustainable energy sources...",
+    content: "Renewable energy technologies likes solar and wind power are crucial in the transition to sustainable energy sources...",
     author: "Emma",
     comment_id_list: [],
     create_date: "2023-02-28",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "b0f4a1a8-9b67-4820-9cf3-25d7bcb6b1f5",
@@ -141,6 +149,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-04-10",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "a7d5e0f2-38ef-4d02-bc11-1d332f9b5b49",
@@ -152,6 +161,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-05-05",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "c3a7b1f9-cc8d-45b0-b7ac-9811e43c83b4",
@@ -163,6 +173,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-06-15",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "e2c6f5a0-8744-4b21-bd4a-9f06a458b03f",
@@ -174,6 +185,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-07-20",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d8f9e2c3-64e2-42aa-96d1-8e47245ac5ae",
@@ -185,6 +197,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-08-10",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "f1d8c4b5-5ef8-4327-b2e3-6f0bf2a1d7a7",
@@ -196,6 +209,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-09-05",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "b6d5e8a3-ec75-4e7d-b62b-9e8e3c907a16",
@@ -207,6 +221,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-10-15",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "a9b8c7d6-e5f4-4a3b-8c2d-1f0e9b0d0a1b",
@@ -218,17 +233,19 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-11-20",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "f3e4d5c6-b7a8-4c9e-8d2f-0e1a2b3c4d5e",
     title: "Space Exploration: The Next Frontier",
     thumbnail_img: "/1920x1080_KirbyBday.png",
     tags: ["Space", "Tech", "Exploration"],
-    content: "Advancements in space technology are enabling humanity to explore distant planets and understand the cosmos like never before...",
+    content: "Advancements in space technology are enabling humanity to explore distant planets and understand the cosmos likes never before...",
     author: "Mia",
     comment_id_list: [],
     create_date: "2023-12-10",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6a",
@@ -240,6 +257,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-01-05",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6b",
@@ -251,6 +269,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-01-10",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6c",
@@ -262,6 +281,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-01-12",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6d",
@@ -273,6 +293,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-01-15",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6e",
@@ -284,6 +305,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-01-18",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f6f",
@@ -295,6 +317,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-01-20",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f70",
@@ -306,6 +329,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-01-22",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f71",
@@ -317,6 +341,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-01-25",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f72",
@@ -328,6 +353,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-01-28",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f73",
@@ -339,6 +365,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-01-30",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f74",
@@ -350,6 +377,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-02",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f75",
@@ -361,6 +389,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-05",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f76",
@@ -372,6 +401,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-08",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f77",
@@ -383,6 +413,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-10",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f78",
@@ -394,6 +425,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-13",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f79",
@@ -405,6 +437,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-15",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f80",
@@ -416,6 +449,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-18",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f81",
@@ -427,6 +461,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-18",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f82",
@@ -438,6 +473,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-18",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f83",
@@ -449,6 +485,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-18",
     modify_date: '2022-12-06',
+    likes: 0,
   },
   {
     id: "d2e3f4a5-c6b7-4d8e-9f1a-0b2c3d4e5f84",
@@ -460,6 +497,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2024-02-18",
     modify_date: '2022-12-06',
+    likes: 0,
   },
 ];
 
@@ -474,6 +512,7 @@ const posts_ja = [
     comment_id_list: ['3958dc9e-712f-4377-85e9-fec4b6a64420', '3958dc9e-712f-4377-85e9-fec4b6a64430'],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
+    likes: 0,
   },
 ];
 
@@ -488,6 +527,7 @@ const posts_kr = [
     comment_id_list: ['3958dc9e-712f-4377-85e9-fec4b6a64420', '3958dc9e-712f-4377-85e9-fec4b6a64430'],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
+    likes: 0,
   },
 ];
 
@@ -502,6 +542,7 @@ const posts_zh = [
     comment_id_list: ['3958dc9e-712f-4377-85e9-fec4b6a64420', '3958dc9e-712f-4377-85e9-fec4b6a64430'],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
+    likes: 0,
   },
 ];
 

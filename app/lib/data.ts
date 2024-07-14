@@ -178,7 +178,6 @@ export async function fetchPostsPages(query: string, locale: string) {
 export async function fetchPostById(id: string, locale: string) {
   noStore();
 
-  console.log("id: " + id + ", locale: " + locale);
   try {
     let data;
 
@@ -194,7 +193,8 @@ export async function fetchPostById(id: string, locale: string) {
             author,
             comment_id_list,
             create_date,
-            modify_date
+            modify_date,
+            likes
           FROM posts_en
           WHERE id=${id};
         `;
@@ -204,6 +204,8 @@ export async function fetchPostById(id: string, locale: string) {
     }
 
     let post = data.rows[0];
+    console.log('post:', post);
+    
 
     return post;
   } catch (error) {
