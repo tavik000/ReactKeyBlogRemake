@@ -3,7 +3,7 @@ import Markdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { dracula } from 'react-syntax-highlighter/dist/cjs/styles/prism';
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 
 type MarkdownRendererProps = {
   children: string;
@@ -19,7 +19,7 @@ export function MarkdownRenderer({ children: markdown }: MarkdownRendererProps) 
           const match = /language-(\w+)/.exec(className || '');
 
           return !inline && match ? (
-            <SyntaxHighlighter style={dracula} PreTag="div" language={match[1]} {...props}>
+            <SyntaxHighlighter style={oneDark} PreTag="div" language={match[1]} {...props}>
               {String(children).replace(/\n$/, '')}
             </SyntaxHighlighter>
           ) : (
@@ -28,7 +28,8 @@ export function MarkdownRenderer({ children: markdown }: MarkdownRendererProps) 
             </code>
           );
         },
-      }}
+      }
+    }
     >
       {markdown}
     </Markdown>
