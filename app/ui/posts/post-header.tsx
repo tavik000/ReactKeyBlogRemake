@@ -1,6 +1,6 @@
 'use client';
 import PostSearch from './post-search';
-import { LanguageButton, RoundButton, UserButton } from './button';
+import { LanguageButton, RoundButton, UserButton } from '../button';
 import { Suspense, useEffect, useState } from 'react';
 import { sniglet } from '@/app/ui/fonts';
 import Link from 'next/link';

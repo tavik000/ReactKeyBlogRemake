@@ -1,5 +1,5 @@
 import { fetchPostById } from '@/app/lib/data';
-import PostContainer from '@/app/ui/post-container';
+import PostContainer from '@/app/ui/posts/post-container';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;

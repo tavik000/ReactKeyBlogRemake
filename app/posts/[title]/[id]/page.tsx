@@ -3,11 +3,11 @@ import { Metadata } from 'next';
 import { fetchPostById } from '@/app/lib/data';
 import Image from 'next/image';
 import Link from 'next/link';
-import PostTag from '@/app/ui/post-tag';
-import PostInteraction from '@/app/ui/post-interaction';
+import PostTag from '@/app/ui/posts/post-tag';
+import PostInteraction from '@/app/ui/posts/post-interaction';
 import { Post } from '@/app/lib/definitions';
-import PostContent from '@/app/ui/post-content';
-import PostContainer from '@/app/ui/post-container';
+import PostContent from '@/app/ui/posts/post-content';
+import PostContainer from '@/app/ui/posts/post-container';
 
 export const metadata: Metadata = {
   title: 'post',

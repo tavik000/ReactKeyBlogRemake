@@ -2,7 +2,7 @@
 import { SkyBackground } from './sky-background';
 import { WaddleDee } from './waddle-dee';
 import React, { useState, useRef, useEffect } from 'react';
-import PostHeader from './post-header';
+import PostHeader from './posts/post-header';
 import { set } from 'zod';
 
 export default function Sky({ locale }: { locale: string }) {
@@ -49,7 +49,6 @@ export default function Sky({ locale }: { locale: string }) {
     };
 
     const handleResize = () => {
-
       if (!skyBackgroundRef.current) {
         throw new Error('skyBackgroundRef is not defined');
       }
@@ -81,7 +80,8 @@ export default function Sky({ locale }: { locale: string }) {
 
       const defaultZoomLevel = 1.5;
       const zoomLevel = window.devicePixelRatio;
-      const scrollOffset = groundPosHeight * 0.048 * (zoomLevel / defaultZoomLevel);
+      const scrollOffset =
+        groundPosHeight * 0.048 * (zoomLevel / defaultZoomLevel);
       // console.log(window.scrollY, scrollOffset, groundPosHeight);
 
       if (window.scrollY + scrollOffset >= groundPosHeight) {

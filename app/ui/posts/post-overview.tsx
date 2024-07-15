@@ -1,7 +1,7 @@
 import AcmeLogo from '@/app/ui/acme-logo';
-import Category from './category';
+import PostCategory from './post-category';
 import PostWrapper from './post-wrapper';
-import Pagination from './pagination';
+import Pagination from '../pagination';
 import { fetchPostsPages } from '@/app/lib/data';
 import { Suspense } from 'react';
 
@@ -22,7 +22,7 @@ export default async function PostOverview({
   return (
     <>
       <div className="post-overview">
-        <Category />
+        <PostCategory />
         {/* TODO: add Suspense */}
         <PostWrapper query={query} currentPage={currentPage} locale={locale} />
         <Suspense>
