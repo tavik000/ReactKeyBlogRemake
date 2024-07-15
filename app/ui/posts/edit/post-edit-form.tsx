@@ -12,7 +12,10 @@ import { useState } from 'react';
 import * as commands from '@uiw/react-md-editor/commands';
 const { db } = require('@vercel/postgres');
 
-const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
+const MDEditor = dynamic(() => import('../../../components/MdEditor'), {
+  ssr: false,
+  loading: () => <p>Loading...</p>,
+});
 
 export default function PostEditForm({ post }: { post: Post }) {
   const initialState = { message: null, errors: {} };
@@ -50,7 +53,8 @@ export default function PostEditForm({ post }: { post: Post }) {
           <label htmlFor="content" className="mb-2 block text-base font-medium">
             Content
           </label>
-          <div className="container" data-color-mode="light">
+          <MDEditor postContent={post.content} />
+          {/* <div className="container" data-color-mode="light">
             <MDEditor
               value={markdown}
               onChange={(value) => {
@@ -61,11 +65,7 @@ export default function PostEditForm({ post }: { post: Post }) {
               visibleDragbar={false}
               highlightEnable={false}
             />
-            {/* <MDEditor.Markdown
-              source={value}
-              style={{ whiteSpace: 'pre-wrap' }}
-            /> */}
-          </div>
+          </div> */}
           <div id="content-error" aria-live="polite" aria-atomic="true">
             {state.errors?.content &&
               state.errors.content.map((error: string) => (
