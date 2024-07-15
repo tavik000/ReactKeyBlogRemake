@@ -255,7 +255,7 @@ export async function fetchPostById(id: string, locale: string) {
     }
 
     let post = data.rows[0];
-    console.log('post:', post);
+    // console.log('post:', post);
     
 
     return post;

@@ -1,140 +1,153 @@
 'use server';
 
 import { z } from 'zod';
-import { sql } from '@vercel/postgres';
+import { sql, VercelPoolClient } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn } from '@/auth';
 import { AuthError } from 'next-auth';
+import { keyName } from './constants';
+import { log } from 'console';
+
+const format = require('pg-format');
+const { db } = require('@vercel/postgres');
 
 const FormSchema = z.object({
   id: z.string(),
-  customerId: z.string({
-    invalid_type_error: 'Please select a customer.',
+  title: z.string({
+    invalid_type_error: 'Please enter a title.',
   }),
-  amount: z.coerce
-    .number()
-    .gt(0, { message: 'Please enter an amount greater than $0.' }),
-  status: z.enum(['pending', 'paid'], {
-    invalid_type_error: 'Please select an invoice status.',
+  thumbnail_img: z.string({
+    invalid_type_error: 'Please enter a thumbnail image.',
   }),
-  date: z.string(),
+  tags: z.string({
+    invalid_type_error: 'Please enter tags.',
+  }),
+  content: z.string({
+    invalid_type_error: 'Please enter content.',
+  }),
+  modify_date: z.string(),
 });
 
-const CreateInvoice = FormSchema.omit({ id: true, date: true });
-const UpdateInvoice = FormSchema.omit({ date: true, id: true });
+const CreatePost = FormSchema.omit({ id: true, modify_date: true });
+const UpdatePost = FormSchema.omit({ id: true, modify_date: true });
 
-// This is temporary
 export type State = {
   errors?: {
-    customerId?: string[];
-    amount?: string[];
-    status?: string[];
+    id?: string[];
+    title?: string[];
+    thumbnail_img?: string[];
+    tags?: string[];
+    content?: string[];
   };
   message?: string | null;
 };
 
-export async function createInvoice(prevState: State, formData: FormData) {
+export async function createPost(client: VercelPoolClient, prevState: State, formData: FormData, locale: string) {
+
   // Validate form fields using Zod
-  const validatedFields = CreateInvoice.safeParse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
+  const validatedFields = CreatePost.safeParse({
+    title: formData.get('title'),
+    thumbnail_img: formData.get('thumbnail_img'),
+    tags: formData.get('tags'),
+    content: formData.get('content'),
   });
 
   // If form validation fails, return errors early. Otherwise, continue.
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Invoice.',
+      message: 'Missing Fields. Failed to Create Post.',
     };
   }
 
   // Prepare data for insertion into the database
-  const { customerId, amount, status } = validatedFields.data;
-  const amountInCents = amount * 100;
-  const date = new Date().toISOString().split('T')[0];
+  const { title, thumbnail_img, tags, content } = validatedFields.data;
+  const create_date = new Date().toISOString().split('T')[0];
+  const modify_date = create_date;
+  const author = keyName;
+  const comment_id_list: string[] = [];
+  const likes = 0;
+  const id = require('uuid').v4();
+  console.log("post id: " + id);
 
   // Insert data into the database
   try {
-    await sql`
-      INSERT INTO invoices (customer_id, amount, status, date)
-      VALUES (${customerId}, ${amountInCents}, ${status}, ${date})
-    `;
+    const createPostQuery = format(
+      `
+      INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date, modify_date, likes)
+      VALUE (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L)
+      ON CONFLICT (id) DO NOTHING
+      `,
+      locale,
+      id,
+      title,
+      thumbnail_img,
+      tags,
+      content,
+      author,
+      comment_id_list,
+      create_date,
+      modify_date,
+      likes
+    );
+
+    const createPost = await client.query(createPostQuery);
+    
+    revalidatePath('/');
+    redirect('/');
+    return { message: 'Post created successfully' };
   } catch (error) {
-    // If a database error occurs, return a more specific error.
-    return {
-      message: 'Database Error: Failed to Create Invoice.',
-    };
+    return { message: 'Failed to create post' };
   }
-
-  // Revalidate the cache for the invoices page and redirect the user.
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
 }
+    
+export async function updatePost(id: string, locale: string, prevState: State, formData: FormData) {
+  //log
+  console.log("updatePost");
 
-export async function updateInvoice(
-  id: string,
-  prevState: State,
-  formData: FormData,
-) {
-  const validatedFields = UpdateInvoice.safeParse({
-    customerId: formData.get('customerId'),
-    amount: formData.get('amount'),
-    status: formData.get('status'),
+  const client = await db.connect();
+
+
+  const validatedFields = UpdatePost.safeParse({
+    title: formData.get('title'),
+    thumbnail_img: formData.get('thumbnail_img'),
+    tags: formData.get('tags'),
+    content: formData.get('content'),
   });
 
   if (!validatedFields.success) {
     return {
       errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Update Invoice.',
+      message: 'Missing Fields. Failed to Update Post.',
     };
   }
 
-  const { customerId, amount, status } = validatedFields.data;
-  const amountInCents = amount * 100;
+  const { title, thumbnail_img, tags, content } = validatedFields.data;
+  const modify_date = new Date().toISOString().split('T')[0];
 
   try {
-    await sql`
-      UPDATE invoices
-      SET customer_id = ${customerId}, amount = ${amountInCents}, status = ${status}
-      WHERE id = ${id}
-    `;
+    const updatePostQuery = format(
+      `
+      UPDATE posts_%s
+      SET title = %L, thumbnail_img = %L, tags = %L, content = %L, modify_date = %L
+      WHERE id = %L
+      `,
+      locale,
+      title,
+      thumbnail_img,
+      tags,
+      content,
+      modify_date,
+      formData.get('id')
+    );
+
+    const updatePost = await client.query(updatePostQuery);
+
+    revalidatePath('/');
+    redirect('/');
+    return { message: 'Post updated successfully' };
   } catch (error) {
-    return { message: 'Database Error: Failed to Update Invoice.' };
-  }
-
-  revalidatePath('/dashboard/invoices');
-  redirect('/dashboard/invoices');
-}
-
-export async function deleteInvoice(id: string) {
-  // throw new Error('Failed to Delete Invoice');
-
-  try {
-    await sql`DELETE FROM invoices WHERE id = ${id}`;
-    revalidatePath('/dashboard/invoices');
-    return { message: 'Deleted Invoice' };
-  } catch (error) {
-    return { message: 'Database Error: Failed to Delete Invoice.' };
-  }
-}
-
-export async function authenticate(
-  prevState: string | undefined,
-  formData: FormData,
-) {
-  try {
-    await signIn('credentials', formData);
-  } catch (error) {
-    if (error instanceof AuthError) {
-      switch (error.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials.';
-        default:
-          return 'Something went wrong.';
-      }
-    }
-    throw error;
+    return { message: 'Failed to update post' };
   }
 }
