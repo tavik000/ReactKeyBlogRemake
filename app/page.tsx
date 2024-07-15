@@ -1,4 +1,4 @@
-import PostOverview from './ui/posts/post-overview';
+import PostOverview from './ui/posts/overview/post-overview';
 
 export default function Page({
   searchParams,

@@ -1,4 +1,4 @@
-export default function PostContainer({
+export default function PostContentContainer({
   children,
 }: {
   children: React.ReactNode;

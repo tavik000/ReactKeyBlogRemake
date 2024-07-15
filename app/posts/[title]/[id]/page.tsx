@@ -3,11 +3,11 @@ import { Metadata } from 'next';
 import { fetchPostById } from '@/app/lib/data';
 import Image from 'next/image';
 import Link from 'next/link';
-import PostTag from '@/app/ui/posts/post-tag';
-import PostInteraction from '@/app/ui/posts/post-interaction';
+import PostTag from '@/app/ui/posts/general/post-tag';
+import PostInteraction from '@/app/ui/posts/view/post-interaction';
 import { Post } from '@/app/lib/definitions';
-import PostContent from '@/app/ui/posts/post-content';
-import PostContainer from '@/app/ui/posts/post-container';
+import PostContent from '@/app/ui/posts/view/post-content';
+import PostContentContainer from '@/app/ui/posts/view/post-content-container';
 
 export const metadata: Metadata = {
   title: 'post',
@@ -22,7 +22,7 @@ export default async function Page({ params }: { params: { id: string } }) {
 
   return (
     <main>
-      <PostContainer>
+      <PostContentContainer>
         <div className="mb-12 flex flex-col">
           <AuthorInfo post={post} />
           <h1 className="mt-2 flex text-28px font-semibold leading-normal">
@@ -46,7 +46,7 @@ export default async function Page({ params }: { params: { id: string } }) {
           likeCount={post.likes}
           commentCount={post.comment_id_list.length}
         />
-      </PostContainer>
+      </PostContentContainer>
     </main>
   );
 }

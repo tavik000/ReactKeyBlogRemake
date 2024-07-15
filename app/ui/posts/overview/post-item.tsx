@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import PostTag from './post-tag';
-import { PostCard } from '../../lib/definitions';
+import PostTag from '../general/post-tag';
+import { PostCard } from '../../../lib/definitions';
 
 export default function PostItem({ post }: { post: PostCard }) {
   const urlRegex = /\s/g;

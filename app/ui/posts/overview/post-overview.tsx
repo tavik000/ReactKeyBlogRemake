@@ -1,7 +1,7 @@
 import AcmeLogo from '@/app/ui/acme-logo';
 import PostCategory from './post-category';
 import PostWrapper from './post-wrapper';
-import Pagination from '../pagination';
+import Pagination from './pagination';
 import { fetchPostsPages } from '@/app/lib/data';
 import { Suspense } from 'react';
 

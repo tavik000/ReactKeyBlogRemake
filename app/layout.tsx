@@ -2,7 +2,7 @@ import '@/app/ui/global.css';
 import { inter } from '@/app/ui/fonts';
 import { Metadata } from 'next';
 import Sky from './ui/sky';
-import PostSection from './ui/posts/post-section';
+import PostSection from './ui/posts/general/post-section';
 
 export const experimental_ppr = true;
 

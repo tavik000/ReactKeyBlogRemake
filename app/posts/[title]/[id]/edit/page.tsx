@@ -1,5 +1,5 @@
 import { fetchPostById } from '@/app/lib/data';
-import PostContainer from '@/app/ui/posts/post-container';
+import PostContentContainer from '@/app/ui/posts/view/post-content-container';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
@@ -9,9 +9,9 @@ export default async function Page({ params }: { params: { id: string } }) {
   // TODO: not found
   return (
     <main>
-      <PostContainer>
+      <PostContentContainer>
         <p> Edit </p>
-      </PostContainer>
+      </PostContentContainer>
     </main>
   );
 }

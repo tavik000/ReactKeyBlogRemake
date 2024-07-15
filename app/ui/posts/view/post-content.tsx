@@ -1,5 +1,5 @@
-import { Post } from '../../lib/definitions';
-import { MarkdownRenderer } from '../markdown';
+import { Post } from '../../../lib/definitions';
+import { MarkdownRenderer } from '../../markdown';
 
 export default function PostContent({ post }: { post: Post }) {
   return (
