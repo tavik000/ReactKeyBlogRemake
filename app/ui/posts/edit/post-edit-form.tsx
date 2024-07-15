@@ -18,11 +18,17 @@ const MDEditor = dynamic(() => import('../../../components/MdEditor'), {
 });
 
 export default function PostEditForm({ post }: { post: Post }) {
+
+  const [markdownValue, setMarkdownValue] = useState('');
+
+  const handleMarkdownChange = (value: string | undefined) => {
+    setMarkdownValue(value || '');
+  };
+
   const initialState = { message: null, errors: {} };
-  const updatePostWithId = updatePost.bind(null, post.id, 'en');
+  const updatePostWithId = updatePost.bind(null, post.id, markdownValue, 'en');
   const [state, dispatch] = useFormState(updatePostWithId, initialState);
 
-  const [markdown, setMarkdown] = useState<string | undefined>(post.content);
 
   return (
     <form action={dispatch}>
@@ -53,19 +59,10 @@ export default function PostEditForm({ post }: { post: Post }) {
           <label htmlFor="content" className="mb-2 block text-base font-medium">
             Content
           </label>
-          <MDEditor postContent={post.content} />
-          {/* <div className="container" data-color-mode="light">
-            <MDEditor
-              value={markdown}
-              onChange={(value) => {
-                setMarkdown(value);
-              }}
-              height="100%"
-              minHeight={1000}
-              visibleDragbar={false}
-              highlightEnable={false}
-            />
-          </div> */}
+          <MDEditor
+            postContent={post.content}
+            onMarkdownChange={handleMarkdownChange}
+          />
           <div id="content-error" aria-live="polite" aria-atomic="true">
             {state.errors?.content &&
               state.errors.content.map((error: string) => (

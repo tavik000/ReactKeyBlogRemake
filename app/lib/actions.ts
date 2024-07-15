@@ -30,7 +30,13 @@ const FormSchema = z.object({
 });
 
 const CreatePost = FormSchema.omit({ id: true, modify_date: true });
-const UpdatePost = FormSchema.omit({ id: true, modify_date: true });
+const UpdatePost = FormSchema.omit({
+  id: true,
+  modify_date: true,
+  thumbnail_img: true,
+  tags: true,
+  content: true,
+});
 
 export type State = {
   errors?: {
@@ -43,8 +49,12 @@ export type State = {
   message?: string | null;
 };
 
-export async function createPost(client: VercelPoolClient, prevState: State, formData: FormData, locale: string) {
-
+export async function createPost(
+  client: VercelPoolClient,
+  prevState: State,
+  formData: FormData,
+  locale: string,
+) {
   // Validate form fields using Zod
   const validatedFields = CreatePost.safeParse({
     title: formData.get('title'),
@@ -69,7 +79,7 @@ export async function createPost(client: VercelPoolClient, prevState: State, for
   const comment_id_list: string[] = [];
   const likes = 0;
   const id = require('uuid').v4();
-  console.log("post id: " + id);
+  console.log('post id: ' + id);
 
   // Insert data into the database
   try {
@@ -89,11 +99,11 @@ export async function createPost(client: VercelPoolClient, prevState: State, for
       comment_id_list,
       create_date,
       modify_date,
-      likes
+      likes,
     );
 
     const createPost = await client.query(createPostQuery);
-    
+
     revalidatePath('/');
     redirect('/');
     return { message: 'Post created successfully' };
@@ -101,19 +111,24 @@ export async function createPost(client: VercelPoolClient, prevState: State, for
     return { message: 'Failed to create post' };
   }
 }
-    
-export async function updatePost(id: string, locale: string, prevState: State, formData: FormData) {
+
+export async function updatePost(
+  id: string,
+  postContent: string,
+  locale: string,
+  prevState: State,
+  formData: FormData,
+) {
   //log
-  console.log("updatePost");
+  console.log('updatePost');
 
   const client = await db.connect();
-
 
   const validatedFields = UpdatePost.safeParse({
     title: formData.get('title'),
     thumbnail_img: formData.get('thumbnail_img'),
     tags: formData.get('tags'),
-    content: formData.get('content'),
+    // content: formData.get('content'),
   });
 
   if (!validatedFields.success) {
@@ -123,31 +138,55 @@ export async function updatePost(id: string, locale: string, prevState: State, f
     };
   }
 
-  const { title, thumbnail_img, tags, content } = validatedFields.data;
+  // const { title, thumbnail_img, tags, content } = validatedFields.data;
+  const { title } = validatedFields.data;
+  let content = postContent;
+  console.log('id : ' + id);
+  console.log('title: ' + title);
+  console.log('content: ' + content);
   const modify_date = new Date().toISOString().split('T')[0];
 
   try {
+    // const updatePostQuery = format(
+    //   `
+    //   UPDATE posts_%s
+    //   SET title = %L, thumbnail_img = %L, tags = %L, content = %L, modify_date = %L
+    //   WHERE id = %L
+    //   `,
+    //   locale,
+    //   title,
+    //   thumbnail_img,
+    //   tags,
+    //   content,
+    //   modify_date,
+    //   formData.get('id')
+    // );
     const updatePostQuery = format(
       `
       UPDATE posts_%s
-      SET title = %L, thumbnail_img = %L, tags = %L, content = %L, modify_date = %L
+      SET title = %L, content = %L, modify_date = %L
       WHERE id = %L
       `,
       locale,
       title,
-      thumbnail_img,
-      tags,
       content,
       modify_date,
-      formData.get('id')
+      id,
     );
 
     const updatePost = await client.query(updatePostQuery);
 
-    revalidatePath('/');
-    redirect('/');
-    return { message: 'Post updated successfully' };
   } catch (error) {
-    return { message: 'Failed to update post' };
+    console.log(error);
+    return {
+      message: 'Failed to update post',
+    };
   }
+
+  const urlRegex = /\s/g;
+  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const redirectUrl = `/posts/${url_title}/${id}`;
+
+  revalidatePath(redirectUrl);
+  redirect(redirectUrl);
 }

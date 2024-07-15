@@ -3,7 +3,7 @@ import { MarkdownRenderer } from '../../markdown';
 
 export default function PostContent({ post }: { post: Post }) {
   return (
-    <article className="prose">
+    <article className="prose-base">
       {/* <ReactMarkdown>{post.content}</ReactMarkdown> */}
       <MarkdownRenderer>{post.content}</MarkdownRenderer>
     </article>

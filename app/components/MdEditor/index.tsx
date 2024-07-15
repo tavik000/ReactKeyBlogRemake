@@ -1,11 +1,21 @@
 import MDEditor from '@uiw/react-md-editor';
-import { useState } from 'react';
-import onImagePasted from  '../utils/onImagePasted';
+import { useState, useEffect } from 'react';
+import onImagePasted from '../utils/onImagePasted';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 
-const MdEditor = ({postContent}: {postContent: string}) => {
+const MdEditor = ({
+  postContent,
+  onMarkdownChange,
+}: {
+  postContent: string;
+  onMarkdownChange?: (value: string | undefined) => void;
+}) => {
   const [markdown, setMarkdown] = useState<string | undefined>(postContent);
+
+  useEffect(() => {
+    onMarkdownChange?.(markdown);
+  }, [markdown, onMarkdownChange]);
 
   return (
     <div className="container" data-color-mode="light">
@@ -15,11 +25,11 @@ const MdEditor = ({postContent}: {postContent: string}) => {
           setMarkdown(value);
         }}
         onPaste={async (event) => {
-            await onImagePasted(event.clipboardData, setMarkdown);
-          }}
-          onDrop={async (event) => {
-            await onImagePasted(event.dataTransfer, setMarkdown);
-          }}
+          await onImagePasted(event.clipboardData, setMarkdown);
+        }}
+        onDrop={async (event) => {
+          await onImagePasted(event.dataTransfer, setMarkdown);
+        }}
         height="100%"
         minHeight={1000}
         visibleDragbar={false}
