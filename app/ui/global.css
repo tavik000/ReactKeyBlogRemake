@@ -811,10 +811,10 @@ ul.post-grid li:hover h3 {
   padding: 20px 40px 20px;
 }
 
-h2,
+/* h2,
 h3 {
   color: #ffeed5;
-}
+} */
 
 .post {
   -webkit-transition: 0.5s linear all;
@@ -1009,4 +1009,45 @@ img {
 
 .blog-title {
   color: #ffbd15;
+}
+
+
+
+
+
+
+
+/* Markdown Editor */
+.w-md-editor-text-input,
+.w-md-editor-text-pre>code,
+.w-md-editor-text-pre {
+  font-size: 1.125rem !important;
+  line-height: 1.rem !important;
+}
+
+.wmde-markdown ol {
+  list-style: auto !important;
+}
+
+.wmde-markdown ul {
+  list-style: inside !important;
+}
+
+.w-md-editor-toolbar {
+  height: 50px !important;
+}
+
+.w-md-editor-toolbar li>button {
+  width: 40px !important;
+  height: 40px !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+}
+
+.w-md-editor-toolbar li>button>svg {
+  width: 20px !important;
+  height: 20px !important;
+  align-content: center !important;
+  vertical-align: middle !important;
+  display: inherit !important;
 }

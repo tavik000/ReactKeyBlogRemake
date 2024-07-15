@@ -5,18 +5,27 @@ import { RoundButton } from '../../button';
 import { useFormState } from 'react-dom';
 import { Post } from '@/app/lib/definitions';
 import { updatePost } from '@/app/lib/actions';
+import '@uiw/react-md-editor/markdown-editor.css';
+import '@uiw/react-markdown-preview/markdown.css';
+import dynamic from 'next/dynamic';
+import { useState } from 'react';
+import * as commands from '@uiw/react-md-editor/commands';
 const { db } = require('@vercel/postgres');
+
+const MDEditor = dynamic(() => import('@uiw/react-md-editor'), { ssr: false });
 
 export default function PostEditForm({ post }: { post: Post }) {
   const initialState = { message: null, errors: {} };
   const updatePostWithId = updatePost.bind(null, post.id, 'en');
   const [state, dispatch] = useFormState(updatePostWithId, initialState);
 
+  const [markdown, setMarkdown] = useState<string | undefined>(post.content);
+
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
         <div className="mb-4">
-          <label htmlFor="title" className="mb-2 block text-sm font-medium">
+          <label htmlFor="title" className="mb-2 block text-lg font-medium">
             Title
           </label>
           <input
@@ -24,7 +33,7 @@ export default function PostEditForm({ post }: { post: Post }) {
             name="title"
             type="text"
             defaultValue={post.title}
-            className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
             aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
@@ -38,16 +47,25 @@ export default function PostEditForm({ post }: { post: Post }) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="content" className="mb-2 block text-sm font-medium">
+          <label htmlFor="content" className="mb-2 block text-base font-medium">
             Content
           </label>
-          <textarea
-            id="content"
-            name="content"
-            defaultValue={post.content}
-            className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-3 text-sm outline-2 placeholder:text-gray-500"
-            aria-describedby="content-error"
-          />
+          <div className="container" data-color-mode="light">
+            <MDEditor
+              value={markdown}
+              onChange={(value) => {
+                setMarkdown(value);
+              }}
+              height="100%"
+              minHeight={1000}
+              visibleDragbar={false}
+              highlightEnable={false}
+            />
+            {/* <MDEditor.Markdown
+              source={value}
+              style={{ whiteSpace: 'pre-wrap' }}
+            /> */}
+          </div>
           <div id="content-error" aria-live="polite" aria-atomic="true">
             {state.errors?.content &&
               state.errors.content.map((error: string) => (
