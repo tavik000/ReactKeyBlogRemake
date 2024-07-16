@@ -11,13 +11,19 @@ import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
-import * as commands from '@uiw/react-md-editor/commands';
+import * as commands from '@uiw/react-md-editor/commands'; //TODO
+import { set } from 'zod'; //TODO
 const { db } = require('@vercel/postgres');
 
 const MDEditor = dynamic(() => import('../../../components/MdEditor'), {
   ssr: false,
   loading: () => <p>Loading...</p>,
 });
+
+interface CloudinaryResult {
+  public_id: string;
+  secure_url: string;
+}
 
 export default function PostEditForm({ post }: { post: Post }) {
   const [markdownValue, setMarkdownValue] = useState('');
@@ -26,8 +32,10 @@ export default function PostEditForm({ post }: { post: Post }) {
     setMarkdownValue(value || '');
   };
 
+  const [thumbnailImage, setThumbnailImage] = useState(post.thumbnail_img);
+
   const initialState = { message: null, errors: {} };
-  const updatePostWithId = updatePost.bind(null, post.id, markdownValue, 'en');
+  const updatePostWithId = updatePost.bind(null, post.id, thumbnailImage, markdownValue, 'en');
   const [state, dispatch] = useFormState(updatePostWithId, initialState);
 
   return (
@@ -59,12 +67,12 @@ export default function PostEditForm({ post }: { post: Post }) {
             htmlFor="thumbnail_img"
             className="mb-2 block text-base font-medium"
           >
-            Thumbnail Image
+            Thumbnail Image (333 x 188)
           </label>
           <div className="flex flex-col items-baseline">
-            <div className="flex mt-6">
+            <div className="mt-6 flex">
               <Image
-                src={post.thumbnail_img}
+                src={thumbnailImage}
                 width={333}
                 height={188}
                 alt="thumbnail image"
@@ -72,11 +80,23 @@ export default function PostEditForm({ post }: { post: Post }) {
                 priority={true}
               />
             </div>
-            <div className="flex mt-6">
-              <CldUploadWidget uploadPreset="<Your Upload Preset>">
+            <div className="mt-6 flex">
+              <CldUploadWidget
+                uploadPreset="key_blog_thumbnail"
+                onSuccess={(result, { widget }) => {
+                  const info = result.info as CloudinaryResult;
+                  setThumbnailImage(info.secure_url);
+                  widget.close();
+                }}
+              >
                 {({ open }) => {
+                  function handleOnClick() {
+                    open();
+                  }
                   return (
-                    <Button onClick={() => open()}>Upload an Image</Button>
+                    <Button type="button" onClick={handleOnClick}>
+                      Upload an Image
+                    </Button>
                   );
                 }}
               </CldUploadWidget>

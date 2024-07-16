@@ -114,6 +114,7 @@ export async function createPost(
 
 export async function updatePost(
   id: string,
+  thumbnail_img: string,
   postContent: string,
   locale: string,
   prevState: State,
@@ -164,17 +165,19 @@ export async function updatePost(
     const updatePostQuery = format(
       `
       UPDATE posts_%s
-      SET title = %L, content = %L, modify_date = %L
+      SET title = %L, thumbnail_img = %L, content = %L, modify_date = %L
       WHERE id = %L
       `,
       locale,
       title,
+      thumbnail_img,
       content,
       modify_date,
       id,
     );
 
     const updatePost = await client.query(updatePostQuery);
+    console.log('updatePost: ' + updatePost);
 
   } catch (error) {
     console.log(error);
