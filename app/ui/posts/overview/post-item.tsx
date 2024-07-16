@@ -20,7 +20,7 @@ export default function PostItem({ post }: { post: PostCard }) {
               src={post.thumbnail_img}
               width={333}
               height={188}
-              alt="Screenshot of the dashboard project showing mobile version"
+              alt="thumbnail image"
               className="post-article-thumbnail mb-3 block w-full flex-row rounded-xl"
               priority={true}
             />

@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import { RoundButton } from '../../button';
+import Image from 'next/image';
+import { RoundButton, Button } from '../../button';
 import { useFormState } from 'react-dom';
 import { Post } from '@/app/lib/definitions';
 import { updatePost } from '@/app/lib/actions';
@@ -9,6 +10,7 @@ import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
 import { useState } from 'react';
+import { CldUploadWidget } from 'next-cloudinary';
 import * as commands from '@uiw/react-md-editor/commands';
 const { db } = require('@vercel/postgres');
 
@@ -18,7 +20,6 @@ const MDEditor = dynamic(() => import('../../../components/MdEditor'), {
 });
 
 export default function PostEditForm({ post }: { post: Post }) {
-
   const [markdownValue, setMarkdownValue] = useState('');
 
   const handleMarkdownChange = (value: string | undefined) => {
@@ -28,7 +29,6 @@ export default function PostEditForm({ post }: { post: Post }) {
   const initialState = { message: null, errors: {} };
   const updatePostWithId = updatePost.bind(null, post.id, markdownValue, 'en');
   const [state, dispatch] = useFormState(updatePostWithId, initialState);
-
 
   return (
     <form action={dispatch}>
@@ -48,6 +48,43 @@ export default function PostEditForm({ post }: { post: Post }) {
           <div id="title-error" aria-live="polite" aria-atomic="true">
             {state.errors?.title &&
               state.errors.title.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="thumbnail_img"
+            className="mb-2 block text-base font-medium"
+          >
+            Thumbnail Image
+          </label>
+          <div className="flex flex-col items-baseline">
+            <div className="flex mt-6">
+              <Image
+                src={post.thumbnail_img}
+                width={333}
+                height={188}
+                alt="thumbnail image"
+                className="block rounded-xl"
+                priority={true}
+              />
+            </div>
+            <div className="flex mt-6">
+              <CldUploadWidget uploadPreset="<Your Upload Preset>">
+                {({ open }) => {
+                  return (
+                    <Button onClick={() => open()}>Upload an Image</Button>
+                  );
+                }}
+              </CldUploadWidget>
+            </div>
+          </div>
+          <div id="thumbnail_img-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.thumbnail_img &&
+              state.errors.thumbnail_img.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
