@@ -34,6 +34,7 @@
     "postcss": "8.4.31",
     "prismjs": "^1.29.0",
     "react": "19.0.0-rc-6230622a1a-20240610",
+    "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "19.0.0-rc-6230622a1a-20240610",
     "react-markdown": "^9.0.1",
     "react-syntax-highlighter": "^15.5.0",
