@@ -212,7 +212,7 @@ export async function fetchPostById(id: string, locale: string) {
               create_date,
               modify_date,
               likes
-            FROM posts_jp
+            FROM posts_ja
             WHERE id=${id};
           `;
           break;
