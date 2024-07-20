@@ -4,8 +4,14 @@ import PostEditForm from '@/app/ui/posts/edit/post-edit-form';
 
 export default async function Page({ params }: { params: { id: string } }) {
   const id = params.id;
-  const postResults = await Promise.all([fetchPostById(id, 'en')]);
-  const post = postResults[0];
+  const posts = await Promise.all(
+    [
+      fetchPostById(id, 'en'),
+      fetchPostById(id, 'ja'),
+      fetchPostById(id, 'kr'),
+      fetchPostById(id, 'zh'),
+    ]
+  );
 
   // TODO: not found
   return (
@@ -17,7 +23,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               <h1 className="mb-6 mt-2 flex text-28px font-semibold leading-normal">
                 Edit
               </h1>
-              <PostEditForm post={post} />
+              <PostEditForm posts={posts} />
             </div>
           </div>
         </div>

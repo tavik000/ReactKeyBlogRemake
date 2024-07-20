@@ -25,7 +25,12 @@ interface CloudinaryResult {
   secure_url: string;
 }
 
-export default function PostEditForm({ post }: { post: Post }) {
+export default function PostEditForm({ posts }: { posts: Post[] }) {
+  // log posts
+  console.log(posts);
+
+  const post = posts[0];
+  
   const [markdownValue, setMarkdownValue] = useState('');
 
   const handleMarkdownChange = (value: string | undefined) => {
@@ -35,33 +40,18 @@ export default function PostEditForm({ post }: { post: Post }) {
   const [thumbnailImage, setThumbnailImage] = useState(post.thumbnail_img);
 
   const initialState = { message: null, errors: {} };
-  const updatePostWithId = updatePost.bind(null, post.id, thumbnailImage, markdownValue, 'en');
+  const updatePostWithId = updatePost.bind(
+    null,
+    post.id,
+    thumbnailImage,
+    markdownValue,
+    'en',
+  );
   const [state, dispatch] = useFormState(updatePostWithId, initialState);
 
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
-        <div className="mb-4">
-          <label htmlFor="title" className="mb-2 block text-lg font-medium">
-            Title
-          </label>
-          <input
-            id="title"
-            name="title"
-            type="text"
-            defaultValue={post.title}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
-            aria-describedby="title-error"
-          />
-          <div id="title-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.title &&
-              state.errors.title.map((error: string) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))}
-          </div>
-        </div>
         <div className="mb-4">
           <label
             htmlFor="thumbnail_img"
@@ -112,6 +102,27 @@ export default function PostEditForm({ post }: { post: Post }) {
           </div>
         </div>
 
+        <div className="mb-4">
+          <label htmlFor="title" className="mb-2 block text-lg font-medium">
+            Title
+          </label>
+          <input
+            id="title"
+            name="title"
+            type="text"
+            defaultValue={post.title}
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
+            aria-describedby="title-error"
+          />
+          <div id="title-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.title &&
+              state.errors.title.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
         <div className="mb-4">
           <label htmlFor="content" className="mb-2 block text-base font-medium">
             Content
