@@ -46,7 +46,6 @@ export function MarkdownRenderer({
               }, [] as number[])
             : [];
 
-          console.log(linesToHighlight);
           return !inline && match ? (
             <Fragment>
               {filename && (

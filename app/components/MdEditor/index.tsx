@@ -1,6 +1,6 @@
 import MDEditor from '@uiw/react-md-editor';
 import { useState, useEffect } from 'react';
-import onImagePasted from '../utils/onImagePasted';
+import onMediaPasted from '../utils/onMediaPasted';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 
@@ -25,10 +25,10 @@ const MdEditor = ({
           setMarkdown(value);
         }}
         onPaste={async (event) => {
-          await onImagePasted(event.clipboardData, setMarkdown);
+          await onMediaPasted(event.clipboardData, setMarkdown);
         }}
         onDrop={async (event) => {
-          await onImagePasted(event.dataTransfer, setMarkdown);
+          await onMediaPasted(event.dataTransfer, setMarkdown);
         }}
         height="100%"
         minHeight={1000}
