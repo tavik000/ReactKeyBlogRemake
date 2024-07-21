@@ -5,6 +5,7 @@ import {
   UserCircleIcon,
   ArrowUpOnSquareIcon,
 } from '@heroicons/react/24/outline';
+import Dropdown, { MenuItem } from './dropdown';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -15,7 +16,7 @@ export function Button({ children, className, ...rest }: ButtonProps) {
     <button
       {...rest}
       className={clsx(
-        'flex h-10 items-center justify-center rounded-lg px-4 text-sm text-center font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50',
+        'flex h-10 items-center justify-center rounded-lg px-4 text-center text-sm font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50',
         className,
       )}
     >
@@ -40,24 +41,61 @@ export function RoundButton({ children, className, ...rest }: ButtonProps) {
   );
 }
 
+const menuItems: MenuItem[] = [
+  {
+    title: 'English',
+    children: [
+      {
+        title: 'English',
+        route: '/products/hinkle-horns',
+      },
+      {
+        title: '日本語',
+        route: '/products/hinkle-horns',
+      },
+      {
+        title: '한국어',
+        route: '/products/doozers',
+      },
+      {
+        title: '繁體中文',
+        route: '/products/zizzer-zazzers',
+      },
+    ],
+  },
+];
+
 export function LanguageButton({ href }: { href: string }) {
   return (
-    <Link
-      className="my-2 flex h-10 w-10 items-center justify-center rounded-md"
-      href={href}
-    >
-      <GlobeAltIcon className="h-5 w-5 text-gray-500" />
-    </Link>
+    <>
+      <div className="mr-16 flex items-center gap-8 text-black ">
+        {menuItems.map((item) => {
+          return item.hasOwnProperty('children') ? (
+            <Dropdown item={item} />
+          ) : (
+            <Link className="hover:text-orange-500" href={item?.route || ''}>
+              {item.title}
+            </Link>
+          );
+        })}
+      </div>
+    </>
+    // <Link
+    //   className="my-2 flex h-10 w-10 items-center justify-center rounded-md"
+    //   href={href}
+    // >
+    //   <GlobeAltIcon className="h-5 w-5 text-gray-500" />
+    // </Link>
   );
 }
 
 export function UserButton({ href }: { href: string }) {
   return (
     <Link
-      className="my-2 flex h-10 w-10 items-center justify-center rounded-md"
+      className="my-2 mr-10 flex h-10 w-10 items-center justify-center rounded-md"
       href={href}
     >
-      <UserCircleIcon className="h-5 w-5 text-gray-500" />
+      <UserCircleIcon className="h-6 w-6 text-gray-500 hover:text-orange-500" />
     </Link>
   );
 }
