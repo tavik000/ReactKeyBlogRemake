@@ -109,7 +109,11 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
                     open();
                   }
                   return (
-                    <Button type="button" onClick={handleOnClick} className="bg-blue-500 hover:bg-blue-400">
+                    <Button
+                      type="button"
+                      onClick={handleOnClick}
+                      className="bg-blue-500 hover:bg-blue-400"
+                    >
                       Upload an Image
                     </Button>
                   );
@@ -166,12 +170,6 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
           </div>
         </div>
 
-        <div aria-live="polite" aria-atomic="true">
-          {state.message ? (
-            <p className="my-2 text-sm text-red-500">{state.message}</p>
-          ) : null}
-        </div>
-
         <div className="mb-4">
           <label htmlFor="title_ja" className="mb-2 block text-lg font-medium">
             Title (Japanese)
@@ -209,12 +207,6 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
                 </p>
               ))}
           </div>
-        </div>
-
-        <div aria-live="polite" aria-atomic="true">
-          {state.message ? (
-            <p className="my-2 text-sm text-red-500">{state.message}</p>
-          ) : null}
         </div>
 
         <div className="mb-4">
@@ -255,15 +247,10 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
               ))}
           </div>
         </div>
-        <div aria-live="polite" aria-atomic="true">
-          {state.message ? (
-            <p className="my-2 text-sm text-red-500">{state.message}</p>
-          ) : null}
-        </div>
 
         <div className="mb-4">
           <label htmlFor="title_zh" className="mb-2 block text-lg font-medium">
-            Title (Chinese)
+            Title (Traditional Chinese)
           </label>
           <input
             id="title_zh"
@@ -285,7 +272,7 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
 
         <div className="mb-4">
           <label htmlFor="content" className="mb-2 block text-base font-medium">
-            Content (Chinese)
+            Content (Traditional Chinese)
           </label>
           <MDEditor
             postContent={post_zh.content}
@@ -308,7 +295,10 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
       </div>
       <div className="mt-4 flex flex-row">
         <div className="w-1/2 px-2">
-          <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-400">
+          <Button
+            type="submit"
+            className="w-full bg-blue-500 hover:bg-blue-400"
+          >
             Save
           </Button>
         </div>

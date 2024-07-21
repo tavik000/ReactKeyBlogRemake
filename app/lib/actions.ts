@@ -14,36 +14,52 @@ const { db } = require('@vercel/postgres');
 
 const FormSchema = z.object({
   id: z.string(),
-  title_en: z.string({
-    invalid_type_error: 'Please enter a title.',
-  }),
-  title_ja: z.string({
-    invalid_type_error: 'Please enter a title.',
-  }),
-  title_kr: z.string({
-    invalid_type_error: 'Please enter a title.',
-  }),
-  title_zh: z.string({
-    invalid_type_error: 'Please enter a title.',
-  }),
+  title_en: z
+    .string({
+      invalid_type_error: 'Please enter a title (en).',
+    })
+    .min(1, { message: 'Please enter a title (en).' }),
+  title_ja: z
+    .string({
+      invalid_type_error: 'Please enter a title (ja).',
+    })
+    .min(1, { message: 'Please enter a title (ja).' }),
+  title_kr: z
+    .string({
+      invalid_type_error: 'Please enter a title (kr).',
+    })
+    .min(1, { message: 'Please enter a title (kr).' }),
+  title_zh: z
+    .string({
+      invalid_type_error: 'Please enter a title (zh).',
+    })
+    .min(1, { message: 'Please enter a title (zh).' }),
   thumbnail_img: z.string({
     invalid_type_error: 'Please enter a thumbnail image.',
   }),
   tags: z.string({
     invalid_type_error: 'Please enter tags.',
   }),
-  content_en: z.string({
-    invalid_type_error: 'Please enter content.',
-  }),
-  content_ja: z.string({
-    invalid_type_error: 'Please enter content.',
-  }),
-  content_kr: z.string({
-    invalid_type_error: 'Please enter content.',
-  }),
-  content_zh: z.string({
-    invalid_type_error: 'Please enter content.',
-  }),
+  content_en: z
+    .string({
+      invalid_type_error: 'Please enter content. (en)',
+    })
+    .min(1, { message: 'Please enter content. (en)' }),
+  content_ja: z
+    .string({
+      invalid_type_error: 'Please enter content. (ja)',
+    })
+    .min(1, { message: 'Please enter content. (ja)' }),
+  content_kr: z
+    .string({
+      invalid_type_error: 'Please enter content. (kr)',
+    })
+    .min(1, { message: 'Please enter content. (kr)' }),
+  content_zh: z
+    .string({
+      invalid_type_error: 'Please enter content. (zh)',
+    })
+    .min(1, { message: 'Please enter content. (zh)' }),
   modify_date: z.string(),
 });
 
@@ -53,10 +69,6 @@ const UpdatePost = FormSchema.omit({
   modify_date: true,
   thumbnail_img: true,
   tags: true,
-  content_en: true,
-  content_ja: true,
-  content_kr: true,
-  content_zh: true,
 });
 
 export type State = {
@@ -221,7 +233,10 @@ export async function updatePostWithAllLanguages(
       title_zh: formData.get('title_zh'),
       thumbnail_img: formData.get('thumbnail_img'),
       tags: formData.get('tags'),
-      // content: formData.get('content'),
+      content_en: postContent_en,
+      content_ja: postContent_ja,
+      content_kr: postContent_kr,
+      content_zh: postContent_zh,
     });
 
     if (!validatedFields.success) {
