@@ -14,7 +14,16 @@ const { db } = require('@vercel/postgres');
 
 const FormSchema = z.object({
   id: z.string(),
-  title: z.string({
+  title_en: z.string({
+    invalid_type_error: 'Please enter a title.',
+  }),
+  title_ja: z.string({
+    invalid_type_error: 'Please enter a title.',
+  }),
+  title_kr: z.string({
+    invalid_type_error: 'Please enter a title.',
+  }),
+  title_zh: z.string({
     invalid_type_error: 'Please enter a title.',
   }),
   thumbnail_img: z.string({
@@ -23,7 +32,16 @@ const FormSchema = z.object({
   tags: z.string({
     invalid_type_error: 'Please enter tags.',
   }),
-  content: z.string({
+  content_en: z.string({
+    invalid_type_error: 'Please enter content.',
+  }),
+  content_ja: z.string({
+    invalid_type_error: 'Please enter content.',
+  }),
+  content_kr: z.string({
+    invalid_type_error: 'Please enter content.',
+  }),
+  content_zh: z.string({
     invalid_type_error: 'Please enter content.',
   }),
   modify_date: z.string(),
@@ -35,115 +53,109 @@ const UpdatePost = FormSchema.omit({
   modify_date: true,
   thumbnail_img: true,
   tags: true,
-  content: true,
+  content_en: true,
+  content_ja: true,
+  content_kr: true,
+  content_zh: true,
 });
 
 export type State = {
   errors?: {
     id?: string[];
-    title?: string[];
+    title_en?: string[];
+    title_ja?: string[];
+    title_kr?: string[];
+    title_zh?: string[];
     thumbnail_img?: string[];
     tags?: string[];
-    content?: string[];
+    content_en?: string[];
+    content_ja?: string[];
+    content_kr?: string[];
+    content_zh?: string[];
   };
   message?: string | null;
 };
 
-export async function createPost(
-  client: VercelPoolClient,
-  prevState: State,
-  formData: FormData,
-  locale: string,
-) {
-  // Validate form fields using Zod
-  const validatedFields = CreatePost.safeParse({
-    title: formData.get('title'),
-    thumbnail_img: formData.get('thumbnail_img'),
-    tags: formData.get('tags'),
-    content: formData.get('content'),
-  });
+// export async function createPost(
+//   client: VercelPoolClient,
+//   prevState: State,
+//   formData: FormData,
+//   locale: string,
+// ) {
+//   // Validate form fields using Zod
+//   const validatedFields = CreatePost.safeParse({
+//     title_en: formData.get('title_en'),
+//     title_ja: formData.get('title_ja'),
+//     title_kr: formData.get('title_kr'),
+//     title_zh: formData.get('title_zh'),
+//     thumbnail_img: formData.get('thumbnail_img'),
+//     tags: formData.get('tags'),
+//     content_en: formData.get('content_en'),
+//     content_ja: formData.get('content_ja'),
+//     content_kr: formData.get('content_kr'),
+//     content_zh: formData.get('content_zh'),
+//   });
 
-  // If form validation fails, return errors early. Otherwise, continue.
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Create Post.',
-    };
-  }
+//   // If form validation fails, return errors early. Otherwise, continue.
+//   if (!validatedFields.success) {
+//     return {
+//       errors: validatedFields.error.flatten().fieldErrors,
+//       message: 'Missing Fields. Failed to Create Post.',
+//     };
+//   }
 
-  // Prepare data for insertion into the database
-  const { title, thumbnail_img, tags, content } = validatedFields.data;
-  const create_date = new Date().toISOString().split('T')[0];
-  const modify_date = create_date;
-  const author = keyName;
-  const comment_id_list: string[] = [];
-  const likes = 0;
-  const id = require('uuid').v4();
-  console.log('post id: ' + id);
+//   // Prepare data for insertion into the database
+//   const { title_en, title_ja, title_kr, title_zh, thumbnail_img, tags, content } = validatedFields.data;
+//   const create_date = new Date().toISOString().split('T')[0];
+//   const modify_date = create_date;
+//   const author = keyName;
+//   const comment_id_list: string[] = [];
+//   const likes = 0;
+//   const id = require('uuid').v4();
+//   console.log('post id: ' + id);
 
-  // Insert data into the database
-  try {
-    const createPostQuery = format(
-      `
-      INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date, modify_date, likes)
-      VALUE (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L)
-      ON CONFLICT (id) DO NOTHING
-      `,
-      locale,
-      id,
-      title,
-      thumbnail_img,
-      tags,
-      content,
-      author,
-      comment_id_list,
-      create_date,
-      modify_date,
-      likes,
-    );
+//   // Insert data into the database
+//   try {
+//     const createPostQuery = format(
+//       `
+//       INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date, modify_date, likes)
+//       VALUE (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L)
+//       ON CONFLICT (id) DO NOTHING
+//       `,
+//       locale,
+//       id,
+//       title,
+//       thumbnail_img,
+//       tags,
+//       content,
+//       author,
+//       comment_id_list,
+//       create_date,
+//       modify_date,
+//       likes,
+//     );
 
-    const createPost = await client.query(createPostQuery);
+//     const createPost = await client.query(createPostQuery);
 
-    revalidatePath('/');
-    redirect('/');
-    return { message: 'Post created successfully' };
-  } catch (error) {
-    return { message: 'Failed to create post' };
-  }
-}
+//     revalidatePath('/');
+//     redirect('/');
+//     return { message: 'Post created successfully' };
+//   } catch (error) {
+//     return { message: 'Failed to create post' };
+//   }
+// }
 
 export async function updatePost(
   id: string,
   thumbnail_img: string,
+  postTitle: string,
   postContent: string,
   locale: string,
-  prevState: State,
-  formData: FormData,
+  client: VercelPoolClient,
 ) {
-  //log
-  console.log('updatePost');
-
-  const client = await db.connect();
-
-  const validatedFields = UpdatePost.safeParse({
-    title: formData.get('title'),
-    thumbnail_img: formData.get('thumbnail_img'),
-    tags: formData.get('tags'),
-    // content: formData.get('content'),
-  });
-
-  if (!validatedFields.success) {
-    return {
-      errors: validatedFields.error.flatten().fieldErrors,
-      message: 'Missing Fields. Failed to Update Post.',
-    };
-  }
-
-  // const { title, thumbnail_img, tags, content } = validatedFields.data;
-  const { title } = validatedFields.data;
   let content = postContent;
   console.log('id : ' + id);
-  console.log('title: ' + title);
+  console.log('title: ' + postTitle);
   console.log('content: ' + content);
   const modify_date = new Date().toISOString().split('T')[0];
 
@@ -169,7 +181,7 @@ export async function updatePost(
       WHERE id = %L
       `,
       locale,
-      title,
+      postTitle,
       thumbnail_img,
       content,
       modify_date,
@@ -178,16 +190,66 @@ export async function updatePost(
 
     const updatePost = await client.query(updatePostQuery);
     console.log('updatePost: ' + updatePost);
-
   } catch (error) {
     console.log(error);
+    return {
+      message: 'Failed to update post (' + locale + ')',
+    };
+  }
+}
+
+export async function updatePostWithAllLanguages(
+  id: string,
+  thumbnail_img: string,
+  postContent_en: string,
+  postContent_ja: string,
+  postContent_kr: string,
+  postContent_zh: string,
+  prevState: State,
+  formData: FormData,
+) {
+  //log
+  console.log('updatePost: ' + id);
+
+  try {
+    const client = await db.connect();
+
+    const validatedFields = UpdatePost.safeParse({
+      title_en: formData.get('title_en'),
+      title_ja: formData.get('title_ja'),
+      title_kr: formData.get('title_kr'),
+      title_zh: formData.get('title_zh'),
+      thumbnail_img: formData.get('thumbnail_img'),
+      tags: formData.get('tags'),
+      // content: formData.get('content'),
+    });
+
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+        message: 'Missing Fields. Failed to Update Post.',
+      };
+    }
+
+    const { title_en, title_ja, title_kr, title_zh } = validatedFields.data;
+
+    const updateResult = await Promise.all([
+      updatePost(id, thumbnail_img, title_en, postContent_en, 'en', client),
+      updatePost(id, thumbnail_img, title_ja, postContent_ja, 'ja', client),
+      updatePost(id, thumbnail_img, title_kr, postContent_kr, 'kr', client),
+      updatePost(id, thumbnail_img, title_zh, postContent_zh, 'zh', client),
+    ]);
+  } catch (error) {
+    console.error(error);
     return {
       message: 'Failed to update post',
     };
   }
 
   const urlRegex = /\s/g;
-  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  // TODO: direct to current locale
+  const title_en = formData.get('title_en') as string;
+  const url_title = title_en.toLowerCase().replace(urlRegex, '-');
   const redirectUrl = `/posts/${url_title}/${id}`;
 
   revalidatePath(redirectUrl);

@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { RoundButton, Button } from '../../button';
 import { useFormState } from 'react-dom';
 import { Post } from '@/app/lib/definitions';
-import { updatePost } from '@/app/lib/actions';
+import { State, updatePostWithAllLanguages } from '@/app/lib/actions';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
@@ -26,28 +26,53 @@ interface CloudinaryResult {
 }
 
 export default function PostEditForm({ posts }: { posts: Post[] }) {
-  // log posts
-  console.log(posts);
+  const post_en = posts[0];
+  const post_ja = posts[1];
+  const post_kr = posts[2];
+  const post_zh = posts[3];
 
-  const post = posts[0];
-  
-  const [markdownValue, setMarkdownValue] = useState('');
+  const [markdownValue_en, setMarkdownValue_en] = useState('');
 
-  const handleMarkdownChange = (value: string | undefined) => {
-    setMarkdownValue(value || '');
+  const handleMarkdownChange_en = (value: string | undefined) => {
+    setMarkdownValue_en(value || '');
   };
 
-  const [thumbnailImage, setThumbnailImage] = useState(post.thumbnail_img);
+  const [markdownValue_ja, setMarkdownValue_ja] = useState('');
+
+  const handleMarkdownChange_ja = (value: string | undefined) => {
+    setMarkdownValue_ja(value || '');
+  };
+
+  const [markdownValue_kr, setMarkdownValue_kr] = useState('');
+
+  const handleMarkdownChange_kr = (value: string | undefined) => {
+    setMarkdownValue_kr(value || '');
+  };
+
+  const [markdownValue_zh, setMarkdownValue_zh] = useState('');
+
+  const handleMarkdownChange_zh = (value: string | undefined) => {
+    setMarkdownValue_zh(value || '');
+  };
+
+  const [thumbnailImage, setThumbnailImage] = useState(post_en.thumbnail_img);
 
   const initialState = { message: null, errors: {} };
-  const updatePostWithId = updatePost.bind(
+
+  const updatePostWithId = updatePostWithAllLanguages.bind(
     null,
-    post.id,
+    post_en.id,
     thumbnailImage,
-    markdownValue,
-    'en',
+    markdownValue_en,
+    markdownValue_ja,
+    markdownValue_kr,
+    markdownValue_zh,
   );
-  const [state, dispatch] = useFormState(updatePostWithId, initialState);
+
+  const [state, dispatch] = useFormState<State, FormData>(
+    updatePostWithId,
+    initialState,
+  );
 
   return (
     <form action={dispatch}>
@@ -84,7 +109,7 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
                     open();
                   }
                   return (
-                    <Button type="button" onClick={handleOnClick}>
+                    <Button type="button" onClick={handleOnClick} className="bg-blue-500 hover:bg-blue-400">
                       Upload an Image
                     </Button>
                   );
@@ -103,20 +128,20 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="title" className="mb-2 block text-lg font-medium">
-            Title
+          <label htmlFor="title_en" className="mb-2 block text-lg font-medium">
+            Title (English)
           </label>
           <input
-            id="title"
-            name="title"
+            id="title_en"
+            name="title_en"
             type="text"
-            defaultValue={post.title}
+            defaultValue={post_en.title}
             className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
             aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.title &&
-              state.errors.title.map((error: string) => (
+            {state.errors?.title_en &&
+              state.errors.title_en.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
@@ -125,15 +150,15 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
         </div>
         <div className="mb-4">
           <label htmlFor="content" className="mb-2 block text-base font-medium">
-            Content
+            Content (English)
           </label>
           <MDEditor
-            postContent={post.content}
-            onMarkdownChange={handleMarkdownChange}
+            postContent={post_en.content}
+            onMarkdownChange={handleMarkdownChange_en}
           />
           <div id="content-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.content &&
-              state.errors.content.map((error: string) => (
+            {state.errors?.content_en &&
+              state.errors.content_en.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
@@ -146,9 +171,157 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
             <p className="my-2 text-sm text-red-500">{state.message}</p>
           ) : null}
         </div>
-        <RoundButton type="submit" className="w-full">
-          Save
-        </RoundButton>
+
+        <div className="mb-4">
+          <label htmlFor="title_ja" className="mb-2 block text-lg font-medium">
+            Title (Japanese)
+          </label>
+          <input
+            id="title_ja"
+            name="title_ja"
+            type="text"
+            defaultValue={post_ja.title}
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
+            aria-describedby="title-error"
+          />
+          <div id="title-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.title_ja &&
+              state.errors.title_ja.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="content" className="mb-2 block text-base font-medium">
+            Content (Japanese)
+          </label>
+          <MDEditor
+            postContent={post_ja.content}
+            onMarkdownChange={handleMarkdownChange_ja}
+          />
+          <div id="content-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.content_ja &&
+              state.errors.content_ja.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+
+        <div aria-live="polite" aria-atomic="true">
+          {state.message ? (
+            <p className="my-2 text-sm text-red-500">{state.message}</p>
+          ) : null}
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="title_kr" className="mb-2 block text-lg font-medium">
+            Title (Korean)
+          </label>
+          <input
+            id="title_kr"
+            name="title_kr"
+            type="text"
+            defaultValue={post_kr.title}
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
+            aria-describedby="title-error"
+          />
+          <div id="title-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.title_kr &&
+              state.errors.title_kr.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="content" className="mb-2 block text-base font-medium">
+            Content (Korean)
+          </label>
+          <MDEditor
+            postContent={post_kr.content}
+            onMarkdownChange={handleMarkdownChange_kr}
+          />
+          <div id="content-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.content_kr &&
+              state.errors.content_kr.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        <div aria-live="polite" aria-atomic="true">
+          {state.message ? (
+            <p className="my-2 text-sm text-red-500">{state.message}</p>
+          ) : null}
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="title_zh" className="mb-2 block text-lg font-medium">
+            Title (Chinese)
+          </label>
+          <input
+            id="title_zh"
+            name="title_zh"
+            type="text"
+            defaultValue={post_zh.title}
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
+            aria-describedby="title-error"
+          />
+          <div id="title-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.title_zh &&
+              state.errors.title_zh.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+
+        <div className="mb-4">
+          <label htmlFor="content" className="mb-2 block text-base font-medium">
+            Content (Chinese)
+          </label>
+          <MDEditor
+            postContent={post_zh.content}
+            onMarkdownChange={handleMarkdownChange_zh}
+          />
+          <div id="content-error" aria-live="polite" aria-atomic="true">
+            {state.errors?.content_zh &&
+              state.errors.content_zh.map((error: string) => (
+                <p className="mt-2 text-sm text-red-500" key={error}>
+                  {error}
+                </p>
+              ))}
+          </div>
+        </div>
+        <div aria-live="polite" aria-atomic="true">
+          {state.message ? (
+            <p className="my-2 text-sm text-red-500">{state.message}</p>
+          ) : null}
+        </div>
+      </div>
+      <div className="mt-4 flex flex-row">
+        <div className="w-1/2 px-2">
+          <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-400">
+            Save
+          </Button>
+        </div>
+        <div className="w-1/2 px-2">
+          <Link href="/" className="w-full">
+            <Button
+              type="button"
+              className="w-full bg-red-500 hover:bg-red-400"
+            >
+              Cancel
+            </Button>
+          </Link>
+        </div>
       </div>
     </form>
   );
