@@ -1051,3 +1051,7 @@ img {
   vertical-align: middle !important;
   display: inherit !important;
 }
+
+.markdown>*:not(iframe) {
+  all: revert;
+}
