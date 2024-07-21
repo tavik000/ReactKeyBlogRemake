@@ -10,6 +10,7 @@ export default function PostSection({
     <div className="post-section">
       <div className="divide-line">
         <h1
+        id="blog-title"
           className={`blog-title ${sniglet.className} absolute -top-20 ml-10 text-5xl font-extrabold`}
         >
           Key Blog
