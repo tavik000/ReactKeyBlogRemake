@@ -41,3 +41,4 @@ export type Post = {
   modify_date: Date;
   likes: number;
 };
+
