@@ -9,7 +9,7 @@ export default async function Page({ params }: { params: { id: string } }) {
       fetchPostById(id, 'en'),
       fetchPostById(id, 'ja'),
       fetchPostById(id, 'kr'),
-      fetchPostById(id, 'zh'),
+      fetchPostById(id, 'hk'),
     ]
   );
 
