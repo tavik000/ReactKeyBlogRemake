@@ -38,7 +38,7 @@ export default function Dropdown(props: Props) {
         >
           {menuItems.map((item) => (
             <Link
-              key={item.route}
+              key={`${item.title}-${item.route}`}
               className="justify-left flex items-center rounded-sm px-6 py-1 hover:bg-zinc-300 hover:text-zinc-500"
               href={item?.route || ''}
               onClick={toggle}
