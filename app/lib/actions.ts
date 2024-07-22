@@ -29,11 +29,11 @@ const FormSchema = z.object({
       invalid_type_error: 'Please enter a title (kr).',
     })
     .min(1, { message: 'Please enter a title (kr).' }),
-  title_zh: z
+  title_hk: z
     .string({
-      invalid_type_error: 'Please enter a title (zh).',
+      invalid_type_error: 'Please enter a title (hk).',
     })
-    .min(1, { message: 'Please enter a title (zh).' }),
+    .min(1, { message: 'Please enter a title (hk).' }),
   thumbnail_img: z.string({
     invalid_type_error: 'Please enter a thumbnail image.',
   }),
@@ -55,11 +55,11 @@ const FormSchema = z.object({
       invalid_type_error: 'Please enter content. (kr)',
     })
     .min(1, { message: 'Please enter content. (kr)' }),
-  content_zh: z
+  content_hk: z
     .string({
-      invalid_type_error: 'Please enter content. (zh)',
+      invalid_type_error: 'Please enter content. (hk)',
     })
-    .min(1, { message: 'Please enter content. (zh)' }),
+    .min(1, { message: 'Please enter content. (hk)' }),
   modify_date: z.string(),
 });
 
@@ -77,13 +77,13 @@ export type State = {
     title_en?: string[];
     title_ja?: string[];
     title_kr?: string[];
-    title_zh?: string[];
+    title_hk?: string[];
     thumbnail_img?: string[];
     tags?: string[];
     content_en?: string[];
     content_ja?: string[];
     content_kr?: string[];
-    content_zh?: string[];
+    content_hk?: string[];
   };
   message?: string | null;
 };
@@ -216,7 +216,7 @@ export async function updatePostWithAllLanguages(
   postContent_en: string,
   postContent_ja: string,
   postContent_kr: string,
-  postContent_zh: string,
+  postContent_hk: string,
   prevState: State,
   formData: FormData,
 ) {
@@ -230,13 +230,13 @@ export async function updatePostWithAllLanguages(
       title_en: formData.get('title_en'),
       title_ja: formData.get('title_ja'),
       title_kr: formData.get('title_kr'),
-      title_zh: formData.get('title_zh'),
+      title_hk: formData.get('title_hk'),
       thumbnail_img: formData.get('thumbnail_img'),
       tags: formData.get('tags'),
       content_en: postContent_en,
       content_ja: postContent_ja,
       content_kr: postContent_kr,
-      content_zh: postContent_zh,
+      content_hk: postContent_hk,
     });
 
     if (!validatedFields.success) {
@@ -246,13 +246,13 @@ export async function updatePostWithAllLanguages(
       };
     }
 
-    const { title_en, title_ja, title_kr, title_zh } = validatedFields.data;
+    const { title_en, title_ja, title_kr, title_hk } = validatedFields.data;
 
     const updateResult = await Promise.all([
       updatePost(id, thumbnail_img, title_en, postContent_en, 'en', client),
       updatePost(id, thumbnail_img, title_ja, postContent_ja, 'ja', client),
       updatePost(id, thumbnail_img, title_kr, postContent_kr, 'kr', client),
-      updatePost(id, thumbnail_img, title_zh, postContent_zh, 'zh', client),
+      updatePost(id, thumbnail_img, title_hk, postContent_hk, 'hk', client),
     ]);
   } catch (error) {
     console.error(error);

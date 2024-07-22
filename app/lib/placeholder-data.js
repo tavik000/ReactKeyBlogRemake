@@ -747,7 +747,7 @@ const posts_kr = [
   },
 ];
 
-const posts_zh = [
+const posts_hk = [
   {
     id: "3958dc9e-712f-4377-85e9-fec4b6a6442b",
     title: "範例帖子 1",
@@ -876,6 +876,6 @@ module.exports = {
   posts_en,
   posts_ja,
   posts_kr,
-  posts_zh,
+  posts_hk,
   comments,
 };

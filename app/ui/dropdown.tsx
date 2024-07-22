@@ -1,12 +1,15 @@
 'use client';
+
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { Button } from './button';
 import { GlobeAltIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
+import { usePathname } from 'next/navigation';
 
 export interface MenuItem {
   title: string;
   route?: string;
+  locale?: string;
   children?: MenuItem[];
 }
 
@@ -18,6 +21,8 @@ export default function Dropdown(props: Props) {
   const { item } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const menuItems = item?.children ? item.children : [];
+  const pathname = usePathname();
+  // console.log('pathname: ' + pathname);
 
   const toggle = () => {
     setIsOpen((old) => !old);
@@ -40,7 +45,9 @@ export default function Dropdown(props: Props) {
             <Link
               key={`${item.title}-${item.route}`}
               className="justify-left flex items-center rounded-sm px-6 py-1 hover:bg-zinc-300 hover:text-zinc-500"
-              href={item?.route || ''}
+              href={{
+                pathname: `/${item.locale}`,
+              }}
               onClick={toggle}
             >
               {item.title}
@@ -60,8 +67,3 @@ export default function Dropdown(props: Props) {
   );
 }
 
-function Header() {
-  return (
-    <header className="flex items-center gap-10 bg-zinc-800 px-2 py-4"></header>
-  );
-}

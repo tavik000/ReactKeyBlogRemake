@@ -69,7 +69,7 @@ export async function fetchFilteredPosts(
             thumbnail_img,
             tags,
             create_date
-          FROM posts_jp
+          FROM posts_ja
           WHERE
             title ILIKE ${`%${query}%`} OR
             content ILIKE ${`%${query}%`}
@@ -92,7 +92,8 @@ export async function fetchFilteredPosts(
           ORDER BY create_date DESC
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
-      case 'zh':
+        break;
+      case 'hk':
         posts = await sql<PostCard>`
           SELECT
             id,
@@ -100,13 +101,14 @@ export async function fetchFilteredPosts(
             thumbnail_img,
             tags,
             create_date
-          FROM posts_zh
+          FROM posts_hk
           WHERE
             title ILIKE ${`%${query}%`} OR
             content ILIKE ${`%${query}%`}
           ORDER BY create_date DESC
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
+        break;
       default:
         throw new Error('Unsupported locale.');
     }
@@ -143,7 +145,7 @@ export async function fetchPostsPages(query: string, locale: string) {
         break;
       case 'ja':
         count = await sql`SELECT COUNT(*)
-          FROM posts_jp
+          FROM posts_ja
           WHERE
             title ILIKE ${`%${query}%`} OR
             content ILIKE ${`%${query}%`}
@@ -156,13 +158,15 @@ export async function fetchPostsPages(query: string, locale: string) {
             title ILIKE ${`%${query}%`} OR
             content ILIKE ${`%${query}%`}
         `;
-      case 'zh':
+        break;
+      case 'hk':
         count = await sql`SELECT COUNT(*)
-          FROM posts_zh
+          FROM posts_hk
           WHERE
             title ILIKE ${`%${query}%`} OR
             content ILIKE ${`%${query}%`}
         `;
+        break;
       default:
         throw new Error('Unsupported locale.');
     }
@@ -199,8 +203,8 @@ export async function fetchPostById(id: string, locale: string) {
           WHERE id=${id};
         `;
         break;
-        case 'ja':
-          data = await sql<Post>`
+      case 'ja':
+        data = await sql<Post>`
             SELECT
               id,
               title,
@@ -215,9 +219,9 @@ export async function fetchPostById(id: string, locale: string) {
             FROM posts_ja
             WHERE id=${id};
           `;
-          break;
-        case 'kr':
-          data = await sql<Post>`
+        break;
+      case 'kr':
+        data = await sql<Post>`
             SELECT
               id,
               title,
@@ -232,9 +236,9 @@ export async function fetchPostById(id: string, locale: string) {
             FROM posts_kr
             WHERE id=${id};
           `;
-          break;
-        case 'zh':
-          data = await sql<Post>`
+        break;
+      case 'hk':
+        data = await sql<Post>`
             SELECT
               id,
               title,
@@ -246,17 +250,16 @@ export async function fetchPostById(id: string, locale: string) {
               create_date,
               modify_date,
               likes
-            FROM posts_zh
+            FROM posts_hk
             WHERE id=${id};
           `;
-          break;
+        break;
       default:
         throw new Error('Unsupported locale.');
     }
 
     let post = data.rows[0];
     // console.log('post:', post);
-    
 
     return post;
   } catch (error) {

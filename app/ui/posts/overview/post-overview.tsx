@@ -7,7 +7,7 @@ import { Suspense } from 'react';
 
 export default async function PostOverview({
   searchParams,
-  locale
+  locale,
 }: {
   searchParams?: {
     query?: string;
@@ -17,7 +17,6 @@ export default async function PostOverview({
 }) {
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-
   const totalPages = await fetchPostsPages(query, locale);
 
   return (

@@ -48,18 +48,22 @@ const menuItems: MenuItem[] = [
       {
         title: 'English',
         route: '/products/hinkle-horns',
+        locale: 'en',
       },
       {
         title: '日本語',
         route: '/products/hinkle-horns',
+        locale: 'ja',
       },
       {
         title: '한국어',
         route: '/products/doozers',
+        locale: 'kr',
       },
       {
         title: '繁體中文',
         route: '/products/zizzer-zazzers',
+        locale: 'zh-HK',
       },
     ],
   },

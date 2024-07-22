@@ -4,7 +4,7 @@ const {
   posts_en,
   posts_ja,
   posts_kr,
-  posts_zh,
+  posts_hk: posts_hk,
   users,
   comments,
 } = require('../app/lib/placeholder-data.js');
@@ -118,8 +118,8 @@ async function seedPosts(client, locale) {
       case 'ja':
         posts = posts_ja;
         break;
-      case 'zh':
-        posts = posts_zh;
+      case 'hk':
+        posts = posts_hk;
         break;
       case 'kr':
         posts = posts_kr;
@@ -205,7 +205,7 @@ async function main() {
   await seedPostTags(client);
   await seedPosts(client, 'en');
   await seedPosts(client, 'ja');
-  await seedPosts(client, 'zh');
+  await seedPosts(client, 'hk');
   await seedPosts(client, 'kr');
   await seedComments(client);
 

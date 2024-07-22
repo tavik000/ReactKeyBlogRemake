@@ -29,7 +29,7 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
   const post_en = posts[0];
   const post_ja = posts[1];
   const post_kr = posts[2];
-  const post_zh = posts[3];
+  const post_hk = posts[3];
 
   const [markdownValue_en, setMarkdownValue_en] = useState('');
 
@@ -49,10 +49,10 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
     setMarkdownValue_kr(value || '');
   };
 
-  const [markdownValue_zh, setMarkdownValue_zh] = useState('');
+  const [markdownValue_hk, setMarkdownValue_hk] = useState('');
 
-  const handleMarkdownChange_zh = (value: string | undefined) => {
-    setMarkdownValue_zh(value || '');
+  const handleMarkdownChange_hk = (value: string | undefined) => {
+    setMarkdownValue_hk(value || '');
   };
 
   const [thumbnailImage, setThumbnailImage] = useState(post_en.thumbnail_img);
@@ -66,7 +66,7 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
     markdownValue_en,
     markdownValue_ja,
     markdownValue_kr,
-    markdownValue_zh,
+    markdownValue_hk,
   );
 
   const [state, dispatch] = useFormState<State, FormData>(
@@ -249,20 +249,20 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="title_zh" className="mb-2 block text-lg font-medium">
+          <label htmlFor="title_hk" className="mb-2 block text-lg font-medium">
             Title (Traditional Chinese)
           </label>
           <input
-            id="title_zh"
-            name="title_zh"
+            id="title_hk"
+            name="title_hk"
             type="text"
-            defaultValue={post_zh.title}
+            defaultValue={post_hk.title}
             className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
             aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.title_zh &&
-              state.errors.title_zh.map((error: string) => (
+            {state.errors?.title_hk &&
+              state.errors.title_hk.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>
@@ -275,12 +275,12 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
             Content (Traditional Chinese)
           </label>
           <MDEditor
-            postContent={post_zh.content}
-            onMarkdownChange={handleMarkdownChange_zh}
+            postContent={post_hk.content}
+            onMarkdownChange={handleMarkdownChange_hk}
           />
           <div id="content-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.content_zh &&
-              state.errors.content_zh.map((error: string) => (
+            {state.errors?.content_hk &&
+              state.errors.content_hk.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>

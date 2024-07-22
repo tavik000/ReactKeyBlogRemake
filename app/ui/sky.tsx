@@ -6,6 +6,11 @@ import PostHeader from './posts/general/post-header';
 import { set } from 'zod';
 
 export default function Sky({ locale }: { locale: string }) {
+
+  if (locale === 'zh-HK') {
+    locale = 'hk';
+  }
+
   const skyBackgroundRef = useRef<HTMLDivElement | null>(null);
 
   const [isWaddleActive, setWaddleActive] = useState<boolean>(false);
@@ -50,7 +55,8 @@ export default function Sky({ locale }: { locale: string }) {
 
     const handleResize = () => {
       if (!skyBackgroundRef.current) {
-        throw new Error('skyBackgroundRef is not defined');
+        console.error('skyBackgroundRef is not defined');
+        return;
       }
 
       if (!waddleDeeRef.current) {
@@ -67,7 +73,8 @@ export default function Sky({ locale }: { locale: string }) {
 
     const checkAndToggleSit = () => {
       if (!skyBackgroundRef.current) {
-        throw new Error('skyBackgroundRef is not defined');
+        console.error('skyBackgroundRef is not defined');
+        return;
       }
 
       if (!waddleDeeRef.current) {
