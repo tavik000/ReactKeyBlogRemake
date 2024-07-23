@@ -33,3 +33,18 @@ export function GetLangFromLocale(locale: string) {
       return 'en';
   }
 }
+
+export function GetLocaleFromLang(lang: string) {
+  switch (lang) {
+    case 'en':
+      return 'en';
+    case 'ja':
+      return 'ja';
+    case 'kr':
+      return 'kr';
+    case 'zh-HK':
+      return 'hk';
+    default:
+      return 'en';
+  }
+}

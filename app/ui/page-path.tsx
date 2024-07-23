@@ -2,7 +2,7 @@
 
 import { homepageURL, GetLangFromLocale } from '@/app/lib/constants';
 import Link from 'next/link';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { DictStructure } from '../components/localization/dict-store';
 import { get } from 'http';
 

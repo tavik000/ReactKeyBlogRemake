@@ -1,4 +1,5 @@
 import PostOverview from '@/app/ui/posts/overview/post-overview';
+import { GetLocaleFromLang } from '../lib/constants';
 
 export default function Page({
   searchParams,
@@ -10,10 +11,8 @@ export default function Page({
   };
   params: { lang: string };
 }) {
-  let locale = params.lang;
-  if (locale === 'zh-HK') {
-    locale = 'hk';
-  }
+  const locale = GetLocaleFromLang(params.lang);
+
   return (
     <main className="flex min-h-screen flex-col">
       <PostOverview searchParams={searchParams} locale={locale} />

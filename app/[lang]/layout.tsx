@@ -5,6 +5,7 @@ import Sky from '@/app/ui/sky';
 import PostSection from '@/app/ui/posts/general/post-section';
 import { getDictionary } from '@/app/components/localization/dictionaries';
 import { DictStructure } from '@/app/components/localization/dict-store';
+import { GetLocaleFromLang } from '../lib/constants';
 
 export const experimental_ppr = true;
 
@@ -25,10 +26,7 @@ export default async function RootLayout({
   params: { lang: string };
 }) {
   const lang = params.lang;
-  let locale = lang;
-  if (locale === 'zh-HK') {
-    locale = 'hk';
-  }
+  const locale = GetLocaleFromLang(lang);
   const dict = (await getDictionary(locale)) as DictStructure;
 
   return (
