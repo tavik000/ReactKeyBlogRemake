@@ -35,7 +35,7 @@ export default async function RootLayout({
     <html lang={lang}>
       <body className={`${inter.className} antialiased`}>
         <Sky locale={locale} dict={dict} />
-        <PostSection dict={dict}>{children}</PostSection>
+        <PostSection locale={locale} dict={dict}>{children}</PostSection>
       </body>
     </html>
   );

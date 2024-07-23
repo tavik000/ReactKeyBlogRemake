@@ -1,19 +1,29 @@
 'use client';
 
-import { homepageURL } from '@/app/lib/constants';
+import { homepageURL, GetLangFromLocale } from '@/app/lib/constants';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { DictStructure } from '../components/localization/dict-store';
+import { get } from 'http';
 
-export function PagePath({ dict }: { dict: DictStructure }) {
+export function PagePath({
+  locale,
+  dict,
+}: {
+  locale: string;
+  dict: DictStructure;
+}) {
   const pathname = usePathname();
   const pathArray = pathname.split('/').filter(Boolean);
   let postTitle: string = '';
 
-  if (pathArray.length >= 3) {
-    pathArray[1] = pathArray[1].replace(/-/g, ' ');
-    postTitle = pathArray[1];
+  if (pathArray.length >= 4) {
+    pathArray[2] = pathArray[2].replace(/-/g, ' ');
+    postTitle = decodeURIComponent(pathArray[2]);
   }
+
+  const lang = GetLangFromLocale(locale);
+  const blogUrl = `/${lang}`;
 
   return (
     <div className="page-path relative z-10 mb-0 flex justify-center py-3">
@@ -23,7 +33,7 @@ export function PagePath({ dict }: { dict: DictStructure }) {
         </PagePathItem>
         {pathArray.length >= 3 ? (
           <div className="flex flex-row">
-            <PagePathItem url="/" shouldShowArrow={true} isPost={false}>
+            <PagePathItem url={blogUrl} shouldShowArrow={true} isPost={false}>
               {dict.overview.blog}
             </PagePathItem>
             <PagePathItem url="" shouldShowArrow={false} isPost={true}>
@@ -31,7 +41,7 @@ export function PagePath({ dict }: { dict: DictStructure }) {
             </PagePathItem>
           </div>
         ) : (
-          <PagePathItem url="/" shouldShowArrow={false} isPost={false}>
+          <PagePathItem url={blogUrl} shouldShowArrow={false} isPost={false}>
             {dict.overview.blog}
           </PagePathItem>
         )}

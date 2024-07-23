@@ -2,16 +2,25 @@ import Link from 'next/link';
 import Image from 'next/image';
 import PostTag from '../general/post-tag';
 import { PostCard } from '../../../lib/definitions';
+import { GetLangFromLocale } from '@/app/lib/constants';
 
-export default function PostItem({ post }: { post: PostCard }) {
+export default function PostItem({
+  locale,
+  post,
+}: {
+  locale: string;
+  post: PostCard;
+}) {
   const urlRegex = /\s/g;
   const url_title = post.title.toLowerCase().replace(urlRegex, '-');
+
+  const lang = GetLangFromLocale(locale);
 
   return (
     <li className="post-item mb-6 flex h-400px w-1/3 max-w-400px basis-1/3 list-none flex-col px-11px">
       <article className="block h-full flex-row">
         <Link
-          href={`/posts/${url_title}/${post.id}`}
+          href={`${lang}/posts/${url_title}/${post.id}`}
           className="article-link flex h-full flex-row"
         >
           {/* <Link href={`/posts/${post.id}`} className="article-link flex flex-row h-full"> */}

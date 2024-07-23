@@ -5,9 +5,11 @@ import { PagePath } from '@/app/ui/page-path';
 export default function PostSection({
   children,
   dict,
+  locale
 }: {
   children: React.ReactNode;
   dict: DictStructure;
+  locale: string;
 }) {
   return (
     <div className="post-section">
@@ -20,7 +22,7 @@ export default function PostSection({
         </h1>
       </div>
       <span className="bg"></span>
-      <PagePath dict={dict} />
+      <PagePath locale={locale} dict={dict} />
       {children}
     </div>
   );
