@@ -6,21 +6,21 @@ import { Button } from './button';
 import { GlobeAltIcon, ChevronDownIcon } from '@heroicons/react/24/outline';
 import { usePathname } from 'next/navigation';
 
-export interface MenuItem {
+export interface LanguageItem {
   title: string;
-  route?: string;
   locale?: string;
-  children?: MenuItem[];
+  isCurrentLocale?: boolean;
+  children?: LanguageItem[];
 }
 
 interface Props {
-  item: MenuItem;
+  item: LanguageItem;
 }
 
 export default function Dropdown(props: Props) {
   const { item } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const menuItems = item?.children ? item.children : [];
+  const languageItems = item?.children ? item.children : [];
   const pathname = usePathname();
   // console.log('pathname: ' + pathname);
 
@@ -33,26 +33,39 @@ export default function Dropdown(props: Props) {
   return (
     <>
       <div className="relative">
-        <button className="flex items-center hover:text-orange-500 group" onClick={toggle}>
-          <GlobeAltIcon className="h-6 w-6 text-gray-500 group-hover:text-orange-500"/>
+        <button
+          className="group flex items-center hover:text-orange-500"
+          onClick={toggle}
+        >
+          <GlobeAltIcon className="h-6 w-6 text-gray-500 group-hover:text-orange-500" />
           <div className="ml-2">{item.title}</div>
-          <ChevronDownIcon className="ml-2 h-4 w-4 text-gray-500 group-hover:text-orange-500"/>
+          <ChevronDownIcon className="ml-2 h-4 w-4 text-gray-500 group-hover:text-orange-500" />
         </button>
         <div
-          className={`absolute shadow-lg -inset-x-5 inset-y-10 z-30 flex min-h-[210px] w-40 flex-col rounded-md bg-white py-4 ${transClass}`}
+          className={`absolute -inset-x-5 inset-y-10 z-30 flex min-h-[210px] w-40 flex-col rounded-md bg-white py-4 shadow-lg ${transClass}`}
         >
-          {menuItems.map((item) => (
-            <Link
-              key={`${item.title}-${item.route}`}
-              className="justify-left flex items-center rounded-sm px-6 py-1 hover:bg-zinc-300 hover:text-zinc-500"
-              href={{
-                pathname: `/${item.locale}`,
-              }}
-              onClick={toggle}
-            >
-              {item.title}
-            </Link>
-          ))}
+          {languageItems.map((item) =>
+            item.isCurrentLocale ? (
+              <div
+                key={`${item.title}-${item.locale}`}
+                className="justify-left flex items-center rounded-sm px-6 py-1"
+              >
+                {item.title}
+                <GlobeAltIcon className="w-6, ml-6 h-6 text-gray-500" />
+              </div>
+            ) : (
+              <Link
+                key={`${item.title}-${item.locale}`}
+                className="justify-left flex items-center rounded-sm px-6 py-1 hover:bg-zinc-300 hover:text-zinc-500"
+                href={{
+                  pathname: `/${item.locale}`,
+                }}
+                onClick={toggle}
+              >
+                {item.title}
+              </Link>
+            ),
+          )}
         </div>
       </div>
       {isOpen ? (
@@ -66,4 +79,3 @@ export default function Dropdown(props: Props) {
     </>
   );
 }
-

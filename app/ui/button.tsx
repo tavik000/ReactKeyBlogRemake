@@ -5,7 +5,8 @@ import {
   UserCircleIcon,
   ArrowUpOnSquareIcon,
 } from '@heroicons/react/24/outline';
-import Dropdown, { MenuItem } from './dropdown';
+import Dropdown, { LanguageItem } from './dropdown';
+import { GetLanguageName } from '../lib/constants';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -41,55 +42,40 @@ export function RoundButton({ children, className, ...rest }: ButtonProps) {
   );
 }
 
-const menuItems: MenuItem[] = [
-  {
-    title: 'English',
+export function LanguageButton({ locale }: { locale: string }) {
+  const languageItems: LanguageItem = {
+    title: GetLanguageName(locale),
+    locale: locale,
+    isCurrentLocale: true,
     children: [
       {
         title: 'English',
-        route: '/products/hinkle-horns',
         locale: 'en',
+        isCurrentLocale: locale === 'en',
       },
       {
         title: '日本語',
-        route: '/products/hinkle-horns',
         locale: 'ja',
+        isCurrentLocale: locale === 'ja',
       },
       {
         title: '한국어',
-        route: '/products/doozers',
         locale: 'kr',
+        isCurrentLocale: locale === 'kr',
       },
       {
         title: '繁體中文',
-        route: '/products/zizzer-zazzers',
         locale: 'zh-HK',
+        isCurrentLocale: locale === 'hk',
       },
     ],
-  },
-];
-
-export function LanguageButton({ href }: { href: string }) {
+  };
   return (
     <>
       <div className="mr-16 flex items-center gap-8 text-black ">
-        {menuItems.map((item) => {
-          return item.hasOwnProperty('children') ? (
-            <Dropdown item={item} />
-          ) : (
-            <Link className="hover:text-orange-500" href={item?.route || ''}>
-              {item.title}
-            </Link>
-          );
-        })}
+        <Dropdown item={languageItems} />
       </div>
     </>
-    // <Link
-    //   className="my-2 flex h-10 w-10 items-center justify-center rounded-md"
-    //   href={href}
-    // >
-    //   <GlobeAltIcon className="h-5 w-5 text-gray-500" />
-    // </Link>
   );
 }
 
