@@ -20,7 +20,7 @@ export default function PostItem({
     <li className="post-item mb-6 flex h-400px w-1/3 max-w-400px basis-1/3 list-none flex-col px-11px">
       <article className="block h-full flex-row">
         <Link
-          href={`${lang}/posts/${url_title}/${post.id}`}
+          href={`${lang}/posts/${url_title}/${post.id}#blog-title`}
           className="article-link flex h-full flex-row"
         >
           {/* <Link href={`/posts/${post.id}`} className="article-link flex flex-row h-full"> */}
