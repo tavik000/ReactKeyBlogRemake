@@ -3,7 +3,7 @@
 import { homepageURL, GetLangFromLocale } from '@/app/lib/constants';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { DictStructure } from '../components/localization/dict-store';
+import { DictStructure } from '@/app/components/localization/dict-store';
 
 export function PagePath({
   locale,

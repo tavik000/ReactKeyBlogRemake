@@ -5,7 +5,8 @@ import Sky from '@/app/ui/sky';
 import PostSection from '@/app/ui/posts/general/post-section';
 import { getDictionary } from '@/app/components/localization/dictionaries';
 import { DictStructure } from '@/app/components/localization/dict-store';
-import { GetLocaleFromLang } from '../lib/constants';
+import { GetLocaleFromLang } from '@/app/lib/constants';
+import { Post } from '@/app/lib/definitions';
 
 export const experimental_ppr = true;
 
@@ -33,7 +34,9 @@ export default async function RootLayout({
     <html lang={lang}>
       <body className={`${inter.className} antialiased`}>
         <Sky locale={locale} dict={dict} />
-        <PostSection locale={locale} dict={dict}>{children}</PostSection>
+        <PostSection locale={locale} dict={dict}>
+          {children}
+        </PostSection>
       </body>
     </html>
   );
