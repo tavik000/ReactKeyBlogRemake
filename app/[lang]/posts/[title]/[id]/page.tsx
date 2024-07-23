@@ -1,4 +1,8 @@
-import { GetLanguageName, GetLocaleFromLang, keyTwitterId } from '@/app/lib/constants';
+import {
+  GetLanguageName,
+  GetLocaleFromLang,
+  keyTwitterId,
+} from '@/app/lib/constants';
 import { Metadata } from 'next';
 import { fetchPostById } from '@/app/lib/data';
 import Image from 'next/image';
@@ -34,7 +38,10 @@ export default async function Page({
       <PostContentContainer>
         <div className="mb-12 flex flex-col">
           <AuthorInfo post={post} />
-          <h1 className="mt-2 flex text-28px font-semibold leading-normal">
+          <h1
+            id="post-title"
+            className="mt-2 flex text-28px font-semibold leading-normal"
+          >
             {post.title}
           </h1>
           <span className="3/5 mt-2 flex flex-wrap justify-start">

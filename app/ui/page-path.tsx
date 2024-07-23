@@ -4,7 +4,6 @@ import { homepageURL, GetLangFromLocale } from '@/app/lib/constants';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { DictStructure } from '../components/localization/dict-store';
-import { get } from 'http';
 
 export function PagePath({
   locale,
@@ -17,7 +16,8 @@ export function PagePath({
   const pathArray = pathname.split('/').filter(Boolean);
   let postTitle: string = '';
 
-  if (pathArray.length >= 4) {
+  const isOnPost = pathArray.length >= 4;
+  if (isOnPost) {
     pathArray[2] = pathArray[2].replace(/-/g, ' ');
     postTitle = decodeURIComponent(pathArray[2]);
   }

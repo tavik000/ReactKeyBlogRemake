@@ -22,7 +22,7 @@ export default function Dropdown(props: Props) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const languageItems = item?.children ? item.children : [];
   const pathname = usePathname();
-  // console.log('pathname: ' + pathname);
+  const pathWithoutLocale = pathname.split('/').slice(2).join('/');
 
   const toggle = () => {
     setIsOpen((old) => !old);
@@ -58,7 +58,7 @@ export default function Dropdown(props: Props) {
                 key={`${item.title}-${item.locale}`}
                 className="justify-left flex items-center rounded-sm px-6 py-1 hover:bg-zinc-300 hover:text-zinc-500"
                 href={{
-                  pathname: `/${item.locale}`,
+                  pathname: `/${item.locale}/${pathWithoutLocale}`,
                 }}
                 onClick={toggle}
               >
