@@ -3,10 +3,6 @@ const removeImports = require('next-remove-imports')();
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  i18n: {
-    locales: ['en-US', 'ja-JP', 'zh-HK', 'ko-KR'],
-    defaultLocale: 'en-US',
-  },
   images: {
     remotePatterns: [
       {
