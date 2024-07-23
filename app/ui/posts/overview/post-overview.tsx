@@ -4,6 +4,8 @@ import PostWrapper from './post-wrapper';
 import Pagination from './pagination';
 import { fetchPostsPages } from '@/app/lib/data';
 import { Suspense } from 'react';
+import { DictStructure } from '@/app/components/localization/dict-store';
+import { getDictionary } from '@/app/components/localization/dictionaries';
 
 export default async function PostOverview({
   searchParams,
@@ -18,11 +20,12 @@ export default async function PostOverview({
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchPostsPages(query, locale);
+  const dict = (await getDictionary(locale)) as DictStructure;
 
   return (
     <>
       <div className="post-overview">
-        <PostCategory />
+        <PostCategory dict={dict}/>
         {/* TODO: add Suspense */}
         <PostWrapper query={query} currentPage={currentPage} locale={locale} />
         <Suspense>

@@ -3,8 +3,9 @@
 import { homepageURL } from '@/app/lib/constants';
 import Link from 'next/link';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { DictStructure } from '../components/localization/dict-store';
 
-export function PagePath() {
+export function PagePath({ dict }: { dict: DictStructure }) {
   const pathname = usePathname();
   const pathArray = pathname.split('/').filter(Boolean);
   let postTitle: string = '';
@@ -16,14 +17,14 @@ export function PagePath() {
 
   return (
     <div className="page-path relative z-10 mb-0 flex justify-center py-3">
-      <div className="flex flex-row py-1 px-2.5 mx-auto w-10/12 max-w-1140px basis-2/3 list-none rounded-md bg-white">
+      <div className="mx-auto flex w-10/12 max-w-1140px basis-2/3 list-none flex-row rounded-md bg-white px-2.5 py-1">
         <PagePathItem url={homepageURL} shouldShowArrow={true} isPost={false}>
-          Key Homepage
+          {dict.overview.homepage}
         </PagePathItem>
         {pathArray.length >= 3 ? (
           <div className="flex flex-row">
             <PagePathItem url="/" shouldShowArrow={true} isPost={false}>
-              Blog
+              {dict.overview.blog}
             </PagePathItem>
             <PagePathItem url="" shouldShowArrow={false} isPost={true}>
               {postTitle}
@@ -31,7 +32,7 @@ export function PagePath() {
           </div>
         ) : (
           <PagePathItem url="/" shouldShowArrow={false} isPost={false}>
-            Blog
+            {dict.overview.blog}
           </PagePathItem>
         )}
       </div>

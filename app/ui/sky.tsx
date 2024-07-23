@@ -4,8 +4,9 @@ import { WaddleDee } from './waddle-dee';
 import React, { useState, useRef, useEffect } from 'react';
 import PostHeader from './posts/general/post-header';
 import { set } from 'zod';
+import { DictStructure } from '../components/localization/dict-store';
 
-export default function Sky({ locale }: { locale: string }) {
+export default function Sky({ locale, dict }: { locale: string, dict: DictStructure }) {
 
   if (locale === 'zh-HK') {
     locale = 'hk';
@@ -116,7 +117,7 @@ export default function Sky({ locale }: { locale: string }) {
   return (
     <>
       <header>
-        <PostHeader locale={locale} groundPosHeight={groundPosHeight} />
+        <PostHeader locale={locale} dict={dict} groundPosHeight={groundPosHeight} />
       </header>
       <main className="flex min-h-screen flex-col">
         <WaddleDee

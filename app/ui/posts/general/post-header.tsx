@@ -5,6 +5,8 @@ import { Suspense, useEffect, useState } from 'react';
 import { sniglet } from '@/app/ui/fonts';
 import Link from 'next/link';
 import { homepageURL } from '@/app/lib/constants';
+import { DictStructure } from '@/app/components/localization/dict-store';
+
 
 function useScrollDirection() {
   const [scrollDirection, setScrollDirection] = useState<null | 'down' | 'up'>(
@@ -45,9 +47,11 @@ function useScrollDirection() {
 export default function PostHeader({
   locale,
   groundPosHeight,
+  dict,
 }: {
   locale: string;
   groundPosHeight: number;
+  dict: DictStructure;
 }) {
   const { scrollDirection, lastScrollY, isLoaded } = useScrollDirection();
 
@@ -66,7 +70,7 @@ export default function PostHeader({
           Key
         </Link>
         <Suspense>
-          <PostSearch placeholder="Search posts..." />
+          <PostSearch placeholder={dict.header.searchPost} />
         </Suspense>
       </div>
       <div className="flex w-1/2 flex-row justify-end">

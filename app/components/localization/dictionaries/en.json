@@ -1,0 +1,10 @@
+{
+  "header": {
+    "searchPost": "Search posts..."
+  },
+  "overview": {
+    "homepage": "Key Homepage",
+    "blog": "Blog"
+  },
+  "category": "CATEGORY"
+}
