@@ -1,4 +1,4 @@
-import { keyTwitterId } from '@/app/lib/constants';
+import { GetLanguageName, GetLocaleFromLang, keyTwitterId } from '@/app/lib/constants';
 import { Metadata } from 'next';
 import { fetchPostById } from '@/app/lib/data';
 import Image from 'next/image';
@@ -13,12 +13,21 @@ export const metadata: Metadata = {
   title: 'post',
 };
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({
+  params,
+}: {
+  params: {
+    lang: string;
+    id: string;
+  };
+}) {
   const id = params.id;
-  const postResults = await Promise.all([fetchPostById(id, 'en')]);
+  const locale = GetLocaleFromLang(params.lang);
+  const postResults = await Promise.all([fetchPostById(id, locale)]);
   const post = postResults[0];
 
-  // TODO: not found
+
+  // TODO: post not found
 
   return (
     <main>
