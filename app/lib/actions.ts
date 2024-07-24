@@ -1,5 +1,5 @@
+'use server';
 import { GetLangFromLocale } from '@/app/lib/constants';
-('use server');
 
 import { z } from 'zod';
 import { sql, VercelPoolClient } from '@vercel/postgres';
