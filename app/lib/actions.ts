@@ -265,10 +265,24 @@ export async function updatePostWithAllLanguages(
 
   const lang = GetLangFromLocale(currentLocale);
   const urlRegex = /\s/g;
-  // TODO: direct to current locale
-  const title_en = formData.get('title_en') as string;
-  const url_title = title_en.toLowerCase().replace(urlRegex, '-');
-  const redirectUrl = `${lang}/posts/${url_title}/${id}#blog-title`;
+  let title = formData.get('title_en') as string;
+  switch (currentLocale) {
+    case 'en':
+      title = formData.get('title_en') as string;
+      break;
+    case 'ja':
+      title = encodeURI(formData.get('title_ja') as string);
+      break;
+    case 'kr':
+      title = encodeURI(formData.get('title_kr') as string);
+      break;
+    case 'hk':
+      title = encodeURI(formData.get('title_hk') as string);
+      break;
+  }
+
+  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const redirectUrl = `/${lang}/posts/${url_title}/${id}`;
 
   revalidatePath(redirectUrl);
   redirect(redirectUrl);

@@ -70,7 +70,7 @@ export default function PostHeader({
           Key
         </Link>
         <Suspense>
-          <PostSearch placeholder={dict.header.searchPost} />
+          <PostSearch locale={locale} placeholder={dict.header.searchPost} />
         </Suspense>
       </div>
       <div className="flex w-1/2 flex-row justify-end">

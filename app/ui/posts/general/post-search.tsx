@@ -4,11 +4,20 @@ import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
 import { Suspense } from 'react';
+import { GetLangFromLocale } from '@/app/lib/constants';
 
-export default function PostSearch({ placeholder }: { placeholder: string }) {
+export default function PostSearch({
+  locale,
+  placeholder,
+}: {
+  locale: string;
+  placeholder: string;
+}) {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const pathname = usePathname();
+
+  const lang = GetLangFromLocale(locale);
 
   const handleSearch = useDebouncedCallback((term) => {
     console.log(`Searching... ${term}`);
@@ -22,8 +31,9 @@ export default function PostSearch({ placeholder }: { placeholder: string }) {
     } else {
       params.delete('query');
     }
-    replace(`/?${params.toString()}`);
+    replace(`${lang}/?${params.toString()}`);
   }, 300);
+  
 
   return (
     <div className="relative z-auto my-2 ml-6 flex h-10 max-h-16 max-w-sm flex-1 flex-shrink-0 rounded-full py-0.5">
