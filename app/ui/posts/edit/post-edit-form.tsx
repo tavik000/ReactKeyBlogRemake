@@ -13,6 +13,7 @@ import { useState } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import * as commands from '@uiw/react-md-editor/commands'; //TODO
 import { set } from 'zod'; //TODO
+import { GetLangFromLocale } from '@/app/lib/constants';
 const { db } = require('@vercel/postgres');
 
 const MDEditor = dynamic(() => import('../../../components/MdEditor'), {
@@ -25,7 +26,14 @@ interface CloudinaryResult {
   secure_url: string;
 }
 
-export default function PostEditForm({ posts }: { posts: Post[] }) {
+export default function PostEditForm({
+  locale,
+  posts,
+}: {
+  locale: string;
+  posts: Post[];
+}) {
+  const lang = GetLangFromLocale(locale);
   const post_en = posts[0];
   const post_ja = posts[1];
   const post_kr = posts[2];
@@ -303,7 +311,12 @@ export default function PostEditForm({ posts }: { posts: Post[] }) {
           </Button>
         </div>
         <div className="w-1/2 px-2">
-          <Link href="/" className="w-full">
+          <Link
+            href={{
+              pathname: `/${lang}`,
+            }}
+            className="w-full"
+          >
             <Button
               type="button"
               className="w-full bg-red-500 hover:bg-red-400"

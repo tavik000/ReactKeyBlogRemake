@@ -1,8 +1,10 @@
 import { fetchPostById } from '@/app/lib/data';
 import PostContentContainer from '@/app/ui/posts/view/post-content-container';
 import PostEditForm from '@/app/ui/posts/edit/post-edit-form';
+import { GetLocaleFromLang } from '@/app/lib/constants';
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page({ params }: { params: { lang:string, id: string } }) {
+  const locale = GetLocaleFromLang(params.lang);
   const id = params.id;
   const posts = await Promise.all(
     [
@@ -23,7 +25,7 @@ export default async function Page({ params }: { params: { id: string } }) {
               <h1 className="mb-6 mt-2 flex text-28px font-semibold leading-normal">
                 Edit
               </h1>
-              <PostEditForm posts={posts} />
+              <PostEditForm locale={locale} posts={posts} />
             </div>
           </div>
         </div>
