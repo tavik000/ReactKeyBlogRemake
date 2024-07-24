@@ -1,4 +1,5 @@
-'use server';
+import { GetLangFromLocale } from '@/app/lib/constants';
+('use server');
 
 import { z } from 'zod';
 import { sql, VercelPoolClient } from '@vercel/postgres';
@@ -211,6 +212,7 @@ export async function updatePost(
 }
 
 export async function updatePostWithAllLanguages(
+  currentLocale: string,
   id: string,
   thumbnail_img: string,
   postContent_en: string,
@@ -261,11 +263,12 @@ export async function updatePostWithAllLanguages(
     };
   }
 
+  const lang = GetLangFromLocale(currentLocale);
   const urlRegex = /\s/g;
   // TODO: direct to current locale
   const title_en = formData.get('title_en') as string;
   const url_title = title_en.toLowerCase().replace(urlRegex, '-');
-  const redirectUrl = `/posts/${url_title}/${id}`;
+  const redirectUrl = `${lang}/posts/${url_title}/${id}#blog-title`;
 
   revalidatePath(redirectUrl);
   redirect(redirectUrl);

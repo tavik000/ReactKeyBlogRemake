@@ -69,6 +69,7 @@ export default function PostEditForm({
 
   const updatePostWithId = updatePostWithAllLanguages.bind(
     null,
+    locale,
     post_en.id,
     thumbnailImage,
     markdownValue_en,
