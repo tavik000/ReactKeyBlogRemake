@@ -7,7 +7,7 @@ import { Metadata } from 'next';
 import { fetchPostById } from '@/app/lib/data';
 import Image from 'next/image';
 import Link from 'next/link';
-import PostTag from '@/app/ui/posts/general/post-tag';
+import { PostTagItem } from '@/app/ui/posts/general/post-tag';
 import PostInteraction from '@/app/ui/posts/view/post-interaction';
 import { Post } from '@/app/lib/definitions';
 import PostContent from '@/app/ui/posts/view/post-content';
@@ -30,9 +30,6 @@ export default async function Page({
   const postResults = await Promise.all([fetchPostById(id, locale)]);
   const post = postResults[0];
 
-
-
-
   // TODO: post not found
 
   return (
@@ -48,7 +45,12 @@ export default async function Page({
           </h1>
           <span className="3/5 mt-2 flex flex-wrap justify-start">
             {post.tags.map((tag) => (
-              <PostTag key={tag}>{tag}</PostTag>
+              <PostTagItem
+                key={tag}
+                locale={locale}
+                tag={tag}
+                isLabel={true}
+              />
             ))}
           </span>
           <PostDate post={post} />

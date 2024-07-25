@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import PostTag from '../general/post-tag';
-import { PostCard } from '../../../lib/definitions';
+import { PostTagItem } from '@/app/ui/posts/general/post-tag';
+import { PostCard } from '@/app/lib/definitions';
 import { GetLangFromLocale } from '@/app/lib/constants';
 
 export default function PostItem({
@@ -47,7 +47,13 @@ export default function PostItem({
               </span>
               <span className="flex w-3/5 flex-wrap justify-end">
                 {post.tags.map((tag) => (
-                  <PostTag key={tag}>{tag}</PostTag>
+                  <PostTagItem
+                    key={tag}
+                    locale={locale}
+                    tag={tag}
+                    isLabel={true}
+                    isClickable={false}
+                  />
                 ))}
               </span>
             </span>

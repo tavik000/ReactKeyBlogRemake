@@ -23,19 +23,34 @@ export default async function PostCategory({
           <div className="flex flex-col">
             <div className="flex flex-row">
               <ul className="w-80">
-                <PostTagItem locale={locale} tag="All" />
+                <PostTagItem locale={locale} tag="All" isLabel={false} />
                 {firstPart.map((tag) => (
-                  <PostTagItem key={tag} locale={locale} tag={tag} />
+                  <PostTagItem
+                    key={tag}
+                    locale={locale}
+                    tag={tag}
+                    isLabel={false}
+                  />
                 ))}
               </ul>
               <ul className="w-80">
                 {secondPart.map((tag) => (
-                  <PostTagItem key={tag} locale={locale} tag={tag} />
+                  <PostTagItem
+                    key={tag}
+                    locale={locale}
+                    tag={tag}
+                    isLabel={false}
+                  />
                 ))}
               </ul>
               <ul className="w-80">
                 {thirdPart.map((tag) => (
-                  <PostTagItem key={tag} locale={locale} tag={tag} />
+                  <PostTagItem
+                    key={tag}
+                    locale={locale}
+                    tag={tag}
+                    isLabel={false}
+                  />
                 ))}
               </ul>
             </div>
@@ -45,4 +60,3 @@ export default async function PostCategory({
     </div>
   );
 }
-

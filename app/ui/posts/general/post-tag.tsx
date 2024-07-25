@@ -1,8 +1,8 @@
 'use client';
 import { GetLangFromLocale } from '@/app/lib/constants';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function PostTag({children}: {children: React.ReactNode}) {
+export default function PostTag({ children }: { children: React.ReactNode }) {
   return (
     <span className="static mb-5px ml-5px inline-block w-auto rounded-sm bg-orange-500 px-1em text-center text-13px/[1.5] font-normal text-white">
       {children}
@@ -10,7 +10,17 @@ export default function PostTag({children}: {children: React.ReactNode}) {
   );
 }
 
-export const PostTagItem = ({ locale, tag }: { locale: string; tag: string }) => {
+export const PostTagItem = ({
+  locale,
+  tag,
+  isLabel,
+  isClickable = true,
+}: {
+  locale: string;
+  tag: string;
+  isLabel: boolean;
+  isClickable?: boolean;
+}) => {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const lang = GetLangFromLocale(locale);
@@ -23,7 +33,7 @@ export const PostTagItem = ({ locale, tag }: { locale: string; tag: string }) =>
       params.delete('tag');
       params.delete('page');
       params.delete('query');
-      replace(`${lang}/`);
+      replace(`/${lang}/`);
       return;
     }
 
@@ -34,19 +44,42 @@ export const PostTagItem = ({ locale, tag }: { locale: string; tag: string }) =>
     } else {
       console.error('Tag is empty');
     }
-    replace(`${lang}/?${params.toString()}`);
+    replace(`/${lang}/?${params.toString()}`);
   };
 
   return (
-    <li>
-      <button
-        onClick={() => {
-          handleTag(tag);
-        }}
-        className="text-sm hover:text-orange-500"
-      >
-        {tag}
-      </button>
-    </li>
+    <>
+      {isLabel ? (
+        <>
+          {isClickable ? (
+            <button
+              onClick={() => {
+                handleTag(tag);
+              }}
+              className="hover:scale-105"
+            >
+              <span className="static mb-5px ml-5px inline-block w-auto rounded-sm bg-orange-500 px-1em text-center text-13px/[1.5] font-normal text-white">
+                {tag}
+              </span>
+            </button>
+          ) : (
+            <span className="static mb-5px ml-5px inline-block w-auto rounded-sm bg-orange-500 px-1em text-center text-13px/[1.5] font-normal text-white">
+              {tag}
+            </span>
+          )}
+        </>
+      ) : (
+        <li>
+          <button
+            onClick={() => {
+              handleTag(tag);
+            }}
+            className="text-sm hover:text-orange-500"
+          >
+            {tag}
+          </button>
+        </li>
+      )}
+    </>
   );
 };
