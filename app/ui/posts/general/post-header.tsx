@@ -74,7 +74,7 @@ export default function PostHeader({
         </Suspense>
       </div>
       <div className="flex w-1/2 flex-row justify-end">
-        <LanguageButton locale={locale} />
+        <LanguageButton locale={locale} isHidden={isHidden}/>
         <UserButton href="/" />
       </div>
     </div>

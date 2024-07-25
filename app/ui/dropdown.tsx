@@ -15,10 +15,11 @@ export interface LanguageItem {
 
 interface Props {
   item: LanguageItem;
+  isHidden?: boolean;
 }
 
 export default function Dropdown(props: Props) {
-  const { item } = props;
+  const { item, isHidden } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const languageItems = item?.children ? item.children : [];
   const pathname = usePathname();
@@ -28,7 +29,7 @@ export default function Dropdown(props: Props) {
     setIsOpen((old) => !old);
   };
 
-  const transClass = isOpen ? 'flex' : 'hidden';
+  const transClass = isOpen && !isHidden ? 'flex' : 'hidden';
 
   return (
     <>
@@ -70,7 +71,7 @@ export default function Dropdown(props: Props) {
       </div>
       {isOpen ? (
         <div
-          className="fixed bottom-0 left-0 right-0 top-0 z-20 "
+          className="cursor-pointer fixed bottom-0 left-0 right-0 top-0 z-20"
           onClick={toggle}
         ></div>
       ) : (

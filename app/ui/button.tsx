@@ -42,7 +42,7 @@ export function RoundButton({ children, className, ...rest }: ButtonProps) {
   );
 }
 
-export function LanguageButton({ locale }: { locale: string }) {
+export function LanguageButton({ locale, isHidden}: { locale: string, isHidden: boolean }) {
   const languageItems: LanguageItem = {
     title: GetLanguageName(locale),
     locale: locale,
@@ -73,7 +73,7 @@ export function LanguageButton({ locale }: { locale: string }) {
   return (
     <>
       <div className="mr-16 flex items-center gap-8 text-black ">
-        <Dropdown item={languageItems} />
+        <Dropdown item={languageItems} isHidden={isHidden}/>
       </div>
     </>
   );
