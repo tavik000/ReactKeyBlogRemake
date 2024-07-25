@@ -28,6 +28,7 @@ export default function PostSearch({
 
     if (term) {
       params.set('query', term);
+      params.delete('tag');
     } else {
       params.delete('query');
     }

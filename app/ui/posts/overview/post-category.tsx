@@ -1,7 +1,6 @@
-import { DictStructure } from '@/app/components/localization/dict-store';
-import { GetLangFromLocale } from '@/app/lib/constants';
 import { fetchPostTags } from '@/app/lib/data';
-import Link from 'next/link';
+import { DictStructure } from '@/app/components/localization/dict-store';
+import { PostTagItem } from '@/app/ui/posts/general/post-tag';
 
 export default async function PostCategory({
   locale,
@@ -24,19 +23,19 @@ export default async function PostCategory({
           <div className="flex flex-col">
             <div className="flex flex-row">
               <ul className="w-80">
-                <PostTag locale={locale} tag="All" />
+                <PostTagItem locale={locale} tag="All" />
                 {firstPart.map((tag) => (
-                  <PostTag key={tag} locale={locale} tag={tag} />
+                  <PostTagItem key={tag} locale={locale} tag={tag} />
                 ))}
               </ul>
               <ul className="w-80">
                 {secondPart.map((tag) => (
-                  <PostTag key={tag} locale={locale} tag={tag} />
+                  <PostTagItem key={tag} locale={locale} tag={tag} />
                 ))}
               </ul>
               <ul className="w-80">
                 {thirdPart.map((tag) => (
-                  <PostTag key={tag} locale={locale} tag={tag} />
+                  <PostTagItem key={tag} locale={locale} tag={tag} />
                 ))}
               </ul>
             </div>
@@ -47,15 +46,3 @@ export default async function PostCategory({
   );
 }
 
-const PostTag = ({ locale, tag }: { locale: string; tag: string }) => {
-  const lang = GetLangFromLocale(locale);
-  const url = `/${lang}/`;
-
-  return (
-    <li>
-      <Link href={url} className="text-sm hover:text-orange-500">
-        {tag}
-      </Link>
-    </li>
-  );
-};
