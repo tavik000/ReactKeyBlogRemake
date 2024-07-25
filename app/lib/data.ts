@@ -31,6 +31,33 @@ import format from 'pg-format';
 //   }
 // }
 
+export async function fetchPostTags() {
+  noStore();
+
+  try {
+    const result = await sql<{
+      name: any;
+      tags: string[];
+    }>`
+    SELECT DISTINCT name,
+      CASE 
+        WHEN name = 'UE5' THEN -1
+        WHEN name LIKE 'O%' THEN 3 
+        WHEN name LIKE 'G%' THEN 2 
+        WHEN name LIKE 'R%' THEN 1 
+        ELSE 0 
+      END AS order_column
+    FROM post_tags
+    ORDER BY order_column, name
+    `;
+    const tags = result.rows.map((row) => row.name);
+    return tags;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch post tags.');
+  }
+}
+
 const ITEMS_PER_PAGE: number = 9;
 export async function fetchFilteredPosts(
   query: string,
