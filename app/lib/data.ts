@@ -165,7 +165,12 @@ export async function fetchFilteredPosts(
           FROM posts_en
           WHERE
             title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`}
+            content ILIKE ${`%${query}%`} OR
+            EXISTS (
+              SELECT 1
+              FROM UNNEST(tags) AS tag
+              WHERE tag ILIKE ${`%${query}%`}
+            )
           ORDER BY create_date DESC
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
@@ -181,7 +186,12 @@ export async function fetchFilteredPosts(
           FROM posts_ja
           WHERE
             title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`}
+            content ILIKE ${`%${query}%`} OR
+            EXISTS (
+              SELECT 1
+              FROM UNNEST(tags) AS tag
+              WHERE tag ILIKE ${`%${query}%`}
+            )
           ORDER BY create_date DESC
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
@@ -197,7 +207,12 @@ export async function fetchFilteredPosts(
           FROM posts_kr
           WHERE
             title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`}
+            content ILIKE ${`%${query}%`} OR
+            EXISTS (
+              SELECT 1
+              FROM UNNEST(tags) AS tag
+              WHERE tag ILIKE ${`%${query}%`}
+            )
           ORDER BY create_date DESC
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
@@ -213,7 +228,12 @@ export async function fetchFilteredPosts(
           FROM posts_hk
           WHERE
             title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`}
+            content ILIKE ${`%${query}%`} OR
+            EXISTS (
+              SELECT 1
+              FROM UNNEST(tags) AS tag
+              WHERE tag ILIKE ${`%${query}%`}
+            )
           ORDER BY create_date DESC
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
@@ -296,7 +316,12 @@ export async function fetchPostsPages(
           FROM posts_en
           WHERE
             title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`}
+            content ILIKE ${`%${query}%`} OR
+            EXISTS (
+              SELECT 1
+              FROM UNNEST(tags) AS tag
+              WHERE tag ILIKE ${`%${query}%`}
+            )
         `;
           break;
         case 'ja':
@@ -304,7 +329,12 @@ export async function fetchPostsPages(
           FROM posts_ja
           WHERE
             title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`}
+            content ILIKE ${`%${query}%`} OR
+            EXISTS (
+              SELECT 1
+              FROM UNNEST(tags) AS tag
+              WHERE tag ILIKE ${`%${query}%`}
+            )
         `;
           break;
         case 'kr':
@@ -312,7 +342,12 @@ export async function fetchPostsPages(
           FROM posts_kr
           WHERE
             title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`}
+            content ILIKE ${`%${query}%`} OR
+            EXISTS (
+              SELECT 1
+              FROM UNNEST(tags) AS tag
+              WHERE tag ILIKE ${`%${query}%`}
+            )
         `;
           break;
         case 'hk':
@@ -320,8 +355,14 @@ export async function fetchPostsPages(
           FROM posts_hk
           WHERE
             title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`}
+            content ILIKE ${`%${query}%`} OR
+            EXISTS (
+              SELECT 1
+              FROM UNNEST(tags) AS tag
+              WHERE tag ILIKE ${`%${query}%`}
+            )
         `;
+        console.log('count:', count);
           break;
         default:
           throw new Error('Unsupported locale.');

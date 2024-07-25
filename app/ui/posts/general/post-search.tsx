@@ -32,7 +32,7 @@ export default function PostSearch({
     } else {
       params.delete('query');
     }
-    replace(`${lang}/?${params.toString()}`);
+    replace(`/${lang}/?${params.toString()}`);
   }, 300);
   
 
