@@ -12,22 +12,24 @@ export default async function PostOverview({
   locale,
 }: {
   searchParams?: {
+    tag?: string;
     query?: string;
     page?: string;
   };
   locale: string;
 }) {
+  const tag = searchParams?.tag || '';
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
-  const totalPages = await fetchPostsPages(query, locale);
+  const totalPages = await fetchPostsPages(tag, query, locale);
   const dict = (await getDictionary(locale)) as DictStructure;
 
   return (
     <>
       <div className="post-overview">
-        <PostCategory dict={dict}/>
+        <PostCategory locale={locale} dict={dict}/>
         {/* TODO: add Suspense */}
-        <PostWrapper query={query} currentPage={currentPage} locale={locale} />
+        <PostWrapper tag={tag} query={query} currentPage={currentPage} locale={locale} />
         <Suspense>
           <Pagination totalPages={totalPages} />
         </Suspense>

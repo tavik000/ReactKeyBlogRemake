@@ -14,13 +14,9 @@ export const PostTagItem = ({ locale, tag }: { locale: string; tag: string }) =>
   const searchParams = useSearchParams();
   const { replace } = useRouter();
   const lang = GetLangFromLocale(locale);
-  const url = `/${lang}/`;
 
   const handleTag = (tag: string) => {
-    console.log(`Set Tag... ${tag}`);
-
     const params = new URLSearchParams(searchParams);
-
     params.set('page', '1');
 
     if (tag === 'All') {

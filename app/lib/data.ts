@@ -60,20 +60,102 @@ export async function fetchPostTags() {
 
 const ITEMS_PER_PAGE: number = 9;
 export async function fetchFilteredPosts(
+  tag: string,
   query: string,
   currentPage: number,
   locale: string,
 ) {
-  console.log('fetchFilteredPosts');
   noStore();
 
   const offset: number = (currentPage - 1) * ITEMS_PER_PAGE;
+  console.log(
+    'fetchFilteredPosts, tag: ' +
+      tag +
+      ', query: ' +
+      query +
+      ', offset: ' +
+      offset,
+  );
 
   try {
     let posts;
-    switch (locale) {
-      case 'en':
-        posts = await sql<PostCard>`
+    if (tag) {
+      switch (locale) {
+        case 'en':
+          posts = await sql<PostCard>`
+          SELECT
+            id,
+            title,
+            thumbnail_img,
+            tags,
+            create_date
+          FROM posts_en
+          WHERE
+            (title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`})
+            AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
+          ORDER BY create_date DESC
+          LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
+        `;
+          break;
+        case 'ja':
+          posts = await sql<PostCard>`
+          SELECT
+            id,
+            title,
+            thumbnail_img,
+            tags,
+            create_date
+          FROM posts_ja
+          WHERE
+            (title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`})
+            AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
+          ORDER BY create_date DESC
+          LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
+        `;
+          break;
+        case 'kr':
+          posts = await sql<PostCard>`
+          SELECT
+            id,
+            title,
+            thumbnail_img,
+            tags,
+            create_date
+          FROM posts_kr
+          WHERE
+            (title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`})
+            AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
+          ORDER BY create_date DESC
+          LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
+        `;
+          break;
+        case 'hk':
+          posts = await sql<PostCard>`
+          SELECT
+            id,
+            title,
+            thumbnail_img,
+            tags,
+            create_date
+          FROM posts_hk
+          WHERE
+            (title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`})
+            AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
+          ORDER BY create_date DESC
+          LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
+        `;
+          break;
+        default:
+          throw new Error('Unsupported locale.');
+      }
+    } else {
+      switch (locale) {
+        case 'en':
+          posts = await sql<PostCard>`
           SELECT
             id,
             title,
@@ -87,9 +169,9 @@ export async function fetchFilteredPosts(
           ORDER BY create_date DESC
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
-        break;
-      case 'ja':
-        posts = await sql<PostCard>`
+          break;
+        case 'ja':
+          posts = await sql<PostCard>`
           SELECT
             id,
             title,
@@ -103,9 +185,9 @@ export async function fetchFilteredPosts(
           ORDER BY create_date DESC
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
-        break;
-      case 'kr':
-        posts = await sql<PostCard>`
+          break;
+        case 'kr':
+          posts = await sql<PostCard>`
           SELECT
             id,
             title,
@@ -119,9 +201,9 @@ export async function fetchFilteredPosts(
           ORDER BY create_date DESC
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
-        break;
-      case 'hk':
-        posts = await sql<PostCard>`
+          break;
+        case 'hk':
+          posts = await sql<PostCard>`
           SELECT
             id,
             title,
@@ -135,9 +217,10 @@ export async function fetchFilteredPosts(
           ORDER BY create_date DESC
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
-        break;
-      default:
-        throw new Error('Unsupported locale.');
+          break;
+        default:
+          throw new Error('Unsupported locale.');
+      }
     }
     return posts.rows;
   } catch (error) {
@@ -157,45 +240,92 @@ export async function getUser(email: string) {
   }
 }
 
-export async function fetchPostsPages(query: string, locale: string) {
+export async function fetchPostsPages(
+  tag: string,
+  query: string,
+  locale: string,
+) {
   noStore();
   try {
     let count;
-    switch (locale) {
-      case 'en':
-        count = await sql`SELECT COUNT(*)
+    if (tag) {
+      switch (locale) {
+        case 'en':
+          count = await sql`SELECT COUNT(*)
+          FROM posts_en
+          WHERE
+            (title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`})
+            AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
+        `;
+          break;
+        case 'ja':
+          count = await sql`SELECT COUNT(*)
+          FROM posts_ja
+          WHERE
+            (title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`})
+            AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
+        `;
+          break;
+        case 'kr':
+          count = await sql`SELECT COUNT(*)
+          FROM posts_kr
+          WHERE
+            (title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`})
+            AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
+        `;
+          break;
+        case 'hk':
+          count = await sql`SELECT COUNT(*)
+          FROM posts_hk
+          WHERE
+            (title ILIKE ${`%${query}%`} OR
+            content ILIKE ${`%${query}%`})
+            AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
+        `;
+          break;
+        default:
+          throw new Error('Unsupported locale.');
+      }
+    } else {
+      switch (locale) {
+        case 'en':
+          count = await sql`SELECT COUNT(*)
           FROM posts_en
           WHERE
             title ILIKE ${`%${query}%`} OR
             content ILIKE ${`%${query}%`}
         `;
-        break;
-      case 'ja':
-        count = await sql`SELECT COUNT(*)
+          break;
+        case 'ja':
+          count = await sql`SELECT COUNT(*)
           FROM posts_ja
           WHERE
             title ILIKE ${`%${query}%`} OR
             content ILIKE ${`%${query}%`}
         `;
-        break;
-      case 'kr':
-        count = await sql`SELECT COUNT(*)
+          break;
+        case 'kr':
+          count = await sql`SELECT COUNT(*)
           FROM posts_kr
           WHERE
             title ILIKE ${`%${query}%`} OR
             content ILIKE ${`%${query}%`}
         `;
-        break;
-      case 'hk':
-        count = await sql`SELECT COUNT(*)
+          break;
+        case 'hk':
+          count = await sql`SELECT COUNT(*)
           FROM posts_hk
           WHERE
             title ILIKE ${`%${query}%`} OR
             content ILIKE ${`%${query}%`}
         `;
-        break;
-      default:
-        throw new Error('Unsupported locale.');
+          break;
+        default:
+          throw new Error('Unsupported locale.');
+      }
     }
 
     const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
