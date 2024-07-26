@@ -13,23 +13,6 @@ import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
 import format from 'pg-format';
 
-// export async function connectDatabase() {
-//   let retries = 5;
-//   while (retries) {
-//     try {
-//       const client = await db.connect();
-//       // Your database query code here...
-//       return client;
-//     } catch (error) {
-//       console.error('Database Error:', error);
-//       retries -= 1;
-//       console.log(`Retries left: ${retries}`);
-//       if (!retries) throw new Error('Failed to connect to the database.');
-//       // Wait for 1 second before retrying
-//       await new Promise((res) => setTimeout(res, 1000));
-//     }
-//   }
-// }
 
 export async function fetchPostTags() {
   noStore();

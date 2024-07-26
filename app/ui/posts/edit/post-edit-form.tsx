@@ -141,6 +141,10 @@ export default function PostEditForm({
         </div>
 
         <div className="mb-4">
+
+        </div>
+
+        <div className="mb-4">
           <label htmlFor="title_en" className="mb-2 block text-lg font-medium">
             Title (English)
           </label>

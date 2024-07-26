@@ -5,7 +5,7 @@ import {
   UserCircleIcon,
   ArrowUpOnSquareIcon,
 } from '@heroicons/react/24/outline';
-import Dropdown, { LanguageItem } from './dropdown';
+import LanguageDropdown, { LanguageItem } from './language-dropdown';
 import { GetLanguageName } from '../lib/constants';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -42,7 +42,13 @@ export function RoundButton({ children, className, ...rest }: ButtonProps) {
   );
 }
 
-export function LanguageButton({ locale, isHidden}: { locale: string, isHidden: boolean }) {
+export function LanguageButton({
+  locale,
+  isHidden,
+}: {
+  locale: string;
+  isHidden: boolean;
+}) {
   const languageItems: LanguageItem = {
     title: GetLanguageName(locale),
     locale: locale,
@@ -73,7 +79,7 @@ export function LanguageButton({ locale, isHidden}: { locale: string, isHidden: 
   return (
     <>
       <div className="mr-16 flex items-center gap-8 text-black ">
-        <Dropdown item={languageItems} isHidden={isHidden}/>
+        <LanguageDropdown item={languageItems} isHidden={isHidden} />
       </div>
     </>
   );

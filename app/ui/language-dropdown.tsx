@@ -18,7 +18,7 @@ interface Props {
   isHidden?: boolean;
 }
 
-export default function Dropdown(props: Props) {
+export default function LanguageDropdown(props: Props) {
   const { item, isHidden } = props;
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const languageItems = item?.children ? item.children : [];
@@ -71,7 +71,7 @@ export default function Dropdown(props: Props) {
       </div>
       {isOpen ? (
         <div
-          className="cursor-pointer fixed bottom-0 left-0 right-0 top-0 z-20"
+          className="fixed bottom-0 left-0 right-0 top-0 z-20 cursor-pointer"
           onClick={toggle}
         ></div>
       ) : (
