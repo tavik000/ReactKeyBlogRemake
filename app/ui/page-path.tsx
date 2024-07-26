@@ -62,9 +62,9 @@ function PagePathItem({
   isPost: boolean;
 }) {
   return !isPost ? (
-    <li className="inline text-sm">
+    <li className="text-sm flex items-start">
       <Link href={url} className="text-orange-400 hover:underline">
-        <span>{children}</span>
+        <span className="whitespace-nowrap">{children}</span>
       </Link>
       {shouldShowArrow && <span className="page-path-arrow mx-2">&gt;</span>}
     </li>
