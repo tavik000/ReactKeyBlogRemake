@@ -14,6 +14,16 @@ import { CldUploadWidget } from 'next-cloudinary';
 import * as commands from '@uiw/react-md-editor/commands'; //TODO
 import { set } from 'zod'; //TODO
 import { GetLangFromLocale } from '@/app/lib/constants';
+import { PostTagItem } from '@/app/ui/posts/general/post-tag';
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button as NextUIButton,
+} from '@nextui-org/react';
+import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
+
 const { db } = require('@vercel/postgres');
 
 const MDEditor = dynamic(() => import('../../../components/MdEditor'), {
@@ -29,15 +39,20 @@ interface CloudinaryResult {
 export default function PostEditForm({
   locale,
   posts,
+  allPostTags,
 }: {
   locale: string;
   posts: Post[];
+  allPostTags: string[];
 }) {
   const lang = GetLangFromLocale(locale);
   const post_en = posts[0];
   const post_ja = posts[1];
   const post_kr = posts[2];
   const post_hk = posts[3];
+
+  const [editPostTags, setEditPostTag] = useState(post_en.tags);
+  const [isExceedFiveTag, setIsExceedFiveTag] = useState(false);
 
   const [markdownValue_en, setMarkdownValue_en] = useState('');
 
@@ -141,7 +156,82 @@ export default function PostEditForm({
         </div>
 
         <div className="mb-4">
+          <div className="flex flex-row">
+            <label
+              htmlFor="content"
+              className="mb-2 flex text-base font-medium"
+            >
+              Category
+            </label>
+            {isExceedFiveTag ? (
+              <p className="mb-2 ml-2 flex text-base text-red-500">
+                (Maximum of 5 tags)
+              </p>
+            ) : (
+              <></>
+            )}
+          </div>
+          <div className="flex flex-row items-end">
+            <Dropdown className="flex-none">
+              <DropdownTrigger>
+                <NextUIButton
+                  variant="bordered"
+                  className="rounded-lg border border-gray-200 bg-white hover:bg-gray-100"
+                >
+                  Add Tag
+                  <ChevronDownIcon className="ml-2 h-4 w-4 text-gray-500 hover:text-gray-100" />
+                </NextUIButton>
+              </DropdownTrigger>
+              <DropdownMenu
+                className="max-h-96 overflow-y-auto rounded-lg bg-white"
+                aria-label="Static Actions"
+                onAction={(key) => {
+                  const newTag = key.toString();
+                  setEditPostTag((prevTags) => {
+                    if (prevTags.length >= 5) {
+                      setIsExceedFiveTag(true);
+                      return prevTags;
+                    }
+                    const updatedTags = new Set([...prevTags, newTag]);
+                    return Array.from(updatedTags);
+                  });
+                }}
+              >
+                {allPostTags.map((tag: string) => (
+                  <DropdownItem className="hover:bg-gray-100" key={tag}>
+                    {tag}
+                  </DropdownItem>
+                ))}
+              </DropdownMenu>
+            </Dropdown>
 
+            <div className="ml-4 flex h-full flex-none">
+              {editPostTags.map((tag: string) => (
+                <div className="flex flex-row items-start" key={tag}>
+                  <PostTagItem
+                    locale={locale}
+                    tag={tag}
+                    isLabel={true}
+                    isClickable={false}
+                    className="flex"
+                  />
+                  <button
+                    className="ml-1 flex hover:scale-125"
+                    onClick={() => {
+                      setEditPostTag((prevTags) => {
+                        const updatedTags = new Set([...prevTags]);
+                        updatedTags.delete(tag);
+                        setIsExceedFiveTag(false);
+                        return Array.from(updatedTags);
+                      });
+                    }}
+                  >
+                    <XMarkIcon className="h-4 w-4 text-gray-500 hover:text-red-500" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
         <div className="mb-4">

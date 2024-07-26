@@ -2,24 +2,18 @@
 import { GetLangFromLocale } from '@/app/lib/constants';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function PostTag({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="static mb-5px ml-5px inline-block w-auto rounded-sm bg-orange-500 px-1em text-center text-13px/[1.5] font-normal text-white">
-      {children}
-    </span>
-  );
-}
-
 export const PostTagItem = ({
   locale,
   tag,
   isLabel,
   isClickable = true,
+  className,
 }: {
   locale: string;
   tag: string;
   isLabel: boolean;
   isClickable?: boolean;
+  className?: string;
 }) => {
   const searchParams = useSearchParams();
   const { replace } = useRouter();
@@ -56,20 +50,20 @@ export const PostTagItem = ({
               onClick={() => {
                 handleTag(tag);
               }}
-              className="hover:scale-105"
+              className={`hover:scale-105 ${className}`}
             >
               <span className="static mb-5px ml-5px inline-block w-auto rounded-sm bg-orange-500 px-1em text-center text-13px/[1.5] font-normal text-white">
                 {tag}
               </span>
             </button>
           ) : (
-            <span className="static mb-5px ml-5px inline-block w-auto rounded-sm bg-orange-500 px-1em text-center text-13px/[1.5] font-normal text-white">
+            <span className={`${className} static mb-5px ml-5px inline-block w-auto rounded-sm bg-orange-500 px-1em text-center text-13px/[1.5] font-normal text-white`}>
               {tag}
             </span>
           )}
         </>
       ) : (
-        <li>
+        <li className={`${className}`}>
           <button
             onClick={() => {
               handleTag(tag);
