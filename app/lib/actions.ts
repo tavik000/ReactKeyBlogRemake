@@ -38,9 +38,13 @@ const FormSchema = z.object({
   thumbnail_img: z.string({
     invalid_type_error: 'Please enter a thumbnail image.',
   }),
-  tags: z.string({
-    invalid_type_error: 'Please enter tags.',
-  }),
+  tags: z
+    .array(
+      z.string({
+        invalid_type_error: 'Please enter valid tags.',
+      }),
+    )
+    .min(1, 'Please enter at least one tag.'),
   content_en: z
     .string({
       invalid_type_error: 'Please enter content. (en)',
@@ -69,7 +73,6 @@ const UpdatePost = FormSchema.omit({
   id: true,
   modify_date: true,
   thumbnail_img: true,
-  tags: true,
 });
 
 export type State = {
@@ -161,6 +164,7 @@ export type State = {
 export async function updatePost(
   id: string,
   thumbnail_img: string,
+  tags: string[],
   postTitle: string,
   postContent: string,
   locale: string,
@@ -170,6 +174,7 @@ export async function updatePost(
   console.log('id : ' + id);
   console.log('title: ' + postTitle);
   console.log('content: ' + content);
+  console.log('tags: ' + tags);
   const modify_date = new Date().toISOString().split('T')[0];
 
   try {
@@ -190,12 +195,13 @@ export async function updatePost(
     const updatePostQuery = format(
       `
       UPDATE posts_%s
-      SET title = %L, thumbnail_img = %L, content = %L, modify_date = %L
+      SET title = %L, thumbnail_img = %L, tags=ARRAY[%L]::VARCHAR[], content = %L, modify_date = %L
       WHERE id = %L
       `,
       locale,
       postTitle,
       thumbnail_img,
+      tags,
       content,
       modify_date,
       id,
@@ -215,6 +221,7 @@ export async function updatePostWithAllLanguages(
   currentLocale: string,
   id: string,
   thumbnail_img: string,
+  postTags: string[],
   postContent_en: string,
   postContent_ja: string,
   postContent_kr: string,
@@ -222,7 +229,6 @@ export async function updatePostWithAllLanguages(
   prevState: State,
   formData: FormData,
 ) {
-  //log
   console.log('updatePost: ' + id);
 
   try {
@@ -234,7 +240,7 @@ export async function updatePostWithAllLanguages(
       title_kr: formData.get('title_kr'),
       title_hk: formData.get('title_hk'),
       thumbnail_img: formData.get('thumbnail_img'),
-      tags: formData.get('tags'),
+      tags: postTags,
       content_en: postContent_en,
       content_ja: postContent_ja,
       content_kr: postContent_kr,
@@ -251,10 +257,42 @@ export async function updatePostWithAllLanguages(
     const { title_en, title_ja, title_kr, title_hk } = validatedFields.data;
 
     const updateResult = await Promise.all([
-      updatePost(id, thumbnail_img, title_en, postContent_en, 'en', client),
-      updatePost(id, thumbnail_img, title_ja, postContent_ja, 'ja', client),
-      updatePost(id, thumbnail_img, title_kr, postContent_kr, 'kr', client),
-      updatePost(id, thumbnail_img, title_hk, postContent_hk, 'hk', client),
+      updatePost(
+        id,
+        thumbnail_img,
+        postTags,
+        title_en,
+        postContent_en,
+        'en',
+        client,
+      ),
+      updatePost(
+        id,
+        thumbnail_img,
+        postTags,
+        title_ja,
+        postContent_ja,
+        'ja',
+        client,
+      ),
+      updatePost(
+        id,
+        thumbnail_img,
+        postTags,
+        title_kr,
+        postContent_kr,
+        'kr',
+        client,
+      ),
+      updatePost(
+        id,
+        thumbnail_img,
+        postTags,
+        title_hk,
+        postContent_hk,
+        'hk',
+        client,
+      ),
     ]);
   } catch (error) {
     console.error(error);

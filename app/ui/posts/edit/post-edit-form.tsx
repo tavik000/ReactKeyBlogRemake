@@ -87,6 +87,7 @@ export default function PostEditForm({
     locale,
     post_en.id,
     thumbnailImage,
+    editPostTags,
     markdownValue_en,
     markdownValue_ja,
     markdownValue_kr,
@@ -170,6 +171,15 @@ export default function PostEditForm({
             ) : (
               <></>
             )}
+            {state.errors?.tags &&
+              state.errors.tags.map((error: string) => (
+                <p
+                  className="mb-2 ml-2 flex text-base text-red-500"
+                  key={error}
+                >
+                  {error}
+                </p>
+              ))}
           </div>
           <div className="flex flex-row items-end">
             <Dropdown className="flex-none">
