@@ -17,13 +17,12 @@ export default function PostItem({
   const lang = GetLangFromLocale(locale);
 
   return (
-    <li className="post-item mb-6 flex h-400px w-1/3 max-w-400px basis-1/3 list-none flex-col px-11px">
+    <li className="post-item mb-6 flex min-h-[400px] w-1/3 max-w-400px basis-1/3 list-none flex-col px-11px">
       <article className="block h-full flex-row">
         <Link
           href={`${lang}/posts/${url_title}/${post.id}#blog-title`}
           className="article-link flex h-full flex-row"
         >
-          {/* <Link href={`/posts/${post.id}`} className="article-link flex flex-row h-full"> */}
           <div className="post-article flex h-full w-full flex-col justify-between rounded-xl bg-white px-3 pb-4 pt-6 font-bold shadow-0550">
             <Image
               src={post.thumbnail_img}
@@ -33,7 +32,7 @@ export default function PostItem({
               className="post-article-thumbnail mb-3 block w-full flex-row rounded-xl"
               priority={true}
             />
-            <span className="article-title flex-grow items-start px-4 pb-3 text-lg font-bold">
+            <span className="article-title flex-grow items-start px-4 pb-3 text-[18px] font-bold">
               {post.title}
             </span>
             <span className="relative mb-0 flex flex-row justify-between ">
