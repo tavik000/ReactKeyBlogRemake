@@ -26,7 +26,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
       page-navigation relative z-10 clear-both mt-20 flex w-full flex-wrap content-center justify-center text-center text-xs
       "
     >
-      <Suspense>
+      {/* <Suspense> */}
         <div className="inline-flex">
           <PaginationArrow
             direction="left"
@@ -60,7 +60,7 @@ export default function Pagination({ totalPages }: { totalPages: number }) {
             isDisabled={currentPage >= totalPages}
           />
         </div>
-      </Suspense>
+      {/* </Suspense> */}
     </div>
   );
 }
