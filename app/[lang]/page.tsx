@@ -1,5 +1,7 @@
 import PostOverview from '@/app/ui/posts/overview/post-overview';
-import { GetLocaleFromLang } from '../lib/constants';
+import { GetLocaleFromLang } from '@/app/lib/constants';
+import { Suspense } from 'react';
+import PostOverviewSkeleton from '@/app/ui/posts/overview/post-overview-skeleton';
 
 export default function Page({
   searchParams,
@@ -14,8 +16,10 @@ export default function Page({
   const locale = GetLocaleFromLang(params.lang);
 
   return (
-    <main className="flex min-h-screen flex-col">
-      <PostOverview searchParams={searchParams} locale={locale} />
+    <main className="light text-foreground bg-background flex min-h-screen flex-col">
+      <Suspense fallback={<PostOverviewSkeleton/>}>
+        <PostOverview searchParams={searchParams} locale={locale} />
+      </Suspense>
     </main>
   );
 }

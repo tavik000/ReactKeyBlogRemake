@@ -13,7 +13,6 @@ import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
 import format from 'pg-format';
 
-
 export async function fetchPostTags() {
   noStore();
 
@@ -345,7 +344,7 @@ export async function fetchPostsPages(
               WHERE tag ILIKE ${`%${query}%`}
             )
         `;
-        console.log('count:', count);
+          console.log('count:', count);
           break;
         default:
           throw new Error('Unsupported locale.');
@@ -363,6 +362,7 @@ export async function fetchPostsPages(
 export async function fetchPostById(id: string, locale: string) {
   noStore();
 
+  // await new Promise((resolve) => setTimeout(resolve, 30000));
   try {
     let data;
 

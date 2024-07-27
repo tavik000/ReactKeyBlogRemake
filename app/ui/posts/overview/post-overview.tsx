@@ -28,11 +28,8 @@ export default async function PostOverview({
     <>
       <div className="post-overview">
         <PostCategory locale={locale} dict={dict}/>
-        {/* TODO: add Suspense */}
         <PostWrapper tag={tag} query={query} currentPage={currentPage} locale={locale} />
-        <Suspense>
           <Pagination totalPages={totalPages} />
-        </Suspense>
       </div>
 
       {/* <div className="mt-4 flex grow flex-col gap-4 md:flex-row">
