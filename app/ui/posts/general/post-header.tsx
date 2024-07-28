@@ -69,11 +69,10 @@ export default function PostHeader({
         >
           Key
         </Link>
-        <Suspense>
           <PostSearch locale={locale} placeholder={dict.header.searchPost} />
-        </Suspense>
       </div>
       <div className="flex w-1/2 flex-row justify-end">
+        <UserButton href="/" />
         <LanguageButton locale={locale} isHidden={isHidden}/>
         <UserButton href="/" />
       </div>
