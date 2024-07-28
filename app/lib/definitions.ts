@@ -7,7 +7,7 @@ export type User = {
   name: string;
   email: string;
   twitter?: string;
-  password: string;
+  password?: string;
 };
 
 export interface BlogComment {

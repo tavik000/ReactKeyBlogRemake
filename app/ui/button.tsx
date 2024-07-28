@@ -7,7 +7,16 @@ import {
   PencilSquareIcon,
 } from '@heroicons/react/24/outline';
 import LanguageDropdown, { LanguageItem } from './language-dropdown';
-import { GetLangFromLocale, GetLanguageName } from '../lib/constants';
+import { GetLangFromLocale, GetLanguageName } from '@/app/lib/constants';
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  Button as NextUIButton,
+} from '@nextui-org/react';
+import { authenticate, logout } from '@/app/lib/actions';
+// import { useSession, signIn, signOut } from 'next-auth/react';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -79,7 +88,7 @@ export function LanguageButton({
   };
   return (
     <>
-      <div className="mr-16 flex items-center gap-8 text-black ">
+      <div className="mr-8 flex items-center gap-8 text-black ">
         <LanguageDropdown item={languageItems} isHidden={isHidden} />
       </div>
     </>
@@ -111,14 +120,35 @@ export function TagButton({ href }: { href: string }) {
   );
 }
 
-export function UserButton({ href }: { href: string }) {
+export function UserButton({ locale }: { locale: string }) {
+  const lang = GetLangFromLocale(locale);
   return (
-    <Link
-      className="my-2 mr-4 flex h-10 w-10 items-center justify-center rounded-md"
-      href={href}
-    >
-      <UserCircleIcon className="h-6 w-6 text-gray-500 hover:text-orange-500" />
-    </Link>
+    <Dropdown className="flex-none">
+      <DropdownTrigger>
+        <NextUIButton className="my-2 mr-4 flex h-10 w-10 items-center justify-center rounded-md">
+          <UserCircleIcon className="h-6 w-6 text-gray-500 hover:text-orange-500" />
+        </NextUIButton>
+      </DropdownTrigger>
+      <DropdownMenu
+        className="max-h-96 overflow-y-auto rounded-lg bg-white"
+        aria-label="Static Actions"
+        onAction={(key) => {
+          const actionKey = key.toString();
+          if (actionKey === 'SignIn') {
+            authenticate(locale);
+          } else {
+            logout();
+          }
+        }}
+      >
+        <DropdownItem className="hover:bg-gray-100" key="SignIn">
+          Sign in
+        </DropdownItem>
+        <DropdownItem className="hover:bg-gray-100" key="SignOut">
+          Sign out 
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
   );
 }
 

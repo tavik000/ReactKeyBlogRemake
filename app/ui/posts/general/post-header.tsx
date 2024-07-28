@@ -75,7 +75,7 @@ export default function PostHeader({
         <CreatePostButton locale={locale} />
         <TagButton href="/en/tag/manage" />
         <LanguageButton locale={locale} isHidden={isHidden}/>
-        <UserButton href="/" />
+        <UserButton locale={locale} />
       </div>
     </div>
   );

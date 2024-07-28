@@ -402,7 +402,6 @@ export default function PostEditForm({
               ))}
           </div>
         </div>
-
         <div className="mb-4">
           <label htmlFor="content" className="mb-2 block text-base font-medium">
             Content (Traditional Chinese)

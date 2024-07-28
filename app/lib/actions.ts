@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { sql, VercelPoolClient } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
-import { signIn } from '@/auth';
+import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { keyName } from './constants';
 import { log } from 'console';
@@ -433,26 +433,10 @@ export async function deletePostWithAllLanguages(
     const client = await db.connect();
 
     const updateResult = await Promise.all([
-      deletePost(
-        id,
-        'en',
-        client,
-      ),
-      deletePost(
-        id,
-        'ja',
-        client,
-      ),
-      deletePost(
-        id,
-        'kr',
-        client,
-      ),
-      deletePost(
-        id,
-        'hk',
-        client,
-      ),
+      deletePost(id, 'en', client),
+      deletePost(id, 'ja', client),
+      deletePost(id, 'kr', client),
+      deletePost(id, 'hk', client),
     ]);
   } catch (error) {
     console.error(error);
@@ -514,4 +498,34 @@ export async function deleteTag(tag: string) {
   const redirectUrl = `/en/tag/manage`;
   revalidatePath(redirectUrl);
   redirect(redirectUrl);
+}
+
+export async function authenticate(locale: string) {
+  const lang = GetLangFromLocale(locale);
+  try {
+    const callbackUrl = 'http://localhost:3000/en/'; // Replace 'your-callback-url' with the actual callback URL
+    console.log(`Attempting to sign in with callback URL: ${callbackUrl}`);
+    await signIn('google', { 
+      callbackUrl: callbackUrl,
+    });
+    console.log('Sign-in successful');
+  } catch (error) {
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+          return 'Invalid credentials.';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+    throw error;
+  }
+}
+
+export async function logout() {
+  try {
+    await signOut();
+  } catch (error) {
+    console.error(error);
+  }
 }
