@@ -1,9 +1,10 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import {
-  GlobeAltIcon,
   UserCircleIcon,
   ArrowUpOnSquareIcon,
+  TagIcon,
+  PencilSquareIcon,
 } from '@heroicons/react/24/outline';
 import LanguageDropdown, { LanguageItem } from './language-dropdown';
 import { GetLanguageName } from '../lib/constants';
@@ -85,10 +86,32 @@ export function LanguageButton({
   );
 }
 
+export function CreatePostButton({ href }: { href: string }) {
+  return (
+    <Link
+      className="my-2 mr-4 flex h-10 w-10 items-center justify-center rounded-md"
+      href={href}
+    >
+      <PencilSquareIcon className="h-6 w-6 text-gray-500 hover:text-orange-500" />
+    </Link>
+  );
+}
+
+export function TagButton({ href }: { href: string }) {
+  return (
+    <Link
+      className="my-2 mr-6 flex h-10 w-10 items-center justify-center rounded-md"
+      href={href}
+    >
+      <TagIcon className="h-6 w-6 text-gray-500 hover:text-orange-500" />
+    </Link>
+  );
+}
+
 export function UserButton({ href }: { href: string }) {
   return (
     <Link
-      className="my-2 mr-10 flex h-10 w-10 items-center justify-center rounded-md"
+      className="my-2 mr-4 flex h-10 w-10 items-center justify-center rounded-md"
       href={href}
     >
       <UserCircleIcon className="h-6 w-6 text-gray-500 hover:text-orange-500" />

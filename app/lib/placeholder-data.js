@@ -77,6 +77,9 @@ const post_tags = [
     name: 'UE / Plugin',
   },
   {
+    name: 'UE / Tips',
+  },
+  {
     name: 'Rider',
   },
   {

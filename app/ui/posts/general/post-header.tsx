@@ -1,7 +1,7 @@
 'use client';
 import PostSearch from './post-search';
-import { LanguageButton, RoundButton, UserButton } from '../../button';
-import { Suspense, useEffect, useState } from 'react';
+import { CreatePostButton, LanguageButton, TagButton, UserButton } from '@/app/ui/button';
+import { useEffect, useState } from 'react';
 import { sniglet } from '@/app/ui/fonts';
 import Link from 'next/link';
 import { homepageURL } from '@/app/lib/constants';
@@ -72,7 +72,8 @@ export default function PostHeader({
           <PostSearch locale={locale} placeholder={dict.header.searchPost} />
       </div>
       <div className="flex w-1/2 flex-row justify-end">
-        <UserButton href="/" />
+        <CreatePostButton href="/" />
+        <TagButton href="/en/tag/manage" />
         <LanguageButton locale={locale} isHidden={isHidden}/>
         <UserButton href="/" />
       </div>

@@ -325,3 +325,51 @@ export async function updatePostWithAllLanguages(
   revalidatePath(redirectUrl);
   redirect(redirectUrl);
 }
+
+export async function addNewTag(tag: string) {
+  try {
+    const client = await db.connect();
+    const addTagQuery = format(
+      `
+      INSERT INTO post_tags
+      VALUES (%L)
+      `,
+      tag,
+    );
+
+    const addTag = await client.query(addTagQuery);
+  } catch (error) {
+    console.error(error);
+    return {
+      message: 'Failed to add tag',
+    };
+  }
+
+  const redirectUrl = `/en/tag/manage`;
+  revalidatePath(redirectUrl);
+  redirect(redirectUrl);
+}
+
+export async function deleteTag(tag: string) {
+  try {
+    const client = await db.connect();
+    const deleteTagQuery = format(
+      `
+      DELETE FROM post_tags
+      WHERE name = %L
+      `,
+      tag,
+    );
+
+    const deleteTag = await client.query(deleteTagQuery);
+  } catch (error) {
+    console.error(error);
+    return {
+      message: 'Failed to delete tag',
+    };
+  }
+
+  const redirectUrl = `/en/tag/manage`;
+  revalidatePath(redirectUrl);
+  redirect(redirectUrl);
+}
