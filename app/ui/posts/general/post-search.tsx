@@ -3,7 +3,6 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
-import { Suspense } from 'react';
 import { GetLangFromLocale } from '@/app/lib/constants';
 
 export default function PostSearch({

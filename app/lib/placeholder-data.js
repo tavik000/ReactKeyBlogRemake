@@ -86,7 +86,7 @@ const post_tags = [
     name: 'Web Dev',
   },
   {
-    name: 'Web/ Nextjs',
+    name: 'Web / Nextjs',
   },
   {
     name: 'Other',
