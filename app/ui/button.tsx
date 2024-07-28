@@ -7,7 +7,7 @@ import {
   PencilSquareIcon,
 } from '@heroicons/react/24/outline';
 import LanguageDropdown, { LanguageItem } from './language-dropdown';
-import { GetLanguageName } from '../lib/constants';
+import { GetLangFromLocale, GetLanguageName } from '../lib/constants';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -86,11 +86,14 @@ export function LanguageButton({
   );
 }
 
-export function CreatePostButton({ href }: { href: string }) {
+export function CreatePostButton({ locale }: { locale: string }) {
+  const lang = GetLangFromLocale(locale);
   return (
     <Link
       className="my-2 mr-4 flex h-10 w-10 items-center justify-center rounded-md"
-      href={href}
+      href={{
+        pathname: `/${lang}/posts/create`,
+      }}
     >
       <PencilSquareIcon className="h-6 w-6 text-gray-500 hover:text-orange-500" />
     </Link>

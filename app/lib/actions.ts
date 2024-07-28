@@ -35,9 +35,11 @@ const FormSchema = z.object({
       invalid_type_error: 'Please enter a title (hk).',
     })
     .min(1, { message: 'Please enter a title (hk).' }),
-  thumbnail_img: z.string({
-    invalid_type_error: 'Please enter a thumbnail image.',
-  }),
+  thumbnail_img: z
+    .string({
+      invalid_type_error: 'Please upload a thumbnail image.',
+    })
+    .min(1, { message: 'Please upload a thumbnail image.' }),
   tags: z
     .array(
       z.string({
@@ -161,6 +163,157 @@ export type State = {
 //   }
 // }
 
+export async function createPost(
+  id: string,
+  thumbnail_img: string,
+  tags: string[],
+  postTitle: string,
+  postContent: string,
+  locale: string,
+  client: VercelPoolClient,
+) {
+  let content = postContent;
+  console.log('id : ' + id);
+  console.log('title: ' + postTitle);
+  console.log('content: ' + content);
+  console.log('tags: ' + tags);
+  console.log('locale: ' + locale);
+  console.log('\n');
+  const create_date = new Date().toISOString().split('T')[0];
+  const modify_date = create_date;
+  const postAuthor = keyName;
+  const comment_id_list: string[] = [];
+
+  try {
+    const createPostQuery = format(
+      `
+      INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date, modify_date, likes)
+          VALUES ('${id}', '${postTitle}', '${thumbnail_img}', ARRAY[%L]::VARCHAR[], '${postContent}', '${postAuthor}', ARRAY[%L]::VARCHAR[], '${create_date}', '${modify_date}', '0')
+          ON CONFLICT (id) DO NOTHING;
+          `,
+      locale,
+      tags,
+      comment_id_list,
+    );
+
+    const createPost = await client.query(createPostQuery);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to add new post (' + locale + ')',
+    };
+  }
+}
+
+export async function createPostWithAllLanguages(
+  currentLocale: string,
+  thumbnail_img: string,
+  postTags: string[],
+  postContent_en: string,
+  postContent_ja: string,
+  postContent_kr: string,
+  postContent_hk: string,
+  prevState: State,
+  formData: FormData,
+) {
+  const id = require('uuid').v4();
+  console.log('create: ' + id);
+
+  try {
+    const client = await db.connect();
+
+    const validatedFields = CreatePost.safeParse({
+      title_en: formData.get('title_en'),
+      title_ja: formData.get('title_ja'),
+      title_kr: formData.get('title_kr'),
+      title_hk: formData.get('title_hk'),
+      thumbnail_img: thumbnail_img,
+      tags: postTags,
+      content_en: postContent_en,
+      content_ja: postContent_ja,
+      content_kr: postContent_kr,
+      content_hk: postContent_hk,
+    });
+
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+        message: 'Missing Fields. Failed to Add New Post.',
+      };
+    }
+
+    const { title_en, title_ja, title_kr, title_hk } = validatedFields.data;
+
+    const addResult = await Promise.all([
+      createPost(
+        id,
+        thumbnail_img,
+        postTags,
+        title_en,
+        postContent_en,
+        'en',
+        client,
+      ),
+      createPost(
+        id,
+        thumbnail_img,
+        postTags,
+        title_ja,
+        postContent_ja,
+        'ja',
+        client,
+      ),
+      createPost(
+        id,
+        thumbnail_img,
+        postTags,
+        title_kr,
+        postContent_kr,
+        'kr',
+        client,
+      ),
+      createPost(
+        id,
+        thumbnail_img,
+        postTags,
+        title_hk,
+        postContent_hk,
+        'hk',
+        client,
+      ),
+    ]);
+  } catch (error) {
+    console.error(error);
+    return {
+      message: 'Failed to update post',
+    };
+  }
+
+  const lang = GetLangFromLocale(currentLocale);
+  const urlRegex = /\s/g;
+  let title = formData.get('title_en') as string;
+  switch (currentLocale) {
+    case 'en':
+      title = formData.get('title_en') as string;
+      break;
+    case 'ja':
+      title = encodeURI(formData.get('title_ja') as string);
+      break;
+    case 'kr':
+      title = encodeURI(formData.get('title_kr') as string);
+      break;
+    case 'hk':
+      title = encodeURI(formData.get('title_hk') as string);
+      break;
+  }
+
+  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const redirectUrl = `/${lang}/posts/${url_title}/${id}`;
+
+  revalidatePath(redirectUrl);
+  redirect(redirectUrl);
+}
+
 export async function updatePost(
   id: string,
   thumbnail_img: string,
@@ -178,20 +331,6 @@ export async function updatePost(
   const modify_date = new Date().toISOString().split('T')[0];
 
   try {
-    // const updatePostQuery = format(
-    //   `
-    //   UPDATE posts_%s
-    //   SET title = %L, thumbnail_img = %L, tags = %L, content = %L, modify_date = %L
-    //   WHERE id = %L
-    //   `,
-    //   locale,
-    //   title,
-    //   thumbnail_img,
-    //   tags,
-    //   content,
-    //   modify_date,
-    //   formData.get('id')
-    // );
     const updatePostQuery = format(
       `
       UPDATE posts_%s
@@ -239,7 +378,7 @@ export async function updatePostWithAllLanguages(
       title_ja: formData.get('title_ja'),
       title_kr: formData.get('title_kr'),
       title_hk: formData.get('title_hk'),
-      thumbnail_img: formData.get('thumbnail_img'),
+      thumbnail_img: thumbnail_img,
       tags: postTags,
       content_en: postContent_en,
       content_ja: postContent_ja,

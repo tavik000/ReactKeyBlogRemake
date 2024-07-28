@@ -72,7 +72,7 @@ export default function PostHeader({
           <PostSearch locale={locale} placeholder={dict.header.searchPost} />
       </div>
       <div className="flex w-1/2 flex-row justify-end">
-        <CreatePostButton href="/" />
+        <CreatePostButton locale={locale} />
         <TagButton href="/en/tag/manage" />
         <LanguageButton locale={locale} isHidden={isHidden}/>
         <UserButton href="/" />

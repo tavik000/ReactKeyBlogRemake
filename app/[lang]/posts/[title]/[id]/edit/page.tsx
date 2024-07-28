@@ -1,5 +1,4 @@
 import { fetchPostById, fetchPostTags } from '@/app/lib/data';
-import PostContentContainer from '@/app/ui/posts/view/post-content-container';
 import PostEditForm from '@/app/ui/posts/edit/post-edit-form';
 import { GetLocaleFromLang } from '@/app/lib/constants';
 
@@ -27,7 +26,7 @@ export default async function Page({ params }: { params: { lang:string, id: stri
               <h1 className="mb-6 mt-2 flex text-28px font-semibold leading-normal">
                 Edit
               </h1>
-              <PostEditForm locale={locale} posts={posts} allPostTags={allPostTags}/>
+              <PostEditForm locale={locale} posts={posts} allPostTags={allPostTags} isNewPost={false}/>
             </div>
           </div>
         </div>

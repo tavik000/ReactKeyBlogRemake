@@ -344,7 +344,6 @@ export async function fetchPostsPages(
               WHERE tag ILIKE ${`%${query}%`}
             )
         `;
-          console.log('count:', count);
           break;
         default:
           throw new Error('Unsupported locale.');

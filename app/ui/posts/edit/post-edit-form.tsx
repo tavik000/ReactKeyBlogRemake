@@ -5,7 +5,11 @@ import Image from 'next/image';
 import { RoundButton, Button } from '../../button';
 import { useFormState } from 'react-dom';
 import { Post } from '@/app/lib/definitions';
-import { State, updatePostWithAllLanguages } from '@/app/lib/actions';
+import {
+  createPostWithAllLanguages,
+  State,
+  updatePostWithAllLanguages,
+} from '@/app/lib/actions';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import dynamic from 'next/dynamic';
@@ -40,10 +44,12 @@ export default function PostEditForm({
   locale,
   posts,
   allPostTags,
+  isNewPost,
 }: {
   locale: string;
   posts: Post[];
   allPostTags: string[];
+  isNewPost: boolean;
 }) {
   const lang = GetLangFromLocale(locale);
   const post_en = posts[0];
@@ -81,21 +87,31 @@ export default function PostEditForm({
   const [thumbnailImage, setThumbnailImage] = useState(post_en.thumbnail_img);
 
   const initialState = { message: null, errors: {} };
-
-  const updatePostWithId = updatePostWithAllLanguages.bind(
-    null,
-    locale,
-    post_en.id,
-    thumbnailImage,
-    editPostTags,
-    markdownValue_en,
-    markdownValue_ja,
-    markdownValue_kr,
-    markdownValue_hk,
-  );
+  const formStateParams = isNewPost
+    ? createPostWithAllLanguages.bind(
+        null,
+        locale,
+        thumbnailImage,
+        editPostTags,
+        markdownValue_en,
+        markdownValue_ja,
+        markdownValue_kr,
+        markdownValue_hk,
+      )
+    : updatePostWithAllLanguages.bind(
+        null,
+        locale,
+        post_en.id,
+        thumbnailImage,
+        editPostTags,
+        markdownValue_en,
+        markdownValue_ja,
+        markdownValue_kr,
+        markdownValue_hk,
+      );
 
   const [state, dispatch] = useFormState<State, FormData>(
-    updatePostWithId,
+    formStateParams,
     initialState,
   );
 
@@ -111,14 +127,18 @@ export default function PostEditForm({
           </label>
           <div className="flex flex-col items-baseline">
             <div className="mt-6 flex">
-              <Image
-                src={thumbnailImage}
-                width={333}
-                height={188}
-                alt="thumbnail image"
-                className="block rounded-xl"
-                priority={true}
-              />
+              {thumbnailImage ? (
+                <Image
+                  src={thumbnailImage}
+                  width={333}
+                  height={188}
+                  alt="thumbnail image"
+                  className="block rounded-xl"
+                  priority={true}
+                />
+              ) : (
+                <></>
+              )}
             </div>
             <div className="mt-6 flex">
               <CldUploadWidget
