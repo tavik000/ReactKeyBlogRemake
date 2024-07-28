@@ -94,75 +94,6 @@ export type State = {
   message?: string | null;
 };
 
-// export async function createPost(
-//   client: VercelPoolClient,
-//   prevState: State,
-//   formData: FormData,
-//   locale: string,
-// ) {
-//   // Validate form fields using Zod
-//   const validatedFields = CreatePost.safeParse({
-//     title_en: formData.get('title_en'),
-//     title_ja: formData.get('title_ja'),
-//     title_kr: formData.get('title_kr'),
-//     title_zh: formData.get('title_zh'),
-//     thumbnail_img: formData.get('thumbnail_img'),
-//     tags: formData.get('tags'),
-//     content_en: formData.get('content_en'),
-//     content_ja: formData.get('content_ja'),
-//     content_kr: formData.get('content_kr'),
-//     content_zh: formData.get('content_zh'),
-//   });
-
-//   // If form validation fails, return errors early. Otherwise, continue.
-//   if (!validatedFields.success) {
-//     return {
-//       errors: validatedFields.error.flatten().fieldErrors,
-//       message: 'Missing Fields. Failed to Create Post.',
-//     };
-//   }
-
-//   // Prepare data for insertion into the database
-//   const { title_en, title_ja, title_kr, title_zh, thumbnail_img, tags, content } = validatedFields.data;
-//   const create_date = new Date().toISOString().split('T')[0];
-//   const modify_date = create_date;
-//   const author = keyName;
-//   const comment_id_list: string[] = [];
-//   const likes = 0;
-//   const id = require('uuid').v4();
-//   console.log('post id: ' + id);
-
-//   // Insert data into the database
-//   try {
-//     const createPostQuery = format(
-//       `
-//       INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date, modify_date, likes)
-//       VALUE (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L)
-//       ON CONFLICT (id) DO NOTHING
-//       `,
-//       locale,
-//       id,
-//       title,
-//       thumbnail_img,
-//       tags,
-//       content,
-//       author,
-//       comment_id_list,
-//       create_date,
-//       modify_date,
-//       likes,
-//     );
-
-//     const createPost = await client.query(createPostQuery);
-
-//     revalidatePath('/');
-//     redirect('/');
-//     return { message: 'Post created successfully' };
-//   } catch (error) {
-//     return { message: 'Failed to create post' };
-//   }
-// }
-
 export async function createPost(
   id: string,
   thumbnail_img: string,
@@ -460,6 +391,78 @@ export async function updatePostWithAllLanguages(
 
   const url_title = title.toLowerCase().replace(urlRegex, '-');
   const redirectUrl = `/${lang}/posts/${url_title}/${id}`;
+
+  revalidatePath(redirectUrl);
+  redirect(redirectUrl);
+}
+
+export async function deletePost(
+  id: string,
+  locale: string,
+  client: VercelPoolClient,
+) {
+  console.log('id : ' + id);
+
+  try {
+    const deletePostQuery = format(
+      `
+      DELETE FROM posts_%s
+      WHERE id = %L
+      `,
+      locale,
+      id,
+    );
+
+    const deletePost = await client.query(deletePostQuery);
+    console.log('deletePost: ' + deletePost);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to delete post (' + locale + ')',
+    };
+  }
+}
+
+export async function deletePostWithAllLanguages(
+  currentLocale: string,
+  id: string,
+) {
+  console.log('deletePost: ' + id);
+
+  try {
+    const client = await db.connect();
+
+    const updateResult = await Promise.all([
+      deletePost(
+        id,
+        'en',
+        client,
+      ),
+      deletePost(
+        id,
+        'ja',
+        client,
+      ),
+      deletePost(
+        id,
+        'kr',
+        client,
+      ),
+      deletePost(
+        id,
+        'hk',
+        client,
+      ),
+    ]);
+  } catch (error) {
+    console.error(error);
+    return {
+      message: 'Failed to update post',
+    };
+  }
+
+  const lang = GetLangFromLocale(currentLocale);
+  const redirectUrl = `/${lang}/`;
 
   revalidatePath(redirectUrl);
   redirect(redirectUrl);

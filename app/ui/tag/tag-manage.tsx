@@ -84,6 +84,7 @@ const ManageTag = ({ tag }: { tag: string }) => {
   };
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+
   return (
     <li key={tag}>
       <div className="flex flex-row items-start">

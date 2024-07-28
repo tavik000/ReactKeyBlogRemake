@@ -430,7 +430,7 @@ export default function PostEditForm({
         <div className="w-1/2 px-2">
           <Button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-400"
+            className="w-full bg-blue-500 hover:bg-blue-400 focus-visible:outline-blue-500 active:bg-blue-600"
           >
             Save
           </Button>
@@ -444,7 +444,7 @@ export default function PostEditForm({
           >
             <Button
               type="button"
-              className="w-full bg-red-500 hover:bg-red-400"
+              className="w-full bg-red-500 hover:bg-red-400 focus-visible:outline-red-500 active:bg-red-600"
             >
               Cancel
             </Button>

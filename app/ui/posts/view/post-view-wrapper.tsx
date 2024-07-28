@@ -10,6 +10,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { fetchPostById } from '@/app/lib/data';
 import { Post } from '@/app/lib/definitions';
+import PostManage from './post-manage';
 
 export default async function PostViewWrapper({
   postId,
@@ -20,6 +21,7 @@ export default async function PostViewWrapper({
 }) {
   const postResults = await Promise.all([fetchPostById(postId, locale)]);
   const post = postResults[0];
+
   return (
     <>
       <div className="mb-12 flex flex-col">
@@ -43,11 +45,11 @@ export default async function PostViewWrapper({
         />
       </div>
       <PostContent post={post} />
-
       <PostInteraction
         likeCount={post.likes}
         commentCount={post.comment_id_list.length}
       />
+      <PostManage locale={locale} postId={postId} postTitle={post.title} />
     </>
   );
 }
