@@ -503,11 +503,14 @@ export async function deleteTag(tag: string) {
 export async function authenticate(locale: string) {
   const lang = GetLangFromLocale(locale);
   try {
-    const callbackUrl = 'http://localhost:3000/en/'; // Replace 'your-callback-url' with the actual callback URL
-    console.log(`Attempting to sign in with callback URL: ${callbackUrl}`);
+    const lang = GetLangFromLocale(locale);
+    const redirectUrl = `/${lang}/`;
     await signIn('google', { 
-      callbackUrl: callbackUrl,
+      redirectTo: redirectUrl,
+      redirect: true,
+      
     });
+
     console.log('Sign-in successful');
   } catch (error) {
     if (error instanceof AuthError) {

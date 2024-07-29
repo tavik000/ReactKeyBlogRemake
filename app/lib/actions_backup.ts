@@ -125,7 +125,15 @@ export async function authenticate(
   formData: FormData,
 ) {
   try {
-    await signIn('credentials', formData);
+    const formDataObj: Record<string, any> = {};
+    formData.forEach((value, key) => {
+      formDataObj[key] = value;
+    });
+
+    await signIn('credentials', {
+      ...formDataObj,
+      redirectTo: 'http://localhost:3000/en/',
+    });
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
