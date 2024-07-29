@@ -7,6 +7,8 @@ import { getDictionary } from '@/app/components/localization/dictionaries';
 import { DictStructure } from '@/app/components/localization/dict-store';
 import { GetLocaleFromLang } from '@/app/lib/constants';
 import { NextUIProvider } from '@nextui-org/react';
+import { auth } from '@/auth';
+
 
 export const experimental_ppr = true;
 
@@ -29,12 +31,13 @@ export default async function RootLayout({
   const lang = params.lang;
   const locale = GetLocaleFromLang(lang);
   const dict = (await getDictionary(locale)) as DictStructure;
+  const session = await auth();
 
   return (
     <html lang={lang}>
       <body className={`${inter.className} antialiased`}>
         <NextUIProvider>
-          <Sky locale={locale} dict={dict} />
+          <Sky locale={locale} dict={dict} session={session || undefined}/>
           <PostSection locale={locale} dict={dict}>
             {children}
           </PostSection>

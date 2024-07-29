@@ -501,14 +501,12 @@ export async function deleteTag(tag: string) {
 }
 
 export async function authenticate(locale: string) {
-  const lang = GetLangFromLocale(locale);
   try {
     const lang = GetLangFromLocale(locale);
-    const redirectUrl = `/${lang}/`;
-    await signIn('google', { 
+    const redirectUrl = `/${lang}#page-path`;
+    await signIn('google', {
       redirectTo: redirectUrl,
       redirect: true,
-      
     });
 
     console.log('Sign-in successful');
@@ -525,9 +523,11 @@ export async function authenticate(locale: string) {
   }
 }
 
-export async function logout() {
+export async function logout(locale: string) {
   try {
-    await signOut();
+    const lang = GetLangFromLocale(locale);
+    const redirectUrl = `/${lang}#page-path`;
+    await signOut({ redirectTo: redirectUrl });
   } catch (error) {
     console.error(error);
   }

@@ -26,7 +26,7 @@ export function PagePath({
   const blogUrl = `/${lang}`;
 
   return (
-    <div className="page-path relative z-10 mb-0 flex justify-center py-3">
+    <div id="page-path" className="page-path relative z-10 mb-0 flex justify-center py-3">
       <div className="mx-auto flex w-10/12 max-w-1140px basis-2/3 list-none flex-row rounded-md bg-white px-2.5 py-1">
         <PagePathItem url={homepageURL} shouldShowArrow={true} isPost={false}>
           {dict.overview.homepage}

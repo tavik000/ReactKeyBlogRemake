@@ -5,8 +5,9 @@ import React, { useState, useRef, useEffect } from 'react';
 import PostHeader from './posts/general/post-header';
 import { set } from 'zod';
 import { DictStructure } from '../components/localization/dict-store';
+import { Session } from 'next-auth';
 
-export default function Sky({ locale, dict }: { locale: string, dict: DictStructure }) {
+export default function Sky({ locale, dict, session}: { locale: string, dict: DictStructure, session?: Session }) {
 
   if (locale === 'zh-HK') {
     locale = 'hk';
@@ -117,7 +118,7 @@ export default function Sky({ locale, dict }: { locale: string, dict: DictStruct
   return (
     <>
       <header>
-        <PostHeader locale={locale} dict={dict} groundPosHeight={groundPosHeight} />
+        <PostHeader locale={locale} dict={dict} groundPosHeight={groundPosHeight} session={session}/>
       </header>
       <main className="flex min-h-screen flex-col">
         <WaddleDee
