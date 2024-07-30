@@ -9,6 +9,7 @@ import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { keyName } from './constants';
 import { log } from 'console';
+import { isRedirectError } from 'next/dist/client/components/redirect';
 
 const format = require('pg-format');
 const { db } = require('@vercel/postgres');
@@ -523,12 +524,14 @@ export async function authenticate(locale: string) {
   }
 }
 
-export async function logout(locale: string) {
+export async function signOutAction(locale: string) {
   try {
     const lang = GetLangFromLocale(locale);
     const redirectUrl = `/${lang}#page-path`;
     await signOut({ redirectTo: redirectUrl });
   } catch (error) {
-    console.error(error);
+    if (isRedirectError(error)) {
+      throw error;
+    }
   }
 }

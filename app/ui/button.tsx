@@ -1,24 +1,12 @@
 import clsx from 'clsx';
 import Link from 'next/link';
 import {
-  UserCircleIcon,
   ArrowUpOnSquareIcon,
   TagIcon,
   PencilSquareIcon,
 } from '@heroicons/react/24/outline';
 import LanguageDropdown, { LanguageItem } from './language-dropdown';
 import { GetLangFromLocale, GetLanguageName } from '@/app/lib/constants';
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-  Button as NextUIButton,
-} from '@nextui-org/react';
-import { authenticate, logout } from '@/app/lib/actions';
-import { Session } from 'next-auth';
-import { Avatar } from '@nextui-org/react';
-import { signOut } from '@/auth';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -122,52 +110,6 @@ export function TagButton({ href }: { href: string }) {
   );
 }
 
-export function UserButton({
-  locale,
-  session,
-}: {
-  locale: string;
-  session?: Session;
-}) {
-  const lang = GetLangFromLocale(locale);
-
-  return (
-    <Dropdown className="flex-none">
-      <DropdownTrigger>
-        <button className="my-2 mr-4 flex h-10 w-10 items-center justify-center rounded-lg text-white transition-colors focus:outline-none aria-disabled:cursor-not-allowed aria-disabled:opacity-50">
-          {session?.user && session.user?.image ? (
-            <Avatar src={session.user.image} />
-          ) : (
-            <UserCircleIcon className="h-8 w-8 text-gray-500 hover:text-orange-500" />
-          )}
-        </button>
-      </DropdownTrigger>
-      <DropdownMenu
-        className="max-h-96 overflow-y-auto rounded-lg bg-white"
-        aria-label="Static Actions"
-        onAction={(key) => {
-          const actionKey = key.toString();
-          if (actionKey === 'SignIn') {
-            authenticate(locale);
-          }
-          if (actionKey === 'SignOut') {
-            logout(locale);
-          }
-        }}
-      >
-        {session?.user ? (
-          <DropdownItem className="hover:bg-gray-100" key="SignOut">
-            Sign out
-          </DropdownItem>
-        ) : (
-          <DropdownItem className="hover:bg-gray-100" key="SignIn">
-            Sign in
-          </DropdownItem>
-        )}
-      </DropdownMenu>
-    </Dropdown>
-  );
-}
 
 export function ShareButton({ ...rest }: ButtonProps) {
   return (

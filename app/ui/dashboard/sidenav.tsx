@@ -23,7 +23,7 @@ export default function SideNav() {
           action={async () => {
             'use server';
             console.log("Signed out");
-            await signOut();
+            await signOut({redirectTo: '/en/'});
             console.log("Signed out done");
           }}
         >

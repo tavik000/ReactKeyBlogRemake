@@ -17,7 +17,7 @@ export default function Page({
 
   return (
     <main className="light text-foreground bg-background flex min-h-screen flex-col">
-      <Suspense fallback={<PostOverviewSkeleton/>}>
+      <Suspense fallback={<PostOverviewSkeleton />}>
         <PostOverview searchParams={searchParams} locale={locale} />
       </Suspense>
     </main>

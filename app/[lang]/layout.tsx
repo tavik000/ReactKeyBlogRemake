@@ -9,7 +9,6 @@ import { GetLocaleFromLang } from '@/app/lib/constants';
 import { NextUIProvider } from '@nextui-org/react';
 import { auth } from '@/auth';
 
-
 export const experimental_ppr = true;
 
 export const metadata: Metadata = {
@@ -37,7 +36,7 @@ export default async function RootLayout({
     <html lang={lang}>
       <body className={`${inter.className} antialiased`}>
         <NextUIProvider>
-          <Sky locale={locale} dict={dict} session={session || undefined}/>
+          <Sky locale={locale} dict={dict} session={session || undefined} />
           <PostSection locale={locale} dict={dict}>
             {children}
           </PostSection>
