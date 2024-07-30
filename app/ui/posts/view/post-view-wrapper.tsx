@@ -1,6 +1,7 @@
 import {
   GetLanguageName,
   GetLocaleFromLang,
+  keyEmail,
   keyTwitterId,
 } from '@/app/lib/constants';
 import PostContent from '@/app/ui/posts/view/post-content';
@@ -11,6 +12,7 @@ import Image from 'next/image';
 import { fetchPostById } from '@/app/lib/data';
 import { Post } from '@/app/lib/definitions';
 import PostManage from './post-manage';
+import { auth } from '@/auth';
 
 export default async function PostViewWrapper({
   postId,
@@ -21,6 +23,7 @@ export default async function PostViewWrapper({
 }) {
   const postResults = await Promise.all([fetchPostById(postId, locale)]);
   const post = postResults[0];
+  const session = await auth();
 
   return (
     <>
@@ -49,7 +52,11 @@ export default async function PostViewWrapper({
         likeCount={post.likes}
         commentCount={post.comment_id_list.length}
       />
-      <PostManage locale={locale} postId={postId} postTitle={post.title} />
+      {session && session?.user && session.user.email === keyEmail ? (
+        <PostManage locale={locale} postId={postId} postTitle={post.title} />
+      ) : (
+        <> </>
+      )}
     </>
   );
 }
