@@ -169,7 +169,7 @@ export function UserButton({
                     onClick={() => {
                       try {
                         setIsSignInLoadingTwitter(true);
-                        signInAction('twitter', locale);
+                        signInAction('twitter', pathname);
                         onClose();
                       } catch (error) {
                         setIsSignInLoadingTwitter(false);

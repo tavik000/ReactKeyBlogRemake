@@ -504,7 +504,6 @@ export async function deleteTag(tag: string) {
 export async function signInAction(provider: string, pathname: string) {
   try {
     const redirectUrl = `${pathname}#page-path`;
-    console.log('redirectUrl: ' + redirectUrl);
     await signIn(provider, {
       redirectTo: redirectUrl,
       redirect: true,
