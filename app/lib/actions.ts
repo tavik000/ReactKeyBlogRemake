@@ -501,11 +501,11 @@ export async function deleteTag(tag: string) {
   redirect(redirectUrl);
 }
 
-export async function authenticate(locale: string) {
+export async function signInAction(provider: string, locale: string) {
   try {
     const lang = GetLangFromLocale(locale);
     const redirectUrl = `/${lang}#page-path`;
-    await signIn('google', {
+    await signIn(provider, {
       redirectTo: redirectUrl,
       redirect: true,
     });
