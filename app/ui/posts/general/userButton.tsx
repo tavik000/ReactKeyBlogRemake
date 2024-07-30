@@ -18,6 +18,7 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { useState } from 'react';
+import { usePathname } from 'next/navigation';
 
 export function UserButton({
   locale,
@@ -31,6 +32,7 @@ export function UserButton({
     useState<boolean>(false);
   const [isSignInLoadingTwitter, setIsSignInLoadingTwitter] =
     useState<boolean>(false);
+  const pathname = usePathname();
 
   return (
     <>
@@ -50,11 +52,10 @@ export function UserButton({
           onAction={(key) => {
             const actionKey = key.toString();
             if (actionKey === 'SignIn') {
-              // authenticate(locale);
               onOpen();
             }
             if (actionKey === 'SignOut') {
-              signOutAction(locale);
+              signOutAction(pathname);
             }
           }}
         >
@@ -95,7 +96,7 @@ export function UserButton({
                     onClick={() => {
                       try {
                         setIsSignInLoadingGoogle(true);
-                        signInAction("google", locale);
+                        signInAction('google', pathname);
                         onClose();
                       } catch (error) {
                         setIsSignInLoadingGoogle(false);
@@ -168,7 +169,7 @@ export function UserButton({
                     onClick={() => {
                       try {
                         setIsSignInLoadingTwitter(true);
-                        signInAction("twitter", locale);
+                        signInAction('twitter', locale);
                         onClose();
                       } catch (error) {
                         setIsSignInLoadingTwitter(false);

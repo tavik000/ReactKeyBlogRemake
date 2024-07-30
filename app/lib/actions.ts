@@ -501,16 +501,13 @@ export async function deleteTag(tag: string) {
   redirect(redirectUrl);
 }
 
-export async function signInAction(provider: string, locale: string) {
+export async function signInAction(provider: string, pathname: string) {
   try {
-    const lang = GetLangFromLocale(locale);
-    const redirectUrl = `/${lang}#page-path`;
+    const redirectUrl = `${pathname}#page-path`;
     await signIn(provider, {
       redirectTo: redirectUrl,
       redirect: true,
     });
-
-    console.log('Sign-in successful');
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
@@ -524,10 +521,10 @@ export async function signInAction(provider: string, locale: string) {
   }
 }
 
-export async function signOutAction(locale: string) {
+export async function signOutAction(pathname: string) {
   try {
-    const lang = GetLangFromLocale(locale);
-    const redirectUrl = `/${lang}#page-path`;
+    console.log('signOutAction, pathname: ' + pathname);
+    const redirectUrl = `${pathname}#page-path`;
     await signOut({ redirectTo: redirectUrl });
   } catch (error) {
     if (isRedirectError(error)) {
