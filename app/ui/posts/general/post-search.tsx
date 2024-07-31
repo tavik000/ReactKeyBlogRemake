@@ -42,7 +42,7 @@ export default function PostSearch({
 
   return (
     <div className="relative z-auto my-2 ml-6 flex h-10 max-h-16 max-w-sm flex-1 flex-shrink-0 rounded-full py-0.5">
-      <label className="sr-only">Search</label>
+      <label htmlFor="post-search" className="sr-only">Search</label>
       <input
         id="post-search"
         className="peer block w-full rounded-md border border-gray-200 bg-gray-100 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
