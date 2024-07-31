@@ -41,9 +41,9 @@ function useScrollDirection() {
     };
 
     window.addEventListener('scroll', updateScrollDirection); // add event listener
-    setTimeout(() => {
-      setLastScrollY(window.scrollY);
-    }, 0);
+    // setTimeout(() => {
+    //   setLastScrollY(window.scrollY);
+    // }, 0);
     return () => {
       window.removeEventListener('scroll', updateScrollDirection); // clean up
     };
