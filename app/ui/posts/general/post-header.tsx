@@ -1,10 +1,6 @@
 'use client';
 import PostSearch from './post-search';
-import {
-  CreatePostButton,
-  LanguageButton,
-  TagButton,
-} from '@/app/ui/button';
+import { CreatePostButton, LanguageButton, TagButton } from '@/app/ui/button';
 import { UserButton } from './userButton';
 import { useEffect, useState } from 'react';
 import { sniglet } from '@/app/ui/fonts';
@@ -42,7 +38,7 @@ function useScrollDirection() {
 
     window.addEventListener('scroll', updateScrollDirection); // add event listener
     // setTimeout(() => {
-    //   setLastScrollY(window.scrollY);
+    setLastScrollY(window.scrollY);
     // }, 0);
     return () => {
       window.removeEventListener('scroll', updateScrollDirection); // clean up
@@ -89,7 +85,7 @@ export default function PostHeader({
           </>
         ) : null}
         <LanguageButton locale={locale} isHidden={isHidden} />
-        <UserButton locale={locale} session={session} dict={dict}/>
+        <UserButton locale={locale} session={session} dict={dict} />
       </div>
     </div>
   );
