@@ -1,6 +1,8 @@
 import { fetchPostById, fetchPostTags } from '@/app/lib/data';
 import PostEditForm from '@/app/ui/posts/edit/post-edit-form';
-import { GetLocaleFromLang } from '@/app/lib/constants';
+import { GetLocaleFromLang, keyEmail } from '@/app/lib/constants';
+import { auth } from '@/auth';
+import PostContentContainer from '@/app/ui/posts/view/post-content-container';
 
 export default async function Page({ params }: { params: { lang:string, id: string } }) {
   const locale = GetLocaleFromLang(params.lang);
@@ -15,7 +17,23 @@ export default async function Page({ params }: { params: { lang:string, id: stri
   );
 
   const allPostTags: string[] = await fetchPostTags();
-  
+  const session = await auth();
+  if (!session) {
+    return (
+      <PostContentContainer>
+        <div>Access Denied</div>
+      </PostContentContainer>
+    );
+  }
+  if (session) {
+    if (session.user?.email !== keyEmail) {
+      return (
+        <PostContentContainer>
+          <div>Access Denied</div>
+        </PostContentContainer>
+      );
+    }
+  } 
   // TODO: not found
   return (
     <main>

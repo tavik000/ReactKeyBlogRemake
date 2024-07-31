@@ -1,7 +1,9 @@
-import { GetLocaleFromLang } from '@/app/lib/constants';
+import { GetLocaleFromLang, keyEmail } from '@/app/lib/constants';
 import { fetchPostTags } from '@/app/lib/data';
 import PostEditForm from '@/app/ui/posts/edit/post-edit-form';
 import { Post } from '@/app/lib/definitions';
+import PostContentContainer from '@/app/ui/posts/view/post-content-container';
+import { auth } from '@/auth';
 
 export default async function Page({ params }: { params: { lang: string } }) {
   const locale = GetLocaleFromLang(params.lang);
@@ -12,7 +14,23 @@ export default async function Page({ params }: { params: { lang: string } }) {
   const posts = [emptyPost_en, emptyPost_ja, emptyPost_kr, emptyPost_hk];
 
   const allPostTags: string[] = await fetchPostTags();
-
+  const session = await auth();
+  if (!session) {
+    return (
+      <PostContentContainer>
+        <div>Access Denied</div>
+      </PostContentContainer>
+    );
+  }
+  if (session) {
+    if (session.user?.email !== keyEmail) {
+      return (
+        <PostContentContainer>
+          <div>Access Denied</div>
+        </PostContentContainer>
+      );
+    }
+  }
   return (
     <main>
       <div className="flex min-h-screen flex-col">
