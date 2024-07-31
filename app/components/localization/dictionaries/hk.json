@@ -1,6 +1,12 @@
 {
   "header": {
-    "searchPost": "搜索..."
+    "searchPost": "搜索...",
+    "signIn": "登入",
+    "signOut": "登出",
+    "signInToKeyBlog": "登入到 Key Blog",
+    "signInWithGoogle": "使用 Google 登入",
+    "signInWithTwitter": "使用 X(Twitter) 登入",
+    "close": "關閉"
   },
   "overview": {
     "homepage": "Key 主頁",

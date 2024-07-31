@@ -1,6 +1,12 @@
 {
   "header": {
-    "searchPost": "검색..."
+    "searchPost": "검색...",
+    "signIn": "로그인",
+    "signOut": "로그아웃",
+    "signInToKeyBlog": "Key Blog에 로그인",
+    "signInWithGoogle": "Google로 로그인",
+    "signInWithTwitter": "X(Twitter)로 로그인",
+    "close": "닫기"
   },
   "overview": {
     "homepage": "Key 홈페이지",

@@ -19,13 +19,16 @@ import {
 } from '@nextui-org/react';
 import { useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { DictStructure } from '@/app/components/localization/dict-store';
 
 export function UserButton({
   locale,
   session,
+  dict,
 }: {
   locale: string;
   session?: Session;
+  dict: DictStructure;
 }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isSignInLoadingGoogle, setIsSignInLoadingGoogle] =
@@ -61,11 +64,11 @@ export function UserButton({
         >
           {session?.user ? (
             <DropdownItem className="hover:bg-gray-100" key="SignOut">
-              Sign out
+              {dict.header.signOut}
             </DropdownItem>
           ) : (
             <DropdownItem className="hover:bg-gray-100" key="SignIn">
-              Sign in
+              {dict.header.signIn}
             </DropdownItem>
           )}
         </DropdownMenu>
@@ -80,7 +83,7 @@ export function UserButton({
           {(onClose) => (
             <>
               <ModalHeader className="mt-6 flex flex-col gap-1 text-center text-xl">
-                Sign in to Key Blog
+                {dict.header.signInToKeyBlog}
               </ModalHeader>
               <ModalBody>
                 <div className="flex flex-col justify-between px-1 py-2">
@@ -91,7 +94,7 @@ export function UserButton({
                     className={
                       isSignInLoadingGoogle
                         ? 'mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300'
-                        : 'mb-4 flex w-full rounded-lg outline-gray-300 hover:bg-gray-100'
+                        : 'mb-4 flex w-full rounded-lg outline-gray-300 hover:outline-orange-200'
                     }
                     onClick={() => {
                       try {
@@ -154,7 +157,9 @@ export function UserButton({
                         ></path>
                       </svg>
                     </span>
-                    <p className="font-semibold">Sign in with Google</p>
+                    <p className="font-semibold">
+                      {dict.header.signInWithGoogle}
+                    </p>
                   </Button>
 
                   <Button
@@ -164,7 +169,7 @@ export function UserButton({
                     className={
                       isSignInLoadingTwitter
                         ? 'mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300'
-                        : 'mb-4 flex w-full rounded-lg outline-gray-300 hover:bg-gray-100'
+                        : 'mb-4 flex w-full rounded-lg outline-gray-300 hover:outline-orange-200'
                     }
                     onClick={() => {
                       try {
@@ -214,13 +219,15 @@ export function UserButton({
                         <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
                       </svg>
                     </span>
-                    <p className="font-semibold">Sign in with X(Twitter)</p>
+                    <p className="font-semibold">
+                      {dict.header.signInWithTwitter}
+                    </p>
                   </Button>
                 </div>
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={onClose}>
-                  Close
+                  {dict.header.close}
                 </Button>
               </ModalFooter>
             </>

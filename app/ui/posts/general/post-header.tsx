@@ -89,7 +89,7 @@ export default function PostHeader({
           </>
         ) : null}
         <LanguageButton locale={locale} isHidden={isHidden} />
-        <UserButton locale={locale} session={session}/>
+        <UserButton locale={locale} session={session} dict={dict}/>
       </div>
     </div>
   );

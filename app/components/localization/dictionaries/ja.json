@@ -1,6 +1,12 @@
 {
   "header": {
-    "searchPost": "ブログ検索..."
+    "searchPost": "ブログ検索...",
+    "signIn": "ログイン",
+    "signOut": "ログアウト",
+    "signInToKeyBlog": "Key Blogにログイン",
+    "signInWithGoogle": "Googleでログイン",
+    "signInWithTwitter": "X(Twitter)でログイン",
+    "close": "閉じる"
   },
   "overview": {
     "homepage": "Key ホームページ",

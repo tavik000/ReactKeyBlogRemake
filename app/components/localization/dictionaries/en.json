@@ -1,6 +1,12 @@
 {
   "header": {
-    "searchPost": "Search posts..."
+    "searchPost": "Search posts...",
+    "signIn": "Sign In",
+    "signOut": "Sign Out",
+    "signInToKeyBlog": "Sign in to Key Blog",
+    "signInWithGoogle": "Sign in with Google",
+    "signInWithTwitter": "Sign in with X(Twitter)",
+    "close": "Close"
   },
   "overview": {
     "homepage": "Key Homepage",
