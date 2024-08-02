@@ -179,6 +179,9 @@ export function UserButton({
                         onClose();
                       } catch (error) {
                         setIsSignInLoadingTwitter(false);
+                        if (error instanceof AuthError) {
+                          throw new Error('AuthError: ' + error.message);
+                        }
                       } finally {
                         setIsSignInLoadingTwitter(false);
                       }
