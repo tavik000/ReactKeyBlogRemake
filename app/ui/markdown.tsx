@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 'use client';
 import React, { Fragment, useState } from 'react';
 import Markdown from 'react-markdown';
@@ -7,6 +8,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import CopyButton from '../components/utils/copy';
 import { escapeHtml } from '../lib/escapeHtml';
+import Image from 'next/image';
 
 type MarkdownRendererProps = {
   children: string;
@@ -88,6 +90,17 @@ export function MarkdownRenderer({
             <code className={className} {...props}>
               {children}
             </code>
+          );
+        },
+        img: (props) => {
+          return (
+            <div className="relative w-auto h-auto aspect-video">
+              <img
+                className="zoom-image cursor-pointer absolute"
+                src={props.src as string}
+                alt={props.alt || ''}
+              />
+            </div>
           );
         },
       }}

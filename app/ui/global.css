@@ -1066,3 +1066,10 @@ img {
     transform: rotate(360deg);
   }
 }
+
+
+.zoom-image:active {
+  transform: scale(2);
+  z-index: 10;
+  transition: transform 0.5s ease;
+}
