@@ -1052,16 +1052,24 @@ img {
   display: inherit !important;
 }
 
-.markdown>*:not(iframe) {
+.markdown>*:not(iframe):not(blockquote) {
   all: revert;
 }
 
+blockquote {
+  margin-top: 0;
+  margin-bottom: 16px;
+  padding: 0 1em;
+  color: #576061;
+  border-left: 0.25em solid #d0d7de;
+}
 
 
 @keyframes spin {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
