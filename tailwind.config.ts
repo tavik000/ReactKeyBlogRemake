@@ -1,12 +1,12 @@
 import type { Config } from 'tailwindcss';
-const {nextui} = require("@nextui-org/react");
+const { nextui } = require('@nextui-org/react');
 
 const config: Config = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
     './app/**/*.{js,ts,jsx,tsx,mdx}',
-    "./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+    './node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
     extend: {
@@ -14,6 +14,8 @@ const config: Config = {
         '13px': '13px',
         '14px': '14px',
         '28px': '28px',
+        small: '0.875rem',
+        tiny: '0.75rem',
       },
       gridTemplateColumns: {
         '13': 'repeat(13, minmax(0, 1fr))',
@@ -24,6 +26,14 @@ const config: Config = {
           500: '#0070F3',
           600: '#2F6FEB',
         },
+      },
+      borderRadius: {
+        large: '1rem',
+        medium: '0.375rem',
+        small: '0.25rem',
+      },
+      borderWidth: {
+        medium: '2px', 
       },
       height: {
         '400px': '400px',
@@ -66,7 +76,11 @@ const config: Config = {
       },
     },
   },
-  darkMode: "class",
-  plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'), [nextui()]],
+  darkMode: 'class',
+  plugins: [
+    require('@tailwindcss/forms'),
+    require('@tailwindcss/typography'),
+    [nextui()],
+  ],
 };
 export default config;
