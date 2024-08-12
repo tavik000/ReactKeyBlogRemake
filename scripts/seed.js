@@ -168,7 +168,6 @@ async function seedComments(client) {
         post_id UUID NOT NULL,
         author VARCHAR(255) NOT NULL,
         author_img VARCHAR(255) NOT NULL,
-        author_email VARCHAR(255) NOT NULL,
         content TEXT NOT NULL,
         create_date DATE NOT NULL
       );
@@ -180,7 +179,7 @@ async function seedComments(client) {
       comments.map((comment) => {
         return client.sql`
           INSERT INTO comments (id, post_id, author, author_img, author_email, content, create_date)
-          VALUES (${comment.id}, ${comment.post_id}, ${comment.author}, ${comment.author_img}, ${comment.author_email}, ${comment.content}, ${comment.create_date})
+          VALUES (${comment.id}, ${comment.post_id}, ${comment.author}, ${comment.author_img}, ${comment.content}, ${comment.create_date})
           ON CONFLICT (id) DO NOTHING;
         `;
       }),
