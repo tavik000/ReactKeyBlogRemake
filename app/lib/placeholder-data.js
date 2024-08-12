@@ -1,6 +1,5 @@
 // This file contains placeholder data that you'll be replacing with real data in the Data Fetching chapter:
 
-
 // https://nextjs.org/learn/dashboard-app/fetching-data
 const users = [
   {
@@ -100,8 +99,8 @@ const comments = [
   {
     id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
     post_id: '3958dc9e-712f-4377-85e9-fec4b6a6442b',
-    author: 'trollguy87',
-    author_img: '/viewers/trollguy87.png',
+    user_name: 'trollguy87',
+    user_img: '/viewers/trollguy87.png',
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus porro earum dolor sint fuga laborum velit laudantium distinctio quos sunt veritatis unde inventore, autem ad tenetur voluptatibus mollitia vel!',
     create_date: '2022-12-06',
     likes: 0,
@@ -109,13 +108,24 @@ const comments = [
   {
     id: '3958dc9e-712f-4377-85e9-fec4b6a64430',
     post_id: '3958dc9e-712f-4377-85e9-fec4b6a6442b',
-    author: 'trollguy87',
-    author_img: '/viewers/trollguy87.png',
+    user_name: 'trollguy87',
+    user_img: '/viewers/trollguy87.png',
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus porro earum dolor sint fuga laborum velit laudantium distinctio quos sunt veritatis unde inventore, autem ad tenetur voluptatibus mollitia vel!',
     create_date: '2023-12-06',
     likes: 0,
   },
 ]
+
+const notifications = [
+  {
+    id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
+    user_name: 'trollguy87',
+    post_id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
+    create_date: '2022-12-06',
+    isRead: false,
+  },
+]
+
 
 const posts_en = [
   {
@@ -953,4 +963,5 @@ module.exports = {
   posts_kr,
   posts_hk,
   comments,
+  notifications,
 };

@@ -7,6 +7,7 @@ const {
   posts_hk: posts_hk,
   users,
   comments,
+  notifications,
 } = require('../app/lib/placeholder-data.js');
 const bcrypt = require('bcrypt');
 const format = require('pg-format');
@@ -166,10 +167,11 @@ async function seedComments(client) {
       CREATE TABLE IF NOT EXISTS comments (
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         post_id UUID NOT NULL,
-        author VARCHAR(255) NOT NULL,
-        author_img VARCHAR(255) NOT NULL,
+        user_name VARCHAR(255) NOT NULL,
+        user_img VARCHAR(255) NOT NULL,
         content TEXT NOT NULL,
-        create_date DATE NOT NULL
+        create_date DATE NOT NULL,
+        likes INT NOT NULL
       );
     `;
 
@@ -178,8 +180,8 @@ async function seedComments(client) {
     const insertedComments = await Promise.all(
       comments.map((comment) => {
         return client.sql`
-          INSERT INTO comments (id, post_id, author, author_img, author_email, content, create_date)
-          VALUES (${comment.id}, ${comment.post_id}, ${comment.author}, ${comment.author_img}, ${comment.content}, ${comment.create_date})
+          INSERT INTO comments (id, post_id, user_name, user_img, content, create_date, likes)
+          VALUES (${comment.id}, ${comment.post_id}, ${comment.user_name}, ${comment.user_img}, ${comment.content}, ${comment.create_date}, ${comment.likes})
           ON CONFLICT (id) DO NOTHING;
         `;
       }),
@@ -197,6 +199,44 @@ async function seedComments(client) {
   }
 }
 
+async function seedNotifications(client) {
+  try {
+    await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
+
+    const createTable = await client.sql`
+      CREATE TABLE IF NOT EXISTS notifications (
+        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+        user_name VARCHAR(255) NOT NULL,
+        post_id UUID NOT NULL,
+        create_date DATE NOT NULL,
+        isRead BOOLEAN NOT NULL
+      );
+    `;
+
+    console.log(`Created "notifications" table`);
+
+    const insertedNotifications = await Promise.all(
+      notifications.map((notification) => {
+        return client.sql`
+          INSERT INTO notifications (id, user_name, post_id, create_date, isRead)
+          VALUES (${notification.id}, ${notification.user_name}, ${notification.post_id}, ${notification.create_date}, ${notification.isRead})
+          ON CONFLICT (id) DO NOTHING;
+        `;
+      }),
+    );
+
+    console.log(`Seeded ${insertedNotifications.length} notifications`);
+
+    return {
+      createTable,
+      notifications: insertedNotifications,
+    };
+  } catch (error) {
+    console.error('Error seeding notifications:', error);
+    throw error;
+  }
+}
+
 async function main() {
   const client = await db.connect();
 
@@ -207,6 +247,7 @@ async function main() {
   await seedPosts(client, 'hk');
   await seedPosts(client, 'kr');
   await seedComments(client);
+  await seedNotifications(client);
 
   await client.end();
 }
