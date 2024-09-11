@@ -8,7 +8,7 @@ import {
   User,
   Revenue,
 } from './definitions_backup';
-import { Post, PostCard, BlogComment } from './definitions';
+import { Post, PostCard, PostComment } from './definitions';
 import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
 import format from 'pg-format';

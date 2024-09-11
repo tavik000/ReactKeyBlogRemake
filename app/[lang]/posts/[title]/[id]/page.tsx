@@ -24,11 +24,11 @@ export default function Page({
 
   return (
     <main>
-      <PostContentContainer>
+      <>
         <Suspense fallback={<PostViewWrapperSkeleton />}>
           <PostViewWrapper postId={id} locale={locale} />
         </Suspense>
-      </PostContentContainer>
+      </>
     </main>
   );
 }

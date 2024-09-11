@@ -10,14 +10,14 @@ export type User = {
   password?: string;
 };
 
-export interface BlogComment {
+export interface PostComment {
   id: string;
   post_id: string;
-  author: string;
-  author_img: string;
-  author_email: string;
+  user_name: string;
+  user_img: string;
   content: string;
   create_date: Date;
+  likes: number;
 }
 
 export type PostCard = {

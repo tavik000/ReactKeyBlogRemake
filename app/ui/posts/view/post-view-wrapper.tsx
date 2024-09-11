@@ -13,6 +13,8 @@ import { fetchPostById } from '@/app/lib/data';
 import { Post } from '@/app/lib/definitions';
 import PostManage from './post-manage';
 import { auth } from '@/auth';
+import PostContentContainer from './post-content-container';
+import CommentItem from './comment-item';
 
 export default async function PostViewWrapper({
   postId,
@@ -27,35 +29,52 @@ export default async function PostViewWrapper({
 
   return (
     <>
-      <div className="mb-12 flex flex-col">
-        <AuthorInfo post={post} />
-        <h1
-          id="post-title"
-          className="mt-2 flex text-28px font-semibold leading-normal"
-        >
-          {post.title}
-        </h1>
-        <span className="3/5 mt-2 flex flex-wrap justify-start">
-          {post.tags.map((tag) => (
-            <PostTagItem key={tag} locale={locale} tag={tag} isLabel={true} />
-          ))}
-        </span>
-        <PostDate post={post} />
+      <PostContentContainer>
+        <div className="mb-12 flex flex-col">
+          <AuthorInfo post={post} />
+          <h1
+            id="post-title"
+            className="mt-2 flex text-28px font-semibold leading-normal"
+          >
+            {post.title}
+          </h1>
+          <span className="3/5 mt-2 flex flex-wrap justify-start">
+            {post.tags.map((tag) => (
+              <PostTagItem key={tag} locale={locale} tag={tag} isLabel={true} />
+            ))}
+          </span>
+          <PostDate post={post} />
 
+          <PostInteraction
+            likeCount={post.likes}
+            commentCount={post.comment_id_list.length}
+          />
+        </div>
+        <PostContent post={post} />
         <PostInteraction
           likeCount={post.likes}
           commentCount={post.comment_id_list.length}
         />
-      </div>
-      <PostContent post={post} />
-      <PostInteraction
-        likeCount={post.likes}
-        commentCount={post.comment_id_list.length}
-      />
+      </PostContentContainer>
       {session && session?.user && session.user.email === keyEmail ? (
         <PostManage locale={locale} postId={postId} postTitle={post.title} />
       ) : (
         <> </>
+      )}
+
+      {post.comment_id_list.length > 0 ? (
+        <div className="mt-6">
+        <PostContentContainer>
+          <h2 className="mt-2 text-lg font-semibold leading-normal">
+            Comments
+          </h2>
+          {post.comment_id_list.map((commentId) => (
+            <CommentItem key={commentId}/>
+          ))}
+        </PostContentContainer>
+        </div>
+      ) : (
+        <></>
       )}
     </>
   );
