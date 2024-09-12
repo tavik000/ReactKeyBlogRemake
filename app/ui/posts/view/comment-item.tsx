@@ -17,7 +17,7 @@ export default function CommentItem({
 
 
   return (
-    <div className="mt-6 flex-col justify-between border-b-2 border-t-2 border-gray-100">
+    <div className="flex-col justify-between border-b-2 border-gray-100">
       <div className="flex mt-4 content-center w-full">
         <User
           name="User"
@@ -26,7 +26,6 @@ export default function CommentItem({
             src: "https://i.pravatar.cc/300"
           }}
         />
-
         <p className="flex items-center ml-auto text-sm text-gray-500">
           {create_date
             .toDateString()
@@ -35,10 +34,9 @@ export default function CommentItem({
             .join(' ')
             .replace(/(?<=\d) /, ', ')}
         </p>
-
       </div>
 
-      {/* Markdown */}
+      {/* Content */}
       <div className="flex mt-4 content-center">
         <div className="mr-0 inline-block flex-shrink-0">
           <MarkdownRenderer> A Markdown Post</MarkdownRenderer>
@@ -57,8 +55,6 @@ export default function CommentItem({
         </div>
       </div>
 
-      {/* Like */}
     </div>
-
   );
 }

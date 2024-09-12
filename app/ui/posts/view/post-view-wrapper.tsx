@@ -64,14 +64,16 @@ export default async function PostViewWrapper({
 
       {post.comment_id_list.length > 0 ? (
         <div className="mt-6">
-        <PostContentContainer>
-          <h2 className="mt-2 text-lg font-semibold leading-normal">
-            Comments
-          </h2>
-          {post.comment_id_list.map((commentId) => (
-            <CommentItem key={commentId}/>
-          ))}
-        </PostContentContainer>
+          <PostContentContainer>
+            <h2 className="mt-2 text-lg font-semibold leading-normal">
+              Comments
+            </h2>
+            <div className="mt-6 border-t-[1px]">
+              {post.comment_id_list.map((commentId) => (
+                <CommentItem key={commentId} />
+              ))}
+            </div>
+          </PostContentContainer>
         </div>
       ) : (
         <></>
