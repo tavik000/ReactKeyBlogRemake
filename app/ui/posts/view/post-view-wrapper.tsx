@@ -55,12 +55,12 @@ export default async function PostViewWrapper({
           likeCount={post.likes}
           commentCount={post.comment_id_list.length}
         />
+        {session && session?.user && session.user.email === keyEmail ? (
+          <PostManage locale={locale} postId={postId} postTitle={post.title} />
+        ) : (
+          <> </>
+        )}
       </PostContentContainer>
-      {session && session?.user && session.user.email === keyEmail ? (
-        <PostManage locale={locale} postId={postId} postTitle={post.title} />
-      ) : (
-        <> </>
-      )}
 
       {post.comment_id_list.length > 0 ? (
         <div className="mt-6">
