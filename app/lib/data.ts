@@ -447,3 +447,27 @@ export async function fetchPostById(id: string, locale: string) {
     throw new Error('Failed to fetch post.');
   }
 }
+
+export async function fetchPostCommentById(commentId: string) {
+  noStore();
+
+  try {
+    const data = await sql<PostComment>`
+    SELECT
+      id,
+      post_id,
+      user_name,
+      user_img,
+      content,
+      create_date,
+      likes
+    FROM comments
+    WHERE id=${commentId};
+  `;
+    const comment = data.rows[0];
+    return comment;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch post comment.');
+  }
+}
