@@ -15,6 +15,7 @@ import PostManage from './post-manage';
 import { auth } from '@/auth';
 import PostContentContainer from './post-content-container';
 import CommentItem from './comment-item';
+import { Button } from '@/app/ui/button';
 
 export default async function PostViewWrapper({
   postId,
@@ -62,22 +63,44 @@ export default async function PostViewWrapper({
         )}
       </PostContentContainer>
 
-      {post.comment_id_list.length > 0 ? (
-        <div className="mt-6">
-          <PostContentContainer>
-            <h2 className="mt-2 text-lg font-semibold leading-normal">
-              Comments
-            </h2>
+      {/* TODO localization */}
+      <div className="mt-6">
+        <PostContentContainer>
+          <h2 className="mt-2 text-lg font-semibold leading-normal">
+            Comments
+          </h2>
+          {post.comment_id_list.length > 0 ? (
             <div className="mt-6 border-t-[1px]">
               {post.comment_id_list.map((commentId) => (
                 <CommentItem key={commentId} commentId={commentId} />
               ))}
             </div>
-          </PostContentContainer>
-        </div>
-      ) : (
-        <></>
-      )}
+          ) : (
+            <></>
+          )}
+          <div>
+
+            {session && session?.user ? (
+              <PostManage locale={locale} postId={postId} postTitle={post.title} />
+            ) : (
+              <>
+                <div className="flex-col rounded-lg mt-4 p-6 text-center bg-gray-200">
+                  <p className="flex justify-center text-lg font-semibold text-black">Let&apos;s comment your feeling</p>
+                  <div className="flex justify-center mt-4 w-full">
+                  <Button className=" flex justify-center bg-orange-500 hover:bg-orange-400 focus-visible:outline-orange-500 active:bg-orange-600" >
+
+                    Login
+                  </Button>
+                  </div>
+
+                </div>
+              </>
+            )}
+          </div>
+        </PostContentContainer>
+      </div>
+
+
     </>
   );
 }
