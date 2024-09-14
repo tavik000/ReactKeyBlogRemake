@@ -87,7 +87,7 @@ export default async function PostViewWrapper({
                 <div className="flex-col rounded-lg mt-4 p-6 text-center bg-gray-200">
                   <p className="flex justify-center text-lg font-semibold text-black">Let&apos;s comment your feeling</p>
                   <div className="flex justify-center mt-4 w-full">
-                  <Button className=" flex justify-center bg-orange-500 hover:bg-orange-400 focus-visible:outline-orange-500 active:bg-orange-600" >
+                  <Button className=" flex justify-center bg-orange-500 hover:bg-orange-600 focus-visible:outline-orange-500 active:bg-orange-600" >
 
                     Login
                   </Button>
