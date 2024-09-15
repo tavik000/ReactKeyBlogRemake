@@ -114,16 +114,13 @@ export function UserButton({
                       try {
                         setIsSignInLoadingGoogle(true);
                         signInAction('google', pathname);
-                        setIsLoginOpenFromPost(false);
                         onClose();
                       } catch (error) {
-                        setIsLoginOpenFromPost(false);
                         setIsSignInLoadingGoogle(false);
                         if (error instanceof AuthError) {
                           throw new Error('AuthError: ' + error.message);
                         }
                       } finally {
-                        setIsLoginOpenFromPost(false);
                         setIsSignInLoadingGoogle(false);
                       }
                     }}
@@ -192,16 +189,13 @@ export function UserButton({
                       try {
                         setIsSignInLoadingTwitter(true);
                         signInAction('twitter', pathname);
-                        setIsLoginOpenFromPost(false);
                         onClose();
                       } catch (error) {
-                        setIsLoginOpenFromPost(false);
                         setIsSignInLoadingTwitter(false);
                         if (error instanceof AuthError) {
                           throw new Error('AuthError: ' + error.message);
                         }
                       } finally {
-                        setIsLoginOpenFromPost(false);
                         setIsSignInLoadingTwitter(false);
                       }
                     }}
@@ -250,7 +244,6 @@ export function UserButton({
               </ModalBody>
               <ModalFooter>
                 <Button color="danger" variant="flat" onPress={() => {
-                  setIsLoginOpenFromPost(false);
                   onClose();
                 }}>
                   {dict.header.close}
