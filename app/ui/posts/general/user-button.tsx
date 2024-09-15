@@ -18,9 +18,11 @@ import {
   Button,
   useDisclosure,
 } from '@nextui-org/react';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { usePathname } from 'next/navigation';
 import { DictStructure } from '@/app/components/localization/dict-store';
+import { useLoginOpenFromPostContext } from '@/app/components/context/login-open-from-post-provider';
+import { on } from 'events';
 
 export function UserButton({
   locale,
@@ -37,6 +39,8 @@ export function UserButton({
   const [isSignInLoadingTwitter, setIsSignInLoadingTwitter] =
     useState<boolean>(false);
   const pathname = usePathname();
+  const { isLoginOpenFromPost, setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
+
 
   return (
     <>
@@ -75,7 +79,7 @@ export function UserButton({
         </DropdownMenu>
       </Dropdown>
       <Modal
-        isOpen={isOpen}
+        isOpen={isOpen || isLoginOpenFromPost}
         onOpenChange={onOpenChange}
         placement="top-center"
         className="rounded-lg bg-white  "
@@ -102,13 +106,16 @@ export function UserButton({
                         setIsSignInLoadingGoogle(true);
                         signInAction('google', pathname);
                         onClose();
+                        setIsLoginOpenFromPost(false);
                       } catch (error) {
                         setIsSignInLoadingGoogle(false);
+                        setIsLoginOpenFromPost(false);
                         if (error instanceof AuthError) {
                           throw new Error('AuthError: ' + error.message);
                         }
                       } finally {
                         setIsSignInLoadingGoogle(false);
+                        setIsLoginOpenFromPost(false);
                       }
                     }}
                   >
@@ -177,13 +184,16 @@ export function UserButton({
                         setIsSignInLoadingTwitter(true);
                         signInAction('twitter', pathname);
                         onClose();
+                        setIsLoginOpenFromPost(false);
                       } catch (error) {
                         setIsSignInLoadingTwitter(false);
+                        setIsLoginOpenFromPost(false);
                         if (error instanceof AuthError) {
                           throw new Error('AuthError: ' + error.message);
                         }
                       } finally {
                         setIsSignInLoadingTwitter(false);
+                        setIsLoginOpenFromPost(false);
                       }
                     }}
                   >
@@ -230,7 +240,10 @@ export function UserButton({
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={onClose}>
+                <Button color="danger" variant="flat" onPress={() => {
+                  onClose();
+                  setIsLoginOpenFromPost(false);
+                }}>
                   {dict.header.close}
                 </Button>
               </ModalFooter>
@@ -238,7 +251,7 @@ export function UserButton({
           )}
         </ModalContent>
       </Modal>
-      {isOpen ? (
+      {(isOpen || isLoginOpenFromPost) ? (
         <div className="fixed bottom-0 left-0 right-0 top-0 z-20 bg-black/40"></div>
       ) : (
         <></>

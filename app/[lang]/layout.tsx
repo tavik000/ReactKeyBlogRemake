@@ -7,7 +7,8 @@ import { getDictionary } from '@/app/components/localization/dictionaries';
 import { DictStructure } from '@/app/components/localization/dict-store';
 import { GetLocaleFromLang } from '@/app/lib/constants';
 import { auth } from '@/auth';
-import { Providers } from '../components/NextUI/providers';
+import { NextUIProviderWrapper } from '@/app/components/NextUI/next-ui-providers-wrapper';
+import { LoginOpenFromPostProvider } from '@/app/components/context/login-open-from-post-provider';
 
 export const experimental_ppr = true;
 
@@ -35,12 +36,14 @@ export default async function RootLayout({
   return (
     <html lang={lang}>
       <body className={`${inter.className} antialiased`}>
-        <Providers>
-          <Sky locale={locale} dict={dict} session={session || undefined} />
-          <PostSection locale={locale} dict={dict}>
-            {children}
-          </PostSection>
-        </Providers>
+        <NextUIProviderWrapper>
+          <LoginOpenFromPostProvider>
+            <Sky locale={locale} dict={dict} session={session || undefined} />
+            <PostSection locale={locale} dict={dict}>
+              {children}
+            </PostSection>
+          </LoginOpenFromPostProvider>
+        </NextUIProviderWrapper>
       </body>
     </html>
   );

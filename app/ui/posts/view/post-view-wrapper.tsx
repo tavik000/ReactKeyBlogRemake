@@ -15,7 +15,7 @@ import PostManage from './post-manage';
 import { auth } from '@/auth';
 import PostContentContainer from './post-content-container';
 import CommentItem from './comment-item';
-import { Button } from '@/app/ui/button';
+import LoginCommentForm from '@/app/ui/posts/view/login-comment-form';
 
 export default async function PostViewWrapper({
   postId,
@@ -27,6 +27,7 @@ export default async function PostViewWrapper({
   const postResults = await Promise.all([fetchPostById(postId, locale)]);
   const post = postResults[0];
   const session = await auth();
+
 
   return (
     <>
@@ -79,28 +80,10 @@ export default async function PostViewWrapper({
             <></>
           )}
           <div>
-
-            {session && session?.user ? (
-              <PostManage locale={locale} postId={postId} postTitle={post.title} />
-            ) : (
-              <>
-                <div className="flex-col rounded-lg mt-4 p-6 text-center bg-gray-200">
-                  <p className="flex justify-center text-lg font-semibold text-black">Let&apos;s comment your feeling</p>
-                  <div className="flex justify-center mt-4 w-full">
-                  <Button className=" flex justify-center bg-orange-500 hover:bg-orange-600 focus-visible:outline-orange-500 active:bg-orange-600" >
-
-                    Login
-                  </Button>
-                  </div>
-
-                </div>
-              </>
-            )}
+            <LoginCommentForm session={session}/>
           </div>
         </PostContentContainer>
       </div>
-
-
     </>
   );
 }
