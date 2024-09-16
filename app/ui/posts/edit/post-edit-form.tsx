@@ -26,7 +26,6 @@ import {
 } from '@nextui-org/react';
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
-const { db } = require('@vercel/postgres');
 
 const MDEditor = dynamic(() => import('../../../components/MdEditor'), {
   ssr: false,
