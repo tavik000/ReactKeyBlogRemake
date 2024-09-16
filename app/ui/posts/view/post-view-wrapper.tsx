@@ -75,7 +75,9 @@ export default async function PostViewWrapper({
               ))}
             </div>
           ) : (
-            <></>
+            <div className="mt-4 pt-8 border-t-2 border-gray-100">
+              <p>No comments</p>
+            </div>
           )}
           <div>
             <LoginCommentForm />
