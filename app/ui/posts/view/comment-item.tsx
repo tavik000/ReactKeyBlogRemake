@@ -29,14 +29,25 @@ export default async function CommentItem({
             src: comment.user_img
           }}
         />
-        <p className="flex items-center ml-auto text-sm text-gray-500">
-          {comment.create_date
-            .toDateString()
-            .split(' ')
-            .slice(1)
-            .join(' ')
-            .replace(/(?<=\d) /, ', ')}
-        </p>
+        {comment.modify_date > comment.create_date ? (
+          <p className="flex items-center ml-auto text-sm text-gray-500">
+            {comment.modify_date
+              .toDateString()
+              .split(' ')
+              .slice(1)
+              .join(' ')
+              .replace(/(?<=\d) /, ', ')} (Edited)
+          </p>
+        ) : (
+          <p className="flex items-center ml-auto text-sm text-gray-500">
+            {comment.create_date
+              .toDateString()
+              .split(' ')
+              .slice(1)
+              .join(' ')
+              .replace(/(?<=\d) /, ', ')}
+          </p>
+        )}
       </div>
 
       {/* Content */}
