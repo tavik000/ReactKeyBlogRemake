@@ -1025,6 +1025,11 @@ img {
   line-height: 1.7 !important;
 }
 
+.wmde-markdown {
+  line-height: 1.7 !important;
+  font-size: 21px !important;
+}
+
 .wmde-markdown ol {
   list-style: auto !important;
 }
