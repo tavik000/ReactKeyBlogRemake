@@ -5,13 +5,13 @@ import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 
 const MdEditor = ({
-  postContent,
+  content,
   onMarkdownChange,
 }: {
-  postContent: string;
+  content: string;
   onMarkdownChange?: (value: string | undefined) => void;
 }) => {
-  const [markdown, setMarkdown] = useState<string | undefined>(postContent);
+  const [markdown, setMarkdown] = useState<string | undefined>(content);
 
   useEffect(() => {
     onMarkdownChange?.(markdown);

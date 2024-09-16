@@ -13,7 +13,7 @@ import PostManage from './post-manage';
 import { auth } from '@/auth';
 import PostContentContainer from './post-content-container';
 import CommentItem from './comment-item';
-import LoginCommentForm from '@/app/ui/posts/view/login-comment-form';
+import CommentEditForm from '@/app/ui/posts/view/comment-edit-form';
 
 export default async function PostViewWrapper({
   postId,
@@ -80,7 +80,7 @@ export default async function PostViewWrapper({
             </div>
           )}
           <div>
-            <LoginCommentForm />
+            <CommentEditForm isNewComment={true} postId={postId} postTitle={post.title} commentId={null}/>
           </div>
         </PostContentContainer>
       </div>

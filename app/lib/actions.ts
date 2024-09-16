@@ -2,14 +2,14 @@
 import { GetLangFromLocale } from '@/app/lib/constants';
 
 import { z } from 'zod';
-import { sql, VercelPoolClient } from '@vercel/postgres';
+import { VercelPoolClient } from '@vercel/postgres';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
 import { keyName } from './constants';
-import { log } from 'console';
 import { isRedirectError } from 'next/dist/client/components/redirect';
+import { getDictionary } from '@/app/components/localization/dictionaries';
 
 const format = require('pg-format');
 const { db } = require('@vercel/postgres');
@@ -71,6 +71,18 @@ const FormSchema = z.object({
   modify_date: z.string(),
 });
 
+const CommentSchema = z.object({
+  id: z.string(),
+  commentContent: z
+    .string({
+      invalid_type_error: 'Please enter a comment.',
+    })
+    .min(1, { message: 'Please enter a comment.' }),
+});
+
+const CreateComment = CommentSchema.omit({ id: true });
+const UpdateComment = CommentSchema;
+
 const CreatePost = FormSchema.omit({ id: true, modify_date: true });
 const UpdatePost = FormSchema.omit({
   id: true,
@@ -91,6 +103,14 @@ export type State = {
     content_ja?: string[];
     content_kr?: string[];
     content_hk?: string[];
+  };
+  message?: string | null;
+};
+
+export type CommentState = {
+  errors?: {
+    id?: string[];
+    commentContent?: string[];
   };
   message?: string | null;
 };
@@ -531,3 +551,244 @@ export async function signOutAction(pathname: string) {
     }
   }
 }
+
+export async function createComment(
+  id: string,
+  commentContent: string,
+  postId: string,
+  userName: string,
+  userImage: string,
+  client: VercelPoolClient,
+  currentLocale: string,
+) {
+
+  const dict = getDictionary(currentLocale);
+  let content = commentContent;
+  console.log('comment id : ' + id);
+  const create_date = new Date().toISOString().split('T')[0];
+  const modify_date = create_date;
+
+  try {
+    const createCommentQuery = format(
+      `
+      INSERT INTO comments (id, post_id, user_name, user_img, content, create_date, modify_date, likes )
+          VALUES ('${id}', '${postId}', '${userName}', '${userImage}', '${content}', '${create_date}', '${modify_date}', '0')
+          ON CONFLICT (id) DO NOTHING;
+          `,
+    );
+
+    const createComment = await client.query(createCommentQuery);
+  } catch (error) {
+    console.log(error);
+    // TODO: add localization
+    return {
+      message: 'Failed to add new comment',
+    };
+  }
+}
+
+export async function updateComment(
+  commentId: string,
+  currentLocale: string,
+  commentContent: string,
+  postId: string,
+  postTitle: string,
+  prevState: CommentState,
+  formData: FormData,
+) {
+  const client = await db.connect();
+  const dict = getDictionary(currentLocale);
+  let content = commentContent;
+  console.log('update comment id : ' + commentId);
+
+
+  try {
+    const validatedFields = UpdateComment.safeParse({
+      id: commentId,
+      commentContent: commentContent,
+    });
+
+    // TODO: add localization
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+        message: 'Missing Fields. Failed to Update Comment.',
+      };
+    }
+
+    const updateCommentQuery = format(
+      `
+      UPDATE comments
+      SET content = %L
+      WHERE id = %L
+      `,
+      content,
+      commentId,
+    );
+
+    const updateComment = await client.query(updateCommentQuery);
+    console.log('updateComment: ' + updateComment);
+  } catch (error) {
+    console.log(error);
+    // TODO: add localization
+    return {
+      message: 'Failed to update comment',
+    };
+  }
+
+  const lang = GetLangFromLocale(currentLocale);
+  const urlRegex = /\s/g;
+  let title = postTitle;
+  switch (currentLocale) {
+    case 'en':
+      break;
+    case 'ja':
+      title = encodeURI(title);
+      break;
+    case 'kr':
+      title = encodeURI(title);
+      break;
+    case 'hk':
+      title = encodeURI(title);
+      break;
+  }
+
+  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const redirectUrl = `/${lang}/posts/${url_title}/${postId}`;
+
+  revalidatePath(redirectUrl);
+  redirect(redirectUrl);
+}
+
+export async function addCommentToPost(
+  postId: string,
+  commentId: string,
+  postLocale: string,
+  currentLocale: string,
+) {
+  const dict = getDictionary(currentLocale);
+
+  try {
+    const client = await db.connect();
+
+    const addCommentQuery = format(
+      `
+      UPDATE posts_%s
+      SET comment_id_list = array_append(comment_id_list, %L)
+      WHERE id = %L
+      `,
+      postLocale,
+      commentId,
+      postId,
+    );
+
+    const addCommentToPost = await client.query(addCommentQuery);
+    console.log('addCommentToPost: ' + addCommentToPost);
+
+  } catch (error) {
+    console.log(error);
+    // TODO: add localization
+    return {
+      message: 'Failed to add comment to post',
+    };
+  }
+}
+
+export async function createCommentWithAllLanguages(
+  commentContent: string,
+  currentLocale: string,
+  postId: string,
+  postTitle: string,
+  userName: string,
+  userImage: string,
+  prevState: CommentState,
+  formData: FormData,
+) {
+
+  const dict = getDictionary(currentLocale);
+  const id = require('uuid').v4();
+  console.log('create comment: ' + id);
+
+  try {
+    const client = await db.connect();
+
+    const validatedFields = CreateComment.safeParse({
+      commentContent: commentContent,
+    });
+
+    // TODO: add localization
+    if (!validatedFields.success) {
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+        message: 'Missing Fields. Failed to Add New Comment.',
+      };
+    }
+
+
+    const addResult = await Promise.all([
+      createComment(
+        id,
+        commentContent,
+        postId,
+        userName,
+        userImage,
+        client,
+        currentLocale,
+      ),
+      addCommentToPost(
+        postId,
+        id,
+        'en',
+        currentLocale,
+      ),
+      addCommentToPost(
+        postId,
+        id,
+        'ja',
+        currentLocale,
+      ),
+      addCommentToPost(
+        postId,
+        id,
+        'kr',
+        currentLocale,
+      ),
+      addCommentToPost(
+        postId,
+        id,
+        'hk',
+        currentLocale,
+      ),
+    ]);
+  } catch (error) {
+    console.error(error);
+    // TODO: add localization
+    return {
+      message: 'Failed to add comment',
+    };
+  }
+
+  const lang = GetLangFromLocale(currentLocale);
+  const urlRegex = /\s/g;
+  let title = postTitle;
+  switch (currentLocale) {
+    case 'en':
+      break;
+    case 'ja':
+      title = encodeURI(title);
+      break;
+    case 'kr':
+      title = encodeURI(title);
+      break;
+    case 'hk':
+      title = encodeURI(title);
+      break;
+  }
+
+  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const redirectUrl = `/${lang}/posts/${url_title}/${postId}`;
+
+  revalidatePath(redirectUrl);
+  redirect(redirectUrl);
+}
+

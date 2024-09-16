@@ -286,7 +286,7 @@ export default function PostEditForm({
             Content (English)
           </label>
           <MDEditor
-            postContent={post_en.content}
+            content={post_en.content}
             onMarkdownChange={handleMarkdownChange_en}
           />
           <div id="content-error" aria-live="polite" aria-atomic="true">
@@ -325,7 +325,7 @@ export default function PostEditForm({
             Content (Japanese)
           </label>
           <MDEditor
-            postContent={post_ja.content}
+            content={post_ja.content}
             onMarkdownChange={handleMarkdownChange_ja}
           />
           <div id="content-error" aria-live="polite" aria-atomic="true">
@@ -364,7 +364,7 @@ export default function PostEditForm({
             Content (Korean)
           </label>
           <MDEditor
-            postContent={post_kr.content}
+            content={post_kr.content}
             onMarkdownChange={handleMarkdownChange_kr}
           />
           <div id="content-error" aria-live="polite" aria-atomic="true">
@@ -403,7 +403,7 @@ export default function PostEditForm({
             Content (Traditional Chinese)
           </label>
           <MDEditor
-            postContent={post_hk.content}
+            content={post_hk.content}
             onMarkdownChange={handleMarkdownChange_hk}
           />
           <div id="content-error" aria-live="polite" aria-atomic="true">
