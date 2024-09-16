@@ -1,10 +1,11 @@
-import MDEditor from '@uiw/react-md-editor';
-import { useState, useEffect } from 'react';
+'use client';
+import { useState, useEffect, useContext } from 'react';
 import onMediaPasted from '../utils/onMediaPasted';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
+import MDEditor, { ICommand, commands, EditorContext, help } from "@uiw/react-md-editor";
 
-const MdEditor = ({
+const CommentMdEditor = ({
   content,
   onMarkdownChange,
 }: {
@@ -31,13 +32,17 @@ const MdEditor = ({
           await onMediaPasted(event.dataTransfer, setMarkdown);
         }}
         height="100%"
-        minHeight={1000}
+        minHeight={250}
         visibleDragbar={false}
         highlightEnable={false}
+        preview="edit"
+        commands={[help]}
+        extraCommands={[commands.codeEdit, commands.codeLive]}
       />
     </div>
   );
 };
 
-export default MdEditor;
+export default CommentMdEditor;
+
 

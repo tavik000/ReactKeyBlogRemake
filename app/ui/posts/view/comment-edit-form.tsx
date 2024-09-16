@@ -11,12 +11,7 @@ import '@uiw/react-markdown-preview/markdown.css';
 import { CommentState, createCommentWithAllLanguages, updateComment } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 
-interface CloudinaryResult {
-    public_id: string;
-    secure_url: string;
-}
-
-const MDEditor = dynamic(() => import('@/app/components/MdEditor'), {
+const CommentMDEditor = dynamic(() => import('@/app/components/CommentMdEditor'), {
     ssr: false,
     loading: () => <p>Loading...</p>,
 });
@@ -67,15 +62,11 @@ export default function CommentEditForm({
         initialState,
     );
 
-
-
-
-
     return (
         <div>
             {session && session?.user && session.user?.image ? (
                 <>
-                    {/* localization */}
+                    {/* TODO localization */}
                     <div className="flex-col mt-4">
                         <div className="flex">
                             <Avatar
@@ -83,24 +74,37 @@ export default function CommentEditForm({
                                 size='sm'
                             />
                             {isNewComment ? (
-                                <p className="ml-2 text-center align-middle justify-center">comment something...</p>
+                                <div className="flex flex-row w-full justify-between">
+                                    <p className="flex ml-2 justify-start">write comment </p>
+                                    <p className="flex justify-end mt-1 align-bottom text-sm text-gray-400">(You can directly paste an image from your computer or the Internet into the text area)</p>
+                                </div>
                             ) : (
-                                <p className="ml-2 text-center align-middle justify-center">edit your comment...</p>
+                                <p className="ml-2 text-center align-middle justify-center">edit comment</p>
                             )}
                         </div>
                         <form action={dispatch}>
-                            <label htmlFor="content" className="mb-2 block text-base font-medium" />
-                            <MDEditor
-                                content="Markdown content"
-                                onMarkdownChange={handleMarkdownChange}
-                            />
-                            <div id="content-error" aria-live="polite" aria-atomic="true">
-                                {state.errors?.commentContent &&
-                                    state.errors.commentContent.map((error: string) => (
-                                        <p className="mt-2 text-sm text-red-500" key={error}>
-                                            {error}
-                                        </p>
-                                    ))}
+                            <div className="flex flex-col w-full justify-between">
+                                <label htmlFor="content" className="mb-2 block text-base font-medium" />
+                                <CommentMDEditor
+                                    content="Markdown content"
+                                    onMarkdownChange={handleMarkdownChange}
+                                />
+                                <div id="content-error" aria-live="polite" aria-atomic="true">
+                                    {state.errors?.commentContent &&
+                                        state.errors.commentContent.map((error: string) => (
+                                            <p className="mt-2 text-sm text-red-500" key={error}>
+                                                {error}
+                                            </p>
+                                        ))}
+                                </div>
+                                <div className="flex justify-end">
+                                    <Button
+                                        className="mt-1 max-w-24 flex bg-orange-500 hover:bg-orange-600 focus-visible:outline-orange-500 active:bg-orange-600"
+                                        type="submit"
+                                    >
+                                        Respond
+                                    </Button>
+                                </div>
                             </div>
                         </form>
 
