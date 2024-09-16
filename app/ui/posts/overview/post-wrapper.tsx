@@ -6,12 +6,13 @@ export default async function PostWrapper({
   tag,
   query,
   currentPage,
+  locale,
 }: {
   tag: string;
   query: string;
   currentPage: number;
+  locale: string;
 }) {
-  const { locale } = useLocaleContext();
   const posts = await fetchFilteredPosts(tag, query, currentPage, locale);
 
   return (

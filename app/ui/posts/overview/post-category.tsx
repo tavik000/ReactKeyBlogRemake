@@ -1,10 +1,12 @@
+import { DictStructure } from '@/app/components/localization/dict-store';
+import { getDictionary } from '@/app/components/localization/dictionaries';
 import { fetchPostTags } from '@/app/lib/data';
 import { PostTagItem } from '@/app/ui/posts/general/post-tag';
-import { useLocaleContext } from '@/app/components/context/locale-provider';
 
-export default async function PostCategory() {
+export default async function PostCategory({ locale }: { locale: string }) {
 
-  const { dict } = useLocaleContext();
+  const dict = (await getDictionary(locale)) as DictStructure;
+
   const postTags: string[] = await fetchPostTags();
   const third = Math.ceil(postTags.length / 3);
   const firstPart = postTags.slice(0, third - 1);

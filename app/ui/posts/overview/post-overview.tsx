@@ -1,20 +1,19 @@
-import AcmeLogo from '@/app/ui/acme-logo';
 import PostCategory from './post-category';
 import PostWrapper from './post-wrapper';
 import Pagination from './pagination';
 import { fetchPostsPages } from '@/app/lib/data';
-import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 export default async function PostOverview({
   searchParams,
+  locale,
 }: {
   searchParams?: {
     tag?: string;
     query?: string;
     page?: string;
   };
+  locale: string;
 }) {
-  const { locale } = useLocaleContext();
   const tag = searchParams?.tag || '';
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
@@ -23,8 +22,8 @@ export default async function PostOverview({
   return (
     <>
       <div className="post-overview">
-        <PostCategory />
-        <PostWrapper tag={tag} query={query} currentPage={currentPage} />
+        <PostCategory locale={locale} />
+        <PostWrapper tag={tag} query={query} currentPage={currentPage} locale={locale} />
         <Pagination totalPages={totalPages} />
       </div>
 
