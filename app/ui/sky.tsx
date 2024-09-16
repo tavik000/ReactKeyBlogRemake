@@ -3,9 +3,7 @@ import { SkyBackground } from './sky-background';
 import { WaddleDee } from './waddle-dee';
 import React, { useState, useRef, useEffect } from 'react';
 import PostHeader from './posts/general/post-header';
-import { DictStructure } from '@/app/components/localization/dict-store';
 import { Session } from 'next-auth';
-import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 export default function Sky({ session }: { session?: Session }) {
 

@@ -6,11 +6,8 @@ import { useEffect, useState } from 'react';
 import { sniglet } from '@/app/ui/fonts';
 import Link from 'next/link';
 import { homepageURL } from '@/app/lib/constants';
-import { DictStructure } from '@/app/components/localization/dict-store';
 import { Session } from 'next-auth';
 import { keyEmail } from '@/app/lib/constants';
-import { signOut } from '@/auth';
-import { signOutAction } from '@/app/lib/actions';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 function useScrollDirection() {
