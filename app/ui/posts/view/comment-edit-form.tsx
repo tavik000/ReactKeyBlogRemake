@@ -86,7 +86,7 @@ export default function CommentEditForm({
                             <div className="flex flex-col w-full justify-between">
                                 <label htmlFor="content" className="mb-2 block text-base font-medium" />
                                 <CommentMDEditor
-                                    content="Markdown content"
+                                    content=''
                                     onMarkdownChange={handleMarkdownChange}
                                 />
                                 <div id="content-error" aria-live="polite" aria-atomic="true">

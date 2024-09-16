@@ -19,9 +19,13 @@ const CommentMdEditor = ({
   }, [markdown, onMarkdownChange]);
 
   return (
+    // TODO Localization
     <div className="container" data-color-mode="light">
       <MDEditor
         value={markdown}
+        textareaProps={{
+          placeholder: 'Please enter the markdown text',
+        }}
         onChange={(value) => {
           setMarkdown(value);
         }}
