@@ -2,7 +2,6 @@ import { keyEmail } from '@/app/lib/constants';
 import PostContentContainer from '@/app/ui/posts/view/post-content-container';
 import TagManageWrapper from '@/app/ui/tag/tag-manage-wrapper';
 import { auth } from '@/auth';
-import { Suspense } from 'react';
 
 export default async function Page() {
   const session = await auth();
