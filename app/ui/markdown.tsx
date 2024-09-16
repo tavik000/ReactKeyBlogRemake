@@ -94,13 +94,11 @@ export function MarkdownRenderer({
         },
         img: (props) => {
           return (
-            <div className="relative w-auto h-auto aspect-video">
-              <img
-                className="zoom-image cursor-pointer absolute"
-                src={props.src as string}
-                alt={props.alt || ''}
-              />
-            </div>
+            <img
+              className="relative w-auto h-auto aspect-video zoom-image cursor-pointer"
+              src={props.src as string}
+              alt={props.alt || ''}
+            />
           );
         },
       }}
