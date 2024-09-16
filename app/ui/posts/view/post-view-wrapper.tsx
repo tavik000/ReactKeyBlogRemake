@@ -78,7 +78,7 @@ export default async function PostViewWrapper({
             <></>
           )}
           <div>
-            <LoginCommentForm session={session}/>
+            <LoginCommentForm />
           </div>
         </PostContentContainer>
       </div>

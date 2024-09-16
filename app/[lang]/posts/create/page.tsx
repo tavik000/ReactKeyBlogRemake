@@ -15,6 +15,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
 
   const allPostTags: string[] = await fetchPostTags();
   const session = await auth();
+  
   if (!session) {
     return (
       <PostContentContainer>

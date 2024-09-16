@@ -1,13 +1,13 @@
 'use client';
 import { Button } from '@/app/ui/button';
-import { Session } from 'next-auth';
 import { useLoginOpenFromPostContext } from '@/app/components/context/login-open-from-post-provider';
+import { useSessionContext } from '@/app/components/context/session-provider';
 
 
 
-export default function LoginCommentForm(
-    { session }: { session: Session | null; }
-) {
+export default function LoginCommentForm() {
+
+    const { session } = useSessionContext();
     const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
 
     return (
