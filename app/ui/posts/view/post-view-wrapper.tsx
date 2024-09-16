@@ -80,7 +80,7 @@ export default async function PostViewWrapper({
             </div>
           )}
           <div>
-            <CommentEditForm isNewComment={true} postId={postId} postTitle={post.title} commentId={null}/>
+            <CommentEditForm isNewComment={true} postId={postId} postTitle={post.title} commentId={null} />
           </div>
         </PostContentContainer>
       </div>
@@ -112,24 +112,39 @@ function AuthorInfo({ post }: { post: Post }) {
 function PostDate({ post }: { post: Post }) {
   return (
     <div className="mt-2 flex text-sm text-gray-500">
-      <p>
-        Last updated on{' '}
-        {post.modify_date
-          .toDateString()
-          .split(' ')
-          .slice(1)
-          .join(' ')
-          .replace(/(?<=\d) /, ', ')}
-      </p>
-      <p className="ml-2">
-        Posted on{' '}
-        {post.create_date
-          .toDateString()
-          .split(' ')
-          .slice(1)
-          .join(' ')
-          .replace(/(?<=\d) /, ', ')}
-      </p>
+      {post.modify_date > post.create_date ? (
+        <div className="flex-row flex">
+          <p className="flex">
+            Last updated on{' '}
+            {post.modify_date
+              .toDateString()
+              .split(' ')
+              .slice(1)
+              .join(' ')
+              .replace(/(?<=\d) /, ', ')}
+          </p>
+          <p className="ml-2 flex">
+            Posted on{' '}
+            {post.create_date
+              .toDateString()
+              .split(' ')
+              .slice(1)
+              .join(' ')
+              .replace(/(?<=\d) /, ', ')}
+          </p>
+        </div>
+      ) : (
+        <p>
+          Posted on{' '}
+          {post.create_date
+            .toDateString()
+            .split(' ')
+            .slice(1)
+            .join(' ')
+            .replace(/(?<=\d) /, ', ')}
+        </p>
+      )}
+
     </div>
   );
 }
