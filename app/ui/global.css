@@ -1022,7 +1022,7 @@ img {
 .w-md-editor-text-pre>code,
 .w-md-editor-text-pre {
   font-size: 1.125rem !important;
-  line-height: 1.rem !important;
+  line-height: 1.7 !important;
 }
 
 .wmde-markdown ol {
