@@ -36,16 +36,16 @@ export function MarkdownRenderer({
           const linesToHighlightInput = match?.input.split(':')[2];
           const linesToHighlight = linesToHighlightInput
             ? linesToHighlightInput.split(',').reduce((acc, line) => {
-                if (line.includes('-')) {
-                  const [start, end] = line.split('-').map(Number);
-                  for (let i = start; i <= end; i++) {
-                    acc.push(i);
-                  }
-                } else {
-                  acc.push(Number(line));
+              if (line.includes('-')) {
+                const [start, end] = line.split('-').map(Number);
+                for (let i = start; i <= end; i++) {
+                  acc.push(i);
                 }
-                return acc;
-              }, [] as number[])
+              } else {
+                acc.push(Number(line));
+              }
+              return acc;
+            }, [] as number[])
             : [];
 
           return !inline && match ? (
