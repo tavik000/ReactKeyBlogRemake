@@ -239,7 +239,6 @@ export default function PostEditForm({
               {editPostTags.map((tag: string) => (
                 <div className="flex flex-row items-start" key={tag}>
                   <PostTagItem
-                    locale={locale}
                     tag={tag}
                     isLabel={true}
                     isClickable={false}

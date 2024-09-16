@@ -1,4 +1,3 @@
-import { PostTagItem } from '@/app/ui/posts/general/post-tag';
 import { Skeleton } from '@nextui-org/react';
 
 export default async function PostCategorySkeleton({}: {}) {

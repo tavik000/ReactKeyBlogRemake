@@ -90,7 +90,6 @@ const ManageTag = ({ tag }: { tag: string }) => {
       <div className="flex flex-row items-start">
         <PostTagItem
           key={tag}
-          locale="en"
           tag={tag}
           isLabel={true}
           isClickable={false}
