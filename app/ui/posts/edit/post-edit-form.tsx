@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { Button } from '../../button';
+import { Button } from '@/app/ui/button';
 import { useFormState } from 'react-dom';
 import { Post } from '@/app/lib/definitions';
 import {
@@ -27,7 +27,7 @@ import {
 import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 
-const MDEditor = dynamic(() => import('../../../components/MdEditor'), {
+const MDEditor = dynamic(() => import('@/app/components/MdEditor'), {
   ssr: false,
   loading: () => <p>Loading...</p>,
 });
