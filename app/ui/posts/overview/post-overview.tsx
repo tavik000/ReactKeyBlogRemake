@@ -3,33 +3,29 @@ import PostCategory from './post-category';
 import PostWrapper from './post-wrapper';
 import Pagination from './pagination';
 import { fetchPostsPages } from '@/app/lib/data';
-import { Suspense } from 'react';
-import { DictStructure } from '@/app/components/localization/dict-store';
-import { getDictionary } from '@/app/components/localization/dictionaries';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 export default async function PostOverview({
   searchParams,
-  locale,
 }: {
   searchParams?: {
     tag?: string;
     query?: string;
     page?: string;
   };
-  locale: string;
 }) {
+  const { locale } = useLocaleContext();
   const tag = searchParams?.tag || '';
   const query = searchParams?.query || '';
   const currentPage = Number(searchParams?.page) || 1;
   const totalPages = await fetchPostsPages(tag, query, locale);
-  const dict = (await getDictionary(locale)) as DictStructure;
 
   return (
     <>
       <div className="post-overview">
-        <PostCategory locale={locale} dict={dict}/>
-        <PostWrapper tag={tag} query={query} currentPage={currentPage} locale={locale} />
-          <Pagination totalPages={totalPages} />
+        <PostCategory />
+        <PostWrapper tag={tag} query={query} currentPage={currentPage} />
+        <Pagination totalPages={totalPages} />
       </div>
 
       {/* <div className="mt-4 flex grow flex-col gap-4 md:flex-row">

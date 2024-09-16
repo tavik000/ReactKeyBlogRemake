@@ -1,14 +1,10 @@
 import { fetchPostTags } from '@/app/lib/data';
-import { DictStructure } from '@/app/components/localization/dict-store';
 import { PostTagItem } from '@/app/ui/posts/general/post-tag';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 
-export default async function PostCategory({
-  locale,
-  dict,
-}: {
-  locale: string;
-  dict: DictStructure;
-}) {
+export default async function PostCategory() {
+
+  const { dict } = useLocaleContext();
   const postTags: string[] = await fetchPostTags();
   const third = Math.ceil(postTags.length / 3);
   const firstPart = postTags.slice(0, third - 1);
@@ -23,11 +19,10 @@ export default async function PostCategory({
           <div className="flex flex-col">
             <div className="flex flex-row">
               <ul className="w-80">
-                <PostTagItem locale={locale} tag="All" isLabel={false} />
+                <PostTagItem tag="All" isLabel={false} />
                 {firstPart.map((tag) => (
                   <PostTagItem
                     key={tag}
-                    locale={locale}
                     tag={tag}
                     isLabel={false}
                   />
@@ -37,7 +32,6 @@ export default async function PostCategory({
                 {secondPart.map((tag) => (
                   <PostTagItem
                     key={tag}
-                    locale={locale}
                     tag={tag}
                     isLabel={false}
                   />
@@ -47,7 +41,6 @@ export default async function PostCategory({
                 {thirdPart.map((tag) => (
                   <PostTagItem
                     key={tag}
-                    locale={locale}
                     tag={tag}
                     isLabel={false}
                   />

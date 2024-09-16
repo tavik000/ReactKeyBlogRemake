@@ -2,19 +2,17 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { PostTagItem } from '@/app/ui/posts/general/post-tag';
 import { PostCard } from '@/app/lib/definitions';
-import { GetLangFromLocale } from '@/app/lib/constants';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 export default function PostItem({
-  locale,
   post,
 }: {
-  locale: string;
   post: PostCard;
 }) {
+  const { lang } = useLocaleContext();
   const urlRegex = /\s/g;
   const url_title = post.title.toLowerCase().replace(urlRegex, '-');
 
-  const lang = GetLangFromLocale(locale);
 
   return (
     <li className="post-item mb-6 flex min-h-[400px] w-1/3 max-w-400px basis-1/3 list-none flex-col px-11px">
@@ -48,7 +46,6 @@ export default function PostItem({
                 {post.tags.map((tag) => (
                   <PostTagItem
                     key={tag}
-                    locale={locale}
                     tag={tag}
                     isLabel={true}
                     isClickable={false}

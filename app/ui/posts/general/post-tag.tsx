@@ -1,23 +1,22 @@
 'use client';
-import { GetLangFromLocale } from '@/app/lib/constants';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 export const PostTagItem = ({
-  locale,
   tag,
   isLabel,
   isClickable = true,
   className,
 }: {
-  locale: string;
   tag: string;
   isLabel: boolean;
   isClickable?: boolean;
   className?: string;
 }) => {
+
+  const { lang } = useLocaleContext();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
-  const lang = GetLangFromLocale(locale);
 
   const handleTag = (tag: string) => {
     const params = new URLSearchParams(searchParams);
