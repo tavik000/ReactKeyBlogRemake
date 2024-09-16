@@ -6,9 +6,9 @@ import { useEffect, useState } from 'react';
 import { sniglet } from '@/app/ui/fonts';
 import Link from 'next/link';
 import { homepageURL } from '@/app/lib/constants';
-import { Session } from 'next-auth';
 import { keyEmail } from '@/app/lib/constants';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
+import { useSessionContext } from '@/app/components/context/session-provider';
 
 function useScrollDirection() {
   const [scrollDirection, setScrollDirection] = useState<null | 'down' | 'up'>(
@@ -48,11 +48,10 @@ function useScrollDirection() {
 
 export default function PostHeader({
   groundPosHeight,
-  session,
 }: {
   groundPosHeight: number;
-  session?: Session;
 }) {
+  const { session } = useSessionContext();
   const { dict } = useLocaleContext();
   const { scrollDirection, lastScrollY, isLoaded } = useScrollDirection();
 
@@ -80,7 +79,7 @@ export default function PostHeader({
           </>
         ) : null}
         <LanguageButton isHidden={isHidden} />
-        <UserButton session={session} />
+        <UserButton />
       </div>
     </div>
   );

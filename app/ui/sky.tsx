@@ -3,9 +3,8 @@ import { SkyBackground } from './sky-background';
 import { WaddleDee } from './waddle-dee';
 import React, { useState, useRef, useEffect } from 'react';
 import PostHeader from './posts/general/post-header';
-import { Session } from 'next-auth';
 
-export default function Sky({ session }: { session?: Session }) {
+export default function Sky() {
 
   const skyBackgroundRef = useRef<HTMLDivElement | null>(null);
 
@@ -112,7 +111,7 @@ export default function Sky({ session }: { session?: Session }) {
   return (
     <>
       <header>
-        <PostHeader groundPosHeight={groundPosHeight} session={session} />
+        <PostHeader groundPosHeight={groundPosHeight} />
       </header>
       <main className="flex min-h-screen flex-col">
         <WaddleDee

@@ -7,7 +7,7 @@ import {
   DropdownItem,
 } from '@nextui-org/react';
 import { signInAction, signOutAction } from '@/app/lib/actions';
-import { AuthError, Session } from 'next-auth';
+import { AuthError } from 'next-auth';
 import { Avatar } from '@nextui-org/react';
 import {
   Modal,
@@ -22,12 +22,11 @@ import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 import { useLoginOpenFromPostContext } from '@/app/components/context/login-open-from-post-provider';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
+import { useSessionContext } from '@/app/components/context/session-provider';
 
-export function UserButton({
-  session,
-}: {
-  session?: Session;
-}) {
+export function UserButton() {
+
+  const { session, setSession } = useSessionContext();
   const { dict } = useLocaleContext();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -70,6 +69,7 @@ export function UserButton({
               onOpen();
             }
             if (actionKey === 'SignOut') {
+              setSession(null)
               signOutAction(pathname);
             }
           }}

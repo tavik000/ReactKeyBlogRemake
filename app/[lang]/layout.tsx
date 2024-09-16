@@ -10,6 +10,7 @@ import { auth } from '@/auth';
 import { NextUIProviderWrapper } from '@/app/components/NextUI/next-ui-providers-wrapper';
 import { LoginOpenFromPostProvider } from '@/app/components/context/login-open-from-post-provider';
 import { LocaleProvider } from '@/app/components/context/locale-provider';
+import { SessionProvider } from '../components/context/session-provider';
 
 export const experimental_ppr = true;
 
@@ -40,10 +41,12 @@ export default async function RootLayout({
         <NextUIProviderWrapper>
           <LoginOpenFromPostProvider>
             <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
-              <Sky session={session || undefined} />
-              <PostSection>
-                {children}
-              </PostSection>
+              <SessionProvider inSession={session || null}>
+                <Sky/>
+                <PostSection>
+                  {children}
+                </PostSection>
+              </SessionProvider>
             </LocaleProvider>
           </LoginOpenFromPostProvider>
         </NextUIProviderWrapper>
