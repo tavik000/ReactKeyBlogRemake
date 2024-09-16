@@ -5,7 +5,7 @@ import { useSessionContext } from '@/app/components/context/session-provider';
 import { Avatar } from '@nextui-org/react';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { CommentState, createCommentWithAllLanguages, updateComment } from '@/app/lib/actions';
@@ -90,11 +90,13 @@ export default function CommentEditForm({
                                     onMarkdownChange={handleMarkdownChange}
                                 />
                                 <div id="content-error" aria-live="polite" aria-atomic="true">
-                                    {state.errors?.commentContent &&
-                                        state.errors.commentContent.map((error: string) => (
-                                            <p className="mt-2 text-sm text-red-500" key={error}>
-                                                {error}
-                                            </p>
+                                    {state?.errors?.commentContent &&
+                                        state.errors.commentContent.map((error: string, index: number) => (
+                                            error && (
+                                                <p className="mt-2 text-sm text-red-500" key={index}>
+                                                    {error}
+                                                </p>
+                                            )
                                         ))}
                                 </div>
                                 <div className="flex justify-end">
