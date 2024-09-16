@@ -564,7 +564,6 @@ export async function createComment(
 
   const dict = getDictionary(currentLocale);
   let content = commentContent;
-  console.log('comment id : ' + id);
   const create_date = new Date().toISOString().split('T')[0];
   const modify_date = create_date;
 
