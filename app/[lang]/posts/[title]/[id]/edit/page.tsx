@@ -4,7 +4,7 @@ import { GetLocaleFromLang, keyEmail } from '@/app/lib/constants';
 import { auth } from '@/auth';
 import PostContentContainer from '@/app/ui/posts/view/post-content-container';
 
-export default async function Page({ params }: { params: { lang:string, id: string } }) {
+export default async function Page({ params }: { params: { lang: string, id: string } }) {
   const locale = GetLocaleFromLang(params.lang);
   const id = params.id;
   const posts = await Promise.all(
@@ -33,7 +33,7 @@ export default async function Page({ params }: { params: { lang:string, id: stri
         </PostContentContainer>
       );
     }
-  } 
+  }
   // TODO: not found
   return (
     <main>
@@ -44,7 +44,7 @@ export default async function Page({ params }: { params: { lang:string, id: stri
               <h1 className="mb-6 mt-2 flex text-28px font-semibold leading-normal">
                 Edit
               </h1>
-              <PostEditForm locale={locale} posts={posts} allPostTags={allPostTags} isNewPost={false}/>
+              <PostEditForm locale={locale} posts={posts} allPostTags={allPostTags} isNewPost={false} />
             </div>
           </div>
         </div>
