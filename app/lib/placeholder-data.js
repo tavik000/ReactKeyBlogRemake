@@ -103,6 +103,7 @@ const comments = [
     user_img: '/viewers/trollguy87.png',
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus porro earum dolor sint fuga laborum velit laudantium distinctio quos sunt veritatis unde inventore, autem ad tenetur voluptatibus mollitia vel!',
     create_date: '2022-12-06',
+    modify_date: '2022-12-06',
     likes: 0,
   },
   {
@@ -112,6 +113,7 @@ const comments = [
     user_img: '/viewers/trollguy87.png',
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus porro earum dolor sint fuga laborum velit laudantium distinctio quos sunt veritatis unde inventore, autem ad tenetur voluptatibus mollitia vel!',
     create_date: '2023-12-06',
+    modify_date: '2022-12-06',
     likes: 0,
   },
 ]

@@ -460,6 +460,7 @@ export async function fetchPostCommentById(commentId: string) {
       user_img,
       content,
       create_date,
+      modify_date,
       likes
     FROM comments
     WHERE id=${commentId};
