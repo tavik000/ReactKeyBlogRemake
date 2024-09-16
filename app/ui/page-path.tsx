@@ -3,18 +3,11 @@
 import { homepageURL, GetLangFromLocale } from '@/app/lib/constants';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { DictStructure } from '@/app/components/localization/dict-store';
-import { Button } from '@/app/ui/button';
-import { signInAction } from '@/app/lib/actions';
-import { AuthError } from 'next-auth';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 
-export function PagePath({
-  locale,
-  dict,
-}: {
-  locale: string;
-  dict: DictStructure;
-}) {
+export function PagePath() {
+
+  const { lang, dict } = useLocaleContext();
   const pathname = usePathname();
   const pathArray = pathname.split('/').filter(Boolean);
   let postTitle: string = '';
@@ -25,7 +18,6 @@ export function PagePath({
     postTitle = decodeURIComponent(pathArray[2]);
   }
 
-  const lang = GetLangFromLocale(locale);
   const blogUrl = `/${lang}`;
 
   return (

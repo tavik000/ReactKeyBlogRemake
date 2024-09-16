@@ -41,7 +41,7 @@ export default async function RootLayout({
           <LoginOpenFromPostProvider>
             <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
               <Sky session={session || undefined} />
-              <PostSection locale={locale} dict={dict}>
+              <PostSection>
                 {children}
               </PostSection>
             </LocaleProvider>
