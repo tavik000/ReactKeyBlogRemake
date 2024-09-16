@@ -8,7 +8,7 @@ import { useLoginOpenFromPostContext } from '@/app/components/context/login-open
 export default function LoginCommentForm(
     { session }: { session: Session | null; }
 ) {
-    const { isLoginOpenFromPost, setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
+    const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
 
     return (
         <div>

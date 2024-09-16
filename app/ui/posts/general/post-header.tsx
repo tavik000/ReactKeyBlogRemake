@@ -11,6 +11,7 @@ import { Session } from 'next-auth';
 import { keyEmail } from '@/app/lib/constants';
 import { signOut } from '@/auth';
 import { signOutAction } from '@/app/lib/actions';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 function useScrollDirection() {
   const [scrollDirection, setScrollDirection] = useState<null | 'down' | 'up'>(
@@ -49,16 +50,13 @@ function useScrollDirection() {
 }
 
 export default function PostHeader({
-  locale,
   groundPosHeight,
-  dict,
   session,
 }: {
-  locale: string;
   groundPosHeight: number;
-  dict: DictStructure;
   session?: Session;
 }) {
+  const { dict } = useLocaleContext();
   const { scrollDirection, lastScrollY, isLoaded } = useScrollDirection();
 
   const isHidden = lastScrollY < groundPosHeight || !isLoaded;
@@ -75,17 +73,17 @@ export default function PostHeader({
         >
           Key
         </Link>
-        <PostSearch locale={locale} placeholder={dict.header.searchPost} />
+        <PostSearch placeholder={dict.header.searchPost} />
       </div>
       <div className="flex w-1/2 flex-row justify-end">
         {session?.user?.email === keyEmail ? (
           <>
-            <CreatePostButton locale={locale} />
+            <CreatePostButton />
             <TagButton href="/en/tag/manage" />
           </>
         ) : null}
-        <LanguageButton locale={locale} isHidden={isHidden} />
-        <UserButton locale={locale} session={session} dict={dict} />
+        <LanguageButton isHidden={isHidden} />
+        <UserButton session={session} />
       </div>
     </div>
   );

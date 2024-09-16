@@ -3,14 +3,11 @@ import { SkyBackground } from './sky-background';
 import { WaddleDee } from './waddle-dee';
 import React, { useState, useRef, useEffect } from 'react';
 import PostHeader from './posts/general/post-header';
-import { DictStructure } from '../components/localization/dict-store';
+import { DictStructure } from '@/app/components/localization/dict-store';
 import { Session } from 'next-auth';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 
-export default function Sky({ locale, dict, session}: { locale: string, dict: DictStructure, session?: Session }) {
-
-  if (locale === 'zh-HK') {
-    locale = 'hk';
-  }
+export default function Sky({ session }: { session?: Session }) {
 
   const skyBackgroundRef = useRef<HTMLDivElement | null>(null);
 
@@ -117,7 +114,7 @@ export default function Sky({ locale, dict, session}: { locale: string, dict: Di
   return (
     <>
       <header>
-        <PostHeader locale={locale} dict={dict} groundPosHeight={groundPosHeight} session={session}/>
+        <PostHeader groundPosHeight={groundPosHeight} session={session} />
       </header>
       <main className="flex min-h-screen flex-col">
         <WaddleDee

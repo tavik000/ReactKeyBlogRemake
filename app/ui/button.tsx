@@ -6,7 +6,8 @@ import {
   PencilSquareIcon,
 } from '@heroicons/react/24/outline';
 import LanguageDropdown, { LanguageItem } from './language-dropdown';
-import { GetLangFromLocale, GetLanguageName } from '@/app/lib/constants';
+import { useLocaleContext } from '../components/context/locale-provider';
+import { GetLanguageName } from '../lib/constants';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -43,12 +44,13 @@ export function RoundButton({ children, className, ...rest }: ButtonProps) {
 }
 
 export function LanguageButton({
-  locale,
   isHidden,
 }: {
-  locale: string;
   isHidden: boolean;
 }) {
+
+  const { locale, lang } = useLocaleContext();
+
   const languageItems: LanguageItem = {
     title: GetLanguageName(locale),
     locale: locale,
@@ -85,8 +87,10 @@ export function LanguageButton({
   );
 }
 
-export function CreatePostButton({ locale }: { locale: string }) {
-  const lang = GetLangFromLocale(locale);
+export function CreatePostButton() {
+
+  const { lang } = useLocaleContext();
+
   return (
     <Link
       className="my-2 mr-4 flex h-10 w-10 items-center justify-center rounded-md"

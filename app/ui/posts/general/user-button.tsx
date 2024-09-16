@@ -20,18 +20,16 @@ import {
 } from '@nextui-org/react';
 import { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
-import { DictStructure } from '@/app/components/localization/dict-store';
 import { useLoginOpenFromPostContext } from '@/app/components/context/login-open-from-post-provider';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 export function UserButton({
-  locale,
   session,
-  dict,
 }: {
-  locale: string;
   session?: Session;
-  dict: DictStructure;
 }) {
+  const { dict } = useLocaleContext();
+
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [isSignInLoadingGoogle, setIsSignInLoadingGoogle] =
     useState<boolean>(false);

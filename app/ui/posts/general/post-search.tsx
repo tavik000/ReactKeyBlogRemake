@@ -1,23 +1,20 @@
 'use client';
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useDebouncedCallback } from 'use-debounce';
-import { GetLangFromLocale } from '@/app/lib/constants';
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 export default function PostSearch({
-  locale,
   placeholder,
 }: {
-  locale: string;
   placeholder: string;
 }) {
+  const { lang } = useLocaleContext();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
-  const pathname = usePathname();
 
-  const lang = GetLangFromLocale(locale);
 
   const handleSearch = useDebouncedCallback((term) => {
     console.log(`Searching... ${term}`);

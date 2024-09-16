@@ -9,6 +9,7 @@ import { GetLocaleFromLang } from '@/app/lib/constants';
 import { auth } from '@/auth';
 import { NextUIProviderWrapper } from '@/app/components/NextUI/next-ui-providers-wrapper';
 import { LoginOpenFromPostProvider } from '@/app/components/context/login-open-from-post-provider';
+import { LocaleProvider } from '@/app/components/context/locale-provider';
 
 export const experimental_ppr = true;
 
@@ -38,10 +39,12 @@ export default async function RootLayout({
       <body className={`${inter.className} antialiased`}>
         <NextUIProviderWrapper>
           <LoginOpenFromPostProvider>
-            <Sky locale={locale} dict={dict} session={session || undefined} />
-            <PostSection locale={locale} dict={dict}>
-              {children}
-            </PostSection>
+            <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
+              <Sky session={session || undefined} />
+              <PostSection locale={locale} dict={dict}>
+                {children}
+              </PostSection>
+            </LocaleProvider>
           </LoginOpenFromPostProvider>
         </NextUIProviderWrapper>
       </body>
