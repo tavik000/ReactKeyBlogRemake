@@ -1,4 +1,3 @@
-import { useLocaleContext } from '@/app/components/context/locale-provider';
 import PostItem from './post-item';
 import { fetchFilteredPosts } from '@/app/lib/data';
 

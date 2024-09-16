@@ -12,16 +12,16 @@ import {
   useDisclosure,
 } from '@nextui-org/react';
 import { deletePostWithAllLanguages } from '@/app/lib/actions';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 export default function PostManage({
-  locale,
   postId,
   postTitle,
 }: {
-  locale: string;
   postId: string;
   postTitle: string;
 }) {
+  const { locale } = useLocaleContext();
   const pathname = usePathname();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 

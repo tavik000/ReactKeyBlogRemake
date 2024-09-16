@@ -1,6 +1,4 @@
 import {
-  GetLanguageName,
-  GetLocaleFromLang,
   keyEmail,
   keyTwitterId,
 } from '@/app/lib/constants';
@@ -42,7 +40,7 @@ export default async function PostViewWrapper({
           </h1>
           <span className="3/5 mt-2 flex flex-wrap justify-start">
             {post.tags.map((tag) => (
-              <PostTagItem key={tag} locale={locale} tag={tag} isLabel={true} />
+              <PostTagItem key={tag} tag={tag} isLabel={true} />
             ))}
           </span>
           <PostDate post={post} />
@@ -58,7 +56,7 @@ export default async function PostViewWrapper({
           commentCount={post.comment_id_list.length}
         />
         {session && session?.user && session.user.email === keyEmail ? (
-          <PostManage locale={locale} postId={postId} postTitle={post.title} />
+          <PostManage postId={postId} postTitle={post.title} />
         ) : (
           <> </>
         )}

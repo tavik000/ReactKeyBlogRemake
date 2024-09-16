@@ -1,6 +1,5 @@
 import { GetLocaleFromLang } from '@/app/lib/constants';
 import { Metadata } from 'next';
-import PostContentContainer from '@/app/ui/posts/view/post-content-container';
 import PostViewWrapper from '@/app/ui/posts/view/post-view-wrapper';
 import { Suspense } from 'react';
 import PostViewWrapperSkeleton from '@/app/ui/posts/view/post-view-wrapper-skeleton';
