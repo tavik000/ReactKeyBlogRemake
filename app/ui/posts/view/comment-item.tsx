@@ -5,6 +5,7 @@ import { User } from "@nextui-org/react";
 import { MarkdownRenderer } from '../../markdown';
 import { InteractIcon } from '@/app/ui/posts/view/interaction';
 import { fetchPostCommentById } from '@/app/lib/data';
+import CommentManageButton from "./comment-manage-button";
 
 export default async function CommentItem({
   commentId,
@@ -48,6 +49,7 @@ export default async function CommentItem({
               .replace(/(?<=\d) /, ', ')}
           </p>
         )}
+        <CommentManageButton commentId={commentId} authorName={"Key Zhao"} />
       </div>
 
       {/* Content */}
