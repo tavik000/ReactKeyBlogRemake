@@ -75,7 +75,7 @@ const CommentItemClient = ({
                         </p>
                     )}
                     <CommentManageButton
-                        authorName={"Key Zhao"}
+                        authorName={comment.user_name}
                         onEdit={onEdit}
                         onDelete={onDelete}
                     />
