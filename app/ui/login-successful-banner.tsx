@@ -1,18 +1,21 @@
 'use client';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useSessionContext } from "@/app/components/context/session-provider";
+import { Session } from "next-auth";
 
 export default function LoginSuccessfulBanner() {
     const sessionContext = useSessionContext();
     const [showBanner, setShowBanner] = useState(false);
+    const prevSession = useRef<Session | null>(null);
 
     useEffect(() => {
-        if (sessionContext.session)  {
+        if (!prevSession.current && sessionContext.session) {
             setShowBanner(true);
             const timer = setTimeout(() => setShowBanner(false), 3000);
             return () => clearTimeout(timer);
         }
-    }, [sessionContext]);
+        prevSession.current = sessionContext.session;
+    }, [sessionContext.session]);
 
     return (
         showBanner && (
