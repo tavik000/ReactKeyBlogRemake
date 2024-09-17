@@ -71,7 +71,7 @@ export default async function PostViewWrapper({
           {post.comment_id_list.length > 0 ? (
             <div className="mt-6 border-t-[1px]">
               {post.comment_id_list.map((commentId) => (
-                <CommentItem key={commentId} commentId={commentId} />
+                <CommentItem key={commentId} commentId={commentId} postTitle={post.title}/>
               ))}
             </div>
           ) : (

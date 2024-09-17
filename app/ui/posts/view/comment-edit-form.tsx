@@ -5,7 +5,7 @@ import { useSessionContext } from '@/app/components/context/session-provider';
 import { Avatar } from '@nextui-org/react';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
 import dynamic from 'next/dynamic';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { CommentState, createCommentWithAllLanguages, updateComment } from '@/app/lib/actions';
@@ -20,12 +20,16 @@ export default function CommentEditForm({
     isNewComment,
     commentId,
     postId,
-    postTitle
+    postTitle,
+    defaultContent,
+    onCancel,
 }: {
     isNewComment: boolean,
     commentId: string | null,
     postId: string,
-    postTitle: string
+    postTitle: string,
+    defaultContent?: string,
+    onCancel: () => void,
 }) {
 
     const { locale, dict } = useLocaleContext();
@@ -75,18 +79,21 @@ export default function CommentEditForm({
                             />
                             {isNewComment ? (
                                 <div className="flex flex-row w-full justify-between">
-                                    <p className="flex ml-2 justify-start">write comment </p>
+                                    <p className="flex ml-2 justify-start">Write comment </p>
                                     <p className="flex justify-end mt-1 align-bottom text-sm text-gray-400">(You can directly paste an image from your computer or the Internet into the text area)</p>
                                 </div>
                             ) : (
-                                <p className="ml-2 text-center align-middle justify-center">edit comment</p>
+                                <div className="flex flex-row w-full justify-between">
+                                    <p className="ml-2 text-center align-middle justify-center">Edit comment</p>
+                                    <p className="flex justify-end mt-1 align-bottom text-sm text-gray-400">(You can directly paste an image from your computer or the Internet into the text area)</p>
+                                </div>
                             )}
                         </div>
                         <form action={dispatch}>
                             <div className="flex flex-col w-full justify-between">
                                 <label htmlFor="content" className="mb-2 block text-base font-medium" />
                                 <CommentMDEditor
-                                    content=''
+                                    content={defaultContent || ''}
                                     onMarkdownChange={handleMarkdownChange}
                                 />
                                 <div id="content-error" aria-live="polite" aria-atomic="true">
@@ -99,13 +106,27 @@ export default function CommentEditForm({
                                             )
                                         ))}
                                 </div>
-                                <div className="flex justify-end">
-                                    <Button
-                                        className="mt-1 max-w-24 flex bg-orange-500 hover:bg-orange-600 focus-visible:outline-orange-500 active:bg-orange-600"
-                                        type="submit"
-                                    >
-                                        Respond
-                                    </Button>
+                                <div className="flex justify-end mb-1">
+                                    <div className="flex justify-end mt-1 w-24">
+                                        {!isNewComment &&
+                                            (<Button className="flex justify-center border-2 box-border border-gray-300 bg-white hover:bg-gray-200 focus-visible:outline-gray-200 active:bg-gray-300"
+                                                onClick={() => {
+                                                    onCancel();
+                                                }}
+                                            >
+                                                <p className="text-gray-500">Cancel</p>
+                                                
+                                            </Button>)
+                                        }
+                                    </div>
+                                    <div className="flex mt-1 ml-1 justify-end w-24">
+                                        <Button
+                                            className="max-w-24 flex bg-orange-500 hover:bg-orange-600 focus-visible:outline-orange-500 active:bg-orange-600"
+                                            type="submit"
+                                        >
+                                            Respond
+                                        </Button>
+                                    </div>
                                 </div>
                             </div>
                         </form>
@@ -117,7 +138,7 @@ export default function CommentEditForm({
                 <>
                     <div className="flex-col rounded-lg mt-4 p-6 text-center bg-gray-200">
                         <p className="flex justify-center text-lg font-semibold text-black">Let&apos;s comment your feeling</p>
-                        <div className="flex justify-center mt-4 w-full">
+                        <div className="flex-col flex justify-center mt-4 w-full">
                             <Button className=" flex justify-center bg-orange-500 hover:bg-orange-600 focus-visible:outline-orange-500 active:bg-orange-600"
                                 onClick={() => {
                                     setIsLoginOpenFromPost(true);

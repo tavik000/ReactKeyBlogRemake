@@ -5,11 +5,12 @@ import { Dropdown, DropdownMenu, DropdownTrigger, DropdownItem } from "@nextui-o
 import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 interface CommentManageButtonProps {
-    commentId: string;
     authorName: string;
+    onEdit: () => void;
+    onDelete: () => void;
 }
 
-export default function CommentManageButton({ commentId, authorName }: CommentManageButtonProps) {
+export default function CommentManageButton({ authorName, onEdit, onDelete }: CommentManageButtonProps) {
     const { dict } = useLocaleContext();
     const sessionContext = useSessionContext();
 
@@ -25,7 +26,7 @@ export default function CommentManageButton({ commentId, authorName }: CommentMa
             <Dropdown
                 radius="sm"
                 classNames={{
-                    content: "py-1 px-1 border border-default-200 rounded-lg border-spacing-4 bg-gradient-to-br from-white to-gray-100 ",
+                    content: "py-1 px-1 border border-default-200 rounded-lg border-spacing-4 bg-gradient-to-br from-white to-gray-100",
                 }}
             >
                 <DropdownTrigger>
@@ -39,9 +40,9 @@ export default function CommentManageButton({ commentId, authorName }: CommentMa
                     className="p-3"
                     onAction={(key) => {
                         if (key === "edit") {
-                            console.log("edit");
+                            onEdit();
                         } else if (key === "delete") {
-                            console.log("delete");
+                            onDelete();
                         }
                     }}
                 >
