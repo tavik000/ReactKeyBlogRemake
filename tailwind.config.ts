@@ -74,6 +74,18 @@ const config: Config = {
           transform: 'translateX(100%)',
         },
       },
+      'slide-down': {
+        '0%': { transform: 'translateY(-100%)' },
+        '100%': { transform: 'translateY(0)' },
+      },
+      'slide-up': {
+        '0%': { transform: 'translateY(0)' },
+        '100%': { transform: 'translateY(-100%)' },
+      },
+    },
+    animation: {
+      'slide-down': 'slide-down 0.5s ease-out',
+      'slide-up': 'slide-up 0.5s ease-in',
     },
   },
   darkMode: 'class',

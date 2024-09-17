@@ -11,6 +11,8 @@ import { NextUIProviderWrapper } from '@/app/components/NextUI/next-ui-providers
 import { LoginOpenFromPostProvider } from '@/app/components/context/login-open-from-post-provider';
 import { LocaleProvider } from '@/app/components/context/locale-provider';
 import { SessionProvider } from '../components/context/session-provider';
+import LoginSuccessfulBanner from '../ui/login-successful-banner';
+import { useEffect, useState } from 'react';
 
 export const experimental_ppr = true;
 
@@ -35,6 +37,8 @@ export default async function RootLayout({
   const dict = (await getDictionary(locale)) as DictStructure;
   const session = await auth();
 
+
+
   return (
     <html lang={lang}>
       <body className={`${inter.className} antialiased`}>
@@ -42,6 +46,7 @@ export default async function RootLayout({
           <LoginOpenFromPostProvider>
             <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
               <SessionProvider inSession={session || null}>
+                <LoginSuccessfulBanner/>
                 <Sky/>
                 <PostSection>
                   {children}
