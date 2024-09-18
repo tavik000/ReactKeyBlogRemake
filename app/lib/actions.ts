@@ -189,7 +189,7 @@ export async function createPostWithAllLanguages(
 
     if (!validatedFields.success) {
       return {
-        errors: validatedFields.error.flatten().fieldErrors,
+        errors: validatedFields.error ? validatedFields.error.flatten().fieldErrors : {},
         message: 'Missing Fields. Failed to Add New Post.',
       };
     }
@@ -340,7 +340,7 @@ export async function updatePostWithAllLanguages(
 
     if (!validatedFields.success) {
       return {
-        errors: validatedFields.error.flatten().fieldErrors,
+        errors: validatedFields.error ? validatedFields.error.flatten().fieldErrors : {},
         message: 'Missing Fields. Failed to Update Post.',
       };
     }
@@ -577,6 +577,7 @@ export async function createComment(
     );
 
     const createComment = await client.query(createCommentQuery);
+    console.log('createComment: ' + createComment);
   } catch (error) {
     console.log(error);
     // TODO: add localization
@@ -599,6 +600,7 @@ export async function updateComment(
   const dict = getDictionary(currentLocale);
   let content = commentContent;
   console.log('update comment id : ' + commentId);
+  console.log('update comment content: ' + content);
 
 
   try {
@@ -626,7 +628,7 @@ export async function updateComment(
     );
 
     const updateComment = await client.query(updateCommentQuery);
-    console.log('updateComment: ' + updateComment);
+    console.log('updateComment success with content: ' + content);
   } catch (error) {
     console.log(error);
     // TODO: add localization
@@ -664,11 +666,11 @@ export async function addCommentToPost(
   commentId: string,
   postLocale: string,
   currentLocale: string,
+  client: VercelPoolClient
 ) {
   const dict = getDictionary(currentLocale);
 
   try {
-    const client = await db.connect();
 
     const addCommentQuery = format(
       `
@@ -682,7 +684,7 @@ export async function addCommentToPost(
     );
 
     const addCommentToPost = await client.query(addCommentQuery);
-    console.log('addCommentToPost: ' + addCommentToPost);
+    console.log('addCommentToPost in ' + postLocale + ': postId: ' + postId + ', commentId: ' + commentId);
 
   } catch (error) {
     console.log(error);
@@ -706,11 +708,21 @@ export async function createCommentWithAllLanguages(
 
   const dict = getDictionary(currentLocale);
   const id = require('uuid').v4();
-  console.log('create comment: ' + id);
+  console.log('create comment all language: ' + id);
+  console.log('comment content: ' + commentContent);
 
+  let client: VercelPoolClient | null = null;
   try {
-    const client = await db.connect();
+    const connectionResult = await Promise.race([
+      db.connect(),
+      new Promise((_, reject) =>
+        setTimeout(() => reject(new Error('Database connection timeout')), 5000)
+      ),
+    ]);
 
+    client = connectionResult as VercelPoolClient;
+
+    console.log('Database connected');
     const validatedFields = CreateComment.safeParse({
       commentContent: commentContent,
     });
@@ -724,6 +736,7 @@ export async function createCommentWithAllLanguages(
     }
 
 
+    console.log('Fields validated');
     const addResult = await Promise.all([
       createComment(
         id,
@@ -739,32 +752,44 @@ export async function createCommentWithAllLanguages(
         id,
         'en',
         currentLocale,
+        client,
       ),
       addCommentToPost(
         postId,
         id,
         'ja',
         currentLocale,
+        client,
       ),
       addCommentToPost(
         postId,
         id,
         'kr',
         currentLocale,
+        client,
       ),
       addCommentToPost(
         postId,
         id,
         'hk',
         currentLocale,
+        client,
       ),
     ]);
+
+    console.log('Comments added to all languages');
   } catch (error) {
-    console.error(error);
+    console.error('Error in createCommentWithAllLanguages:', error);
     // TODO: add localization
     return {
+      errors: { commentContent: ['Network Error'] },
       message: 'Failed to add comment',
     };
+  } finally {
+    if (client !== null) {
+      client.release();
+      console.log('Database connection closed');
+    }
   }
 
   const lang = GetLangFromLocale(currentLocale);
@@ -786,6 +811,7 @@ export async function createCommentWithAllLanguages(
 
   const url_title = title.toLowerCase().replace(urlRegex, '-');
   const redirectUrl = `/${lang}/posts/${url_title}/${postId}`;
+  console.log('added comment redirectUrl: ' + redirectUrl);
 
   revalidatePath(redirectUrl);
   redirect(redirectUrl);
