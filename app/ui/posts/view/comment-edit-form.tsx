@@ -29,7 +29,7 @@ export default function CommentEditForm({
     postId: string,
     postTitle: string,
     defaultContent?: string,
-    onCancel: () => void,
+    onCancel: null | (() => void),
 }) {
 
     const { locale, dict } = useLocaleContext();
@@ -129,7 +129,9 @@ export default function CommentEditForm({
                                         {!isNewComment &&
                                             (<Button className="flex justify-center border-2 box-border border-gray-300 bg-white hover:bg-gray-200 focus-visible:outline-gray-200 active:bg-gray-300"
                                                 onClick={() => {
-                                                    onCancel();
+                                                    if (onCancel) {
+                                                        onCancel();
+                                                    }
                                                 }}
                                             >
                                                 <p className="text-gray-500">Cancel</p>

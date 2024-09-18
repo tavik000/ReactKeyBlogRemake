@@ -80,7 +80,7 @@ export default async function PostViewWrapper({
             </div>
           )}
           <div>
-            <CommentEditForm isNewComment={true} postId={postId} postTitle={post.title} commentId={null} />
+            <CommentEditForm isNewComment={true} postId={postId} postTitle={post.title} commentId={null} onCancel={null}/>
           </div>
         </PostContentContainer>
       </div>
