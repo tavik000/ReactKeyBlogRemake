@@ -36,10 +36,15 @@ export default function CommentEditForm({
     const { session } = useSessionContext();
     const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
 
-    const [markdownValue, setMarkdownValue] = useState('');
+    const [markdownValue, setMarkdownValue] = useState(defaultContent || '');
+    const [shouldClearToggle, setShouldClearToggle] = useState(false);
 
     const handleMarkdownChange = (value: string | undefined) => {
         setMarkdownValue(value || '');
+    };
+
+    const clearMarkdownValue = () => {
+        setShouldClearToggle(!shouldClearToggle);
     };
 
     const initialState = { message: null, errors: {} };
@@ -89,12 +94,25 @@ export default function CommentEditForm({
                                 </div>
                             )}
                         </div>
-                        <form action={dispatch}>
+                        <form
+                            onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
+                                e.preventDefault();
+                                dispatch(new FormData(e.currentTarget));
+                                if (isNewComment) {
+                                    clearMarkdownValue();
+                                }
+                                if (onCancel) {
+                                    onCancel();
+                                }
+                            }}
+                        >
                             <div className="flex flex-col w-full justify-between">
                                 <label htmlFor="content" className="mb-2 block text-base font-medium" />
                                 <CommentMDEditor
-                                    content={defaultContent || ''}
+                                    isNewComment={isNewComment}
+                                    content={markdownValue}
                                     onMarkdownChange={handleMarkdownChange}
+                                    shouldClear={shouldClearToggle}
                                 />
                                 <div id="content-error" aria-live="polite" aria-atomic="true">
                                     {state?.errors?.commentContent &&
@@ -115,7 +133,7 @@ export default function CommentEditForm({
                                                 }}
                                             >
                                                 <p className="text-gray-500">Cancel</p>
-                                                
+
                                             </Button>)
                                         }
                                     </div>

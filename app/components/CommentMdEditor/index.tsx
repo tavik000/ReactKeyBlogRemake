@@ -6,17 +6,27 @@ import '@uiw/react-markdown-preview/markdown.css';
 import MDEditor, { ICommand, commands, EditorContext, help } from "@uiw/react-md-editor";
 
 const CommentMdEditor = ({
+  isNewComment,
   content,
   onMarkdownChange,
+  shouldClear: shouldClearToggle,
 }: {
+  isNewComment: boolean;
   content: string;
   onMarkdownChange?: (value: string | undefined) => void;
+  shouldClear?: boolean;
 }) => {
   const [markdown, setMarkdown] = useState<string | undefined>(content);
 
   useEffect(() => {
     onMarkdownChange?.(markdown);
-  }, [markdown, onMarkdownChange]);
+  }, [markdown, onMarkdownChange, content]);
+
+  useEffect(() => {
+    if (isNewComment) {
+      setMarkdown('');
+    }
+  }, [shouldClearToggle, isNewComment]);
 
   return (
     // TODO Localization
