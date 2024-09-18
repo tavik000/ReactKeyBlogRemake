@@ -13,8 +13,7 @@ export default function LoginSuccessfulBanner() {
         if (!prevSession.current && sessionContext.session && !hasBannerShown) {
             setShowBanner(true);
             localStorage.setItem('bannerShown', 'true');
-            const timer = setTimeout(() => setShowBanner(false), 3000);
-            return () => clearTimeout(timer);
+            setTimeout(() => setShowBanner(false), 3000);
         }
         prevSession.current = sessionContext.session;
 
