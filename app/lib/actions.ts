@@ -620,7 +620,8 @@ export async function updateComment(
     const updateCommentQuery = format(
       `
       UPDATE comments
-      SET content = %L
+      SET content = %L,
+          modify_date = NOW()
       WHERE id = %L
       `,
       content,
