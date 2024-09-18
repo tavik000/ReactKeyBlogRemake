@@ -9,12 +9,18 @@ export default function LoginSuccessfulBanner() {
     const prevSession = useRef<Session | null>(null);
 
     useEffect(() => {
-        if (!prevSession.current && sessionContext.session) {
+        const hasBannerShown = localStorage.getItem('bannerShown');
+        if (!prevSession.current && sessionContext.session && !hasBannerShown) {
             setShowBanner(true);
+            localStorage.setItem('bannerShown', 'true');
             const timer = setTimeout(() => setShowBanner(false), 3000);
             return () => clearTimeout(timer);
         }
         prevSession.current = sessionContext.session;
+
+        if (!sessionContext.session) {
+            localStorage.removeItem('bannerShown');
+        }
     }, [sessionContext.session]);
 
     return (
