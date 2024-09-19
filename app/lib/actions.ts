@@ -818,3 +818,113 @@ export async function createCommentWithAllLanguages(
   redirect(redirectUrl);
 }
 
+export async function deleteComment(
+  commentId: string,
+  currentLocale: string,
+  client: VercelPoolClient,
+) {
+  const dict = getDictionary(currentLocale);
+  console.log('delete comment id : ' + commentId);
+
+  try {
+    const deleteCommentQuery = format(
+      `
+      DELETE FROM comments
+      WHERE id = %L
+      `,
+      commentId,
+    );
+
+    const deleteComment = await client.query(deleteCommentQuery);
+    console.log('deleteComment successful id: ' + commentId);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to delete comment (' + commentId + ')',
+    };
+  }
+}
+
+export async function deleteCommentFromPost(
+  postId: string,
+  commentId: string,
+  postLocale: string,
+  currentLocale: string,
+  client: VercelPoolClient,
+) {
+  const dict = getDictionary(currentLocale);
+  console.log('deleteCommentFromPost: locale: (' + postLocale + ') postId: ' + postId + ', commentId: ' + commentId);
+
+  try {
+    const deleteCommentQuery = format(
+      `
+      UPDATE posts_%s
+      SET comment_id_list = array_remove(comment_id_list, %L)
+      WHERE id = %L
+      `,
+      postLocale,
+      commentId,
+      postId,
+    );
+
+    const deleteCommentFromPost = await client.query(deleteCommentQuery);
+    console.log('deleteCommentFromPost successfully in ' + postLocale + ': postId: ' + postId + ', commentId: ' + commentId);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to delete comment from post',
+    };
+  }
+}
+
+export async function deleteCommentWithAllLanguages(
+  currentLocale: string,
+  commentId: string,
+  postId: string,
+  postTitle: string,
+) {
+  console.log('deleteComment: ' + commentId);
+
+  try {
+    const client = await db.connect();
+
+    const deleteResult = await Promise.all([
+      deleteComment(commentId, currentLocale, client),
+      deleteCommentFromPost(postId, commentId, 'en', currentLocale, client),
+      deleteCommentFromPost(postId, commentId, 'ja', currentLocale, client),
+      deleteCommentFromPost(postId, commentId, 'kr', currentLocale, client),
+      deleteCommentFromPost(postId, commentId, 'hk', currentLocale, client),
+    ]);
+  } catch (error) {
+    console.error(error);
+    return {
+      message: 'Failed to delete comment',
+    };
+  }
+
+ 
+  const lang = GetLangFromLocale(currentLocale);
+  const urlRegex = /\s/g;
+  let title = postTitle;
+  switch (currentLocale) {
+    case 'en':
+      break;
+    case 'ja':
+      title = encodeURI(title);
+      break;
+    case 'kr':
+      title = encodeURI(title);
+      break;
+    case 'hk':
+      title = encodeURI(title);
+      break;
+  }
+
+  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const redirectUrl = `/${lang}/posts/${url_title}/${postId}`;
+  console.log('added comment redirectUrl: ' + redirectUrl);
+
+  revalidatePath(redirectUrl);
+  redirect(redirectUrl);
+
+}

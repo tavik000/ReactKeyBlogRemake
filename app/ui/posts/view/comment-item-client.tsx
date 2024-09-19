@@ -7,6 +7,8 @@ import CommentManageButton from "./comment-manage-button";
 import CommentEditForm from "./comment-edit-form";
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { PostComment } from '@/app/lib/definitions';
+import { deleteCommentWithAllLanguages } from "@/app/lib/actions";
+import { useLocaleContext } from "@/app/components/context/locale-provider";
 
 const CommentItemClient = ({
     comment,
@@ -17,6 +19,7 @@ const CommentItemClient = ({
     commentId: string,
     postTitle: string
 }) => {
+    const { locale, dict } = useLocaleContext();
     const [isEdit, setIsEdit] = useState(false);
 
     const onEdit = () => {
@@ -24,7 +27,7 @@ const CommentItemClient = ({
     };
 
     const onDelete = () => {
-        console.log("Delete comment");
+        deleteCommentWithAllLanguages(locale, commentId, comment.post_id, postTitle);
     };
 
     const onCancel = () => {
@@ -76,6 +79,7 @@ const CommentItemClient = ({
                     )}
                     <CommentManageButton
                         authorName={comment.user_name}
+                        commentContent={comment.content}
                         onEdit={onEdit}
                         onDelete={onDelete}
                     />

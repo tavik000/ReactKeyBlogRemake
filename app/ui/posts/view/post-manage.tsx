@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { Button } from '../../button';
+import { Button } from '@/app/ui/button';
 import { usePathname } from 'next/navigation';
 import {
   Modal,
