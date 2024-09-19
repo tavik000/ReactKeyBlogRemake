@@ -144,7 +144,7 @@ export default function CommentEditForm({
                                                     }
                                                 }}
                                             >
-                                                <p className="flex text-gray-500 whitespace-nowrap">{dict.comment.cancel}</p>
+                                                <p className="flex text-gray-500 whitespace-nowrap font-bold">{dict.comment.cancel}</p>
                                             </Button>)
                                         }
                                     </div>
@@ -153,7 +153,7 @@ export default function CommentEditForm({
                                             className="max-w-24 flex bg-orange-500 hover:bg-orange-600 focus-visible:outline-orange-500 active:bg-orange-600"
                                             type="submit"
                                         >
-                                            {isNewComment ? dict.comment.respond : dict.comment.update}
+                                            <p className='font-bold'>{isNewComment ? dict.comment.respond : dict.comment.update}</p>
                                         </Button>
                                     </div>
                                 </div>

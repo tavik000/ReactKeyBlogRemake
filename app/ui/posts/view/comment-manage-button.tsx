@@ -113,7 +113,7 @@ export default function CommentManageButton({ authorName, commentContent, onEdit
                                         onClose()
                                     }}
                                 >
-                                    {dict.comment.delete}
+                                    <p className='font-bold'>{dict.comment.delete}</p>
                                 </Button>
                             </ModalFooter>
                         </>
