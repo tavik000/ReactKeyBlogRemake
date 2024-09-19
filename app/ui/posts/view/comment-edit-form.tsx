@@ -173,7 +173,7 @@ export default function CommentEditForm({
                                     setIsLoginOpenFromPost(true);
                                 }}
                             >
-                                {dict.comment.login}
+                                <p className='font-bold'>{dict.comment.login}</p>
                             </Button>
                         </div>
                     </div>
