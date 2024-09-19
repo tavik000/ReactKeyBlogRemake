@@ -12,5 +12,27 @@
     "homepage": "Key 홈페이지",
     "blog": "블로그"
   },
-  "category": "카테고리"
+  "category": "카테고리",
+  "comment": {
+    "commentTitle": "댓글",
+    "noComment": "댓글이 없습니다",
+    "letComment": "느낌을 댓글로 남겨보세요",
+    "login": "로그인",
+    "loginSuccessful": "로그인 성공!",
+    "writeComment": "댓글 작성",
+    "pasteImageTip": "(컴퓨터나 인터넷에서 이미지를 텍스트 영역에 직접 붙여넣을 수 있습니다)",
+    "commentPlaceholder": "마크다운 텍스트를 입력하세요",
+    "respond": "답글",
+    "pleaseEnterComment": "댓글을 입력하세요.",
+    "edit": "편집",
+    "delete": "삭제",
+    "editComment": "댓글 편집",
+    "update": "업데이트",
+    "cancel": "취소",
+    "failAddComment": "댓글 추가에 실패했습니다",
+    "failUpdateComment": "댓글 업데이트에 실패했습니다",
+    "caution": "주의",
+    "areYouSureDeleteComment": "이 댓글을 삭제하시겠습니까?",
+    "close": "닫기"
+  }
 }

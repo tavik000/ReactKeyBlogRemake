@@ -14,6 +14,8 @@ import { auth } from '@/auth';
 import PostContentContainer from './post-content-container';
 import CommentItem from './comment-item';
 import CommentEditForm from '@/app/ui/posts/view/comment-edit-form';
+import { getDictionary } from '@/app/components/localization/dictionaries';
+import { DictStructure } from '@/app/components/localization/dict-store';
 
 export default async function PostViewWrapper({
   postId,
@@ -22,6 +24,7 @@ export default async function PostViewWrapper({
   postId: string;
   locale: string;
 }) {
+  const dict = (await getDictionary(locale)) as DictStructure;
   const postResults = await Promise.all([fetchPostById(postId, locale)]);
   const post = postResults[0];
   const session = await auth();
@@ -62,11 +65,10 @@ export default async function PostViewWrapper({
         )}
       </PostContentContainer>
 
-      {/* TODO localization */}
       <div className="mt-6">
         <PostContentContainer>
           <h2 className="mt-2 text-lg font-semibold leading-normal">
-            Comments
+            {dict.comment.commentTitle}
           </h2>
           {post.comment_id_list.length > 0 ? (
             <div className="mt-6 border-t-[1px]">
@@ -76,7 +78,7 @@ export default async function PostViewWrapper({
             </div>
           ) : (
             <div className="mt-4 pt-8 border-t-2 border-gray-100">
-              <p>No comments</p>
+              <p>{dict.comment.noComment}</p>
             </div>
           )}
           <div>

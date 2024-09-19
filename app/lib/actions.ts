@@ -75,9 +75,9 @@ const CommentSchema = z.object({
   id: z.string(),
   commentContent: z
     .string({
-      invalid_type_error: 'Please enter a comment.',
+      invalid_type_error: 'dict.comment.pleaseEnterComment',
     })
-    .min(1, { message: 'Please enter a comment.' }),
+    .min(1, { message: 'dict.comment.pleaseEnterComment' }),
 });
 
 const CreateComment = CommentSchema.omit({ id: true });
@@ -580,9 +580,8 @@ export async function createComment(
     console.log('createComment: ' + createComment);
   } catch (error) {
     console.log(error);
-    // TODO: add localization
     return {
-      message: 'Failed to add new comment',
+      message: 'dict.comment.failAddComment',
     };
   }
 }
@@ -609,11 +608,10 @@ export async function updateComment(
       commentContent: commentContent,
     });
 
-    // TODO: add localization
     if (!validatedFields.success) {
       return {
         errors: validatedFields.error.flatten().fieldErrors,
-        message: 'Missing Fields. Failed to Update Comment.',
+        message: 'dict.comment.pleaseEnterComment',
       };
     }
 
@@ -632,9 +630,8 @@ export async function updateComment(
     console.log('updateComment success with content: ' + content);
   } catch (error) {
     console.log(error);
-    // TODO: add localization
     return {
-      message: 'Failed to update comment',
+      message: 'dict.comment.failUpdateComment',
     };
   }
 
@@ -689,9 +686,8 @@ export async function addCommentToPost(
 
   } catch (error) {
     console.log(error);
-    // TODO: add localization
     return {
-      message: 'Failed to add comment to post',
+      message: 'dict.comment.failAddComment',
     };
   }
 }
@@ -728,11 +724,10 @@ export async function createCommentWithAllLanguages(
       commentContent: commentContent,
     });
 
-    // TODO: add localization
     if (!validatedFields.success) {
       return {
         errors: validatedFields.error.flatten().fieldErrors,
-        message: 'Missing Fields. Failed to Add New Comment.',
+        message: 'dict.comment.failAddComment',
       };
     }
 
@@ -781,10 +776,9 @@ export async function createCommentWithAllLanguages(
     console.log('Comments added to all languages');
   } catch (error) {
     console.error('Error in createCommentWithAllLanguages:', error);
-    // TODO: add localization
     return {
       errors: { commentContent: ['Network Error'] },
-      message: 'Failed to add comment',
+      message: 'dict.comment.failAddComment',
     };
   } finally {
     if (client !== null) {

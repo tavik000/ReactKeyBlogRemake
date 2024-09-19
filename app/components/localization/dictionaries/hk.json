@@ -12,5 +12,27 @@
     "homepage": "Key 主頁",
     "blog": "博客"
   },
-  "category": "類別"
+  "category": "類別",
+  "comment": {
+    "commentTitle": "評論",
+    "noComment": "沒有評論",
+    "letComment": "發表閣下的感受",
+    "login": "登入",
+    "loginSuccessful": "登入成功！",
+    "writeComment": "撰寫評論",
+    "pasteImageTip": "（您可以直接從電腦或互聯網將圖片粘貼到文本區域）",
+    "commentPlaceholder": "請輸入Markdown文本",
+    "respond": "回覆",
+    "pleaseEnterComment": "請輸入評論。",
+    "edit": "編輯",
+    "delete": "刪除",
+    "editComment": "編輯評論",
+    "update": "更新",
+    "cancel": "取消",
+    "failAddComment": "回覆評論失敗",
+    "failUpdateComment": "更新評論失敗",
+    "caution": "注意",
+    "areYouSureDeleteComment": "你確定要刪除此評論嗎？",
+    "close": "關閉"
+  }
 }

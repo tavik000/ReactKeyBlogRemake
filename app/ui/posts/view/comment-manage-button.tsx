@@ -72,12 +72,12 @@ export default function CommentManageButton({ authorName, commentContent, onEdit
                     >
                         {isAuthor ? (
                             <DropdownItem key="edit" className="hover:bg-gray-200">
-                                Edit
+                                {dict.comment.edit}
                             </DropdownItem>
                         ) : <DropdownItem key="edit" className="text-gray-500 hover:bg-gray-200 hidden" />
                         }
                         <DropdownItem key="delete" className="text-red-500 hover:bg-gray-200" color="danger">
-                            Delete
+                            {dict.comment.delete}
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
@@ -91,11 +91,11 @@ export default function CommentManageButton({ authorName, commentContent, onEdit
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col gap-1 text-white">
-                                Caution
+                                {dict.comment.caution}
                             </ModalHeader>
                             <ModalBody>
                                 <p className="text-white">
-                                    Are you sure you want to delete this comment?
+                                    {dict.comment.areYouSureDeleteComment}
                                 </p>
                                 <p className="text-red-500">{truncateText(commentContent, 100)}</p>
                             </ModalBody>
@@ -104,7 +104,7 @@ export default function CommentManageButton({ authorName, commentContent, onEdit
                                     className="bg-gray-600 hover:bg-gray-400"
                                     onClick={onClose}
                                 >
-                                    Close
+                                    {dict.comment.close}
                                 </Button>
                                 <Button
                                     className="bg-red-500 hover:bg-red-400"
@@ -113,7 +113,7 @@ export default function CommentManageButton({ authorName, commentContent, onEdit
                                         onClose()
                                     }}
                                 >
-                                    Delete
+                                    {dict.comment.delete}
                                 </Button>
                             </ModalFooter>
                         </>

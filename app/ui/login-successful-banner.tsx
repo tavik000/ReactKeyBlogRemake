@@ -2,8 +2,10 @@
 import { useState, useEffect, useRef } from "react";
 import { useSessionContext } from "@/app/components/context/session-provider";
 import { Session } from "next-auth";
+import { useLocaleContext } from "@/app/components/context/locale-provider";
 
 export default function LoginSuccessfulBanner() {
+    const { dict } = useLocaleContext();
     const sessionContext = useSessionContext();
     const [showBanner, setShowBanner] = useState(false);
     const prevSession = useRef<Session | null>(null);
@@ -32,7 +34,7 @@ export default function LoginSuccessfulBanner() {
                         <svg className="w-6 h-6 text-white mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
                         </svg>
-                        <p className="flex text-lg">Login successful!</p>
+                        <p className="flex text-lg">{dict.comment.loginSuccessful}</p>
                     </div>
                     <div className="flex justify-end align-middle">
                         <button onClick={() => setShowBanner(false)} className="flex ml-6 w-6 h-6">

@@ -12,5 +12,27 @@
     "homepage": "Key ホームページ",
     "blog": "ブログ"
   },
-  "category": "CATEGORY"
+  "category": "CATEGORY",
+  "comment": {
+    "commentTitle": "コメント",
+    "noComment": "この記事にコメントはありません。",
+    "letComment": "感想をコメントしましょう",
+    "login": "ログイン",
+    "loginSuccessful": "ログイン成功！",
+    "writeComment": "コメントする",
+    "pasteImageTip": "（コンピュータやインターネットから直接画像をテキストエリアに貼り付けることができます）",
+    "commentPlaceholder": "Markdownテキストを入力",
+    "respond": "投稿する",
+    "pleaseEnterComment": "コメントを入力してください。",
+    "edit": "編集する",
+    "delete": "削除する",
+    "editComment": "編集する",
+    "update": "更新する",
+    "cancel": "キャンセル",
+    "failAddComment": "コメントの失敗しました",
+    "failUpdateComment": "コメントの更新に失敗しました",
+    "caution": "注意",
+    "areYouSureDeleteComment": "このコメントを削除してもよろしいですか？",
+    "close": "閉じる"
+  }
 }

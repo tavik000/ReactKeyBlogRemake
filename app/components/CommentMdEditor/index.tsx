@@ -4,6 +4,7 @@ import onMediaPasted from '../utils/onMediaPasted';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import MDEditor, { ICommand, commands, EditorContext, help } from "@uiw/react-md-editor";
+import { useLocaleContext } from '../context/locale-provider';
 
 const CommentMdEditor = ({
   isNewComment,
@@ -16,6 +17,7 @@ const CommentMdEditor = ({
   onMarkdownChange?: (value: string | undefined) => void;
   shouldClear?: boolean;
 }) => {
+  const { dict } = useLocaleContext();
   const [markdown, setMarkdown] = useState<string | undefined>(content);
 
   useEffect(() => {
@@ -29,12 +31,11 @@ const CommentMdEditor = ({
   }, [shouldClearToggle, isNewComment]);
 
   return (
-    // TODO Localization
     <div className="container" data-color-mode="light">
       <MDEditor
         value={markdown}
         textareaProps={{
-          placeholder: 'Please enter the markdown text',
+          placeholder: dict.comment.commentPlaceholder,
         }}
         onChange={(value) => {
           setMarkdown(value);
