@@ -172,7 +172,7 @@ async function seedComments(client) {
         content TEXT NOT NULL,
         create_date DATE NOT NULL,
         modify_date DATE NOT NULL,
-        likes INT NOT NULL
+        likes VARCHAR(255)[] NOT NULL
       );
     `;
 
@@ -180,11 +180,22 @@ async function seedComments(client) {
 
     const insertedComments = await Promise.all(
       comments.map((comment) => {
-        return client.sql`
+        const insertCommentTableQuery = format(
+          `   
           INSERT INTO comments (id, post_id, user_name, user_img, content, create_date, modify_date, likes)
-          VALUES (${comment.id}, ${comment.post_id}, ${comment.user_name}, ${comment.user_img}, ${comment.content}, ${comment.create_date}, ${comment.modify_date}, ${comment.likes})
+          VALUES (%L, %L, %L, %L, %L, %L, %L, ARRAY[%L]::VARCHAR[])
           ON CONFLICT (id) DO NOTHING;
-        `;
+          `,
+          comment.id,
+          comment.post_id,
+          comment.user_name,
+          comment.user_img,
+          comment.content,
+          comment.create_date,
+          comment.modify_date,
+          comment.likes 
+        );
+        return client.query(insertCommentTableQuery);
       }),
     );
 

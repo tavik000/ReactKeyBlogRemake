@@ -104,7 +104,7 @@ const comments = [
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus porro earum dolor sint fuga laborum velit laudantium distinctio quos sunt veritatis unde inventore, autem ad tenetur voluptatibus mollitia vel!',
     create_date: '2022-12-06',
     modify_date: '2022-12-07',
-    likes: 0,
+    likes: [],
   },
   {
     id: '3958dc9e-712f-4377-85e9-fec4b6a64430',
@@ -114,7 +114,7 @@ const comments = [
     content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus porro earum dolor sint fuga laborum velit laudantium distinctio quos sunt veritatis unde inventore, autem ad tenetur voluptatibus mollitia vel!',
     create_date: '2023-12-06',
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
 ]
 
