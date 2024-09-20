@@ -96,7 +96,7 @@ const CommentItemClient = ({
                     <div className="mr-0 inline-block flex-shrink-0">
                         <InteractIcon count={comment.likes} shouldShowCount={true}>
                             <HeartIcon
-                                className="flex h-6 w-6 align-middle"
+                                className="flex h-6 w-6 align-middle hover:text-red-500"
                                 color="#757575"
                                 title="Like"
                             />
