@@ -450,6 +450,8 @@ export async function fetchPostById(id: string, locale: string) {
 
 export async function fetchPostCommentById(commentId: string) {
   noStore();
+  
+  console.log('fetchPostCommentById, commentId: ' + commentId);
 
   try {
     const data = await sql<PostComment>`

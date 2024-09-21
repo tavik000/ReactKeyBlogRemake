@@ -15,6 +15,9 @@ import { Post } from '@/app/lib/definitions';
 import PostManage from './post-manage';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
 import { useSessionContext } from '@/app/components/context/session-provider';
+import { useLoginOpenFromPostContext } from '@/app/components/context/login-open-from-post-provider';
+import { useState } from 'react';
+import { likePostWithAllLanguages, unlikePostWithAllLanguages } from '@/app/lib/actions';
 
 export default function PostViewClient({
   post
@@ -26,6 +29,43 @@ export default function PostViewClient({
   const postId = post.id;
   const { dict } = useLocaleContext();
   const sessionContext = useSessionContext();
+  const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
+  // const isLikedBefore: boolean = !!sessionContext.session && post.likes.includes(sessionContext.session?.user?.name ?? '');
+  const isLikedBefore: boolean = false;
+  const [isLiked, setIsLiked] = useState<boolean>(isLikedBefore);
+  const [isLikeDisabled, setIsLikeDisabled] = useState(false);
+  const [isShowingClickEffect, setIsShowingClickEffect] = useState(false);
+  const isSelfPost = sessionContext.session?.user?.name === post.author;
+
+  const handleClickLike = () => {
+    if (isSelfPost) return;
+    if (isLikeDisabled) return;
+
+    if (!sessionContext.session) {
+      setIsLoginOpenFromPost(true);
+      return;
+    }
+
+    if (!isLiked) {
+      if (sessionContext.session?.user?.name) {
+        likePostWithAllLanguages(sessionContext.session.user.name, postId);
+        setIsLiked(true);
+        setIsShowingClickEffect(true);
+        setTimeout(() => setIsShowingClickEffect(false), 200);
+        setIsLikeDisabled(true);
+        setTimeout(() => setIsLikeDisabled(false), 5000);
+      } else {
+        console.error('User name is not found');
+      }
+    } else {
+      if (sessionContext.session?.user?.name) {
+        unlikePostWithAllLanguages(sessionContext.session.user.name, postId);
+        setIsLiked(false);
+      } else {
+        console.error('User name is not found');
+      }
+    }
+  };
 
   return (
     <div>
@@ -46,14 +86,26 @@ export default function PostViewClient({
           <PostDate post={post} />
 
           <PostInteraction
-            likeCount={post.likes.length}
+            likeCount={post.likes.length +
+              ((isLiked && !isLikedBefore) ? 1 :
+                (isLikedBefore && !isLiked) ? -1 : 0)}
             commentCount={post.comment_id_list.length}
+            isSelfPost={isSelfPost}
+            isLiked={isLiked}
+            isShowingClickEffect={isShowingClickEffect}
+            handleClickLike={handleClickLike}
           />
         </div>
         <PostContent post={post} />
         <PostInteraction
-          likeCount={post.likes.length}
+            likeCount={post.likes.length +
+              ((isLiked && !isLikedBefore) ? 1 :
+                (isLikedBefore && !isLiked) ? -1 : 0)}
           commentCount={post.comment_id_list.length}
+          isSelfPost={isSelfPost}
+          isLiked={isLiked}
+          isShowingClickEffect={isShowingClickEffect}
+          handleClickLike={handleClickLike}
         />
         {sessionContext.session && sessionContext.session?.user && sessionContext.session.user.email === keyEmail ? (
           <PostManage postId={postId} postTitle={post.title} />

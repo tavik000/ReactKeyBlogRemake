@@ -26,9 +26,11 @@ const CommentItemClient = ({
     const sessionContext = useSessionContext();
     const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
     const [isEdit, setIsEdit] = useState(false);
-    const [isLiked, setIsLiked] = useState(sessionContext.session && comment.likes.includes(sessionContext.session?.user?.name ?? ''));
+    // const isLikedBefore: boolean = !!sessionContext.session && comment.likes.includes(sessionContext.session?.user?.name ?? '');
+    const isLikedBefore: boolean = false;
+    const [isLiked, setIsLiked] = useState<boolean>(isLikedBefore);
     const [isLikeDisabled, setIsLikeDisabled] = useState(false);
-    const [clickEffect, setClickEffect] = useState(false);
+    const [isShowingClickEffect, setIsShowingClickEffect] = useState(false);
     const isSelfComment = sessionContext.session?.user?.name === comment.user_name;
 
     const onEdit = () => {
@@ -56,8 +58,8 @@ const CommentItemClient = ({
             if (sessionContext.session?.user?.name) {
                 likeComment(sessionContext.session.user.name, commentId);
                 setIsLiked(true);
-                setClickEffect(true);
-                setTimeout(() => setClickEffect(false), 200);
+                setIsShowingClickEffect(true);
+                setTimeout(() => setIsShowingClickEffect(false), 200);
                 setIsLikeDisabled(true);
                 setTimeout(() => setIsLikeDisabled(false), 5000);
             } else {
@@ -134,12 +136,16 @@ const CommentItemClient = ({
 
                 <div className="flex mt-4 mb-4 content-center">
                     <div className="mr-0 inline-block flex-shrink-0">
-                        <InteractIcon count={comment.likes.length + (isLiked ? 1 : 0)} shouldShowCount={true}>
+                        <InteractIcon
+                            count={comment.likes.length +
+                                ((isLiked && !isLikedBefore) ? 1 :
+                                    (isLikedBefore && !isLiked) ? -1 : 0)}
+                            shouldShowCount={true}>
                             <HeartIcon
                                 className={`flex h-6 w-6 align-middle hover:cursor-pointer
                                 ${isSelfComment ? 'hover:cursor-not-allowed' :
                                         isLiked ? 'fill-orange-500 text-orange-500' : 'hover:text-orange-500'}
-                                ${clickEffect ? 'click-effect' : ''}
+                                ${isShowingClickEffect ? 'click-effect' : ''}
                                 `}
                                 color="#757575"
                                 title="Like"

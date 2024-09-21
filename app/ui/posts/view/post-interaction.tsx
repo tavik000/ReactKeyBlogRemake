@@ -6,18 +6,33 @@ import { InteractIcon } from '@/app/ui/posts/view/interaction';
 export default function PostInteraction({
   likeCount,
   commentCount,
+  isSelfPost,
+  isLiked,
+  isShowingClickEffect,
+  handleClickLike,
 }: {
   likeCount: number;
   commentCount: number;
+  isSelfPost: boolean;
+  isLiked: boolean;
+  isShowingClickEffect: boolean;
+  handleClickLike: () => void;
 }) {
   return (
     <div className="mt-6 flex  justify-between border-b-2 border-t-2 border-gray-100">
       <div className="flex content-center">
         <InteractIcon count={likeCount} shouldShowCount={true}>
           <HeartIcon
-            className="flex h-6 w-6 align-middle"
+            className={`flex h-6 w-6 align-middle hover:cursor-pointer
+                                ${isSelfPost ? 'hover:cursor-not-allowed' :
+                isLiked ? 'fill-orange-500 text-orange-500' : 'hover:text-orange-500'}
+                                ${isShowingClickEffect ? 'click-effect' : ''}
+                                `}
             color="#757575"
             title="Like"
+            onClick={() => {
+              handleClickLike();
+            }}
           />
         </InteractIcon>
         <InteractIcon count={commentCount} shouldShowCount={commentCount > 0}>
