@@ -52,22 +52,34 @@ const FormSchema = z.object({
     .string({
       invalid_type_error: 'Please enter content. (en)',
     })
-    .min(1, { message: 'Please enter content. (en)' }),
+    .min(1, { message: 'Please enter content. (en)' })
+    .refine((val) => val.trim().length > 0, {
+      message: 'Please enter content. (en)',
+    }),
   content_ja: z
     .string({
       invalid_type_error: 'Please enter content. (ja)',
     })
-    .min(1, { message: 'Please enter content. (ja)' }),
+    .min(1, { message: 'Please enter content. (ja)' })
+    .refine((val) => val.trim().length > 0, {
+      message: 'Please enter content. (ja)',
+    }),
   content_kr: z
     .string({
       invalid_type_error: 'Please enter content. (kr)',
     })
-    .min(1, { message: 'Please enter content. (kr)' }),
+    .min(1, { message: 'Please enter content. (kr)' })
+    .refine((val) => val.trim().length > 0, {
+      message: 'Please enter content. (kr)',
+    }),
   content_hk: z
     .string({
       invalid_type_error: 'Please enter content. (hk)',
     })
-    .min(1, { message: 'Please enter content. (hk)' }),
+    .min(1, { message: 'Please enter content. (hk)' })
+    .refine((val) => val.trim().length > 0, {
+      message: 'Please enter content. (hk)',
+    }),
   modify_date: z.string(),
 });
 
@@ -77,7 +89,10 @@ const CommentSchema = z.object({
     .string({
       invalid_type_error: 'dict.comment.pleaseEnterComment',
     })
-    .min(1, { message: 'dict.comment.pleaseEnterComment' }),
+    .min(1, { message: 'dict.comment.pleaseEnterComment' })
+    .refine((val) => val.trim().length > 0, {
+      message: 'dict.comment.pleaseEnterComment',
+    }),
 });
 
 const CreateComment = CommentSchema.omit({ id: true });
