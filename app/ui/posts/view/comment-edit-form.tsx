@@ -1,16 +1,15 @@
 'use client';
+import React, { useState, useContext, useEffect, useRef } from 'react';
 import { Button } from '@/app/ui/button';
 import { useLoginOpenFromPostContext } from '@/app/components/context/login-open-from-post-provider';
 import { useSessionContext } from '@/app/components/context/session-provider';
 import { Avatar } from '@nextui-org/react';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
 import dynamic from 'next/dynamic';
-import { useState } from 'react';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
 import { CommentState, createCommentWithAllLanguages, updateComment } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
-import { get } from 'http';
 
 const CommentMDEditor = dynamic(() => import('@/app/components/CommentMdEditor'), {
     ssr: false,
@@ -39,6 +38,7 @@ export default function CommentEditForm({
 
     const [markdownValue, setMarkdownValue] = useState(defaultContent || '');
     const [shouldClearToggle, setShouldClearToggle] = useState(false);
+    const formRef = useRef<HTMLFormElement>(null);
 
     const handleMarkdownChange = (value: string | undefined) => {
         setMarkdownValue(value || '');
@@ -81,6 +81,19 @@ export default function CommentEditForm({
         return keys.reduce((acc: DictStructure, key: string) => acc[key], dict as DictStructure) as unknown as string;
     };
 
+    useEffect(() => {
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (event.ctrlKey && event.key === 'Enter') {
+                formRef.current?.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+            }
+        };
+
+        document.addEventListener('keydown', handleKeyDown);
+        return () => {
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, []);
+
     return (
         <div>
             {session && session?.user && session.user?.image ? (
@@ -104,6 +117,7 @@ export default function CommentEditForm({
                             )}
                         </div>
                         <form
+                            ref={formRef}
                             onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
                                 e.preventDefault();
                                 dispatch(new FormData(e.currentTarget));
@@ -159,8 +173,6 @@ export default function CommentEditForm({
                                 </div>
                             </div>
                         </form>
-
-
                     </div>
                 </>
             ) : (
