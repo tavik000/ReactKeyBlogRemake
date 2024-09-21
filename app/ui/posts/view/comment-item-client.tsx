@@ -28,6 +28,7 @@ const CommentItemClient = ({
     const [isEdit, setIsEdit] = useState(false);
     const [isLiked, setIsLiked] = useState(sessionContext.session && comment.likes.includes(sessionContext.session?.user?.name ?? ''));
     const [isLikeDisabled, setIsLikeDisabled] = useState(false);
+    const [clickEffect, setClickEffect] = useState(false);
 
     const onEdit = () => {
         setIsEdit(true);
@@ -53,6 +54,10 @@ const CommentItemClient = ({
             if (sessionContext.session?.user?.name) {
                 likeComment(sessionContext.session.user.name, commentId);
                 setIsLiked(true);
+                setClickEffect(true);
+                setTimeout(() => setClickEffect(false), 200);
+                setIsLikeDisabled(true);
+                setTimeout(() => setIsLikeDisabled(false), 5000);
             } else {
                 console.error('No user name found in session');
             }
@@ -65,8 +70,6 @@ const CommentItemClient = ({
             }
         }
 
-        setIsLikeDisabled(true);
-        setTimeout(() => setIsLikeDisabled(false), 5000);
     };
 
     if (isEdit) {
@@ -132,7 +135,8 @@ const CommentItemClient = ({
                         <InteractIcon count={comment.likes.length + (isLiked ? 1 : 0)} shouldShowCount={true}>
                             <HeartIcon
                                 className={`flex h-6 w-6 align-middle hover:cursor-pointer
-                                     ${isLiked ? 'fill-red-500 text-red-500' : 'hover:text-red-500'}`}
+                                     ${isLiked ? 'fill-orange-500 text-orange-500' : 'hover:text-orange-500'}
+                                     ${clickEffect ? 'click-effect' : ''}`}
                                 color="#757575"
                                 title="Like"
                                 onClick={() => {

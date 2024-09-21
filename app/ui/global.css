@@ -1086,3 +1086,19 @@ blockquote {
   z-index: 10;
   transition: transform 0.5s ease;
 }
+
+.click-effect {
+  animation: click-animation 0.2s ease-out;
+}
+
+@keyframes click-animation {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
