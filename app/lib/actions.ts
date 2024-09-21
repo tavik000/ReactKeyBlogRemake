@@ -150,17 +150,19 @@ export async function createPost(
   const modify_date = create_date;
   const postAuthor = keyName;
   const comment_id_list: string[] = [];
+  const likes: string[] = [];
 
   try {
     const createPostQuery = format(
       `
       INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date, modify_date, likes)
-          VALUES ('${id}', '${postTitle}', '${thumbnail_img}', ARRAY[%L]::VARCHAR[], '${postContent}', '${postAuthor}', ARRAY[%L]::VARCHAR[], '${create_date}', '${modify_date}', '0')
+          VALUES ('${id}', '${postTitle}', '${thumbnail_img}', ARRAY[%L]::VARCHAR[], '${postContent}', '${postAuthor}', ARRAY[%L]::VARCHAR[], '${create_date}', '${modify_date}', ARRAY[%L]::VARCHAR[])
           ON CONFLICT (id) DO NOTHING;
           `,
       locale,
       tags,
       comment_id_list,
+      likes,
     );
 
     const createPost = await client.query(createPostQuery);
@@ -981,6 +983,112 @@ export async function unlikeComment(
     console.log(error);
     return {
       message: 'Failed to unlike comment (' + commentId + ')',
+    };
+  }
+}
+
+export async function likePost(
+  userName: string,
+  postId: string,
+  postLocale: string,
+  client: VercelPoolClient,
+) {
+
+  try {
+    console.log('like post id : ' + postId + ' in ' + postLocale);
+    const likePostQuery = format(
+      `
+      UPDATE posts_%s
+      SET likes = array_append(likes, %L)
+      WHERE id = %L
+      `,
+      postLocale,
+      userName,
+      postId,
+    );
+
+    const likePost = await client.query(likePostQuery);
+    console.log('likePost successfully userName: ' + userName, + ' in ' + postLocale + ' postId: ' + postId);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to like post (' + postId + ')',
+    };
+  }
+}
+
+export async function unlikePost(
+  userName: string,
+  postId: string,
+  postLocale: string,
+  client: VercelPoolClient,
+) {
+
+  try {
+    console.log('unlike post id : ' + postId + ' in ' + postLocale);
+    const unlikePostQuery = format(
+      `
+      UPDATE posts_%s
+      SET likes = array_remove(likes, %L)
+      WHERE id = %L
+      `,
+      postLocale,
+      userName,
+      postId,
+    );
+
+    const unlikePost = await client.query(unlikePostQuery);
+    console.log('unlikePost successfully userName: ' + userName, + ' in ' + postLocale + ' postId: ' + postId);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to unlike post (' + postId + ')',
+    };
+  }
+}
+
+export async function likePostWithAllLanguages(
+  userName: string,
+  postId: string,
+) {
+  console.log('likePost: ' + postId);
+
+  try {
+    const client = await db.connect();
+
+    const likeResult = await Promise.all([
+      likePost(userName, postId, 'en', client),
+      likePost(userName, postId, 'ja', client),
+      likePost(userName, postId, 'kr', client),
+      likePost(userName, postId, 'hk', client),
+    ]);
+  } catch (error) {
+    console.error(error);
+    return {
+      message: 'Failed to like post',
+    };
+  }
+}
+
+export async function unlikePostWithAllLanguages(
+  userName: string,
+  postId: string,
+) {
+  console.log('unlikePost: ' + postId);
+
+  try {
+    const client = await db.connect();
+
+    const unlikeResult = await Promise.all([
+      unlikePost(userName, postId, 'en', client),
+      unlikePost(userName, postId, 'ja', client),
+      unlikePost(userName, postId, 'kr', client),
+      unlikePost(userName, postId, 'hk', client),
+    ]);
+  } catch (error) {
+    console.error(error);
+    return {
+      message: 'Failed to unlike post',
     };
   }
 }

@@ -40,6 +40,6 @@ export type Post = {
   comment_id_list: string[];
   create_date: Date;
   modify_date: Date;
-  likes: number;
+  likes: string[];
 };
 

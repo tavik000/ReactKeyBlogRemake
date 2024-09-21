@@ -140,7 +140,7 @@ const posts_en = [
     comment_id_list: ['3958dc9e-712f-4377-85e9-fec4b6a64420', '3958dc9e-712f-4377-85e9-fec4b6a64430'],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: '86b93c2d-9d95-4c14-b05f-6e7e4e167c44',
@@ -152,7 +152,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: 'e4189b55-9232-4e56-97ec-3d67bf7351d5',
@@ -164,7 +164,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: 'a8e2fa8e-5a5c-4a3e-9a38-8b3a160f3e15',
@@ -176,7 +176,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: '4fca8134-1d33-4f97-b761-1089de3d3f13',
@@ -188,7 +188,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: 'c92bc4a3-4f34-45b1-b66f-e7c64fc8b39e',
@@ -200,7 +200,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: '2022-12-06',
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "f7a9e3b7-8fd4-4b3f-bd7a-79a712f5f1a1",
@@ -212,7 +212,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-01-15",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "9a2f4c51-7c2d-4b07-bd06-8fc6e6dbd1c9",
@@ -224,7 +224,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-02-28",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "b0f4a1a8-9b67-4820-9cf3-25d7bcb6b1f5",
@@ -236,7 +236,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-04-10",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "a7d5e0f2-38ef-4d02-bc11-1d332f9b5b49",
@@ -248,7 +248,7 @@ const posts_en = [
     comment_id_list: [],
     create_date: "2023-05-05",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   // {
   //   id: "c3a7b1f9-cc8d-45b0-b7ac-9811e43c83b4",
@@ -599,7 +599,7 @@ const posts_ja = [
     comment_id_list: ["3958dc9e-712f-4377-85e9-fec4b6a64420", "3958dc9e-712f-4377-85e9-fec4b6a64430"],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "86b93c2d-9d95-4c14-b05f-6e7e4e167c44",
@@ -611,7 +611,7 @@ const posts_ja = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "e4189b55-9232-4e56-97ec-3d67bf7351d5",
@@ -623,7 +623,7 @@ const posts_ja = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "a8e2fa8e-5a5c-4a3e-9a38-8b3a160f3e15",
@@ -635,7 +635,7 @@ const posts_ja = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "4fca8134-1d33-4f97-b761-1089de3d3f13",
@@ -647,7 +647,7 @@ const posts_ja = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "c92bc4a3-4f34-45b1-b66f-e7c64fc8b39e",
@@ -671,7 +671,7 @@ const posts_ja = [
     comment_id_list: [],
     create_date: "2023-01-15",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "9a2f4c51-7c2d-4b07-bd06-8fc6e6dbd1c9",
@@ -683,7 +683,7 @@ const posts_ja = [
     comment_id_list: [],
     create_date: "2023-02-28",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "b0f4a1a8-9b67-4820-9cf3-25d7bcb6b1f5",
@@ -695,7 +695,7 @@ const posts_ja = [
     comment_id_list: [],
     create_date: "2023-04-10",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "a7d5e0f2-38ef-4d02-bc11-1d332f9b5b49",
@@ -707,7 +707,7 @@ const posts_ja = [
     comment_id_list: [],
     create_date: "2023-05-05",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
 ];
 
@@ -722,7 +722,7 @@ const posts_kr = [
     comment_id_list: ["3958dc9e-712f-4377-85e9-fec4b6a64420", "3958dc9e-712f-4377-85e9-fec4b6a64430"],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "86b93c2d-9d95-4c14-b05f-6e7e4e167c44",
@@ -734,7 +734,7 @@ const posts_kr = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "e4189b55-9232-4e56-97ec-3d67bf7351d5",
@@ -746,7 +746,7 @@ const posts_kr = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "a8e2fa8e-5a5c-4a3e-9a38-8b3a160f3e15",
@@ -758,7 +758,7 @@ const posts_kr = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "4fca8134-1d33-4f97-b761-1089de3d3f13",
@@ -770,7 +770,7 @@ const posts_kr = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "c92bc4a3-4f34-45b1-b66f-e7c64fc8b39e",
@@ -782,7 +782,7 @@ const posts_kr = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "f7a9e3b7-8fd4-4b3f-bd7a-79a712f5f1a1",
@@ -794,7 +794,7 @@ const posts_kr = [
     comment_id_list: [],
     create_date: "2023-01-15",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "9a2f4c51-7c2d-4b07-bd06-8fc6e6dbd1c9",
@@ -806,7 +806,7 @@ const posts_kr = [
     comment_id_list: [],
     create_date: "2023-02-28",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "b0f4a1a8-9b67-4820-9cf3-25d7bcb6b1f5",
@@ -818,7 +818,7 @@ const posts_kr = [
     comment_id_list: [],
     create_date: "2023-04-10",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "a7d5e0f2-38ef-4d02-bc11-1d332f9b5b49",
@@ -830,7 +830,7 @@ const posts_kr = [
     comment_id_list: [],
     create_date: "2023-05-05",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
 ];
 
@@ -845,7 +845,7 @@ const posts_hk = [
     comment_id_list: ["3958dc9e-712f-4377-85e9-fec4b6a64420", "3958dc9e-712f-4377-85e9-fec4b6a64430"],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "86b93c2d-9d95-4c14-b05f-6e7e4e167c44",
@@ -857,7 +857,7 @@ const posts_hk = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "e4189b55-9232-4e56-97ec-3d67bf7351d5",
@@ -869,7 +869,7 @@ const posts_hk = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "a8e2fa8e-5a5c-4a3e-9a38-8b3a160f3e15",
@@ -881,7 +881,7 @@ const posts_hk = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "4fca8134-1d33-4f97-b761-1089de3d3f13",
@@ -893,7 +893,7 @@ const posts_hk = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "c92bc4a3-4f34-45b1-b66f-e7c64fc8b39e",
@@ -905,7 +905,7 @@ const posts_hk = [
     comment_id_list: [],
     create_date: "2022-12-06",
     modify_date: "2022-12-06",
-    likes: 0
+    likes: [],
   },
   {
     id: "f7a9e3b7-8fd4-4b3f-bd7a-79a712f5f1a1",
@@ -917,7 +917,7 @@ const posts_hk = [
     comment_id_list: [],
     create_date: "2023-01-15",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "9a2f4c51-7c2d-4b07-bd06-8fc6e6dbd1c9",
@@ -929,7 +929,7 @@ const posts_hk = [
     comment_id_list: [],
     create_date: "2023-02-28",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "b0f4a1a8-9b67-4820-9cf3-25d7bcb6b1f5",
@@ -941,7 +941,7 @@ const posts_hk = [
     comment_id_list: [],
     create_date: "2023-04-10",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
   {
     id: "a7d5e0f2-38ef-4d02-bc11-1d332f9b5b49",
@@ -953,7 +953,7 @@ const posts_hk = [
     comment_id_list: [],
     create_date: "2023-05-05",
     modify_date: '2022-12-06',
-    likes: 0,
+    likes: [],
   },
 ];
 
