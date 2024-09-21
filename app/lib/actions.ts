@@ -559,21 +559,21 @@ export async function createComment(
   userName: string,
   userImage: string,
   client: VercelPoolClient,
-  currentLocale: string,
 ) {
 
-  const dict = getDictionary(currentLocale);
   let content = commentContent;
   const create_date = new Date().toISOString().split('T')[0];
   const modify_date = create_date;
+  const likes: string[] = [];
 
   try {
     const createCommentQuery = format(
       `
       INSERT INTO comments (id, post_id, user_name, user_img, content, create_date, modify_date, likes )
-          VALUES ('${id}', '${postId}', '${userName}', '${userImage}', '${content}', '${create_date}', '${modify_date}', '0')
+          VALUES ('${id}', '${postId}', '${userName}', '${userImage}', '${content}', '${create_date}', '${modify_date}', ARRAY[%L]::VARCHAR[])
           ON CONFLICT (id) DO NOTHING;
           `,
+      likes,
     );
 
     const createComment = await client.query(createCommentQuery);
@@ -596,7 +596,6 @@ export async function updateComment(
   formData: FormData,
 ) {
   const client = await db.connect();
-  const dict = getDictionary(currentLocale);
   let content = commentContent;
   console.log('update comment id : ' + commentId);
   console.log('update comment content: ' + content);
@@ -663,10 +662,8 @@ export async function addCommentToPost(
   postId: string,
   commentId: string,
   postLocale: string,
-  currentLocale: string,
   client: VercelPoolClient
 ) {
-  const dict = getDictionary(currentLocale);
 
   try {
 
@@ -703,7 +700,6 @@ export async function createCommentWithAllLanguages(
   formData: FormData,
 ) {
 
-  const dict = getDictionary(currentLocale);
   const id = require('uuid').v4();
   console.log('create comment all language: ' + id);
   console.log('comment content: ' + commentContent);
@@ -727,7 +723,7 @@ export async function createCommentWithAllLanguages(
     if (!validatedFields.success) {
       return {
         errors: validatedFields.error.flatten().fieldErrors,
-        message: 'dict.comment.failAddComment',
+        message: 'dict.comment.pleaseEnterComment',
       };
     }
 
@@ -741,34 +737,29 @@ export async function createCommentWithAllLanguages(
         userName,
         userImage,
         client,
-        currentLocale,
       ),
       addCommentToPost(
         postId,
         id,
         'en',
-        currentLocale,
         client,
       ),
       addCommentToPost(
         postId,
         id,
         'ja',
-        currentLocale,
         client,
       ),
       addCommentToPost(
         postId,
         id,
         'kr',
-        currentLocale,
         client,
       ),
       addCommentToPost(
         postId,
         id,
         'hk',
-        currentLocale,
         client,
       ),
     ]);
@@ -896,7 +887,7 @@ export async function deleteCommentWithAllLanguages(
     };
   }
 
- 
+
   const lang = GetLangFromLocale(currentLocale);
   const urlRegex = /\s/g;
   let title = postTitle;

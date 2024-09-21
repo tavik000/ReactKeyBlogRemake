@@ -19,7 +19,7 @@ const CommentItemClient = ({
     commentId: string,
     postTitle: string
 }) => {
-    const { locale, dict } = useLocaleContext();
+    const { locale } = useLocaleContext();
     const [isEdit, setIsEdit] = useState(false);
 
     const onEdit = () => {
