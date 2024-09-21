@@ -22,7 +22,7 @@ const CommentItemClient = ({
     commentId: string,
     postTitle: string
 }) => {
-    const { locale } = useLocaleContext();
+    const { locale, dict } = useLocaleContext();
     const sessionContext = useSessionContext();
     const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
     const [isEdit, setIsEdit] = useState(false);
@@ -31,6 +31,11 @@ const CommentItemClient = ({
     const [isLikeDisabled, setIsLikeDisabled] = useState(false);
     const [isShowingClickEffect, setIsShowingClickEffect] = useState(false);
     const isSelfComment = sessionContext.session?.user?.name === comment.user_name;
+
+    const likeTooltipContent = dict.post.likes + ": " + comment.likes.join(', ');
+    const truncatedLikeTooltipContent = likeTooltipContent.length > 100
+        ? likeTooltipContent.substring(0, 100) + '...'
+        : likeTooltipContent;
 
     const onEdit = () => {
         setIsEdit(true);
@@ -139,7 +144,8 @@ const CommentItemClient = ({
                             count={comment.likes.length +
                                 ((isLiked && !isLikedBefore) ? 1 :
                                     (isLikedBefore && !isLiked) ? -1 : 0)}
-                            shouldShowCount={true}>
+                            shouldShowCount={true}
+                            tooltipContent={truncatedLikeTooltipContent}>
                             <HeartIcon
                                 className={`flex h-6 w-6 align-middle 
                                 ${isSelfComment ? 'hover:cursor-not-allowed' :
@@ -147,7 +153,7 @@ const CommentItemClient = ({
                                 ${isShowingClickEffect ? 'click-effect' : ''}
                                 `}
                                 color="#757575"
-                                title="Like"
+                                title={dict.post.like}
                                 onClick={() => {
                                     handleClickLike();
                                 }}

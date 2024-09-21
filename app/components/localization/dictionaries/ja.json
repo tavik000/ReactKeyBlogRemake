@@ -13,6 +13,11 @@
     "blog": "ブログ"
   },
   "category": "CATEGORY",
+  "post": {
+    "like": "いいね",
+    "likes": "いいねした人",
+    "comment": "コメント"
+  },
   "comment": {
     "commentTitle": "コメント",
     "noComment": "この記事にコメントはありません。",

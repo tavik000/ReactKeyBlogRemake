@@ -13,6 +13,11 @@
     "blog": "블로그"
   },
   "category": "카테고리",
+  "post": {
+    "like": "좋아요",
+    "likes": "좋아요",
+    "comment": "댓글"
+  },
   "comment": {
     "commentTitle": "댓글",
     "noComment": "댓글이 없습니다",

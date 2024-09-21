@@ -13,6 +13,11 @@
     "blog": "Blog"
   },
   "category": "CATEGORY",
+  "post": {
+    "like": "Like",
+    "likes": "Likes",
+    "comment": "Comment"
+  },
   "comment": {
     "commentTitle": "Comments",
     "noComment": "No comments",

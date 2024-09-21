@@ -13,6 +13,11 @@
     "blog": "博客"
   },
   "category": "類別",
+  "post": {
+    "like": "讚好",
+    "likes": "讚好",
+    "comment": "評論"
+  },
   "comment": {
     "commentTitle": "評論",
     "noComment": "沒有評論",

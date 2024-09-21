@@ -94,6 +94,7 @@ export default function PostViewClient({
             isSelfPost={isSelfPost}
             isLiked={isLiked}
             isShowingClickEffect={isShowingClickEffect}
+            postLikes={post.likes}
             handleClickLike={handleClickLike}
           />
         </div>
@@ -106,6 +107,7 @@ export default function PostViewClient({
           isSelfPost={isSelfPost}
           isLiked={isLiked}
           isShowingClickEffect={isShowingClickEffect}
+          postLikes={post.likes}
           handleClickLike={handleClickLike}
         />
         {sessionContext.session && sessionContext.session?.user && sessionContext.session.user.email === keyEmail ? (

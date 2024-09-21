@@ -13,6 +13,11 @@ export interface DictStructure {
     blog: string;
   };
   category: string;
+  post: {
+    like: string;
+    likes: string;
+    comment: string;
+  };
   comment: {
     commentTitle: string;
     noComment: string;

@@ -1,7 +1,8 @@
+'use client';
 import { HeartIcon, ChatBubbleLeftIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import { ShareButton } from '@/app/ui/button';
 import { InteractIcon } from '@/app/ui/posts/view/interaction';
+import { useLocaleContext } from '@/app/components/context/locale-provider';
 
 export default function PostInteraction({
   likeCount,
@@ -9,6 +10,7 @@ export default function PostInteraction({
   isSelfPost,
   isLiked,
   isShowingClickEffect,
+  postLikes,
   handleClickLike,
 }: {
   likeCount: number;
@@ -16,12 +18,21 @@ export default function PostInteraction({
   isSelfPost: boolean;
   isLiked: boolean;
   isShowingClickEffect: boolean;
+  postLikes: string[];
   handleClickLike: () => void;
 }) {
+
+  const { dict } = useLocaleContext();
+
+  const likeTooltipContent = dict.post.likes + ": " + postLikes.join(', ');
+  const truncatedLikeTooltipContent = likeTooltipContent.length > 100
+    ? likeTooltipContent.substring(0, 100) + '...'
+    : likeTooltipContent;
+
   return (
     <div className="mt-6 flex  justify-between border-b-2 border-t-2 border-gray-100">
       <div className="flex content-center">
-        <InteractIcon count={likeCount} shouldShowCount={true}>
+        <InteractIcon count={likeCount} shouldShowCount={true} tooltipContent={truncatedLikeTooltipContent}>
           <HeartIcon
             className={`flex h-6 w-6 align-middle
                                 ${isSelfPost ? 'hover:cursor-not-allowed' :
@@ -29,17 +40,17 @@ export default function PostInteraction({
                                 ${isShowingClickEffect ? 'click-effect' : ''}
                                 `}
             color="#757575"
-            title="Like"
+            title={dict.post.like}
             onClick={() => {
               handleClickLike();
             }}
           />
         </InteractIcon>
-        <InteractIcon count={commentCount} shouldShowCount={commentCount > 0}>
+        <InteractIcon count={commentCount} shouldShowCount={commentCount > 0} tooltipContent='Comment'>
           <ChatBubbleLeftIcon
             className="flex h-6 w-6 align-middle"
             color="#757575"
-            title="Comment"
+            title={dict.post.comment}
           />
         </InteractIcon>
       </div>
