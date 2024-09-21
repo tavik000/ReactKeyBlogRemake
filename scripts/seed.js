@@ -100,7 +100,7 @@ async function seedPosts(client, locale) {
         comment_id_list VARCHAR(255)[] NOT NULL,
         create_date DATE NOT NULL,
         modify_date DATE NOT NULL,
-        likes INT NOT NULL
+        likes VARCHAR(255)[] NOT NULL
       );
     `,
       locale,
@@ -135,12 +135,13 @@ async function seedPosts(client, locale) {
         const insertPostTableQuery = format(
           `
           INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date, modify_date, likes)
-          VALUES ('${post.id}', '${post.title}', '${post.thumbnail_img}', ARRAY[%L]::VARCHAR[], '${post.content}', '${post.author}', ARRAY[%L]::VARCHAR[], '${post.create_date}', '${post.modify_date}', '${post.likes}')
+          VALUES ('${post.id}', '${post.title}', '${post.thumbnail_img}', ARRAY[%L]::VARCHAR[], '${post.content}', '${post.author}', ARRAY[%L]::VARCHAR[], '${post.create_date}', '${post.modify_date}', ARRAY[%L]::VARCHAR[])
           ON CONFLICT (id) DO NOTHING;
           `,
           locale,
           post.tags,
           post.comment_id_list,
+          post.likes,
         );
 
         return client.query(insertPostTableQuery);
