@@ -156,13 +156,20 @@ export async function createPost(
     const createPostQuery = format(
       `
       INSERT INTO posts_%s (id, title, thumbnail_img, tags, content, author, comment_id_list, create_date, modify_date, likes)
-          VALUES ('${id}', '${postTitle}', '${thumbnail_img}', ARRAY[%L]::VARCHAR[], '${postContent}', '${postAuthor}', ARRAY[%L]::VARCHAR[], '${create_date}', '${modify_date}', ARRAY[%L]::VARCHAR[])
-          ON CONFLICT (id) DO NOTHING;
-          `,
+      VALUES (%L, %L, %L, ARRAY[%L]::VARCHAR[], %L, %L, ARRAY[%L]::VARCHAR[], %L, %L, ARRAY[%L]::VARCHAR[])
+      ON CONFLICT (id) DO NOTHING;
+      `,
       locale,
+      id,
+      postTitle,
+      thumbnail_img,
       tags,
+      postContent,
+      postAuthor,
       comment_id_list,
-      likes,
+      create_date,
+      modify_date,
+      likes
     );
 
     const createPost = await client.query(createPostQuery);
@@ -586,12 +593,13 @@ export async function createComment(
   try {
     const createCommentQuery = format(
       `
-      INSERT INTO comments (id, post_id, user_name, user_img, content, create_date, modify_date, likes )
-          VALUES ('${id}', '${postId}', '${userName}', '${userImage}', '${content}', '${create_date}', '${modify_date}', ARRAY[%L]::VARCHAR[])
-          ON CONFLICT (id) DO NOTHING;
-          `,
-      likes,
+      INSERT INTO comments (id, post_id, user_name, user_img, content, create_date, modify_date, likes)
+      VALUES (%L, %L, %L, %L, %L, %L, %L, ARRAY[%L]::VARCHAR[])
+      ON CONFLICT (id) DO NOTHING;
+      `,
+      id, postId, userName, userImage, commentContent, create_date, modify_date, likes
     );
+
 
     const createComment = await client.query(createCommentQuery);
     console.log('createComment: ' + createComment);
@@ -746,7 +754,7 @@ export async function createCommentWithAllLanguages(
 
 
     console.log('Fields validated');
-    const addResult = await Promise.all([
+    const addResults = await Promise.allSettled([
       createComment(
         id,
         commentContent,
@@ -780,6 +788,12 @@ export async function createCommentWithAllLanguages(
         client,
       ),
     ]);
+
+    for (const result of addResults) {
+      if (result.status === 'rejected') {
+        throw new Error(result.reason);
+      }
+    }
 
     console.log('Comments added to all languages');
   } catch (error) {
