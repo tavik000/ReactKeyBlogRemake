@@ -29,6 +29,13 @@ export default function PostInteraction({
     ? likeTooltipContent.substring(0, 100) + '...'
     : likeTooltipContent;
 
+  const handleChatBubbleClick = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: 'smooth'
+    });
+  };
+
   return (
     <div className="mt-6 flex  justify-between border-b-2 border-t-2 border-gray-100">
       <div className="flex content-center">
@@ -48,9 +55,10 @@ export default function PostInteraction({
         </InteractIcon>
         <InteractIcon count={commentCount} shouldShowCount={commentCount > 0} tooltipContent='Comment'>
           <ChatBubbleLeftIcon
-            className="flex h-6 w-6 align-middle"
+            className="flex h-6 w-6 align-middle hover:cursor-pointer hover:text-orange-500"
             color="#757575"
             title={dict.post.comment}
+            onClick={handleChatBubbleClick}
           />
         </InteractIcon>
       </div>
