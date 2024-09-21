@@ -12,7 +12,6 @@ export const InteractIcon = ({
   return (
     <div className="inline-block flex-shrink-0 w-16 py-2 px-0.5 break-words">
       <div className="flex flex-row content-center">
-        <Link href="/" className="flex">
           <div className="relative mr-1">
             <span>
               <div className="inline-block align-middle">{children}</div>
@@ -25,7 +24,6 @@ export const InteractIcon = ({
               </div>
             </div>
           )}
-        </Link>
       </div>
     </div>
   );

@@ -9,6 +9,9 @@ import { HeartIcon } from '@heroicons/react/24/outline';
 import { PostComment } from '@/app/lib/definitions';
 import { deleteCommentWithAllLanguages } from "@/app/lib/actions";
 import { useLocaleContext } from "@/app/components/context/locale-provider";
+import { useSessionContext } from "@/app/components/context/session-provider";
+import { useLoginOpenFromPostContext } from "@/app/components/context/login-open-from-post-provider";
+import { likeComment, unlikeComment } from "@/app/lib/actions";
 
 const CommentItemClient = ({
     comment,
@@ -20,7 +23,11 @@ const CommentItemClient = ({
     postTitle: string
 }) => {
     const { locale } = useLocaleContext();
+    const sessionContext = useSessionContext();
+    const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
     const [isEdit, setIsEdit] = useState(false);
+    const [isLiked, setIsLiked] = useState(sessionContext.session && comment.likes.includes(sessionContext.session?.user?.name ?? ''));
+    const [isLikeDisabled, setIsLikeDisabled] = useState(false);
 
     const onEdit = () => {
         setIsEdit(true);
@@ -33,6 +40,34 @@ const CommentItemClient = ({
     const onCancel = () => {
         setIsEdit(false);
     }
+
+    const handleClickLike = () => {
+        if (isLikeDisabled) return;
+
+        if (!sessionContext.session) {
+            setIsLoginOpenFromPost(true);
+            return;
+        }
+
+        if (!isLiked) {
+            if (sessionContext.session?.user?.name) {
+                likeComment(sessionContext.session.user.name, commentId);
+                setIsLiked(true);
+            } else {
+                console.error('No user name found in session');
+            }
+        } else {
+            if (sessionContext.session?.user?.name) {
+                unlikeComment(sessionContext.session.user.name, commentId);
+                setIsLiked(false);
+            } else {
+                console.error('No user name found in session');
+            }
+        }
+
+        setIsLikeDisabled(true);
+        setTimeout(() => setIsLikeDisabled(false), 5000);
+    };
 
     if (isEdit) {
         return (
@@ -94,11 +129,15 @@ const CommentItemClient = ({
 
                 <div className="flex mt-4 mb-4 content-center">
                     <div className="mr-0 inline-block flex-shrink-0">
-                        <InteractIcon count={comment.likes.length} shouldShowCount={true}>
+                        <InteractIcon count={comment.likes.length + (isLiked ? 1 : 0)} shouldShowCount={true}>
                             <HeartIcon
-                                className="flex h-6 w-6 align-middle hover:text-red-500"
+                                className={`flex h-6 w-6 align-middle hover:cursor-pointer
+                                     ${isLiked ? 'fill-red-500 text-red-500' : 'hover:text-red-500'}`}
                                 color="#757575"
                                 title="Like"
+                                onClick={() => {
+                                    handleClickLike();
+                                }}
                             />
                         </InteractIcon>
                     </div>

@@ -913,3 +913,59 @@ export async function deleteCommentWithAllLanguages(
   redirect(redirectUrl);
 
 }
+
+export async function likeComment(
+  userName: string,
+  commentId: string,
+) {
+
+  try {
+    console.log('like comment id : ' + commentId);
+    const client = await db.connect();
+    const likeCommentQuery = format(
+      `
+      UPDATE comments
+      SET likes = array_append(likes, %L)
+      WHERE id = %L
+      `,
+      userName,
+      commentId,
+    );
+
+    const likeComment = await client.query(likeCommentQuery);
+    console.log('likeComment successfully userName: ' + userName);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to like comment (' + commentId + ')',
+    };
+  }
+}
+
+export async function unlikeComment(
+  userName: string,
+  commentId: string,
+) {
+
+  try {
+    console.log('unlike comment id : ' + commentId);
+    const client = await db.connect();
+    const unlikeCommentQuery = format(
+      `
+      UPDATE comments
+      SET likes = array_remove(likes, %L)
+      WHERE id = %L
+      `,
+      userName,
+      commentId,
+    );
+
+    const unlikeComment = await client.query(unlikeCommentQuery);
+    console.log('unlikeComment successfully userName: ' + userName);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to unlike comment (' + commentId + ')',
+    };
+  }
+}
