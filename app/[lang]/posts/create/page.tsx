@@ -66,6 +66,6 @@ function createEmptyPost(): Post {
     comment_id_list: [],
     create_date: new Date(),
     modify_date: new Date(),
-    likes: 0,
+    likes: [],
   };
 }

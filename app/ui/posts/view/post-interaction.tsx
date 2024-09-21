@@ -23,9 +23,9 @@ export default function PostInteraction({
       <div className="flex content-center">
         <InteractIcon count={likeCount} shouldShowCount={true}>
           <HeartIcon
-            className={`flex h-6 w-6 align-middle hover:cursor-pointer
+            className={`flex h-6 w-6 align-middle
                                 ${isSelfPost ? 'hover:cursor-not-allowed' :
-                isLiked ? 'fill-orange-500 text-orange-500' : 'hover:text-orange-500'}
+                isLiked ? 'hover:cursor-pointer fill-orange-500 text-orange-500' : 'hover:cursor-pointer hover:text-orange-500'}
                                 ${isShowingClickEffect ? 'click-effect' : ''}
                                 `}
             color="#757575"

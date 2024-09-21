@@ -1,17 +1,23 @@
 import { fetchPostCommentById } from '@/app/lib/data';
 import CommentItemClient from './comment-item-client';
+import { PostComment } from '@/app/lib/definitions';
 
-export default async function CommentItem({
+export default function CommentItem({
   commentId,
+  comment,
   postTitle,
 }: {
   commentId: string;
+  comment: PostComment | null;
   postTitle: string;
 }) {
-  const commentResults = await Promise.all([fetchPostCommentById(commentId)]);
-  const comment = commentResults[0];
+
+  if (!comment) {
+    console.error('Comment is not found, commentId:' + commentId);
+    return null;
+  }
 
   return (
-    <CommentItemClient comment={comment} commentId={commentId} postTitle={postTitle} />
+    <CommentItemClient comment={comment} commentId={comment.id} postTitle={postTitle} />
   );
 }

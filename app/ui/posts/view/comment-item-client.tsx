@@ -26,8 +26,7 @@ const CommentItemClient = ({
     const sessionContext = useSessionContext();
     const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
     const [isEdit, setIsEdit] = useState(false);
-    // const isLikedBefore: boolean = !!sessionContext.session && comment.likes.includes(sessionContext.session?.user?.name ?? '');
-    const isLikedBefore: boolean = false;
+    const isLikedBefore: boolean = !!sessionContext.session && comment.likes.includes(sessionContext.session?.user?.name ?? '');
     const [isLiked, setIsLiked] = useState<boolean>(isLikedBefore);
     const [isLikeDisabled, setIsLikeDisabled] = useState(false);
     const [isShowingClickEffect, setIsShowingClickEffect] = useState(false);
@@ -142,9 +141,9 @@ const CommentItemClient = ({
                                     (isLikedBefore && !isLiked) ? -1 : 0)}
                             shouldShowCount={true}>
                             <HeartIcon
-                                className={`flex h-6 w-6 align-middle hover:cursor-pointer
+                                className={`flex h-6 w-6 align-middle 
                                 ${isSelfComment ? 'hover:cursor-not-allowed' :
-                                        isLiked ? 'fill-orange-500 text-orange-500' : 'hover:text-orange-500'}
+                                        isLiked ? 'hover:cursor-pointer fill-orange-500 text-orange-500' : 'hover:cursor-pointer hover:text-orange-500'}
                                 ${isShowingClickEffect ? 'click-effect' : ''}
                                 `}
                                 color="#757575"

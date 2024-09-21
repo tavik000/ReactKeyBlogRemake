@@ -1,4 +1,4 @@
-'use client';
+'use client'
 import {
   keyEmail,
   keyTwitterId,
@@ -11,7 +11,7 @@ import Image from 'next/image';
 import PostContentContainer from './post-content-container';
 import CommentItem from './comment-item';
 import CommentEditForm from '@/app/ui/posts/view/comment-edit-form';
-import { Post } from '@/app/lib/definitions';
+import { Post, PostComment } from '@/app/lib/definitions';
 import PostManage from './post-manage';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
 import { useSessionContext } from '@/app/components/context/session-provider';
@@ -20,9 +20,11 @@ import { useState } from 'react';
 import { likePostWithAllLanguages, unlikePostWithAllLanguages } from '@/app/lib/actions';
 
 export default function PostViewClient({
-  post
+  post,
+  comments
 }: {
   post: Post
+  comments: PostComment[]
 }
 ) {
 
@@ -30,8 +32,7 @@ export default function PostViewClient({
   const { dict } = useLocaleContext();
   const sessionContext = useSessionContext();
   const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
-  // const isLikedBefore: boolean = !!sessionContext.session && post.likes.includes(sessionContext.session?.user?.name ?? '');
-  const isLikedBefore: boolean = false;
+  const isLikedBefore: boolean = !!sessionContext.session && post.likes.includes(sessionContext.session?.user?.name ?? '');
   const [isLiked, setIsLiked] = useState<boolean>(isLikedBefore);
   const [isLikeDisabled, setIsLikeDisabled] = useState(false);
   const [isShowingClickEffect, setIsShowingClickEffect] = useState(false);
@@ -98,9 +99,9 @@ export default function PostViewClient({
         </div>
         <PostContent post={post} />
         <PostInteraction
-            likeCount={post.likes.length +
-              ((isLiked && !isLikedBefore) ? 1 :
-                (isLikedBefore && !isLiked) ? -1 : 0)}
+          likeCount={post.likes.length +
+            ((isLiked && !isLikedBefore) ? 1 :
+              (isLikedBefore && !isLiked) ? -1 : 0)}
           commentCount={post.comment_id_list.length}
           isSelfPost={isSelfPost}
           isLiked={isLiked}
@@ -122,7 +123,7 @@ export default function PostViewClient({
           {post.comment_id_list.length > 0 ? (
             <div className="mt-6 border-t-[1px]">
               {post.comment_id_list.map((commentId) => (
-                <CommentItem key={commentId} commentId={commentId} postTitle={post.title} />
+                <CommentItem key={commentId} commentId={commentId} comment={comments.find(comment => comment.id === commentId) ?? null} postTitle={post.title} />
               ))}
             </div>
           ) : (

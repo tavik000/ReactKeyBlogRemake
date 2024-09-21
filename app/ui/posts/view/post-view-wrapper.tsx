@@ -1,4 +1,4 @@
-import { fetchPostById } from '@/app/lib/data';
+import { fetchPostById, fetchPostCommentById } from '@/app/lib/data';
 import PostViewClient from './post-view-client';
 
 export default async function PostViewWrapper({
@@ -10,9 +10,12 @@ export default async function PostViewWrapper({
 }) {
   const postResults = await Promise.all([fetchPostById(postId, locale)]);
   const post = postResults[0];
+  const commentResults = await Promise.all(
+    post.comment_id_list.map(commentId => fetchPostCommentById(commentId))
+  );
 
     
   return (
-    <PostViewClient post={post} />
+    <PostViewClient post={post} comments={commentResults} />
   );
 }
