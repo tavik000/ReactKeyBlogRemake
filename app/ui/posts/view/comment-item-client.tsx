@@ -29,6 +29,7 @@ const CommentItemClient = ({
     const [isLiked, setIsLiked] = useState(sessionContext.session && comment.likes.includes(sessionContext.session?.user?.name ?? ''));
     const [isLikeDisabled, setIsLikeDisabled] = useState(false);
     const [clickEffect, setClickEffect] = useState(false);
+    const isSelfComment = sessionContext.session?.user?.name === comment.user_name;
 
     const onEdit = () => {
         setIsEdit(true);
@@ -43,6 +44,7 @@ const CommentItemClient = ({
     }
 
     const handleClickLike = () => {
+        if (isSelfComment) return;
         if (isLikeDisabled) return;
 
         if (!sessionContext.session) {
@@ -135,8 +137,10 @@ const CommentItemClient = ({
                         <InteractIcon count={comment.likes.length + (isLiked ? 1 : 0)} shouldShowCount={true}>
                             <HeartIcon
                                 className={`flex h-6 w-6 align-middle hover:cursor-pointer
-                                     ${isLiked ? 'fill-orange-500 text-orange-500' : 'hover:text-orange-500'}
-                                     ${clickEffect ? 'click-effect' : ''}`}
+                                ${isSelfComment ? 'hover:cursor-not-allowed' :
+                                        isLiked ? 'fill-orange-500 text-orange-500' : 'hover:text-orange-500'}
+                                ${clickEffect ? 'click-effect' : ''}
+                                `}
                                 color="#757575"
                                 title="Like"
                                 onClick={() => {
