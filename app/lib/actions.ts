@@ -691,7 +691,6 @@ export async function addCommentToPost(
 ) {
 
   try {
-
     const addCommentQuery = format(
       `
       UPDATE posts_%s
@@ -714,13 +713,14 @@ export async function addCommentToPost(
   }
 }
 
-export async function createCommentWithAllLanguages(
+export async function createCommentWithAllLanguagesAndNotifications(
   commentContent: string,
   currentLocale: string,
   postId: string,
   postTitle: string,
   userName: string,
   userImage: string,
+  notifyTargetUserList: string[],
   prevState: CommentState,
   formData: FormData,
 ) {
@@ -796,6 +796,18 @@ export async function createCommentWithAllLanguages(
     }
 
     console.log('Comments added to all languages');
+
+    createCommentNotificationForTargetUserList(
+      notifyTargetUserList,
+      userName,
+      userImage,
+      postId,
+      postTitle,
+      id,
+      commentContent,
+      currentLocale,
+      client,
+    );
   } catch (error) {
     console.error('Error in createCommentWithAllLanguages:', error);
     return {
@@ -808,6 +820,8 @@ export async function createCommentWithAllLanguages(
       console.log('Database connection closed');
     }
   }
+
+
 
   const lang = GetLangFromLocale(currentLocale);
   const urlRegex = /\s/g;
@@ -1103,6 +1117,48 @@ export async function unlikePostWithAllLanguages(
     console.error(error);
     return {
       message: 'Failed to unlike post',
+    };
+  }
+}
+
+export async function createCommentNotificationForTargetUserList(
+  targetUserNameList: string[],
+  sourceUserName: string,
+  sourceUserImage: string,
+  postId: string,
+  postTitle: string,
+  commentId: string,
+  commentContent: string,
+  sourceLocale: string,
+  client: VercelPoolClient,
+) {
+  console.log('createCommentNotificationForTargetUserList, postTitle: ' + postTitle + ', postId: ' + postId + ', commentId: ' + commentId + ', commentContent: ' + commentContent + ', sourceUserName: ' + sourceUserName + ', targetUserNameList: ' + targetUserNameList);
+
+  try {
+    const create_date = new Date().toISOString().split('T')[0];
+    for (const targetUserName of targetUserNameList) {
+      if (targetUserName === sourceUserName) {
+        continue;
+      }
+      const id = require('uuid').v4();
+      const isRead = false;
+
+      const createNotificationQuery = format(
+        `
+        INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, source_locale, create_date, is_read)
+        VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
+        ON CONFLICT (id) DO NOTHING;
+        `,
+        id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, sourceLocale, create_date, isRead,
+      );
+
+      const createNotification = await client.query(createNotificationQuery);
+      console.log('createNotification successfully targetUserName: ' + targetUserName);
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to create notification',
     };
   }
 }

@@ -8,7 +8,7 @@ import { useLocaleContext } from '@/app/components/context/locale-provider';
 import dynamic from 'next/dynamic';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
-import { CommentState, createCommentWithAllLanguages, updateComment } from '@/app/lib/actions';
+import { CommentState, createCommentWithAllLanguagesAndNotifications, updateComment } from '@/app/lib/actions';
 import { useFormState } from 'react-dom';
 
 const CommentMDEditor = dynamic(() => import('@/app/components/CommentMdEditor'), {
@@ -23,6 +23,7 @@ export default function CommentEditForm({
     postTitle,
     defaultContent,
     onCancel,
+    notifyTargetUserList,
 }: {
     isNewComment: boolean,
     commentId: string | null,
@@ -30,6 +31,7 @@ export default function CommentEditForm({
     postTitle: string,
     defaultContent?: string,
     onCancel: null | (() => void),
+    notifyTargetUserList?: string[],
 }) {
 
     const { locale, dict } = useLocaleContext();
@@ -50,14 +52,15 @@ export default function CommentEditForm({
 
     const initialState = { message: null, errors: {} };
     const formStateParams = isNewComment ?
-        createCommentWithAllLanguages.bind(
+        createCommentWithAllLanguagesAndNotifications.bind(
             null,
             markdownValue,
             locale,
             postId,
             postTitle,
             session?.user?.name ?? '',
-            session?.user?.image ?? ''
+            session?.user?.image ?? '',
+            notifyTargetUserList ?? [],
         ) : updateComment.bind(
             null,
             commentId ?? '',
@@ -75,9 +78,9 @@ export default function CommentEditForm({
     type DictStructure = {
         [key: string]: any;
     };
-    
+
     const getDictValue = (errorString: string): string => {
-        const keys = errorString.split('.').slice(1); 
+        const keys = errorString.split('.').slice(1);
         return keys.reduce((acc: DictStructure, key: string) => acc[key], dict as DictStructure) as unknown as string;
     };
 

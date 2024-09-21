@@ -121,10 +121,16 @@ const comments = [
 const notifications = [
   {
     id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
-    user_name: 'trollguy87',
+    source_user_name: 'trollguy87',
+    source_user_img: '/viewers/trollguy87.png',
+    target_user_name: 'trollguy87',
     post_id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
+    post_title: 'Example Post 1',
+    comment_id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
+    comment_content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus porro earum dolor sint fuga laborum velit laudantium distinctio quos sunt veritatis unde inventore, autem ad tenetur voluptatibus mollitia vel!',
+    source_locale: 'en',
     create_date: '2022-12-06',
-    isRead: false,
+    is_read: false,
   },
 ]
 

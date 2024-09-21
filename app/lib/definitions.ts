@@ -2,6 +2,7 @@
 // It describes the shape of the data, and what data type each property should accept.
 // For simplicity of teaching, we're manually defining these types.
 // However, these types are generated automatically if you're using an ORM such as Prisma.
+
 export type User = {
   id: string;
   name: string;
@@ -43,3 +44,16 @@ export type Post = {
   likes: string[];
 };
 
+export type Notification = {
+  id: string;
+  source_user_name: string;
+  source_user_img: string;
+  target_user_name: string;
+  post_id: string;
+  post_title: string;
+  comment_id: string;
+  comment_content: string;
+  source_locale: string;
+  create_date: Date;
+  is_read: boolean;
+};

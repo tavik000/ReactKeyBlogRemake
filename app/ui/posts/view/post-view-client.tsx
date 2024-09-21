@@ -1,6 +1,7 @@
 'use client'
 import {
   keyEmail,
+  keyName,
   keyTwitterId,
 } from '@/app/lib/constants';
 import PostContent from '@/app/ui/posts/view/post-content';
@@ -37,6 +38,8 @@ export default function PostViewClient({
   const [isLikeDisabled, setIsLikeDisabled] = useState(false);
   const [isShowingClickEffect, setIsShowingClickEffect] = useState(false);
   const isSelfPost = sessionContext.session?.user?.name === post.author;
+  const notifyTargetUserList = [keyName, ...comments.map(comment => comment.user_name)];
+
 
   const handleClickLike = () => {
     if (isSelfPost) return;
@@ -134,7 +137,14 @@ export default function PostViewClient({
             </div>
           )}
           <div>
-            <CommentEditForm isNewComment={true} postId={postId} postTitle={post.title} commentId={null} onCancel={null} />
+            <CommentEditForm
+              isNewComment={true}
+              postId={postId}
+              postTitle={post.title}
+              commentId={null}
+              onCancel={null}
+              notifyTargetUserList={notifyTargetUserList}
+            />
           </div>
         </PostContentContainer>
       </div>

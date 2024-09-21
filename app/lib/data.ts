@@ -1,15 +1,6 @@
 import { sql, db } from '@vercel/postgres';
-import {
-  CustomerField,
-  CustomersTableType,
-  InvoiceForm,
-  InvoicesTable,
-  LatestInvoiceRaw,
-  User,
-  Revenue,
-} from './definitions_backup';
+import { User, } from './definitions_backup';
 import { Post, PostCard, PostComment } from './definitions';
-import { formatCurrency } from './utils';
 import { unstable_noStore as noStore } from 'next/cache';
 import format from 'pg-format';
 
@@ -52,11 +43,11 @@ export async function fetchFilteredPosts(
   const offset: number = (currentPage - 1) * ITEMS_PER_PAGE;
   console.log(
     'fetchFilteredPosts, tag: ' +
-      tag +
-      ', query: ' +
-      query +
-      ', offset: ' +
-      offset,
+    tag +
+    ', query: ' +
+    query +
+    ', offset: ' +
+    offset,
   );
 
   try {
@@ -450,7 +441,7 @@ export async function fetchPostById(id: string, locale: string) {
 
 export async function fetchPostCommentById(commentId: string) {
   noStore();
-  
+
   console.log('fetchPostCommentById, commentId: ' + commentId);
 
   try {
@@ -472,5 +463,36 @@ export async function fetchPostCommentById(commentId: string) {
   } catch (error) {
     console.error('Database Error:', error);
     throw new Error('Failed to fetch post comment.');
+  }
+}
+
+
+export async function fetchAllNotificationByTargetUserName( targetUserName: string) {
+  noStore();
+
+  console.log('fetchAllNotificationByTargetUserName, targetUserName: ' + targetUserName);
+
+  try {
+    const data = await sql<PostComment>`
+    SELECT
+      id,
+      source_user_name,
+      source_user_img,
+      target_user_name,
+      post_id,
+      post_title,
+      comment_id,
+      comment_content,
+      source_locale,
+      create_date,
+      is_read
+    FROM notifications
+    WHERE target_user_name=${targetUserName};
+  `;
+    const notifications = data.rows[0];
+    return notifications;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to fetch notifications.');
   }
 }

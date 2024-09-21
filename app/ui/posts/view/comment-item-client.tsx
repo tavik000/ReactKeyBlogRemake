@@ -95,7 +95,9 @@ const CommentItemClient = ({
         );
     } else {
         return (
-            <div className="flex-col justify-between border-b-2 border-gray-100">
+            <div
+            id={`comment-${commentId}`}
+            className="flex-col justify-between border-b-2 border-gray-100">
                 <div className="flex mt-4 content-center w-full">
                     <User
                         name={comment.user_name}
