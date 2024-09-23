@@ -461,6 +461,26 @@ body {
   left: 15%;
 }
 
+.cloud-10 {
+  top: 490vh;
+  left: 30%;
+}
+
+.cloud-11 {
+  top: 530vh;
+  left: 85%;
+}
+
+.cloud-12 {
+  top: 580vh;
+  left: 45%;
+}
+
+.cloud-13 {
+  top: 610vh;
+  left: 75%;
+}
+
 .star-block {
   position: relative;
   display: flex;

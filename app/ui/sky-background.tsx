@@ -30,13 +30,18 @@ export const SkyBackground = forwardRef<HTMLDivElement, React.PropsWithChildren<
             <div className="cloud cloud-medium cloud-6"></div>
             <div className="cloud cloud-7"></div>
             <div className="cloud cloud-large cloud-8"></div>
-            <div className="cloud cloud-9"></div>
+            <div className="cloud cloud-mediumcloud-9"></div>
+            <div className="cloud cloud-10"></div>
+            <div className="cloud cloud-medium cloud-11"></div>
+            <div className="cloud cloud-large cloud-12"></div>
+            <div className="cloud cloud-13"></div>
+            {/* <div className="cloud cloud-10"></div> */}
 
-            <div className="star-block star-block-1"><div className="star-block-star"></div></div>
+            {/* <div className="star-block star-block-1"><div className="star-block-star"></div></div>
             <div className="star-block star-block-2"><div className="star-block-star"></div></div>
             <div className="star-block star-block-3"><div className="star-block-star"></div></div>
             <div className="star-block star-block-4"><div className="star-block-star"></div></div>
-            <div className="star-block star-block-5"><div className="star-block-star"></div></div>
+            <div className="star-block star-block-5"><div className="star-block-star"></div></div> */}
         </div>
 
     )
