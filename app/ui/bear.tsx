@@ -78,7 +78,6 @@ export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(
         return (
             <div id="curious-bear"
                 className={className}
-                // className="translate-x-24"
                 ref={ref}>
                 <Bear isSitting={isSitting} />
             </div>
