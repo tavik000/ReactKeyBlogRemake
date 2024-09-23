@@ -27,6 +27,7 @@ export default function Sky() {
       const groundPosHeight =
         skyBackgroundRef.current.getBoundingClientRect().height;
 
+
       const waddleDeeTop = waddleDeeRef.current.getBoundingClientRect().top;
       if (waddleDeeTopCache.current === 0) {
         waddleDeeTopCache.current = waddleDeeTop;
@@ -36,9 +37,17 @@ export default function Sky() {
         return;
       }
 
+
+      // bear
+      const sitTopOffset = -100;
+      
+      // waddle dee
+      // const sitTopOffset = 0;
+      const sitPosY = groundPosHeight - waddleDeeTopCache.current + sitTopOffset;
+
       if (value) {
         waddleDeeRef.current.style.top =
-          groundPosHeight - waddleDeeTopCache.current + 'px';
+          sitPosY + 'px';
       } else {
         waddleDeeRef.current.style.top = '';
       }
@@ -74,7 +83,6 @@ export default function Sky() {
       }
 
       if (!waddleDeeRef.current) {
-        return;
         throw new Error('checkAndToggleSit: waddleDeeRef is not defined');
       }
 
@@ -84,8 +92,13 @@ export default function Sky() {
 
       const defaultZoomLevel = 1.5;
       const zoomLevel = window.devicePixelRatio;
+      // waddle dee 
+      // const scrollOffset =
+      //   groundPosHeight * 0.048 * (zoomLevel / defaultZoomLevel);
+
+      // bear
       const scrollOffset =
-        groundPosHeight * 0.048 * (zoomLevel / defaultZoomLevel);
+        groundPosHeight * 0.058 * (zoomLevel / defaultZoomLevel);
       // console.log(window.scrollY, scrollOffset, groundPosHeight);
 
       if (window.scrollY + scrollOffset >= groundPosHeight) {
