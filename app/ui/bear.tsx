@@ -25,6 +25,7 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
         const ears = document.querySelector(".ears");
         const nose = document.querySelector(".nose");
         const snout = document.querySelector(".snout");
+        const ballon = document.querySelector(".ballon");
 
         // init cursor position
         let cursorPos = { x: 0, y: 0 };
@@ -60,6 +61,7 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
             if (blushes) followCursor(blushes, 4.8, 4.8)
             if (snout) followCursor(snout, 2.25, 2.55)
             if (nose) followCursor(nose, 1.5, 1.5)
+            if (ballon) followCursor(ballon, 15, 15)
         }
 
         window.addEventListener('resize', setWindowSize);
@@ -72,27 +74,19 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
                 className={className}
                 // className="translate-x-24"
                 ref={ref}>
-                {/* <div className="parasol-bear">
-                    <div className="parasol-bear-top">
-                        <div className="parasol-bear-top-material"></div>
-                        <div className="parasol-bear-top-footer">
-                            <div className="parasol-bear-top-footer-left"></div>
-                            <div className="parasol-bear-top-footer-center"></div>
-                            <div className="parasol-bear-top-footer-right"></div>
+                <div className="bear">
+                    <div className='ballon'>
+                        <div className="ball rotate-12 translate-x-6">
+                            <div className="rope"></div>
+                        </div>
+                        <div className="ball -rotate-12 -translate-x-6">
+                            <div className="rope"></div>
+                        </div>
+                        <div className="ball">
+                            <div className="rope"></div>
                         </div>
                     </div>
-                    <div className="parasol-bear-stick"></div>
-                </div> */}
-                <div className="bear">
-                    <div className="ball rotate-12 translate-x-6">
-                        <div className="rope"></div>
-                    </div>
-                    <div className="ball -rotate-12 -translate-x-6">
-                        <div className="rope"></div>
-                    </div>
-                    <div className="ball">
-                        <div className="rope"></div>
-                    </div>
+
                     <svg className="w-32" xmlns="http://www.w3.org/2000/svg" viewBox="0 -20 446.4 686.5">
                         <title>Curious Bear</title>
                         <g id="bear">
