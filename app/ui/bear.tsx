@@ -55,12 +55,12 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
         }
 
         const initFollow = () => {
-            if (ears) followCursor(ears, -3, -3.5)
+            if (ears) followCursor(ears, -4, -4)
             if (head) followCursor(head, 6, 6)
             if (eyes) followCursor(eyes, 4.8, 4.8)
             if (blushes) followCursor(blushes, 4.8, 4.8)
-            if (snout) followCursor(snout, 2.25, 2.55)
-            if (nose) followCursor(nose, 1.5, 1.5)
+            if (snout) followCursor(snout, 2.25, 2.85)
+            if (nose) followCursor(nose, 1.5, 1.8)
             if (ballon) followCursor(ballon, 15, 15)
         }
 
