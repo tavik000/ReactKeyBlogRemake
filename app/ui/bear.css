@@ -79,8 +79,8 @@ svg {
 .bear-blush {
     position: absolute;
     z-index: 2;
-    /* top: 2.75rem; */
-    top: -9.15rem;
+    top: 2.75rem;
+    /* top: -9.15rem; for cursor follow*/
     height: 0.75rem;
     width: 1.25rem;
     background-color: #fa698b;
@@ -99,8 +99,8 @@ svg {
 .bear-eye {
     position: absolute;
     z-index: 3;
-    /* top: 1.5rem; */
-    top: -10.5rem;
+    top: 1.5rem;
+    /* top: -10.5rem;  for cursor follow*/
     height: 1.5rem;
     width: 0.65rem;
     background-color: #444;

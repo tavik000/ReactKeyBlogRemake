@@ -21,6 +21,8 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
         // select elements
         const eyes = document.querySelector(".eyes");
         const blushes = document.querySelector(".blushes");
+        const bearBlushes = document.querySelectorAll(".bear-blush");
+        const bearEyes = document.querySelectorAll(".bear-eye");
         const head = document.querySelector(".head");
         const ears = document.querySelector(".ears");
         const nose = document.querySelector(".nose");
@@ -41,7 +43,18 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
 
         function mousemove(e: { clientX: any; clientY: any; }) {
             cursorPos = { x: e.clientX, y: e.clientY }
-            initFollow();
+            if (bearBlushes) {
+                bearBlushes.forEach(blush => {
+                    (blush as HTMLElement).style.top = "-9.15rem";
+                });
+            }
+            if (bearEyes) {
+                bearEyes.forEach(eye => {
+                    (eye as HTMLElement).style.top = "-10.5rem";
+                });
+            }
+
+            updateFollow();
         }
 
 
@@ -54,7 +67,7 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
             (el as HTMLElement).style.transform = `translate(${distanceLeft / xRatio}px, ${distanceTop / yRatio}px)`;
         }
 
-        const initFollow = () => {
+        const updateFollow = () => {
             if (ears) followCursor(ears, -4, -4)
             if (head) followCursor(head, 6, 6)
             if (eyes) followCursor(eyes, 4.8, 4.8)
