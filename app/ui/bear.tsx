@@ -1,4 +1,5 @@
-import { forwardRef, useRef } from 'react';
+'use client';
+import { forwardRef, useEffect, useRef } from 'react';
 import React from 'react';
 import './bear.css';
 import clsx from 'clsx';
@@ -17,46 +18,13 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
             '': isActive
         });
 
-
-        // select elements
-        const eyes = document.querySelector(".eyes");
-        const blushes = document.querySelector(".blushes");
-        const bearBlushes = document.querySelectorAll(".bear-blush");
-        const bearEyes = document.querySelectorAll(".bear-eye");
-        const head = document.querySelector(".head");
-        const ears = document.querySelector(".ears");
-        const nose = document.querySelector(".nose");
-        const snout = document.querySelector(".snout");
-        const ballon = document.querySelector(".ballon");
-
         // init cursor position
         let cursorPos = { x: 0, y: 0 };
 
-        // get window size
-        let windowWidth = window.innerWidth;
-        let windowHeight = window.innerHeight;
-
-        function setWindowSize() {
-            windowWidth = window.innerWidth;
-            windowHeight = window.innerHeight;
-        };
-
-        function mousemove(e: { clientX: any; clientY: any; }) {
+        const mousemove = (e: { clientX: any; clientY: any; }) => {
             cursorPos = { x: e.clientX, y: e.clientY }
-            if (bearBlushes) {
-                bearBlushes.forEach(blush => {
-                    (blush as HTMLElement).style.top = "-9.15rem";
-                });
-            }
-            if (bearEyes) {
-                bearEyes.forEach(eye => {
-                    (eye as HTMLElement).style.top = "-10.5rem";
-                });
-            }
-
             updateFollow();
         }
-
 
         const followCursor = (el: Element, xRatio: number, yRatio: number) => {
             const elOffset = el.getBoundingClientRect();
@@ -68,19 +36,44 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
         }
 
         const updateFollow = () => {
-            if (ears) followCursor(ears, -4, -4)
-            if (head) followCursor(head, 6, 6)
-            if (eyes) followCursor(eyes, 4.8, 4.8)
-            if (blushes) followCursor(blushes, 4.8, 4.8)
-            if (snout) followCursor(snout, 2.25, 2.85)
-            if (nose) followCursor(nose, 1.5, 1.8)
-            if (ballon) followCursor(ballon, 15, 15)
+            const eyes = document.querySelector(".eyes");
+            const blushes = document.querySelector(".blushes");
+            const bearBlushes = document.querySelectorAll(".bear-blush");
+            const bearEyes = document.querySelectorAll(".bear-eye");
+            const head = document.querySelector(".head");
+            const ears = document.querySelector(".ears");
+            const nose = document.querySelector(".nose");
+            const snout = document.querySelector(".snout");
+            const ballon = document.querySelector(".ballon");
+
+            if (ears) followCursor(ears, -4, -4);
+            if (head) followCursor(head, 6, 6);
+            if (eyes) followCursor(eyes, 4.8, 4.8);
+            if (blushes) followCursor(blushes, 4.8, 4.8);
+            if (snout) followCursor(snout, 2.25, 2.85);
+            if (nose) followCursor(nose, 1.5, 1.8);
+            if (ballon) followCursor(ballon, 15, 15);
+
+            if (bearBlushes && bearBlushes.length > 0) {
+                bearBlushes.forEach(blush => {
+                    (blush as HTMLElement).style.top = "-9.15rem";
+                });
+            }
+
+            if (bearEyes && bearEyes.length > 0) {
+                bearEyes.forEach(eye => {
+                    (eye as HTMLElement).style.top = "-10.5rem";
+                });
+            }
         }
 
-        window.addEventListener('resize', setWindowSize);
-        window.addEventListener("mousemove", mousemove);
+        useEffect(() => {
+            window.addEventListener("mousemove", mousemove);
 
-
+            return () => {
+                window.removeEventListener("mousemove", mousemove);
+            };
+        }, []);
 
         return (
             <div id="curious-bear"
