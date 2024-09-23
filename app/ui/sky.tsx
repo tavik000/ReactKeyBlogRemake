@@ -3,6 +3,7 @@ import { SkyBackground } from './sky-background';
 import { WaddleDee } from './waddle-dee';
 import React, { useState, useRef, useEffect } from 'react';
 import PostHeader from './posts/general/post-header';
+import { Bear } from './bear';
 
 export default function Sky() {
 
@@ -73,6 +74,7 @@ export default function Sky() {
       }
 
       if (!waddleDeeRef.current) {
+        return;
         throw new Error('checkAndToggleSit: waddleDeeRef is not defined');
       }
 
@@ -114,7 +116,12 @@ export default function Sky() {
         <PostHeader groundPosHeight={groundPosHeight} />
       </header>
       <main className="flex min-h-screen flex-col">
-        <WaddleDee
+        {/* <WaddleDee
+          isSitting={isSitting}
+          isActive={isWaddleActive}
+          ref={waddleDeeRef}
+        /> */}
+        <Bear
           isSitting={isSitting}
           isActive={isWaddleActive}
           ref={waddleDeeRef}
