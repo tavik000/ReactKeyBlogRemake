@@ -1,3 +1,4 @@
+import { Bear } from "./bear";
 import { sniglet } from "./fonts";
 import { forwardRef } from "react";
 
@@ -6,7 +7,10 @@ export const SkyBackground = forwardRef<HTMLDivElement, React.PropsWithChildren<
         <div className="sky-background" ref={ref}>
             <div className="cloud cloud-large cloud-1"></div>
             <div className="cloud cloud-medium cloud-2">
-                <div className="waddle-dee-the-second">
+                    <div className={`${sniglet.className} scroll-sign`}>
+                        scroll
+                    </div>
+                {/* <div className="waddle-dee-the-second">
                     <div className={`${sniglet.className} sign`}>
                         scroll
                     </div>
@@ -22,7 +26,7 @@ export const SkyBackground = forwardRef<HTMLDivElement, React.PropsWithChildren<
                     </div>
                     <div className="waddle-foot waddle-foot-left"></div>
                     <div className="waddle-foot waddle-foot-right"></div>
-                </div>
+                </div> */}
             </div>
             <div className="cloud cloud-3"></div>
             <div className="cloud cloud-medium cloud-4"></div>
@@ -30,7 +34,7 @@ export const SkyBackground = forwardRef<HTMLDivElement, React.PropsWithChildren<
             <div className="cloud cloud-medium cloud-6"></div>
             <div className="cloud cloud-7"></div>
             <div className="cloud cloud-large cloud-8"></div>
-            <div className="cloud cloud-mediumcloud-9"></div>
+            <div className="cloud cloud-medium cloud-9"></div>
             <div className="cloud cloud-10"></div>
             <div className="cloud cloud-medium cloud-11"></div>
             <div className="cloud cloud-large cloud-12"></div>

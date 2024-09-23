@@ -3,7 +3,7 @@ import { SkyBackground } from './sky-background';
 import React, { useState, useRef, useEffect } from 'react';
 import PostHeader from './posts/general/post-header';
 import { WaddleDee } from './waddle-dee';
-import { Bear } from './bear';
+import { Bear, CuriousBear } from './bear';
 
 export default function Sky() {
 
@@ -134,7 +134,7 @@ export default function Sky() {
           isActive={isBearActive}
           ref={curiousBearRef}
         /> */}
-        <Bear
+        <CuriousBear
           isSitting={isSitting}
           isActive={isBearActive}
           ref={curiousBearRef}
