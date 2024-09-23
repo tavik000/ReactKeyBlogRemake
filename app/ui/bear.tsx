@@ -18,6 +18,53 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
         });
 
 
+        // select elements
+        const eyes = document.querySelector(".eyes");
+        const head = document.querySelector(".head");
+        const ears = document.querySelector(".ears");
+        const nose = document.querySelector(".nose");
+        const snout = document.querySelector(".snout");
+
+        // init cursor position
+        let cursorPos = { x: 0, y: 0 };
+
+        // get window size
+        let windowWidth = window.innerWidth;
+        let windowHeight = window.innerHeight;
+
+        function setWindowSize() {
+            windowWidth = window.innerWidth;
+            windowHeight = window.innerHeight;
+        };
+
+        function mousemove(e: { clientX: any; clientY: any; }) {
+            cursorPos = { x: e.clientX, y: e.clientY }
+            initFollow();
+        }
+
+     
+        const followCursor = (el: Element, xRatio: number, yRatio: number) => {
+            const elOffset = el.getBoundingClientRect();
+            const centerX = elOffset.x + elOffset.width / 2;
+            const centerY = elOffset.y + elOffset.height / 2;
+            const distanceLeft = Math.round(((cursorPos.x - centerX) * 100) / window.innerWidth);
+            const distanceTop = Math.round(((cursorPos.y - centerY) * 100) / window.innerHeight);
+            (el as HTMLElement).style.transform = `translate(${distanceLeft / xRatio}px, ${distanceTop / yRatio}px)`;
+        }
+
+        const initFollow = () => {
+            if (ears) followCursor(ears, -3, -3.5)
+            if (head) followCursor(head, 6, 6)
+            if (eyes) followCursor(eyes, 1.8, 1.8)
+            if (snout) followCursor(snout, 2.25, 2.55)
+            if (nose) followCursor(nose, 1.5, 1.5)
+        }
+
+        window.addEventListener('resize', setWindowSize);
+        window.addEventListener("mousemove", mousemove);
+
+
+
         return (
             <div id="waddleDee"
                 className={className}
@@ -77,14 +124,14 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
                                 </g>
                                 <path d="M409.6,176.9c0,94.7-83.5,130.1-186.4,130.1S36.8,271.6,36.8,176.9,120.3,5.4,223.2,5.4,409.6,82.2,409.6,176.9Z" fill="#f6ac29" />
                                 <path id="head-stroke" d="M409.6,176.9c0,94.7-83.5,130.1-186.4,130.1S36.8,271.6,36.8,176.9,120.3,5.4,223.2,5.4,409.6,82.2,409.6,176.9Z" fill="none" stroke="#3f1c0d" strokeMiterlimit="10" strokeWidth="10" />
-                                {/* <g id="eyes" className="eyes">
+                                <g id="eyes" className="eyes">
                                 <circle cx="291.1" cy="138" r="16.8" fill="#3f1c0c" />
                                 <circle cx="287.3" cy="134.2" r="4.8" fill="#884d3a" />
                                 <circle cx="155.3" cy="138" r="16.8" fill="#3f1c0c" />
                                 <circle cx="152.3" cy="134.2" r="4.8" fill="#884d3a" />
                                 <path d="M117.1,106.7l0.5-2.2,0.3-1.1,0.6-1.5a23.6,23.6,0,0,1,1.6-3.5l1.1-1.9,1.3-1.9,0.7-1,0.8-.9,1.7-1.9a33.4,33.4,0,0,1,14.1-8.3,36.2,36.2,0,0,1,5.3-1.1l2.6-.2h4.8l2.1,0.4,1.9,0.4,1.7,0.5,1.5,0.5,1.2,0.5,2.2,1.1a3.2,3.2,0,0,1-1.7,6h-0.4l-2-.2h-6.9l-1.7.2h-0.9l-0.9.2-1.9.3c-1.3.4-2.6,0.6-3.8,1.1a40.3,40.3,0,0,0-3.8,1.5,39.5,39.5,0,0,0-6.9,4.3l-1.4,1.3-0.7.6-0.6.7-1.2,1.3-1,1.3-1,1.2-0.8,1.1-0.7.9-0.6,1-1.2,1.9A3.2,3.2,0,0,1,117.1,106.7Z" fill="#3f1c0d" />
                                 <path d="M323.4,109.2l-1.2-1.9-0.6-1-0.7-.9-0.8-1.1-1-1.2-1-1.3-1.2-1.3-0.6-.7-0.7-.6-1.4-1.3a31.6,31.6,0,0,0-10.7-5.8c-1.3-.5-2.6-0.7-3.8-1.1l-1.9-.3-0.9-.2h-0.9l-1.7-.2h-6.9l-2,.2h-0.4a3.2,3.2,0,0,1-1.7-6l2.2-1.1,1.2-.5,1.5-.5,1.7-.5,1.9-.4,2.1-.4h4.8l2.6,0.2a36.2,36.2,0,0,1,5.3,1.1,35.1,35.1,0,0,1,14.1,8.3l1.7,1.9,0.8,0.9,0.7,1,1.3,1.9,1.1,1.9a23.6,23.6,0,0,1,1.6,3.5l0.6,1.5,0.3,1.1,0.5,2.2A3.2,3.2,0,0,1,323.4,109.2Z" fill="#3f1c0d" />
-                            </g> */}
+                            </g>
                                 <g>
                                     <path className="snout" d="M308.5,230c0,43.6-40.2,52.6-87.3,52.6s-83.3-9-83.3-52.6,38.2-79,85.3-79S308.5,186.3,308.5,230Z" fill="#ffeed5" />
                                     <g className="nose">
@@ -99,8 +146,8 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
                     </svg>
                     <div className="bear-blush bear-blush-left"></div>
                     <div className="bear-blush bear-blush-right"></div>
-                    <div className="bear-eye bear-eye-left"></div>
-                    <div className="bear-eye bear-eye-right"></div>
+                    <div id="eyes" className="bear-eye bear-eye-left"></div>
+                    <div id="eyes" className="bear-eye bear-eye-right"></div>
                 </div>
             </div>
 
