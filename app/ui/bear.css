@@ -1,3 +1,36 @@
+.curious-bear {
+    position: fixed;
+    left: calc(50% - 4.5rem);
+    z-index: 40;
+    top: 12rem;
+    transform-origin: center -7rem;
+    animation: sway-sm 5s infinite linear;
+}
+
+
+.curious-bear.is-sitting {
+    position: absolute;
+    width: auto;
+    animation: auto;
+}
+
+.curious-bear.is-sitting #arm-left,
+.curious-bear.is-sitting #arm-left-shadow,
+.curious-bear.is-sitting #arm-left-stroke {
+    animation: none;
+}
+
+.curious-bear.is-sitting #arm-right,
+.curious-bear.is-sitting #arm-right-shadow,
+.curious-bear.is-sitting #arm-right-stroke {
+    animation: none;
+}
+
+.curious-bear.is-sitting .ball {
+    transform: translateY(-2000px) translateX(-50%);
+    transition: transform 3s ease-out;
+}
+
 .ball {
     position: absolute;
     width: 80px;
@@ -73,10 +106,6 @@
 }
 
 
-.waddle-dee.is-sitting .ball {
-    transform: translateY(-2000px) translateX(-50%);
-    transition: transform 3s ease-out;
-}
 
 svg {
     overflow: visible;
@@ -176,17 +205,6 @@ svg {
     transform-origin: 31% 50%
 }
 
-.waddle-dee.is-sitting #arm-left,
-.waddle-dee.is-sitting #arm-left-shadow,
-.waddle-dee.is-sitting #arm-left-stroke {
-    animation: none;
-}
-
-.waddle-dee.is-sitting #arm-right,
-.waddle-dee.is-sitting #arm-right-shadow,
-.waddle-dee.is-sitting #arm-right-stroke {
-    animation: none;
-}
 
 
-/* #3F1C0C */
+/* original bear color #3F1C0C */

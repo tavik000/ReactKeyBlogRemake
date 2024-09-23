@@ -11,7 +11,7 @@ interface BearProps {
 export const Bear = forwardRef<HTMLDivElement, BearProps>(
     function Bear({ isSitting, isActive }, ref) {
 
-        const className = clsx('waddle-dee', {
+        const className = clsx('curious-bear', {
             'is-sitting': isSitting,
             'hidden': !isActive,
             '': isActive
@@ -83,7 +83,7 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
 
 
         return (
-            <div id="waddleDee"
+            <div id="curious-bear"
                 className={className}
                 // className="translate-x-24"
                 ref={ref}>

@@ -1,19 +1,19 @@
 'use client';
 import { SkyBackground } from './sky-background';
-import { WaddleDee } from './waddle-dee';
 import React, { useState, useRef, useEffect } from 'react';
 import PostHeader from './posts/general/post-header';
+import { WaddleDee } from './waddle-dee';
 import { Bear } from './bear';
 
 export default function Sky() {
 
   const skyBackgroundRef = useRef<HTMLDivElement | null>(null);
 
-  const [isWaddleActive, setWaddleActive] = useState<boolean>(false);
+  const [isBearActive, setBearActive] = useState<boolean>(false);
   const [isSitting, setSit] = useState<boolean>(false);
   const [groundPosHeight, setGroundPosHeight] = useState<number>(0);
-  const waddleDeeRef = useRef<HTMLDivElement | null>(null);
-  const waddleDeeTopCache = useRef<number>(0);
+  const curiousBearRef = useRef<HTMLDivElement | null>(null);
+  const curiousBearTopCache = useRef<number>(0);
 
   useEffect(() => {
     const toggleSit = (value: boolean) => {
@@ -21,19 +21,19 @@ export default function Sky() {
         throw new Error('skyBackgroundRef is not defined');
       }
 
-      if (!waddleDeeRef.current) {
-        throw new Error('toggleSit: waddleDeeRef is not defined');
+      if (!curiousBearRef.current) {
+        throw new Error('toggleSit: curiousBearRef is not defined');
       }
       const groundPosHeight =
         skyBackgroundRef.current.getBoundingClientRect().height;
 
 
-      const waddleDeeTop = waddleDeeRef.current.getBoundingClientRect().top;
-      if (waddleDeeTopCache.current === 0) {
-        waddleDeeTopCache.current = waddleDeeTop;
+      const curiousBearTop = curiousBearRef.current.getBoundingClientRect().top;
+      if (curiousBearTopCache.current === 0) {
+        curiousBearTopCache.current = curiousBearTop;
       }
 
-      if (waddleDeeTop === 0) {
+      if (curiousBearTop === 0) {
         return;
       }
 
@@ -41,15 +41,15 @@ export default function Sky() {
       // bear
       const sitTopOffset = -100;
       
-      // waddle dee
+      // Waddle dee
       // const sitTopOffset = 0;
-      const sitPosY = groundPosHeight - waddleDeeTopCache.current + sitTopOffset;
+      const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
 
       if (value) {
-        waddleDeeRef.current.style.top =
+        curiousBearRef.current.style.top =
           sitPosY + 'px';
       } else {
-        waddleDeeRef.current.style.top = '';
+        curiousBearRef.current.style.top = '';
       }
       setSit(value);
     };
@@ -64,15 +64,15 @@ export default function Sky() {
         return;
       }
 
-      if (!waddleDeeRef.current) {
-        throw new Error('checkAndToggleSit: waddleDeeRef is not defined');
+      if (!curiousBearRef.current) {
+        throw new Error('checkAndToggleSit: curiousBearRef is not defined');
       }
-      if (waddleDeeRef.current.classList.contains('is-sitting')) {
+      if (curiousBearRef.current.classList.contains('is-sitting')) {
         const groundPosHeight =
           skyBackgroundRef.current.getBoundingClientRect().height;
 
-        waddleDeeRef.current.style.top =
-          groundPosHeight - waddleDeeTopCache.current + 'px';
+        curiousBearRef.current.style.top =
+          groundPosHeight - curiousBearTopCache.current + 'px';
       }
     };
 
@@ -82,8 +82,8 @@ export default function Sky() {
         return;
       }
 
-      if (!waddleDeeRef.current) {
-        throw new Error('checkAndToggleSit: waddleDeeRef is not defined');
+      if (!curiousBearRef.current) {
+        throw new Error('checkAndToggleSit: curiousBearRef is not defined');
       }
 
       const groundPosHeight =
@@ -92,7 +92,7 @@ export default function Sky() {
 
       const defaultZoomLevel = 1.5;
       const zoomLevel = window.devicePixelRatio;
-      // waddle dee 
+      // Waddle dee 
       // const scrollOffset =
       //   groundPosHeight * 0.048 * (zoomLevel / defaultZoomLevel);
 
@@ -102,17 +102,17 @@ export default function Sky() {
       // console.log(window.scrollY, scrollOffset, groundPosHeight);
 
       if (window.scrollY + scrollOffset >= groundPosHeight) {
-        if (!waddleDeeRef.current.classList.contains('is-sitting')) {
+        if (!curiousBearRef.current.classList.contains('is-sitting')) {
           toggleSit(true);
         }
       } else {
-        if (waddleDeeRef.current.classList.contains('is-sitting')) {
+        if (curiousBearRef.current.classList.contains('is-sitting')) {
           toggleSit(false);
         }
       }
     };
 
-    setWaddleActive(true);
+    setBearActive(true);
     checkAndToggleSit();
     // setTimeout(() => checkAndToggleSit(), 10);
     window.addEventListener('scroll', handleScroll);
@@ -121,7 +121,7 @@ export default function Sky() {
       window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('resize', handleResize);
     };
-  }, [groundPosHeight, isWaddleActive]);
+  }, [groundPosHeight, isBearActive]);
 
   return (
     <>
@@ -131,13 +131,13 @@ export default function Sky() {
       <main className="flex min-h-screen flex-col">
         {/* <WaddleDee
           isSitting={isSitting}
-          isActive={isWaddleActive}
-          ref={waddleDeeRef}
+          isActive={isBearActive}
+          ref={curiousBearRef}
         /> */}
         <Bear
           isSitting={isSitting}
-          isActive={isWaddleActive}
-          ref={waddleDeeRef}
+          isActive={isBearActive}
+          ref={curiousBearRef}
         />
         <SkyBackground ref={skyBackgroundRef} />
       </main>
