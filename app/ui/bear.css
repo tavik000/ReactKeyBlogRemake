@@ -115,113 +115,171 @@
 
 .ball {
     position: absolute;
-    width: 80px; /* 200px / 3 */
-    height: 80px; /* 200px / 3 */
+    width: 80px;
+    /* 200px / 3 */
+    height: 80px;
+    /* 200px / 3 */
     background: #fb8d33;
     border-radius: 50%;
-    border: 5px solid black; /* 15px / 3 */
+    border: 5px solid black;
+    /* 15px / 3 */
     left: 50%;
     top: -41%;
-    margin-left: -33.33px; /* -100px / 3 */
-    margin-top: -33.33px; /* -100px / 3 */
+    margin-left: -33.33px;
+    /* -100px / 3 */
+    margin-top: -33.33px;
+    /* -100px / 3 */
 }
- 
+
 .ball:after {
     position: absolute;
     content: "";
-    width: 50px; /* 150px / 3 */
-    height: 50px; /* 150px / 3 */
+    width: 50px;
+    /* 150px / 3 */
+    height: 50px;
+    /* 150px / 3 */
     border-radius: 50%;
     text-align: center;
-    line-height: 25px; /* 75px / 3 */
+    line-height: 25px;
+    /* 75px / 3 */
     border-style: solid;
-    border-width: 3px; /* 9px / 3 */
+    border-width: 3px;
+    /* 9px / 3 */
     border-top-color: transparent;
     border-bottom-color: transparent;
     border-left-color: transparent;
     transform: rotate(-30deg);
     background: none;
     left: 50%;
-    margin-left: -28.33px; /* -85px / 3 */
+    margin-left: -28.33px;
+    /* -85px / 3 */
     top: 50%;
-    margin-top: -28.33px; /* -85px / 3 */
+    margin-top: -28.33px;
+    /* -85px / 3 */
 }
- 
+
 .ball:before {
     position: absolute;
     content: "";
-    bottom: -13.33px; /* -40px / 3 */
+    bottom: -13.33px;
+    /* -40px / 3 */
     left: 50%;
-    margin-left: -6.67px; /* -20px / 3 */
+    margin-left: -6.67px;
+    /* -20px / 3 */
     width: 0px;
     height: 0px;
 }
- 
+
 .rope {
     background: black;
-    width: 3.33px; /* 10px / 3 */
-    height: 60px; /* 120px / 3 */
+    width: 3.33px;
+    /* 10px / 3 */
+    height: 60px;
+    /* 120px / 3 */
     left: 50%;
-    margin-left: -1.67px; /* -5px / 3 */
+    margin-left: -1.67px;
+    /* -5px / 3 */
     position: absolute;
-    bottom: -85%; /* -65% / 3 */
-    border-radius: 1.67px; /* 5px / 3 */
+    bottom: -85%;
+    /* -65% / 3 */
+    border-radius: 1.67px;
+    /* 5px / 3 */
 }
 
-
+svg {
+    overflow: visible;
+}
 
 .bear-blush {
-  position: absolute;
-  z-index: 2;
-  top: 2.75rem;
-  height: 0.75rem;
-  width: 1.25rem;
-  background-color: #fa698b;
-  border-radius: 50%;
-  opacity: 0.4;
+    position: absolute;
+    z-index: 2;
+    top: 2.75rem;
+    height: 0.75rem;
+    width: 1.25rem;
+    background-color: #fa698b;
+    border-radius: 50%;
+    opacity: 0.4;
 }
 
 .bear-blush-left {
-  left: 1rem;
+    left: 1rem;
 }
 
 .bear-blush-right {
-  right: 1rem;
+    right: 1rem;
 }
 
 .bear-eye {
-  position: absolute;
-  z-index: 3;
-  top: 1.5rem;
-  height: 1.5rem;
-  width: 0.65rem;
-  background-color: #444;
-  border-radius: 0.5rem/0.75rem;
-  overflow: hidden;
-  transform-origin: center 70%;
-  animation-name: blinky;
-  animation-duration: 7s;
-  animation-iteration-count: infinite;
+    position: absolute;
+    z-index: 3;
+    top: 1.5rem;
+    height: 1.5rem;
+    width: 0.65rem;
+    background-color: #444;
+    border-radius: 0.5rem/0.75rem;
+    overflow: hidden;
+    transform-origin: center 70%;
+    animation-name: blinky;
+    animation-duration: 7s;
+    animation-iteration-count: infinite;
 }
 
 .bear-eye::after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 0.125rem;
-  height: 40%;
-  width: calc(100% - 0.125rem * 2);
-  border-radius: 40%;
-  background-color: #fff;
-  transform: translateX(-50%);
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0.125rem;
+    height: 40%;
+    width: calc(100% - 0.125rem * 2);
+    border-radius: 40%;
+    background-color: #fff;
+    transform: translateX(-50%);
 }
 
 .bear-eye-left {
-  left: 2.5rem;
+    left: 2.5rem;
 }
 
 .bear-eye-right {
-  right: 2.5rem;
+    right: 2.5rem;
+}
+
+@keyframes rotateArmRight {
+
+    0%,
+    100% {
+        transform: rotate(-30deg);
+    }
+
+    50% {
+        transform: rotate(-40deg);
+    }
+}
+
+@keyframes rotateArmLeft {
+
+    0%,
+    100% {
+        transform: rotate(30deg);
+    }
+
+    50% {
+        transform: rotate(40deg);
+    }
+}
+
+#arm-right,
+#arm-right-shadow,
+#arm-right-stroke {
+    animation: rotateArmRight 1.5s infinite linear;
+    transform-origin: 69% 50%
+}
+
+#arm-left,
+#arm-left-shadow,
+#arm-left-stroke {
+    animation: rotateArmLeft 1.5s infinite linear;
+    transform-origin: 31% 50%
 }
 
 /* #3F1C0C */
