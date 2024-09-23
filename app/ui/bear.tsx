@@ -95,7 +95,7 @@ export const Bear = forwardRef<HTMLDivElement, BearProps>(
                         <div className="ball -rotate-12 -translate-x-6">
                             <div className="rope"></div>
                         </div>
-                        <div className="ball">
+                        <div className="ball -translate-y-1">
                             <div className="rope"></div>
                         </div>
                     </div>
