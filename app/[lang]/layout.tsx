@@ -10,9 +10,11 @@ import { auth } from '@/auth';
 import { NextUIProviderWrapper } from '@/app/components/NextUI/next-ui-providers-wrapper';
 import { LoginOpenFromPostProvider } from '@/app/components/context/login-open-from-post-provider';
 import { LocaleProvider } from '@/app/components/context/locale-provider';
-import { SessionProvider } from '../components/context/session-provider';
-import LoginSuccessfulBanner from '../ui/login-successful-banner';
+import { SessionProvider } from '@/app/components/context/session-provider';
+import LoginSuccessfulBanner from '@/app/ui/login-successful-banner';
 import { fetchAllNotificationByTargetUserName } from '../lib/data';
+import { NotificationProvider } from '@/app/components/context/notification-provider';
+import { Notification } from '@/app/lib/definitions';
 
 export const experimental_ppr = true;
 
@@ -36,9 +38,9 @@ export default async function RootLayout({
   const locale = GetLocaleFromLang(lang);
   const dict = (await getDictionary(locale)) as DictStructure;
   const session = await auth();
+  let notifications: Notification[] = [];
   if (session?.user) { 
-    const notifications = session?.user?.name ? await fetchAllNotificationByTargetUserName(session.user.name) : [];
-    console.log('notifications', notifications);
+     notifications = session?.user?.name ? (await fetchAllNotificationByTargetUserName(session.user.name) as unknown as Notification[]) : [];
   }
 
 
@@ -50,11 +52,13 @@ export default async function RootLayout({
           <LoginOpenFromPostProvider>
             <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
               <SessionProvider inSession={session || null}>
+                <NotificationProvider inNotifications={notifications || []}>
                 <LoginSuccessfulBanner/>
                 <Sky/>
                 <PostSection>
                   {children}
                 </PostSection>
+                </NotificationProvider>
               </SessionProvider>
             </LocaleProvider>
           </LoginOpenFromPostProvider>

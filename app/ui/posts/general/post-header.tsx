@@ -9,6 +9,7 @@ import { homepageURL } from '@/app/lib/constants';
 import { keyEmail } from '@/app/lib/constants';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
 import { useSessionContext } from '@/app/components/context/session-provider';
+import { useNotificationContext } from '@/app/components/context/notification-provider';
 
 function useScrollDirection() {
   const [scrollDirection, setScrollDirection] = useState<null | 'down' | 'up'>(
@@ -54,6 +55,9 @@ export default function PostHeader({
   const { session } = useSessionContext();
   const { dict } = useLocaleContext();
   const { lastScrollY, isLoaded } = useScrollDirection();
+  const { notifications } = useNotificationContext();
+
+  console.log('post header notification ', notifications);
 
   const isHidden = lastScrollY < groundPosHeight || !isLoaded;
 
