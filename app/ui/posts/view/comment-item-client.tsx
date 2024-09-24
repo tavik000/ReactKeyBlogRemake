@@ -16,11 +16,13 @@ import { likeComment, unlikeComment } from "@/app/lib/actions";
 const CommentItemClient = ({
     comment,
     commentId,
-    postTitle
+    postTitle,
+    postId,
 }: {
     comment: PostComment,
     commentId: string,
     postTitle: string
+    postId: string
 }) => {
     const { locale, dict } = useLocaleContext();
     const sessionContext = useSessionContext();
@@ -60,7 +62,10 @@ const CommentItemClient = ({
 
         if (!isLiked) {
             if (sessionContext.session?.user?.name) {
-                likeComment(sessionContext.session.user.name, commentId);
+                const sourceUserName = sessionContext.session.user.name;
+                const sourceUserImage = sessionContext.session.user.image;
+                const targetUserName = comment.user_name;
+                likeComment(targetUserName, sourceUserName, sourceUserImage ?? '', postId, postTitle, commentId, comment.content, locale);
                 setIsLiked(true);
                 setIsShowingClickEffect(true);
                 setTimeout(() => setIsShowingClickEffect(false), 200);
@@ -96,8 +101,8 @@ const CommentItemClient = ({
     } else {
         return (
             <div
-            id={`comment-${commentId}`}
-            className="flex-col justify-between border-b-2 border-gray-100">
+                id={`comment-${commentId}`}
+                className="flex-col justify-between border-b-2 border-gray-100">
                 <div className="flex mt-4 content-center w-full">
                     <User
                         name={comment.user_name}

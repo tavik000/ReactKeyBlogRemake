@@ -30,7 +30,7 @@ export default function PostViewClient({
 ) {
 
   const postId = post.id;
-  const { dict } = useLocaleContext();
+  const { locale, dict } = useLocaleContext();
   const sessionContext = useSessionContext();
   const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
   const isLikedBefore: boolean = !!sessionContext.session && post.likes.includes(sessionContext.session?.user?.name ?? '');
@@ -52,7 +52,9 @@ export default function PostViewClient({
 
     if (!isLiked) {
       if (sessionContext.session?.user?.name) {
-        likePostWithAllLanguages(sessionContext.session.user.name, postId);
+        const userName = sessionContext.session.user.name;
+        const userImage = sessionContext.session.user.image;
+        likePostWithAllLanguages(sessionContext.session.user.name, postId, userImage ?? '', post.title, locale);
         setIsLiked(true);
         setIsShowingClickEffect(true);
         setTimeout(() => setIsShowingClickEffect(false), 200);
@@ -128,7 +130,7 @@ export default function PostViewClient({
           {post.comment_id_list.length > 0 ? (
             <div className="mt-6 border-t-[1px]">
               {post.comment_id_list.map((commentId) => (
-                <CommentItem key={commentId} commentId={commentId} comment={comments.find(comment => comment.id === commentId) ?? null} postTitle={post.title} />
+                <CommentItem key={commentId} commentId={commentId} comment={comments.find(comment => comment.id === commentId) ?? null} postTitle={post.title} postId={postId}/>
               ))}
             </div>
           ) : (

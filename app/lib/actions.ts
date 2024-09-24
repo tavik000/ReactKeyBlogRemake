@@ -10,6 +10,7 @@ import { AuthError } from 'next-auth';
 import { keyName } from './constants';
 import { isRedirectError } from 'next/dist/client/components/redirect';
 import { getDictionary } from '@/app/components/localization/dictionaries';
+import { create } from 'domain';
 
 const format = require('pg-format');
 const { db } = require('@vercel/postgres');
@@ -795,7 +796,7 @@ export async function createCommentWithAllLanguagesAndNotifications(
       }
     }
 
-    console.log('Comments added to all languages');
+    console.log('Comments added to all languages successfully');
 
     createCommentNotificationForTargetUserList(
       notifyTargetUserList,
@@ -960,8 +961,14 @@ export async function deleteCommentWithAllLanguages(
 }
 
 export async function likeComment(
-  userName: string,
+  targetUserName: string,
+  sourceUserName: string,
+  sourceUserImage: string,
+  postId: string,
+  postTitle: string,
   commentId: string,
+  commentContent: string,
+  userLocale: string,
 ) {
 
   try {
@@ -973,12 +980,25 @@ export async function likeComment(
       SET likes = array_append(likes, %L)
       WHERE id = %L
       `,
-      userName,
+      sourceUserName,
       commentId,
     );
 
     const likeComment = await client.query(likeCommentQuery);
-    console.log('likeComment successfully userName: ' + userName);
+    console.log('likeComment successfully userName: ' + sourceUserName);
+
+    createLikeCommentNotificationForCommentAuthor(
+      targetUserName,
+      sourceUserName,
+      sourceUserImage,
+      postId,
+      postTitle,
+      commentId,
+      commentContent,
+      userLocale,
+      client
+    );
+
   } catch (error) {
     console.log(error);
     return {
@@ -1037,6 +1057,8 @@ export async function likePost(
 
     const likePost = await client.query(likePostQuery);
     console.log('likePost successfully userName: ' + userName, + ' in ' + postLocale + ' postId: ' + postId);
+
+
   } catch (error) {
     console.log(error);
     return {
@@ -1078,6 +1100,9 @@ export async function unlikePost(
 export async function likePostWithAllLanguages(
   userName: string,
   postId: string,
+  userImage: string,
+  postTitle: string,
+  userLocale: string,
 ) {
   console.log('likePost: ' + postId);
 
@@ -1090,6 +1115,18 @@ export async function likePostWithAllLanguages(
       likePost(userName, postId, 'kr', client),
       likePost(userName, postId, 'hk', client),
     ]);
+
+    console.log('likePostWithAllLanguages successfully ' + postId);
+
+    createLikePostNotificationForPostAuthor(
+      userName,
+      userImage,
+      postId,
+      postTitle,
+      userLocale,
+      client
+    );
+
   } catch (error) {
     console.error(error);
     return {
@@ -1134,7 +1171,6 @@ export async function createLikePostNotificationForPostAuthor(
   try {
     const type = 'like';
     const create_date = new Date().toISOString().split('T')[0];
-    const isRead = false;
     const id = require('uuid').v4();
     const targetUserName = keyName;
     const commentId = null;
@@ -1143,10 +1179,10 @@ export async function createLikePostNotificationForPostAuthor(
     const createNotificationQuery = format(
       `
         INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, type, source_locale, create_date, is_read)
-        VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
+        VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
         ON CONFLICT (id) DO NOTHING;
         `,
-      id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date, isRead,
+      id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date,
     );
 
     const createNotification = await client.query(createNotificationQuery);
@@ -1180,15 +1216,14 @@ export async function createCommentNotificationForTargetUserList(
         continue;
       }
       const id = require('uuid').v4();
-      const isRead = false;
 
       const createNotificationQuery = format(
         `
         INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, type, source_locale, create_date, is_read)
-        VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
+        VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
         ON CONFLICT (id) DO NOTHING;
         `,
-        id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date, isRead,
+        id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date,
       );
 
       const createNotification = await client.query(createNotificationQuery);
@@ -1213,22 +1248,22 @@ export async function createLikeCommentNotificationForCommentAuthor(
   sourceLocale: string,
   client: VercelPoolClient
 ) {
-  console.log('createLikeCommentNotificationForCommentAuthor, postTitle: ' + postTitle + ', postId: ' + postId + ', commentId: ' + commentId + ', commentContent: ' + commentContent + ', sourceUserName: ' + sourceUserName + ', targetUserName: ' + targetUserName);
-
   try {
     const type = 'like';
     const create_date = new Date().toISOString().split('T')[0];
-    const isRead = false;
-    const id = require('uuid').v4;
+    const id = require('uuid').v4();
 
     const createNotificationQuery = format(
-      `
+        `
         INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, type, source_locale, create_date, is_read)
-        VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
+        VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
         ON CONFLICT (id) DO NOTHING;
         `,
-      id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date, isRead,
+      id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date,
     );
+
+
+    console.log('createNotificationQuery:', createNotificationQuery);
 
     const createNotification = await client.query(createNotificationQuery);
     console.log('create like comment notification successfully targetUserName: ' + targetUserName);

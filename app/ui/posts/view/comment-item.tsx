@@ -6,10 +6,12 @@ export default function CommentItem({
   commentId,
   comment,
   postTitle,
+  postId,
 }: {
   commentId: string;
   comment: PostComment | null;
   postTitle: string;
+  postId: string;
 }) {
 
   if (!comment) {
@@ -18,6 +20,6 @@ export default function CommentItem({
   }
 
   return (
-    <CommentItemClient comment={comment} commentId={comment.id} postTitle={postTitle} />
+    <CommentItemClient comment={comment} commentId={comment.id} postTitle={postTitle} postId={postId} />
   );
 }
