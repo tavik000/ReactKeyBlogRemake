@@ -53,7 +53,7 @@ export default function PostHeader({
 }) {
   const { session } = useSessionContext();
   const { dict } = useLocaleContext();
-  const { scrollDirection, lastScrollY, isLoaded } = useScrollDirection();
+  const { lastScrollY, isLoaded } = useScrollDirection();
 
   const isHidden = lastScrollY < groundPosHeight || !isLoaded;
 

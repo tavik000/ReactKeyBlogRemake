@@ -12,7 +12,6 @@ import { LoginOpenFromPostProvider } from '@/app/components/context/login-open-f
 import { LocaleProvider } from '@/app/components/context/locale-provider';
 import { SessionProvider } from '../components/context/session-provider';
 import LoginSuccessfulBanner from '../ui/login-successful-banner';
-import { useEffect, useState } from 'react';
 
 export const experimental_ppr = true;
 
