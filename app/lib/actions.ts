@@ -1135,6 +1135,7 @@ export async function createCommentNotificationForTargetUserList(
   console.log('createCommentNotificationForTargetUserList, postTitle: ' + postTitle + ', postId: ' + postId + ', commentId: ' + commentId + ', commentContent: ' + commentContent + ', sourceUserName: ' + sourceUserName + ', targetUserNameList: ' + targetUserNameList);
 
   try {
+    const type = 'comment';
     const create_date = new Date().toISOString().split('T')[0];
     for (const targetUserName of targetUserNameList) {
       if (targetUserName === sourceUserName) {
@@ -1145,11 +1146,11 @@ export async function createCommentNotificationForTargetUserList(
 
       const createNotificationQuery = format(
         `
-        INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, source_locale, create_date, is_read)
+        INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, type, source_locale, create_date, is_read)
         VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
         ON CONFLICT (id) DO NOTHING;
         `,
-        id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, sourceLocale, create_date, isRead,
+        id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date, isRead,
       );
 
       const createNotification = await client.query(createNotificationQuery);

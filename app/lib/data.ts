@@ -483,6 +483,7 @@ export async function fetchAllNotificationByTargetUserName( targetUserName: stri
       post_title,
       comment_id,
       comment_content,
+      type,
       source_locale,
       create_date,
       is_read

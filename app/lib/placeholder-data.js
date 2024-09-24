@@ -1,5 +1,7 @@
 // This file contains placeholder data that you'll be replacing with real data in the Data Fetching chapter:
 
+const { type } = require("os");
+
 // https://nextjs.org/learn/dashboard-app/fetching-data
 const users = [
   {
@@ -123,12 +125,41 @@ const notifications = [
     id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
     source_user_name: 'trollguy87',
     source_user_img: '/viewers/trollguy87.png',
-    target_user_name: 'trollguy87',
+    target_user_name: 'Key Zhao',
+    post_id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
+    post_title: 'Example Post 1',
+    comment_id: '3958dc9e-712f-4377-85e9-fec4b6a64430',
+    comment_content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus porro earum dolor sint fuga laborum velit laudantium distinctio quos sunt veritatis unde inventore, autem ad tenetur voluptatibus mollitia vel!',
+    type: 'comment',
+    source_locale: 'en',
+    create_date: '2022-12-06',
+    is_read: false,
+  },
+  {
+    id: '3958dc9e-712f-4377-85e9-fec4b6a64421',
+    source_user_name: 'trollguy87',
+    source_user_img: '/viewers/trollguy87.png',
+    target_user_name: 'Key Zhao',
+    post_id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
+    post_title: 'Example Post 1',
+    comment_id: null,
+    comment_content: null,
+    type: 'like',
+    source_locale: 'kr',
+    create_date: '2022-12-06',
+    is_read: false,
+  },
+  {
+    id: '3958dc9e-712f-4377-85e9-fec4b6a64422',
+    source_user_name: 'trollguy87',
+    source_user_img: '/viewers/trollguy87.png',
+    target_user_name: 'Key Zhao',
     post_id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
     post_title: 'Example Post 1',
     comment_id: '3958dc9e-712f-4377-85e9-fec4b6a64420',
     comment_content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dignissimos possimus porro earum dolor sint fuga laborum velit laudantium distinctio quos sunt veritatis unde inventore, autem ad tenetur voluptatibus mollitia vel!',
-    source_locale: 'en',
+    type: 'like',
+    source_locale: 'kr',
     create_date: '2022-12-06',
     is_read: false,
   },

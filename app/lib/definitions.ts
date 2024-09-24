@@ -53,6 +53,7 @@ export type Notification = {
   post_title: string;
   comment_id: string;
   comment_content: string;
+  type: string;
   source_locale: string;
   create_date: Date;
   is_read: boolean;

@@ -194,7 +194,7 @@ async function seedComments(client) {
           comment.content,
           comment.create_date,
           comment.modify_date,
-          comment.likes 
+          comment.likes
         );
         return client.query(insertCommentTableQuery);
       }),
@@ -217,28 +217,42 @@ async function seedNotifications(client) {
     await client.sql`CREATE EXTENSION IF NOT EXISTS "uuid-ossp"`;
 
     const createTable = await client.sql`
-      CREATE TABLE IF NOT EXISTS notifications (
-        id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-        source_user_name VARCHAR(255) NOT NULL,
-        source_user_img VARCHAR(255) NOT NULL,
-        target_user_name VARCHAR(255) NOT NULL,
-        post_id UUID NOT NULL,
-        post_title VARCHAR(255) NOT NULL,
-        comment_id UUID NOT NULL,
-        comment_content TEXT NOT NULL,
-        source_locale VARCHAR(255) NOT NULL,
-        create_date DATE NOT NULL,
-        is_read BOOLEAN NOT NULL
-      );
-    `;
+    CREATE TABLE IF NOT EXISTS notifications (
+      id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+      source_user_name VARCHAR(255) NOT NULL,
+      source_user_img VARCHAR(255) NOT NULL,
+      target_user_name VARCHAR(255) NOT NULL,
+      post_id UUID NOT NULL,
+      post_title VARCHAR(255) NOT NULL,
+      comment_id UUID,
+      comment_content TEXT,
+      type VARCHAR(255) NOT NULL,
+      source_locale VARCHAR(255) NOT NULL,
+      create_date DATE NOT NULL,
+      is_read BOOLEAN NOT NULL
+    );
+  `;
 
     console.log(`Created "notifications" table`);
 
     const insertedNotifications = await Promise.all(
       notifications.map((notification) => {
         return client.sql`
-          INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, source_locale, create_date, is_read)
-          VALUES (${notification.id}, ${notification.source_user_name}, ${notification.source_user_img}, ${notification.target_user_name}, ${notification.post_id}, ${notification.post_title}, ${notification.comment_id}, ${notification.comment_content}, ${notification.source_locale}, ${notification.create_date}, ${notification.is_read})
+          INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, type, source_locale, create_date, is_read)
+          VALUES (
+            ${notification.id}, 
+            ${notification.source_user_name}, 
+            ${notification.source_user_img}, 
+            ${notification.target_user_name}, 
+            ${notification.post_id}, 
+            ${notification.post_title}, 
+            ${notification.comment_id ?? null}, 
+            ${notification.comment_content ?? null}, 
+            ${notification.type}, 
+            ${notification.source_locale}, 
+            ${notification.create_date}, 
+            ${notification.is_read}
+          )
           ON CONFLICT (id) DO NOTHING;
         `;
       }),
