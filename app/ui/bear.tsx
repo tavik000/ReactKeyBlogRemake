@@ -33,13 +33,14 @@ export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(
                 const snout = document.querySelector(".snout");
                 const ballon = document.querySelector(".ballon");
 
-                if (ears) followCursor(ears, -4, -4);
-                if (head) followCursor(head, 6, 6);
-                if (eyes) followCursor(eyes, 4.8, 4.8);
-                if (blushes) followCursor(blushes, 4.8, 4.8);
-                if (snout) followCursor(snout, 2.25, 2.85);
-                if (nose) followCursor(nose, 1.5, 1.8);
-                if (ballon) followCursor(ballon, 15, 15);
+                const yAnimationScale = 1.4;
+                if (ears) followCursor(ears, -4, -4 * yAnimationScale);
+                if (head) followCursor(head, 6, 6 * yAnimationScale);
+                if (eyes) followCursor(eyes, 4.8, 4.8 * yAnimationScale);
+                if (blushes) followCursor(blushes, 4.8, 4.8 * yAnimationScale);
+                if (snout) followCursor(snout, 2.25, 2.85 * yAnimationScale);
+                if (nose) followCursor(nose, 1.5, 1.8 * yAnimationScale);
+                if (ballon) followCursor(ballon, 15, 15 * yAnimationScale);
 
                 if (bearBlushes && bearBlushes.length > 0) {
                     bearBlushes.forEach(blush => {
