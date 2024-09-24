@@ -73,7 +73,7 @@ export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(
             return () => {
                 window.removeEventListener("mousemove", mousemove);
             };
-        }, []);
+        }, [mousemove]);
 
         return (
             <div id="curious-bear"
