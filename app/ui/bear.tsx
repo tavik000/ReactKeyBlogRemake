@@ -21,10 +21,7 @@ export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(
         // init cursor position
         let cursorPos = { x: 0, y: 0 };
 
-        const mousemove = (e: { clientX: any; clientY: any; }) => {
-            cursorPos = { x: e.clientX, y: e.clientY }
-            updateFollow();
-        }
+       
 
         const followCursor = (el: Element, xRatio: number, yRatio: number) => {
             const elOffset = el.getBoundingClientRect();
@@ -68,12 +65,16 @@ export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(
         }
 
         useEffect(() => {
+ const mousemove = (e: { clientX: any; clientY: any; }) => {
+            cursorPos = { x: e.clientX, y: e.clientY }
+            updateFollow();
+        }
             window.addEventListener("mousemove", mousemove);
 
             return () => {
                 window.removeEventListener("mousemove", mousemove);
             };
-        }, [mousemove]);
+        }, []);
 
         return (
             <div id="curious-bear"
