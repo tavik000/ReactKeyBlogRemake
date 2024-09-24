@@ -1,6 +1,6 @@
 'use client';
 import PostSearch from './post-search';
-import { CreatePostButton, LanguageButton, TagButton } from '@/app/ui/button';
+import { CreatePostButton, LanguageButton, NotificationButton, TagButton } from '@/app/ui/button';
 import { UserButton } from './user-button';
 import { useEffect, useState } from 'react';
 import { sniglet } from '@/app/ui/fonts';
@@ -78,7 +78,12 @@ export default function PostHeader({
             <TagButton href="/en/tag/manage" />
           </>
         ) : null}
+
         <LanguageButton isHidden={isHidden} />
+
+        {session?.user ? (
+          <NotificationButton />
+        ) : null}
         <UserButton />
       </div>
     </div>

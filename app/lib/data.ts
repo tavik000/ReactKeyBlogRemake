@@ -467,13 +467,13 @@ export async function fetchPostCommentById(commentId: string) {
 }
 
 
-export async function fetchAllNotificationByTargetUserName( targetUserName: string) {
+export async function fetchAllNotificationByTargetUserName(targetUserName: string) {
   noStore();
 
   console.log('fetchAllNotificationByTargetUserName, targetUserName: ' + targetUserName);
 
   try {
-    const data = await sql<PostComment>`
+    const data = await sql<Notification>`
     SELECT
       id,
       source_user_name,
@@ -490,7 +490,7 @@ export async function fetchAllNotificationByTargetUserName( targetUserName: stri
     FROM notifications
     WHERE target_user_name=${targetUserName};
   `;
-    const notifications = data.rows[0];
+    const notifications = data.rows;
     return notifications;
   } catch (error) {
     console.error('Database Error:', error);

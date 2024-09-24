@@ -12,6 +12,7 @@ import { LoginOpenFromPostProvider } from '@/app/components/context/login-open-f
 import { LocaleProvider } from '@/app/components/context/locale-provider';
 import { SessionProvider } from '../components/context/session-provider';
 import LoginSuccessfulBanner from '../ui/login-successful-banner';
+import { fetchAllNotificationByTargetUserName } from '../lib/data';
 
 export const experimental_ppr = true;
 
@@ -35,6 +36,10 @@ export default async function RootLayout({
   const locale = GetLocaleFromLang(lang);
   const dict = (await getDictionary(locale)) as DictStructure;
   const session = await auth();
+  if (session?.user) { 
+    const notifications = session?.user?.name ? await fetchAllNotificationByTargetUserName(session.user.name) : [];
+    console.log('notifications', notifications);
+  }
 
 
 
