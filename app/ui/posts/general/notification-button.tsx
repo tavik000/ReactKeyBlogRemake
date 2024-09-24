@@ -54,7 +54,7 @@ export function NotificationButton() {
             <Dropdown
                 radius="sm"
                 classNames={{
-                    content: "py-1 px-1 border border-default-200 rounded-lg border-spacing-4 bg-gradient-to-br from-white to-gray-100",
+                    content: "py-1 px-1 border border-default-200 rounded-lg border-spacing-4 bg-gradient-to-br from-white to-gray-100 w-auto",
                 }}
             >
                 <DropdownTrigger>
@@ -64,7 +64,7 @@ export function NotificationButton() {
                 <DropdownMenu
                     aria-label="Notification"
                     variant="solid"
-                    className="p-3"
+                    className="p-3 w-80"
                     onAction={(key) => {
                         if (key === "edit") {
                             // onEdit();
@@ -77,7 +77,7 @@ export function NotificationButton() {
                     }}
                 >
                     {/* <DropdownSection title={dict.notification.title} /> */}
-                    <DropdownSection title="Notificaitons" showDivider >
+                    <DropdownSection title="Notification" showDivider className="">
                         {notifications.map((notification) => (
                             <DropdownItem
                                 key={notification.id}
@@ -92,7 +92,9 @@ export function NotificationButton() {
                                     />
                                 }
                             >
-                                {notification.comment_content}
+                                <div className="w-32">
+                                    <p>{notification.comment_content}</p>
+                                </div>
                             </DropdownItem>
                         ))}
                     </DropdownSection>
