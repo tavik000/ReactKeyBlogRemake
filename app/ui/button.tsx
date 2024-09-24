@@ -115,13 +115,6 @@ export function TagButton({ href }: { href: string }) {
   );
 }
 
-export function NotificationButton() {
-  return (
-    <div className="mr-6 flex items-center gap-8 text-black ">
-      <BellIcon className="h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
-    </div>
-  );
-}
 
 export function ShareButton({ ...rest }: ButtonProps) {
   return (
