@@ -19,56 +19,55 @@ export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(
         });
 
         // init cursor position
-        let cursorPos = { x: 0, y: 0 };
-
-       
-
-        const followCursor = (el: Element, xRatio: number, yRatio: number) => {
-            const elOffset = el.getBoundingClientRect();
-            const centerX = elOffset.x + elOffset.width / 2;
-            const centerY = elOffset.y + elOffset.height / 2;
-            const distanceLeft = Math.round(((cursorPos.x - centerX) * 100) / window.innerWidth);
-            const distanceTop = Math.round(((cursorPos.y - centerY) * 100) / window.innerHeight);
-            (el as HTMLElement).style.transform = `translate(${distanceLeft / xRatio}px, ${distanceTop / yRatio}px)`;
-        }
-
-        const updateFollow = () => {
-            const eyes = document.querySelector(".eyes");
-            const blushes = document.querySelector(".blushes");
-            const bearBlushes = document.querySelectorAll(".bear-blush");
-            const bearEyes = document.querySelectorAll(".bear-eye");
-            const head = document.querySelector(".head");
-            const ears = document.querySelector(".ears");
-            const nose = document.querySelector(".nose");
-            const snout = document.querySelector(".snout");
-            const ballon = document.querySelector(".ballon");
-
-            if (ears) followCursor(ears, -4, -4);
-            if (head) followCursor(head, 6, 6);
-            if (eyes) followCursor(eyes, 4.8, 4.8);
-            if (blushes) followCursor(blushes, 4.8, 4.8);
-            if (snout) followCursor(snout, 2.25, 2.85);
-            if (nose) followCursor(nose, 1.5, 1.8);
-            if (ballon) followCursor(ballon, 15, 15);
-
-            if (bearBlushes && bearBlushes.length > 0) {
-                bearBlushes.forEach(blush => {
-                    (blush as HTMLElement).style.top = "-9.15rem";
-                });
-            }
-
-            if (bearEyes && bearEyes.length > 0) {
-                bearEyes.forEach(eye => {
-                    (eye as HTMLElement).style.top = "-10.5rem";
-                });
-            }
-        }
+        const cursorPos = useRef({ x: 0, y: 0 });
 
         useEffect(() => {
- const mousemove = (e: { clientX: any; clientY: any; }) => {
-            cursorPos = { x: e.clientX, y: e.clientY }
-            updateFollow();
-        }
+            const updateFollow = () => {
+                const eyes = document.querySelector(".eyes");
+                const blushes = document.querySelector(".blushes");
+                const bearBlushes = document.querySelectorAll(".bear-blush");
+                const bearEyes = document.querySelectorAll(".bear-eye");
+                const head = document.querySelector(".head");
+                const ears = document.querySelector(".ears");
+                const nose = document.querySelector(".nose");
+                const snout = document.querySelector(".snout");
+                const ballon = document.querySelector(".ballon");
+
+                if (ears) followCursor(ears, -4, -4);
+                if (head) followCursor(head, 6, 6);
+                if (eyes) followCursor(eyes, 4.8, 4.8);
+                if (blushes) followCursor(blushes, 4.8, 4.8);
+                if (snout) followCursor(snout, 2.25, 2.85);
+                if (nose) followCursor(nose, 1.5, 1.8);
+                if (ballon) followCursor(ballon, 15, 15);
+
+                if (bearBlushes && bearBlushes.length > 0) {
+                    bearBlushes.forEach(blush => {
+                        (blush as HTMLElement).style.top = "-9.15rem";
+                    });
+                }
+
+                if (bearEyes && bearEyes.length > 0) {
+                    bearEyes.forEach(eye => {
+                        (eye as HTMLElement).style.top = "-10.5rem";
+                    });
+                }
+            }
+
+
+            const followCursor = (el: Element, xRatio: number, yRatio: number) => {
+                const elOffset = el.getBoundingClientRect();
+                const centerX = elOffset.x + elOffset.width / 2;
+                const centerY = elOffset.y + elOffset.height / 2;
+                const distanceLeft = Math.round(((cursorPos.current.x - centerX) * 100) / window.innerWidth);
+                const distanceTop = Math.round(((cursorPos.current.y - centerY) * 100) / window.innerHeight);
+                (el as HTMLElement).style.transform = `translate(${distanceLeft / xRatio}px, ${distanceTop / yRatio}px)`;
+            }
+
+            const mousemove = (e: { clientX: any; clientY: any; }) => {
+                cursorPos.current = { x: e.clientX, y: e.clientY };
+                updateFollow();
+            }
             window.addEventListener("mousemove", mousemove);
 
             return () => {
