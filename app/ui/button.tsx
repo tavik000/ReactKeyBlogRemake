@@ -5,6 +5,7 @@ import {
   TagIcon,
   PencilSquareIcon,
 } from '@heroicons/react/24/outline';
+import { BellIcon } from '@heroicons/react/24/solid';
 import LanguageDropdown, { LanguageItem } from './language-dropdown';
 import { useLocaleContext } from '../components/context/locale-provider';
 import { GetLanguageName } from '../lib/constants';
@@ -114,6 +115,13 @@ export function TagButton({ href }: { href: string }) {
   );
 }
 
+export function NotificationButton() {
+  return (
+    <div className="mr-6 flex items-center gap-8 text-black ">
+      <BellIcon className="h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+    </div>
+  );
+}
 
 export function ShareButton({ ...rest }: ButtonProps) {
   return (
