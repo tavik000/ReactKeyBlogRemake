@@ -1121,6 +1121,44 @@ export async function unlikePostWithAllLanguages(
   }
 }
 
+export async function createLikePostNotificationForPostAuthor(
+  sourceUserName: string,
+  sourceUserImage: string,
+  postId: string,
+  postTitle: string,
+  sourceLocale: string,
+  client: VercelPoolClient,
+) {
+  console.log('createLikePostNotificationForAuthor, postTitle: ' + postTitle + ', postId: ' + postId + ', sourceUserName: ' + sourceUserName);
+
+  try {
+    const type = 'like';
+    const create_date = new Date().toISOString().split('T')[0];
+    const isRead = false;
+    const id = require('uuid').v4();
+    const targetUserName = keyName;
+    const commentId = null;
+    const commentContent = null;
+
+    const createNotificationQuery = format(
+      `
+        INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, type, source_locale, create_date, is_read)
+        VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
+        ON CONFLICT (id) DO NOTHING;
+        `,
+      id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date, isRead,
+    );
+
+    const createNotification = await client.query(createNotificationQuery);
+    console.log('create like post notification successfully sourceUserName: ' + sourceUserName);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to create notification',
+    };
+  }
+}
+
 export async function createCommentNotificationForTargetUserList(
   targetUserNameList: string[],
   sourceUserName: string,
@@ -1154,8 +1192,46 @@ export async function createCommentNotificationForTargetUserList(
       );
 
       const createNotification = await client.query(createNotificationQuery);
-      console.log('createNotification successfully targetUserName: ' + targetUserName);
+      console.log('create comment notification successfully targetUserName: ' + targetUserName);
     }
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to create notification',
+    };
+  }
+}
+
+export async function createLikeCommentNotificationForCommentAuthor(
+  targetUserName: string,
+  sourceUserName: string,
+  sourceUserImage: string,
+  postId: string,
+  postTitle: string,
+  commentId: string,
+  commentContent: string,
+  sourceLocale: string,
+  client: VercelPoolClient
+) {
+  console.log('createLikeCommentNotificationForCommentAuthor, postTitle: ' + postTitle + ', postId: ' + postId + ', commentId: ' + commentId + ', commentContent: ' + commentContent + ', sourceUserName: ' + sourceUserName + ', targetUserName: ' + targetUserName);
+
+  try {
+    const type = 'like';
+    const create_date = new Date().toISOString().split('T')[0];
+    const isRead = false;
+    const id = require('uuid').v4;
+
+    const createNotificationQuery = format(
+      `
+        INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, type, source_locale, create_date, is_read)
+        VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
+        ON CONFLICT (id) DO NOTHING;
+        `,
+      id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date, isRead,
+    );
+
+    const createNotification = await client.query(createNotificationQuery);
+    console.log('create like comment notification successfully targetUserName: ' + targetUserName);
   } catch (error) {
     console.log(error);
     return {
