@@ -50,7 +50,7 @@ export function LanguageButton({
   isHidden: boolean;
 }) {
 
-  const { locale, lang } = useLocaleContext();
+  const { locale } = useLocaleContext();
 
   const languageItems: LanguageItem = {
     title: GetLanguageName(locale),
