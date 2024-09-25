@@ -18,7 +18,7 @@ export default function Page({
   const locale = GetLocaleFromLang(lang);
 
   return (
-    <main className="light text-foreground bg-background flex min-h-screen flex-col">
+    <main className="light text-foreground flex min-h-screen flex-col">
         <Suspense fallback={<PostOverviewSkeleton />}>
           <PostOverview searchParams={searchParams} locale={locale} />
         </Suspense>
