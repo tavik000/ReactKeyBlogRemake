@@ -28,14 +28,15 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-export function NotificationButton() {
+export function NotificationButton( { isHidden }: { isHidden: boolean }) {
+
     const { dict } = useLocaleContext();
     const { notifications } = useNotificationContext();
     const sessionContext = useSessionContext();
 
     const isLogin = !!sessionContext.session;
 
-    if (!isLogin) {
+    if (!isLogin || isHidden) {
         return null;
     }
 
@@ -69,7 +70,7 @@ export function NotificationButton() {
 
     return (
         <div className="flex items-center gap-8 text-black ">
-            <DropdownMenu>
+            <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                     <BellIcon className="mr-6 h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
                 </DropdownMenuTrigger>

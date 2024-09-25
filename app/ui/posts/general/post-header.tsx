@@ -85,7 +85,7 @@ export default function PostHeader({
         ) : null}
 
         <LanguageButton isHidden={isHidden} />
-        <NotificationButton />
+        <NotificationButton isHidden={isHidden} />
         <UserButton />
       </div>
     </div>
