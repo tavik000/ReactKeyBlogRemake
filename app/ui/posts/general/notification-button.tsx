@@ -68,13 +68,13 @@ export function NotificationButton() {
     }
 
     return (
-        <div className="mr-6 flex items-center gap-8 text-black ">
+        <div className="flex items-center gap-8 text-black ">
             <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                    <BellIcon className="h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+                    <BellIcon className="mr-6 h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
                 </DropdownMenuTrigger>
                 {/* TODO localization */}
-                <DropdownMenuContent align="start" className="p-3 w-80" >
+                <DropdownMenuContent align="start" className="p-3 w-80 -translate-x-16 translate-y-2" >
                     {/* <DropdownSection title={dict.notification.title} /> */}
 
                     <DropdownMenuLabel>Notification</DropdownMenuLabel>
