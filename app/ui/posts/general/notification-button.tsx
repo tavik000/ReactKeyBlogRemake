@@ -25,6 +25,7 @@ import {
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { ScrollArea } from "@/components/ui/scroll-area"
 import { keyName } from "@/app/lib/constants";
 
 export function NotificationButton({ isHidden }: { isHidden: boolean }) {
@@ -118,32 +119,34 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                     <DropdownMenuLabel>Notification</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup title="Notification" className="">
-                        {notifications.map((notification) => (
-                            <DropdownMenuItem
-                                key={notification.id}
-                            >
-                                <div className="mt-2 flex flex-row hover:cursor-pointer">
-                                    <Avatar className="flex w-8 h-8">
-                                        <AvatarImage src={notification.source_user_img} alt={notification.source_user_name} />
-                                        <AvatarFallback>{notification.source_user_name}</AvatarFallback>
-                                    </Avatar>
-                                    <div className="flex flex-col ml-4">
-                                        <div className="flex">
-                                            <NotificationFormatContent notification={notification} />
-                                        </div>
-                                        <div className="flex mt-1">
-                                            <p className="text-gray-400 text-xs">{notification.create_date
-                                                .toDateString()
-                                                .split(' ')
-                                                .slice(1)
-                                                .join(' ')
-                                                .replace(/(?<=\d) /, ', ')}
-                                            </p>
+                        <ScrollArea className="h-[500px]">
+                            {notifications.map((notification) => (
+                                <DropdownMenuItem
+                                    key={notification.id}
+                                >
+                                    <div className="mt-2 flex flex-row hover:cursor-pointer">
+                                        <Avatar className="flex w-8 h-8">
+                                            <AvatarImage src={notification.source_user_img} alt={notification.source_user_name} />
+                                            <AvatarFallback>{notification.source_user_name}</AvatarFallback>
+                                        </Avatar>
+                                        <div className="flex flex-col ml-4">
+                                            <div className="flex">
+                                                <NotificationFormatContent notification={notification} />
+                                            </div>
+                                            <div className="flex mt-1">
+                                                <p className="text-gray-400 text-xs">{notification.create_date
+                                                    .toDateString()
+                                                    .split(' ')
+                                                    .slice(1)
+                                                    .join(' ')
+                                                    .replace(/(?<=\d) /, ', ')}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </DropdownMenuItem>
-                        ))}
+                                </DropdownMenuItem>
+                            ))}
+                        </ScrollArea>
                     </DropdownMenuGroup>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup title="Delete">
