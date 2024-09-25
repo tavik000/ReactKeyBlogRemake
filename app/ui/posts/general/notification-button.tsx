@@ -2,9 +2,26 @@
 
 import { useNotificationContext } from "@/app/components/context/notification-provider";
 import { useSessionContext } from "@/app/components/context/session-provider";
-import { Dropdown, DropdownMenu, DropdownTrigger, DropdownItem, DropdownSection, User } from "@nextui-org/react";
+// import { Dropdown, DropdownMenu, DropdownTrigger, DropdownItem, DropdownSection, User } from "@nextui-org/react";
+
 import { useLocaleContext } from '@/app/components/context/locale-provider';
 import { BellIcon } from "@heroicons/react/24/solid";
+
+import { Button } from "@/components/ui/button"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function NotificationButton() {
     const { dict } = useLocaleContext();
@@ -20,69 +37,48 @@ export function NotificationButton() {
     if (!notifications || notifications.length === 0) {
         return (
             <div className="mr-6 flex items-center gap-8 text-black ">
-                <Dropdown
-                    radius="sm"
-                    classNames={{
-                        content: "py-1 px-1 border border-default-200 rounded-lg border-spacing-4 bg-gradient-to-br from-white to-gray-100",
-                    }}
-                >
-                    <DropdownTrigger>
+                <DropdownMenu >
+                    <DropdownMenuTrigger>
                         <BellIcon className="h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
-                    </DropdownTrigger>
+                    </DropdownMenuTrigger>
                     {/* TODO localization */}
-                    <DropdownMenu
+                    <DropdownMenuContent
                         aria-label="Notification"
-                        variant="solid"
                         className="p-3"
                     >
-                        <DropdownSection title="Notificaitons" showDivider >
-                            <DropdownItem
+                        <DropdownMenuLabel>Notification</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuGroup title="Notifications" >
+                            <DropdownMenuItem
                                 key="no-notifications"
                                 className="text-gray-500 hover:cursor-default"
                             >
                                 No notifications
-                            </DropdownItem>
-                        </DropdownSection>
-                    </DropdownMenu>
-                </Dropdown>
+                            </DropdownMenuItem>
+                        </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         )
     }
 
     return (
         <div className="mr-6 flex items-center gap-8 text-black ">
-            <Dropdown
-                radius="sm"
-                classNames={{
-                    content: "py-1 px-1 border border-default-200 rounded-lg border-spacing-4 bg-gradient-to-br from-white to-gray-100 w-auto",
-                }}
-            >
-                <DropdownTrigger>
+            <DropdownMenu >
+                <DropdownMenuTrigger>
                     <BellIcon className="h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
-                </DropdownTrigger>
+                </DropdownMenuTrigger>
                 {/* TODO localization */}
-                <DropdownMenu
-                    aria-label="Notification"
-                    variant="solid"
-                    className="p-3 w-80"
-                    onAction={(key) => {
-                        if (key === "edit") {
-                            // onEdit();
-                        } else if (key === "delete") {
-                            // onOpen();
-                        }
-                        else {
-                            console.error('Unexpected key type:', typeof key);
-                        }
-                    }}
-                >
+                <DropdownMenuContent className="p-3 w-80" >
                     {/* <DropdownSection title={dict.notification.title} /> */}
-                    <DropdownSection title="Notification" showDivider className="">
+
+                        <DropdownMenuLabel>Notification</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                    <DropdownMenuGroup title="Notification" className="">
                         {notifications.map((notification) => (
-                            <DropdownItem
+                            <DropdownMenuItem
                                 key={notification.id}
-                                description={notification.create_date.toDateString()}
-                                startContent={
+                            >
                                     <User
                                         name={notification.source_user_name}
                                         avatarProps={{
@@ -90,8 +86,6 @@ export function NotificationButton() {
                                             src: notification.source_user_img,
                                         }}
                                     />
-                                }
-                            >
                                 <div className="w-32">
                                     <p>{notification.comment_content}</p>
                                 </div>
