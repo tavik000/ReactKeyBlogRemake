@@ -27,10 +27,11 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { keyName } from "@/app/lib/constants";
+import Link from "next/link";
 
 export function NotificationButton({ isHidden }: { isHidden: boolean }) {
 
-    const { dict } = useLocaleContext();
+    const { lang, dict } = useLocaleContext();
     const { notifications } = useNotificationContext();
     const sessionContext = useSessionContext();
 
@@ -47,8 +48,29 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
         return text;
     }
 
+
+    function GetNotificationLink(notification: Notification): string {
+        // TODO localization for post_title
+
+        const urlRegex = /\s/g;
+        const url_title = notification.post_title.toLowerCase().replace(urlRegex, '-');
+        let url = '';
+        if (notification.type === 'comment') {
+            url = `/${lang}/posts/${url_title}/${notification.post_id}#comment-${notification.comment_id}`;
+        } else if (notification.type === 'like') {
+            if (notification.comment_id == null) {
+                url = `/${lang}/posts/${url_title}/${notification.post_id}`;
+            } else {
+                url = `/${lang}/posts/${url_title}/${notification.post_id}#comment-${notification.comment_id}`;
+            }
+        }
+        console.log('notification link', url);
+        return url;
+    }
+
+
     const NotificationFormatContent = ({ notification }: { notification: Notification }) => {
-        // TODO localization
+        // TODO localization for format, and post title
         const truncatedPostTitle = truncateText(notification.post_title, 100);
         let truncatedCommentContent = '';
         if (notification.comment_content) {
@@ -124,7 +146,9 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                                 <DropdownMenuItem
                                     key={notification.id}
                                 >
-                                    <div className="mt-2 flex flex-row hover:cursor-pointer">
+                                    <Link
+                                        className="mt-2 flex flex-row hover:cursor-pointer"
+                                        href={GetNotificationLink(notification)}>
                                         <Avatar className="flex w-8 h-8">
                                             <AvatarImage src={notification.source_user_img} alt={notification.source_user_name} />
                                             <AvatarFallback>{notification.source_user_name}</AvatarFallback>
@@ -143,7 +167,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                                                 </p>
                                             </div>
                                         </div>
-                                    </div>
+                                    </Link>
                                 </DropdownMenuItem>
                             ))}
                         </ScrollArea>

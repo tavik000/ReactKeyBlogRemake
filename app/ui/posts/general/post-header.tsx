@@ -58,7 +58,6 @@ export default function PostHeader({
   const { lastScrollY, isLoaded } = useScrollDirection();
   const { notifications } = useNotificationContext();
 
-  console.log('post header notification ', notifications);
 
   const isHidden = lastScrollY < groundPosHeight || !isLoaded;
 
