@@ -138,7 +138,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                     <div className="flex mr-6 relative items-center">
                         <BellIcon className="flex h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
                         {unreadNotificationsCount > 0 && (
-                            <div id="counter" className="absolute -top-1 -right-1 flex p-1 w-4 h-4 bg-red-500 text-white text-xs rounded-lg items-center justify-center">
+                            <div id="counter" className="absolute -top-1 -right-1 flex p-1 w-4 h-4 bg-orange-500 text-white text-xs rounded-lg items-center justify-center">
                                 {unreadNotificationsCount}
                             </div>
                         )}
