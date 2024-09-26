@@ -38,7 +38,7 @@ export default function PostViewClient({
   const [isLikeDisabled, setIsLikeDisabled] = useState(false);
   const [isShowingClickEffect, setIsShowingClickEffect] = useState(false);
   const isSelfPost = sessionContext.session?.user?.name === post.author;
-  const notifyTargetUserList = [keyName, ...comments.map(comment => comment.user_name)];
+  const notifyTargetUserList = Array.from(new Set([keyName, ...comments.map(comment => comment.user_name)]));
 
 
   const handleClickLike = () => {
