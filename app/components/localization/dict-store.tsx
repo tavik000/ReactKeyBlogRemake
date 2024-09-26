@@ -40,4 +40,14 @@ export interface DictStructure {
     areYouSureDeleteComment: string;
     close: string;
   };
+  notification: {
+    notificationTitle: string;
+    noNotification: string;
+    clearAllNotification: string;
+    commented: string;
+    onPost: string;
+    like: string;
+    yourPost: string;
+    yourComment: string;
+  };
 }

@@ -39,5 +39,15 @@
     "caution": "注意",
     "areYouSureDeleteComment": "你確定要刪除此評論嗎？",
     "close": "關閉"
+  },
+  "notification": {
+    "notificationTitle": "通知",
+    "noNotification": "沒有通知",
+    "clearAllNotification": "清除所有通知",
+    "commented": "發表了評論",
+    "onPost": "在你訂閱的文章上",
+    "like": "點了讚",
+    "yourPost": "對你的文章",
+    "yourComment": "對你的評論"
   }
 }

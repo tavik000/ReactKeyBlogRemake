@@ -39,5 +39,15 @@
     "caution": "注意",
     "areYouSureDeleteComment": "このコメントを削除してもよろしいですか？",
     "close": "閉じる"
+  },
+  "notification": {
+    "notificationTitle": "通知",
+    "noNotification": "通知はありません",
+    "clearAllNotification": "すべてクリア",
+    "commented": "コメントしました",
+    "onPost": "があなたが購読している記事に",
+    "like": "いいねしました",
+    "yourPost": "あなたの記事に",
+    "yourComment": "あなたのコメントに"
   }
 }

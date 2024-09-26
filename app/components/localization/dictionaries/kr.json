@@ -39,5 +39,15 @@
     "caution": "주의",
     "areYouSureDeleteComment": "이 댓글을 삭제하시겠습니까?",
     "close": "닫기"
+  },
+  "notification": {
+    "notificationTitle": "알림",
+    "noNotification": "알림이 없습니다",
+    "clearAllNotification": "모두 지우기",
+    "commented": "댓글을 달았습니다",
+    "onPost": "님이 구독한 글에",
+    "like": "좋아요를 눌렀습니다",
+    "yourPost": "님의 글에",
+    "yourComment": "님의 댓글에"
   }
 }
