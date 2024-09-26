@@ -53,7 +53,7 @@ export default function PostInteraction({
             }}
           />
         </InteractIcon>
-        <InteractIcon count={commentCount} shouldShowCount={commentCount > 0} tooltipContent='Comment'>
+        <InteractIcon count={commentCount} shouldShowCount={commentCount > 0} tooltipContent={dict.post.comment}>
           <ChatBubbleLeftIcon
             className="flex h-6 w-6 align-middle hover:cursor-pointer hover:text-orange-500"
             color="#757575"
