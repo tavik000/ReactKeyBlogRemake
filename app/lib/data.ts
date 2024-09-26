@@ -488,7 +488,8 @@ export async function fetchAllNotificationByTargetUserName(targetUserName: strin
       create_date,
       is_read
     FROM notifications
-    WHERE target_user_name=${targetUserName};
+    WHERE target_user_name=${targetUserName}
+    ORDER BY create_date DESC
   `;
     const notifications = data.rows;
     return notifications;
