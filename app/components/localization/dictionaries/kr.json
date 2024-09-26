@@ -44,8 +44,10 @@
     "notificationTitle": "알림",
     "noNotification": "알림이 없습니다",
     "clearAllNotification": "모두 지우기",
-    "commented": "댓글을 달았습니다",
+    "commented": "댓글",
+    "ed": "을 달았습니다",
     "onPost": "님이 구독한 글에",
+    "at": "에",
     "like": "좋아요를 눌렀습니다",
     "yourPost": "님의 글에",
     "yourComment": "님의 댓글에"

@@ -45,7 +45,9 @@ export interface DictStructure {
     noNotification: string;
     clearAllNotification: string;
     commented: string;
+    ed: string;
     onPost: string;
+    on: string;
     like: string;
     yourPost: string;
     yourComment: string;

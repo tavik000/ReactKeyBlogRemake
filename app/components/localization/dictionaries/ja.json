@@ -44,10 +44,12 @@
     "notificationTitle": "通知",
     "noNotification": "通知はありません",
     "clearAllNotification": "すべてクリア",
-    "commented": "コメントしました",
-    "onPost": "があなたが購読している記事に",
-    "like": "いいねしました",
-    "yourPost": "あなたの記事に",
-    "yourComment": "あなたのコメントに"
+    "commented": "コメント",
+    "ed": "しました",
+    "onPost": "さんがあなたが購読している記事",
+    "on": "に",
+    "like": "いいね",
+    "yourPost": "さんがあなたの記事",
+    "yourComment": "さんがあなたのコメント"
   }
 }

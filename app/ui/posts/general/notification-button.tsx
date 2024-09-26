@@ -10,7 +10,6 @@ import {
     AvatarFallback,
     AvatarImage,
 } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -27,20 +26,23 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { keyName } from "@/app/lib/constants";
-import Link from "next/link";
 import { deleteAllNotificationByTargetUserName, setNotificationIsRead } from "@/app/lib/actions";
 import { useEffect, useState } from "react";
+import { useRouter } from 'next/navigation'
+
 
 export function NotificationButton({ isHidden }: { isHidden: boolean }) {
 
-    const { lang, dict } = useLocaleContext();
-    const { notifications } = useNotificationContext();
+    const router = useRouter();
+    const { locale, lang, dict } = useLocaleContext();
+    const { notifications, setNotifications } = useNotificationContext();
     const sessionContext = useSessionContext();
 
     const [unreadNotificationsCount, setUnreadNotificationsCount] = useState(0);
     const [isClearAllNotifications, setIsClearAllNotifications] = useState(false);
 
     const isLogin = !!sessionContext.session;
+
 
     useEffect(() => {
         if (notifications === undefined) return;
@@ -57,6 +59,17 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
         return null;
     }
 
+    function setNotificationIsReadByIdClient(notificationId: string, isRead: boolean) {
+        if (notifications === null) return;
+        const updatedNotifications = notifications.map(notification => {
+            if (notification.id === notificationId) {
+                notification.is_read = isRead;
+            }
+            return notification;
+        });
+        setNotifications(updatedNotifications);
+    }
+
     function truncateText(text: string, maxLength: number) {
         if (text.length > maxLength) {
             return text.substring(0, maxLength) + '...';
@@ -66,10 +79,24 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
 
 
     function GetNotificationLink(notification: Notification): string {
-        // TODO localization for post_title
-
         const urlRegex = /\s/g;
-        const url_title = notification.post_title.toLowerCase().replace(urlRegex, '-');
+
+        let postTitle = '';
+        switch (notification.source_locale) {
+            case 'en':
+                postTitle = notification.post_title as string;
+                break;
+            case 'ja':
+                postTitle = encodeURI(notification.post_title as string);
+                break;
+            case 'kr':
+                postTitle = encodeURI(notification.post_title as string);
+                break;
+            case 'hk':
+                postTitle = encodeURI(notification.post_title as string);
+                break;
+        }
+        const url_title = postTitle.toLowerCase().replace(urlRegex, '-');
         let url = '';
         if (notification.type === 'comment') {
             url = `/${lang}/posts/${url_title}/${notification.post_id}#comment-${notification.comment_id}`;
@@ -86,7 +113,6 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
 
 
     const NotificationFormatContent = ({ notification }: { notification: Notification }) => {
-        // TODO localization for format, and post title
         const truncatedPostTitle = truncateText(notification.post_title, 100);
         let truncatedCommentContent = '';
         if (notification.comment_content) {
@@ -94,24 +120,65 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
         }
         if (notification.type === 'comment') {
             if (notification.target_user_name === keyName) {
-                return (
-                    <p>{notification.source_user_name} <strong>commented</strong> on your article <strong>{truncatedPostTitle}</strong>: &quot;{truncatedCommentContent}&quot;</p>
-                )
+                if (locale === 'ja' || locale === 'kr') {
+                    return (
+                        <p>{notification.source_user_name} {dict.notification.yourPost} <strong>{truncatedPostTitle}</strong> {dict.notification.on}<strong>{dict.notification.commented}</strong>{dict.notification.ed}: &quot;{truncatedCommentContent}&quot;</p>
+                    )
+                } else if (locale === 'en') {
+                    return (
+                        <p>{notification.source_user_name} <strong>{dict.notification.commented}</strong> {dict.notification.on} {dict.notification.yourPost} <strong>{truncatedPostTitle}</strong>: &quot;{truncatedCommentContent}&quot;</p>
+                    )
+                } else if (locale === 'hk') {
+                    return (
+                        <p>{notification.source_user_name} {dict.notification.yourPost} <strong>{truncatedPostTitle}</strong> {dict.notification.ed}<strong>{dict.notification.commented}</strong>: &quot;{truncatedCommentContent}&quot;</p>
+                    )
+                }
             }
             else {
-                return (
-                    <p>{notification.source_user_name} <strong>commented</strong> on the article you&apos;re subscribed to: <strong>{truncatedPostTitle}</strong></p>
-                )
+                if (locale === 'ja' || locale === 'kr') {
+                    return (
+                        <p>{notification.source_user_name} {dict.notification.onPost} <strong>{truncatedPostTitle}</strong> {dict.notification.on}<strong>{dict.notification.commented}</strong>{dict.notification.ed}</p>
+                    )
+                } else if (locale === 'en') {
+                    return (
+                        <p>{notification.source_user_name} <strong>{dict.notification.commented}</strong> {dict.notification.onPost}: <strong>{truncatedPostTitle}</strong></p>
+                    )
+                } else if (locale === 'hk') {
+                    return (
+                        <p>{notification.source_user_name}  {dict.notification.onPost} <strong>{truncatedPostTitle}</strong> {dict.notification.ed}<strong>{dict.notification.commented}</strong></p>
+                    )
+                }
             }
         } else if (notification.type === 'like') {
             if (notification.comment_id == null) {
-                return (
-                    <p>{notification.source_user_name} <strong>liked</strong> your article <strong>{truncatedPostTitle}</strong></p>
-                )
+
+                if (locale === 'ja' || locale === 'kr') {
+                    return (
+                        <p>{notification.source_user_name} {dict.notification.yourPost} <strong>{truncatedPostTitle}</strong> {dict.notification.on}<strong>{dict.notification.like}</strong>{dict.notification.ed}</p>
+                    )
+                } else if (locale === 'en') {
+                    return (
+                        <p>{notification.source_user_name} <strong>{dict.notification.like}</strong> {dict.notification.yourPost} <strong>{truncatedPostTitle}</strong></p>
+                    )
+                } else if (locale === 'hk') {
+                    return (
+                        <p>{notification.source_user_name} {dict.notification.yourPost} <strong>{truncatedPostTitle}</strong> <strong>{dict.notification.like}</strong></p>
+                    )
+                }
             } else {
-                return (
-                    <p>{notification.source_user_name} <strong>liked</strong> your comment: &quot;{truncatedCommentContent}&quot;</p>
-                )
+                if (locale === 'ja' || locale === 'kr') {
+                    return (
+                        <p>{notification.source_user_name} {dict.notification.yourComment} &quot;{truncatedCommentContent}&quot; {dict.notification.on}<strong>{dict.notification.like}</strong>{dict.notification.ed}</p>
+                    )
+                } else if (locale === 'en') {
+                    return (
+                        <p>{notification.source_user_name} <strong>{dict.notification.like}</strong> {dict.notification.yourComment}: &quot;{truncatedCommentContent}&quot;</p>
+                    )
+                } else if (locale === 'hk') {
+                    return (
+                        <p>{notification.source_user_name} {dict.notification.yourComment} &quot;{truncatedCommentContent}&quot; <strong>{dict.notification.like}</strong></p>
+                    )
+                }
             }
         }
     }
@@ -126,9 +193,8 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                             <BellIcon className="flex h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
                         </div>
                     </DropdownMenuTrigger>
-                    {/* TODO localization */}
                     <DropdownMenuContent align="start" className="p-3 w-80 -translate-x-16 translate-y-2" >
-                        <DropdownMenuLabel>Notification</DropdownMenuLabel>
+                        <DropdownMenuLabel>{dict.notification.notificationTitle}</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup title="Notifications" >
                             <DropdownMenuLabel
@@ -136,7 +202,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                             >
                                 <div className="mt-2 flex relative hover:cursor-default items-center justify-center">
                                     <p className="flex items-center text-center font-bold">
-                                        No notifications
+                                        {dict.notification.noNotification}
                                     </p>
                                 </div>
                             </DropdownMenuLabel>
@@ -161,11 +227,8 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                         )}
                     </div>
                 </DropdownMenuTrigger>
-                {/* TODO localization */}
                 <DropdownMenuContent align="start" className="p-3 w-80 -translate-x-16 translate-y-2" >
-                    {/* <DropdownSection title={dict.notification.title} /> */}
-
-                    <DropdownMenuLabel>Notification</DropdownMenuLabel>
+                    <DropdownMenuLabel>{dict.notification.notificationTitle}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup title="Notification">
                         <ScrollArea className="h-[500px]">
@@ -173,10 +236,17 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                                 <DropdownMenuItem
                                     key={notification.id}
                                 >
-                                    <Link
+                                    <button
                                         className="mt-2 flex flex-row relative hover:cursor-pointer"
-                                        href={GetNotificationLink(notification)}
-                                        onClick={() => setNotificationIsRead(notification.id)}>
+                                        onClick={() => {
+                                            const redirectUrl = GetNotificationLink(notification);
+                                            router.push(redirectUrl);
+                                            if (!notification.is_read) {
+                                                setNotificationIsRead(notification.id,);
+                                                setNotificationIsReadByIdClient(notification.id, true);
+                                            }
+                                        }
+                                        }>
                                         {!notification.is_read && (
                                             <div id="not-read-mark" className="mr-2 mt-[14px] z-10 flex w-1.5 h-1.5 min-w-1.5 min-h-1.5 align-middle bg-orange-500 rounded-sm" />
                                         )}
@@ -198,7 +268,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                                                 </p>
                                             </div>
                                         </div>
-                                    </Link>
+                                    </button>
                                 </DropdownMenuItem>
                             ))}
                         </ScrollArea>
@@ -214,7 +284,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                                         setIsClearAllNotifications(true);
                                     }
                                 }}>
-                                <p className="flex text-center font-bold">Clear All Notifications</p>
+                                <p className="flex text-center font-bold">{dict.notification.clearAllNotification}</p>
                             </button>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>

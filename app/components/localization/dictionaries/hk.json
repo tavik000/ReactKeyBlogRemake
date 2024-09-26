@@ -44,8 +44,10 @@
     "notificationTitle": "通知",
     "noNotification": "沒有通知",
     "clearAllNotification": "清除所有通知",
-    "commented": "發表了評論",
+    "commented": "評論",
+    "ed": "發表了",
     "onPost": "在你訂閱的文章上",
+    "on": "在",
     "like": "點了讚",
     "yourPost": "對你的文章",
     "yourComment": "對你的評論"

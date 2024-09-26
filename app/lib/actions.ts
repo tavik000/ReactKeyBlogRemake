@@ -1254,7 +1254,7 @@ export async function createLikeCommentNotificationForCommentAuthor(
     const id = require('uuid').v4();
 
     const createNotificationQuery = format(
-        `
+      `
         INSERT INTO notifications (id, source_user_name, source_user_img, target_user_name, post_id, post_title, comment_id, comment_content, type, source_locale, create_date, is_read)
         VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
         ON CONFLICT (id) DO NOTHING;
@@ -1276,7 +1276,7 @@ export async function createLikeCommentNotificationForCommentAuthor(
 }
 
 export async function setNotificationIsRead(
-  notificationId: string
+  notificationId: string,
 ) {
   try {
     const client = await db.connect();
@@ -1291,6 +1291,8 @@ export async function setNotificationIsRead(
 
     const updateNotification = await client.query(updateNotificationQuery);
     console.log('updateNotification is_read successfully id: ' + notificationId);
+
+
   } catch (error) {
     console.log(error);
     return {
