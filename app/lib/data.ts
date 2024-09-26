@@ -439,13 +439,13 @@ export async function fetchPostById(id: string, locale: string) {
   }
 }
 
-export async function fetchPostCommentById(commentId: string) {
+export async function fetchPostCommentByPostId(postId: string) {
   noStore();
 
-  console.log('fetchPostCommentById, commentId: ' + commentId);
+  console.log('fetchPostCommentByPostId, postId: ' + postId);
 
   try {
-    const data = await sql<PostComment>`
+    const data = await sql<PostComment[]>`
     SELECT
       id,
       post_id,
@@ -456,13 +456,13 @@ export async function fetchPostCommentById(commentId: string) {
       modify_date,
       likes
     FROM comments
-    WHERE id=${commentId};
+    WHERE post_id=${postId};
   `;
-    const comment = data.rows[0];
-    return comment;
+    const comments = data.rows;
+    return comments;
   } catch (error) {
     console.error('Database Error:', error);
-    throw new Error('Failed to fetch post comment.');
+    throw new Error('Failed to fetch post comments.');
   }
 }
 

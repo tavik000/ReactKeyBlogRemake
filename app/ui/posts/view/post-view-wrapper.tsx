@@ -1,4 +1,4 @@
-import { fetchPostById, fetchPostCommentById } from '@/app/lib/data';
+import { fetchPostById, fetchPostCommentByPostId } from '@/app/lib/data';
 import PostViewClient from './post-view-client';
 
 export default async function PostViewWrapper({
@@ -8,18 +8,19 @@ export default async function PostViewWrapper({
   postId: string;
   locale: string;
 }) {
-  const postResults = await Promise.all([fetchPostById(postId, locale)]);
-  const post = postResults[0];
+  const [post, comments] = await Promise.all([
+    fetchPostById(postId, locale),
+    fetchPostCommentByPostId(postId),
+  ]);
+
   if (!post) {
     console.error('Post not found, postId:', postId);
     return <div>Post not found</div>;
   }
-  const commentResults = await Promise.all(
-    post.comment_id_list.map(commentId => fetchPostCommentById(commentId))
-  );
 
+  const flattenedComments = comments.flat();
     
   return (
-    <PostViewClient post={post} comments={commentResults} />
+    <PostViewClient post={post} comments={flattenedComments} />
   );
 }

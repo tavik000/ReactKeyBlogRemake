@@ -1,4 +1,3 @@
-import { fetchPostCommentById } from '@/app/lib/data';
 import CommentItemClient from './comment-item-client';
 import { PostComment } from '@/app/lib/definitions';
 
