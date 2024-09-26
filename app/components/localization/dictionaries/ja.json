@@ -16,7 +16,9 @@
   "post": {
     "like": "いいね",
     "likes": "いいねした人",
-    "comment": "コメント"
+    "comment": "コメント",
+    "postOn": "投稿日",
+    "lastUpdatedOn": "最終更新日"
   },
   "comment": {
     "commentTitle": "コメント",
@@ -38,7 +40,8 @@
     "failUpdateComment": "コメントの更新に失敗しました",
     "caution": "注意",
     "areYouSureDeleteComment": "このコメントを削除してもよろしいですか？",
-    "close": "閉じる"
+    "close": "閉じる",
+    "edited": "編集済み"
   },
   "notification": {
     "notificationTitle": "通知",

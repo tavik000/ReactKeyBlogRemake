@@ -16,7 +16,9 @@
   "post": {
     "like": "Like",
     "likes": "Likes",
-    "comment": "Comment"
+    "comment": "Comment",
+    "postOn": "Posted on",
+    "lastUpdatedOn": "Last updated on"
   },
   "comment": {
     "commentTitle": "Comments",
@@ -38,7 +40,8 @@
     "failUpdateComment": "Failed to update comment",
     "caution": "Caution",
     "areYouSureDeleteComment": "Are you sure you want to delete this comment?",
-    "close": "Close"
+    "close": "Close",
+    "edited": "Edited"
   },
   "notification": {
     "notificationTitle": "Notification",

@@ -16,7 +16,9 @@
   "post": {
     "like": "좋아요",
     "likes": "좋아요",
-    "comment": "댓글"
+    "comment": "댓글",
+    "postOn": "게시일",
+    "lastUpdatedOn": "마지막 업데이트 날짜"
   },
   "comment": {
     "commentTitle": "댓글",
@@ -38,7 +40,8 @@
     "failUpdateComment": "댓글 업데이트에 실패했습니다",
     "caution": "주의",
     "areYouSureDeleteComment": "이 댓글을 삭제하시겠습니까?",
-    "close": "닫기"
+    "close": "닫기",
+    "edited": "편집됨"
   },
   "notification": {
     "notificationTitle": "알림",

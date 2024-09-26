@@ -19,6 +19,7 @@ import { useSessionContext } from '@/app/components/context/session-provider';
 import { useLoginOpenFromPostContext } from '@/app/components/context/login-open-from-post-provider';
 import { useState } from 'react';
 import { likePostWithAllLanguages, unlikePostWithAllLanguages } from '@/app/lib/actions';
+import { getFormatDateByLocale } from '@/app/lib/utils';
 
 export default function PostViewClient({
   post,
@@ -130,7 +131,7 @@ export default function PostViewClient({
           {post.comment_id_list.length > 0 ? (
             <div className="mt-6 border-t-[1px]">
               {post.comment_id_list.map((commentId) => (
-                <CommentItem key={commentId} commentId={commentId} comment={comments.find(comment => comment.id === commentId) ?? null} postTitle={post.title} postId={postId}/>
+                <CommentItem key={commentId} commentId={commentId} comment={comments.find(comment => comment.id === commentId) ?? null} postTitle={post.title} postId={postId} />
               ))}
             </div>
           ) : (
@@ -178,38 +179,24 @@ function AuthorInfo({ post }: { post: Post }) {
 }
 
 function PostDate({ post }: { post: Post }) {
+  const { lang, dict } = useLocaleContext();
   return (
     <div className="mt-2 flex text-sm text-gray-500">
       {post.modify_date > post.create_date ? (
         <div className="flex-row flex">
-          <p className="flex">
-            Last updated on{' '}
-            {post.modify_date
-              .toDateString()
-              .split(' ')
-              .slice(1)
-              .join(' ')
-              .replace(/(?<=\d) /, ', ')}
+          <p className="flex text-nowrap">
+            {dict.post.lastUpdatedOn}{' '}
+            {getFormatDateByLocale(post.modify_date, lang)}
           </p>
-          <p className="ml-2 flex">
-            Posted on{' '}
-            {post.create_date
-              .toDateString()
-              .split(' ')
-              .slice(1)
-              .join(' ')
-              .replace(/(?<=\d) /, ', ')}
+          <p className="ml-2 flex text-nowrap">
+            {dict.post.postOn}{' '}
+            {getFormatDateByLocale(post.create_date, lang)}
           </p>
         </div>
       ) : (
-        <p>
-          Posted on{' '}
-          {post.create_date
-            .toDateString()
-            .split(' ')
-            .slice(1)
-            .join(' ')
-            .replace(/(?<=\d) /, ', ')}
+        <p className="text-nowrap">
+          {dict.post.postOn}{' '}
+            {getFormatDateByLocale(post.create_date, lang)}
         </p>
       )}
 

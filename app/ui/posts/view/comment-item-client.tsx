@@ -12,6 +12,7 @@ import { useLocaleContext } from "@/app/components/context/locale-provider";
 import { useSessionContext } from "@/app/components/context/session-provider";
 import { useLoginOpenFromPostContext } from "@/app/components/context/login-open-from-post-provider";
 import { likeComment, unlikeComment } from "@/app/lib/actions";
+import { getFormatDateByLocale } from "@/app/lib/utils";
 
 const CommentItemClient = ({
     comment,
@@ -24,7 +25,7 @@ const CommentItemClient = ({
     postTitle: string
     postId: string
 }) => {
-    const { locale, dict } = useLocaleContext();
+    const { locale, lang, dict } = useLocaleContext();
     const sessionContext = useSessionContext();
     const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
     const [isEdit, setIsEdit] = useState(false);
@@ -112,22 +113,13 @@ const CommentItemClient = ({
                         }}
                     />
                     {comment.modify_date > comment.create_date ? (
-                        <p className="flex items-center ml-auto text-sm text-gray-500">
-                            {comment.modify_date
-                                .toDateString()
-                                .split(' ')
-                                .slice(1)
-                                .join(' ')
-                                .replace(/(?<=\d) /, ', ')} (Edited)
+                        <p className="flex items-center ml-auto text-sm text-gray-500 text-nowrap">
+                            {getFormatDateByLocale(comment.modify_date, lang)}
+                            {' '} ({dict.comment.edited})
                         </p>
                     ) : (
-                        <p className="flex items-center ml-auto text-sm text-gray-500">
-                            {comment.create_date
-                                .toDateString()
-                                .split(' ')
-                                .slice(1)
-                                .join(' ')
-                                .replace(/(?<=\d) /, ', ')}
+                        <p className="flex items-center ml-auto text-sm text-gray-500 text-nowrap">
+                            {getFormatDateByLocale(comment.create_date, lang)}
                         </p>
                     )}
                     <CommentManageButton

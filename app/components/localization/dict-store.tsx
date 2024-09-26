@@ -17,6 +17,8 @@ export interface DictStructure {
     like: string;
     likes: string;
     comment: string;
+    postOn: string;
+    lastUpdatedOn: string;
   };
   comment: {
     commentTitle: string;
@@ -39,6 +41,7 @@ export interface DictStructure {
     caution: string;
     areYouSureDeleteComment: string;
     close: string;
+    edited: string;
   };
   notification: {
     notificationTitle: string;

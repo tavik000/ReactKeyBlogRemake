@@ -29,6 +29,7 @@ import { keyName } from "@/app/lib/constants";
 import { deleteAllNotificationByTargetUserName, setNotificationIsRead } from "@/app/lib/actions";
 import { useEffect, useState } from "react";
 import { useRouter } from 'next/navigation'
+import { getFormatDateByLocale } from "@/app/lib/utils";
 
 
 export function NotificationButton({ isHidden }: { isHidden: boolean }) {
@@ -259,12 +260,8 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                                                 <NotificationFormatContent notification={notification} />
                                             </div>
                                             <div className="flex mt-1">
-                                                <p className="text-gray-400 text-xs">{notification.create_date
-                                                    .toDateString()
-                                                    .split(' ')
-                                                    .slice(1)
-                                                    .join(' ')
-                                                    .replace(/(?<=\d) /, ', ')}
+                                                <p className="text-gray-400 text-xs text-nowrap">
+                                                    {getFormatDateByLocale(notification.create_date, lang)}
                                                 </p>
                                             </div>
                                         </div>

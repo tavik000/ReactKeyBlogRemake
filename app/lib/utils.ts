@@ -67,3 +67,21 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     totalPages,
   ];
 };
+
+export const getFormatDateByLocale = (date: Date, lang: string) => {
+  if (lang === 'en') {
+    return date.toDateString()
+      .split(' ')
+      .slice(1)
+      .join(' ')
+      .replace(/(?<=\d) /, ', ')
+  }
+  if (lang === 'kr') {
+    lang = 'ko-KR'
+  }
+  return new Intl.DateTimeFormat(lang, {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }).format(new Date(date))
+}

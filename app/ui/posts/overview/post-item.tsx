@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { PostTagItem } from '@/app/ui/posts/general/post-tag';
 import { PostCard } from '@/app/lib/definitions';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
+import { getFormatDateByLocale } from '@/app/lib/utils';
 
 export default function PostItem({
   post,
@@ -35,13 +36,8 @@ export default function PostItem({
               {post.title}
             </span>
             <span className="relative mb-0 flex flex-row justify-between ">
-              <span className="article-date flex h-full items-end px-1em text-left text-14px/[1.5] font-normal">
-                {post.create_date
-                  .toDateString()
-                  .split(' ')
-                  .slice(1)
-                  .join(' ')
-                  .replace(/(?<=\d) /, ', ')}
+              <span className="article-date flex h-full items-end px-1em text-left text-14px/[1.5] font-normal text-nowrap">
+                {getFormatDateByLocale(post.create_date, lang)}
               </span>
               <span className="flex w-3/5 flex-wrap justify-end">
                 {post.tags.map((tag) => (
