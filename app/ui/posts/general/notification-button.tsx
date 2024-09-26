@@ -255,7 +255,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                                             <AvatarFallback>{notification.source_user_name}</AvatarFallback>
                                         </Avatar>
                                         <div className="flex flex-col ml-4">
-                                            <div className="flex">
+                                            <div className="flex text-left">
                                                 <NotificationFormatContent notification={notification} />
                                             </div>
                                             <div className="flex mt-1">
