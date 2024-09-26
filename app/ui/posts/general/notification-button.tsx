@@ -100,6 +100,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
         }
     }
 
+
     if (!notifications || notifications.length === 0) {
         return (
             <div className="mr-6 flex items-center gap-8 text-black ">
@@ -128,11 +129,20 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
         )
     }
 
+    const unreadNotificationsCount = notifications.filter(notification => !notification.is_read).length;
+
     return (
         <div className="flex items-center gap-8 text-black ">
             <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
-                    <BellIcon className="mr-6 h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+                    <div className="flex mr-6 relative items-center">
+                        <BellIcon className="flex h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+                        {unreadNotificationsCount > 0 && (
+                            <div id="counter" className="absolute -top-1 -right-1 flex p-1 w-4 h-4 bg-red-500 text-white text-xs rounded-lg items-center justify-center">
+                                {unreadNotificationsCount}
+                            </div>
+                        )}
+                    </div>
                 </DropdownMenuTrigger>
                 {/* TODO localization */}
                 <DropdownMenuContent align="start" className="p-3 w-80 -translate-x-16 translate-y-2" >
