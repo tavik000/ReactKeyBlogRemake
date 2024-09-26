@@ -28,6 +28,8 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { keyName } from "@/app/lib/constants";
 import Link from "next/link";
+import { deleteAllNotificationByTargetUserName, setNotificationIsRead } from "@/app/lib/actions";
+import { useEffect, useState } from "react";
 
 export function NotificationButton({ isHidden }: { isHidden: boolean }) {
 
@@ -35,7 +37,21 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
     const { notifications } = useNotificationContext();
     const sessionContext = useSessionContext();
 
+    const [unreadNotificationsCount, setUnreadNotificationsCount] = useState(0);
+    const [isClearAllNotifications, setIsClearAllNotifications] = useState(false);
+
     const isLogin = !!sessionContext.session;
+
+    useEffect(() => {
+        if (notifications === undefined) return;
+        if (notifications === null || notifications.length === 0) {
+            setUnreadNotificationsCount(0);
+            return;
+        }
+        const count = notifications.filter(notification => !notification.is_read).length;
+        console.log('unread notifications count', count);
+        setUnreadNotificationsCount(count);
+    }, [notifications]);
 
     if (!isLogin || isHidden) {
         return null;
@@ -101,27 +117,29 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
     }
 
 
-    if (!notifications || notifications.length === 0) {
+    if (!notifications || notifications.length === 0 || isClearAllNotifications) {
         return (
-            <div className="mr-6 flex items-center gap-8 text-black ">
-                <DropdownMenu >
-                    <DropdownMenuTrigger>
-                        <BellIcon className="h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+            <div className="flex items-center gap-8 text-black">
+                <DropdownMenu modal={false}>
+                    <DropdownMenuTrigger asChild>
+                        <div className="flex mr-6 relative items-center">
+                            <BellIcon className="flex h-6 w-6 text-gray-500 hover:text-orange-500 hover:cursor-pointer" />
+                        </div>
                     </DropdownMenuTrigger>
                     {/* TODO localization */}
-                    <DropdownMenuContent
-                        aria-label="Notification"
-                        className="p-3"
-                    >
+                    <DropdownMenuContent align="start" className="p-3 w-80 -translate-x-16 translate-y-2" >
                         <DropdownMenuLabel>Notification</DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup title="Notifications" >
-                            <DropdownMenuItem
+                            <DropdownMenuLabel
                                 key="no-notifications"
-                                className="text-gray-500 hover:cursor-default"
                             >
-                                No notifications
-                            </DropdownMenuItem>
+                                <div className="mt-2 flex relative hover:cursor-default items-center justify-center">
+                                    <p className="flex items-center text-center font-bold">
+                                        No notifications
+                                    </p>
+                                </div>
+                            </DropdownMenuLabel>
                         </DropdownMenuGroup>
                     </DropdownMenuContent>
                 </DropdownMenu>
@@ -129,10 +147,9 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
         )
     }
 
-    const unreadNotificationsCount = notifications.filter(notification => !notification.is_read).length;
 
     return (
-        <div className="flex items-center gap-8 text-black ">
+        <div className="flex items-center gap-8 text-black">
             <DropdownMenu modal={false}>
                 <DropdownMenuTrigger asChild>
                     <div className="flex mr-6 relative items-center">
@@ -150,15 +167,19 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
 
                     <DropdownMenuLabel>Notification</DropdownMenuLabel>
                     <DropdownMenuSeparator />
-                    <DropdownMenuGroup title="Notification" className="">
+                    <DropdownMenuGroup title="Notification">
                         <ScrollArea className="h-[500px]">
                             {notifications.map((notification) => (
                                 <DropdownMenuItem
                                     key={notification.id}
                                 >
                                     <Link
-                                        className="mt-2 flex flex-row hover:cursor-pointer"
-                                        href={GetNotificationLink(notification)}>
+                                        className="mt-2 flex flex-row relative hover:cursor-pointer"
+                                        href={GetNotificationLink(notification)}
+                                        onClick={() => setNotificationIsRead(notification.id)}>
+                                        {!notification.is_read && (
+                                            <div id="not-read-mark" className="mr-2 mt-[14px] z-10 flex w-1.5 h-1.5 min-w-1.5 min-h-1.5 align-middle bg-orange-500 rounded-sm" />
+                                        )}
                                         <Avatar className="flex w-8 h-8">
                                             <AvatarImage src={notification.source_user_img} alt={notification.source_user_name} />
                                             <AvatarFallback>{notification.source_user_name}</AvatarFallback>
@@ -185,9 +206,16 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup title="Delete">
                         <DropdownMenuItem key="delete" className="text-gray-600 hover:bg-gray-200" color="danger">
-                            <div className="flex items-center justify-center align-middle w-full hover:cursor-pointer">
+                            <button className="flex items-center justify-center align-middle w-full hover:cursor-pointer"
+                                onClick={() => {
+                                    const userName = sessionContext.session?.user?.name;
+                                    if (userName) {
+                                        deleteAllNotificationByTargetUserName(userName);
+                                        setIsClearAllNotifications(true);
+                                    }
+                                }}>
                                 <p className="flex text-center font-bold">Clear All Notifications</p>
-                            </div>
+                            </button>
                         </DropdownMenuItem>
                     </DropdownMenuGroup>
                 </DropdownMenuContent>

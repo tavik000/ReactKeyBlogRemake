@@ -1274,3 +1274,50 @@ export async function createLikeCommentNotificationForCommentAuthor(
     };
   }
 }
+
+export async function setNotificationIsRead(
+  notificationId: string
+) {
+  try {
+    const client = await db.connect();
+    const updateNotificationQuery = format(
+      `
+      UPDATE notifications
+      SET is_read = TRUE
+      WHERE id = %L
+      `,
+      notificationId,
+    );
+
+    const updateNotification = await client.query(updateNotificationQuery);
+    console.log('updateNotification is_read successfully id: ' + notificationId);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to update notification (' + notificationId + ')',
+    };
+  }
+}
+
+export async function deleteAllNotificationByTargetUserName(
+  targetUserName: string
+) {
+  try {
+    const client = await db.connect();
+    const deleteNotificationQuery = format(
+      `
+      DELETE FROM notifications
+      WHERE target_user_name = %L
+      `,
+      targetUserName,
+    );
+
+    const deleteNotification = await client.query(deleteNotificationQuery);
+    console.log('deleteNotification successfully targetUserName: ' + targetUserName);
+  } catch (error) {
+    console.log(error);
+    return {
+      message: 'Failed to delete notification',
+    };
+  }
+}
