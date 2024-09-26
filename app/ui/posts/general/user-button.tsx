@@ -106,7 +106,7 @@ export function UserButton() {
                     className={
                       isSignInLoadingGoogle
                         ? 'mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300'
-                        : 'mb-4 flex w-full rounded-lg outline-gray-300 hover:outline-orange-200'
+                        : 'mb-4 flex w-full rounded-lg bg-white outline-gray-300 hover:outline-orange-200'
                     }
                     onClick={() => {
                       try {
@@ -181,7 +181,7 @@ export function UserButton() {
                     className={
                       isSignInLoadingTwitter
                         ? 'mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300'
-                        : 'mb-4 flex w-full rounded-lg outline-gray-300 hover:outline-orange-200'
+                        : 'mb-4 flex w-full rounded-lg bg-white outline-gray-300 hover:outline-orange-200'
                     }
                     onClick={() => {
                       try {
