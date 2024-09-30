@@ -6,7 +6,6 @@ import { UserButton } from './user-button';
 import { useEffect, useState } from 'react';
 import { sniglet } from '@/app/ui/fonts';
 import Link from 'next/link';
-import { homepageURL } from '@/app/lib/constants';
 import { keyEmail } from '@/app/lib/constants';
 import { useLocaleContext } from '@/app/components/context/locale-provider';
 import { useSessionContext } from '@/app/components/context/session-provider';
@@ -54,12 +53,12 @@ export default function PostHeader({
   groundPosHeight: number;
 }) {
   const { session } = useSessionContext();
-  const { dict } = useLocaleContext();
+  const { lang, dict } = useLocaleContext();
   const { lastScrollY, isLoaded } = useScrollDirection();
-  const { notifications } = useNotificationContext();
 
 
   const isHidden = lastScrollY < groundPosHeight || !isLoaded;
+  const blogUrl = `/${lang}`;
 
   return (
     <div
@@ -68,7 +67,7 @@ export default function PostHeader({
     >
       <div className="flex w-1/2 flex-row">
         <Link
-          href={homepageURL}
+          href={blogUrl}
           className={`blog-title flex ${sniglet.className} my-2 ml-4 text-4xl font-semibold`}
         >
           Key
