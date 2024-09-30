@@ -39,30 +39,32 @@ export default async function RootLayout({
   const dict = (await getDictionary(locale)) as DictStructure;
   const session = await auth();
   let notifications: Notification[] = [];
-  if (session?.user) { 
-     notifications = session?.user?.name ? (await fetchAllNotificationByTargetUserName(session.user.name) as unknown as Notification[]) : [];
+  if (session?.user) {
+    notifications = session?.user?.name ? (await fetchAllNotificationByTargetUserName(session.user.name) as unknown as Notification[]) : [];
   }
 
 
 
   return (
     <html lang={lang}>
-      <body className={`${inter.className} antialiased`}>
-        <NextUIProviderWrapper>
-          <LoginOpenFromPostProvider>
-            <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
-              <SessionProvider inSession={session || null}>
-                <NotificationProvider inNotifications={notifications || []}>
-                <LoginSuccessfulBanner/>
-                <Sky/>
-                <PostSection>
-                  {children}
-                </PostSection>
-                </NotificationProvider>
-              </SessionProvider>
-            </LocaleProvider>
-          </LoginOpenFromPostProvider>
-        </NextUIProviderWrapper>
+      <body className={`${inter.className} antialiased w-full`}>
+        <div id="body-wrapper" className="overflow-hidden relative">
+          <NextUIProviderWrapper>
+            <LoginOpenFromPostProvider>
+              <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
+                <SessionProvider inSession={session || null}>
+                  <NotificationProvider inNotifications={notifications || []}>
+                    <LoginSuccessfulBanner />
+                    <Sky />
+                    <PostSection>
+                      {children}
+                    </PostSection>
+                  </NotificationProvider>
+                </SessionProvider>
+              </LocaleProvider>
+            </LoginOpenFromPostProvider>
+          </NextUIProviderWrapper>
+        </div>
       </body>
     </html>
   );

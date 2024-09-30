@@ -4,7 +4,7 @@ import { forwardRef } from "react";
 
 export const SkyBackground = forwardRef<HTMLDivElement, React.PropsWithChildren<{}>>(function SkyBackground(_, ref) {
     return (
-        <div className="sky-background" ref={ref}>
+        <div className="sky-background w-full" ref={ref}>
             <div className="cloud cloud-large cloud-1"></div>
             <div className="cloud cloud-medium cloud-2">
                     <div className={`${sniglet.className} scroll-sign`}>
