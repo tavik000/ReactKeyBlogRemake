@@ -1,9 +1,8 @@
 .curious-bear {
-    /* these part is in twailwind */
-    /* position: fixed;
+    position: fixed;
     left: calc(50% - 4.5rem);
     z-index: 40;
-    top: 12rem; */
+    top: 12rem;
     transform-origin: center -7rem;
     animation: sway-sm 5s infinite linear;
 }

@@ -4,8 +4,6 @@ import React, { useState, useRef, useEffect } from 'react';
 import PostHeader from './posts/general/post-header';
 import { WaddleDee } from './waddle-dee';
 import { Bear, CuriousBear } from './bear';
-import { DeviceWidth } from '../lib/constants';
-import { getCurrentDeviceWidthType } from '../lib/utils';
 
 export default function Sky() {
 
@@ -42,7 +40,7 @@ export default function Sky() {
 
       // bear
       const sitTopOffset = -100;
-
+      
       // Waddle dee
       // const sitTopOffset = 0;
       const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
@@ -99,28 +97,9 @@ export default function Sky() {
       //   groundPosHeight * 0.048 * (zoomLevel / defaultZoomLevel);
 
       // bear
-
-
-
-      console.log('window.innerWidth:', window.innerWidth);
-      console.log('DeviceWidth.xl:', DeviceWidth.xl);
-      console.log('DeviceWidth.lg:', DeviceWidth.lg);
-      console.log('DeviceWidth.md:', DeviceWidth.md);
-      console.log('DeviceWidth.sm:', DeviceWidth.sm);
-
-      const deviceWidthType = getCurrentDeviceWidthType(window.innerWidth);
-      
-      let scrollOffsetScale = 0.058;
-      if (deviceWidthType === 'sm') {
-        scrollOffsetScale = 0.080;
-      }
-      else if (deviceWidthType === 'md') {
-        scrollOffsetScale = 0.070;
-      }
       const scrollOffset =
-        groundPosHeight * scrollOffsetScale * (zoomLevel / defaultZoomLevel);
-      console.log('window.scrollY:', window.scrollY, 'scrollOffset:', scrollOffset, 'scrollOffsetScale', scrollOffsetScale,
-        'groundPosHeight:', groundPosHeight);
+        groundPosHeight * 0.058 * (zoomLevel / defaultZoomLevel);
+      // console.log(window.scrollY, scrollOffset, groundPosHeight);
 
       if (window.scrollY + scrollOffset >= groundPosHeight) {
         if (!curiousBearRef.current.classList.contains('is-sitting')) {
@@ -149,7 +128,7 @@ export default function Sky() {
       <header>
         <PostHeader groundPosHeight={groundPosHeight} />
       </header>
-      <main className="flex min-h-screen flex-col w-full">
+      <main className="flex min-h-screen flex-col">
         {/* <WaddleDee
           isSitting={isSitting}
           isActive={isBearActive}
@@ -159,7 +138,6 @@ export default function Sky() {
           isSitting={isSitting}
           isActive={isBearActive}
           ref={curiousBearRef}
-          className='fixed left-1/2 transform -translate-x-18 z-40 top-48'
         />
         <SkyBackground ref={skyBackgroundRef} />
       </main>
