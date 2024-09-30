@@ -1,4 +1,5 @@
 import { Revenue } from './definitions_backup';
+import { DeviceWidth } from './constants';
 
 export const formatCurrency = (amount: number) => {
   return (amount / 100).toLocaleString('en-US', {
@@ -85,3 +86,23 @@ export const getFormatDateByLocale = (date: Date, lang: string) => {
     day: 'numeric',
   }).format(new Date(date))
 }
+
+type DeviceWidthType = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+export const getCurrentDeviceWidthType = (width: number): DeviceWidthType => {
+  if (width < DeviceWidth.sm) {
+    return 'sm';
+  }
+  if (width < DeviceWidth.md) {
+    return 'md';
+  }
+  if (width < DeviceWidth.lg) {
+    return 'lg';
+  }
+  if (width < DeviceWidth.xl) {
+    return 'xl';
+  }
+  if (width < DeviceWidth.xxl) {
+    return 'xxl';
+  }
+  return 'xxl';
+};
