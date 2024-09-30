@@ -4,6 +4,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PostHeader from './posts/general/post-header';
 import { WaddleDee } from './waddle-dee';
 import { Bear, CuriousBear } from './bear';
+import { getCurrentDeviceWidthType } from '../lib/utils';
 
 export default function Sky() {
 
@@ -90,16 +91,14 @@ export default function Sky() {
         skyBackgroundRef.current.getBoundingClientRect().height;
       setGroundPosHeight(groundPosHeight);
 
-      const defaultZoomLevel = 1.5;
-      const zoomLevel = window.devicePixelRatio;
       // Waddle dee 
       // const scrollOffset =
       //   groundPosHeight * 0.048 * (zoomLevel / defaultZoomLevel);
 
       // bear
-      const scrollOffset =
-        groundPosHeight * 0.058 * (zoomLevel / defaultZoomLevel);
-      // console.log(window.scrollY, scrollOffset, groundPosHeight);
+      const scrollOffset = 516;
+
+      console.log("scrollOffset", scrollOffset, "groundPosHeight", groundPosHeight);
 
       if (window.scrollY + scrollOffset >= groundPosHeight) {
         if (!curiousBearRef.current.classList.contains('is-sitting')) {
