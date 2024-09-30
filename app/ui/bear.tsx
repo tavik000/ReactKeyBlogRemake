@@ -7,12 +7,13 @@ import clsx from 'clsx';
 interface CuriousBearProps {
     isSitting: boolean;
     isActive: boolean;
+    className?: string;
 }
 
 export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(
-    function CuriousBear({ isSitting, isActive }, ref) {
+    function CuriousBear({ isSitting, isActive, className }, ref) {
 
-        const className = clsx('curious-bear', {
+        const combinedClassName = clsx('curious-bear', className, {
             'is-sitting': isSitting,
             'hidden': !isActive,
             '': isActive
