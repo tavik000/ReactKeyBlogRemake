@@ -40,7 +40,7 @@ export default function Sky() {
 
       // bear
       const sitTopOffset = -100;
-      
+
       // Waddle dee
       // const sitTopOffset = 0;
       const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
