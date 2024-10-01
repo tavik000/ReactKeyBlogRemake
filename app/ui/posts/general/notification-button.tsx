@@ -228,7 +228,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
                         )}
                     </div>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent align="start" className="p-3 w-80 -translate-x-16 translate-y-2" >
+                <DropdownMenuContent align="start" className="p-3 -translate-x-16 translate-y-2 xs:fixed xs:left-0 xs:w-72 md:w-80" >
                     <DropdownMenuLabel>{dict.notification.notificationTitle}</DropdownMenuLabel>
                     <DropdownMenuSeparator />
                     <DropdownMenuGroup title="Notification">
