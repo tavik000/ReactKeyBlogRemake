@@ -43,7 +43,7 @@ export default function LanguageDropdown(props: Props) {
                     <ChevronDownIcon className="ml-2 h-4 w-4 text-gray-500 group-hover:text-orange-500 xs:hidden md:block" />
                 </button>
                 <div
-                    className={`absolute -inset-x-5 inset-y-10 z-30 flex min-h-[210px] flex-col rounded-md bg-white py-4 shadow-lg ${transClass} xs:w-32 xs:-translate-x-6 md:w-40`}
+                    className={`absolute -inset-x-5 inset-y-10 z-30 flex min-h-[210px] flex-col rounded-md bg-white py-4 shadow-lg ${transClass} xs:w-32 xs:-translate-x-6 md:w-40 md:translate-x-0`}
                 >
                     {languageItems.map((item) =>
                         item.isCurrentLocale ? (
