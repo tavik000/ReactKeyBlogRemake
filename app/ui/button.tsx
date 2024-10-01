@@ -81,7 +81,7 @@ export function LanguageButton({
   };
   return (
     <>
-      <div className="mr-8 flex items-center gap-8 text-black ">
+      <div className="xs:mr-3 md:mr-8 flex items-center gap-8 text-black text-nowrap">
         <LanguageDropdown item={languageItems} isHidden={isHidden} />
       </div>
     </>
