@@ -1,45 +1,42 @@
-'use client';
+"use client";
 
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { useDebouncedCallback } from 'use-debounce';
-import React from 'react';
-import { useLocaleContext } from '@/app/components/context/locale-provider';
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
+import React from "react";
+import { useLocaleContext } from "@/app/components/context/locale-provider";
 
-export default function PostSearch({
-  placeholder,
-}: {
-  placeholder: string;
-}) {
+export default function PostSearch({ placeholder }: { placeholder: string }) {
   const { lang } = useLocaleContext();
   const searchParams = useSearchParams();
   const { replace } = useRouter();
-
 
   const handleSearch = useDebouncedCallback((term) => {
     console.log(`Searching... ${term}`);
 
     const params = new URLSearchParams(searchParams);
 
-    params.set('page', '1');
+    params.set("page", "1");
 
     if (term) {
-      params.set('query', term);
-      params.delete('tag');
+      params.set("query", term);
+      params.delete("tag");
     } else {
-      params.delete('query');
+      params.delete("query");
     }
     replace(`/${lang}/?${params.toString()}`);
   }, 300);
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleSearch(e.currentTarget.value);
     }
   };
 
   return (
     <div className="relative z-auto my-2 ml-6 flex h-10 max-h-16 max-w-sm flex-1 flex-shrink-0 rounded-full py-0.5">
-      <label htmlFor="post-search" className="sr-only">Search</label>
+      <label htmlFor="post-search" className="sr-only">
+        Search
+      </label>
       <input
         id="post-search"
         className="peer block w-full rounded-md border border-gray-200 bg-gray-100 py-[9px] pl-10 text-sm outline-2 placeholder:text-gray-500"
@@ -47,8 +44,8 @@ export default function PostSearch({
         onChange={(e) => {
           handleSearch(e.target.value);
         }}
-        onKeyDown={handleKeyDown} 
-        defaultValue={searchParams.get('query')?.toString()}
+        onKeyDown={handleKeyDown}
+        defaultValue={searchParams.get("query")?.toString()}
       />
       <MagnifyingGlassIcon className="absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
     </div>
