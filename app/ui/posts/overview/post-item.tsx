@@ -1,29 +1,24 @@
-'use client';
-import Link from 'next/link';
-import Image from 'next/image';
-import { PostTagItem } from '@/app/ui/posts/general/post-tag';
-import { PostCard } from '@/app/lib/definitions';
-import { useLocaleContext } from '@/app/components/context/locale-provider';
-import { getFormatDateByLocale } from '@/app/lib/utils';
+"use client";
+import Link from "next/link";
+import Image from "next/image";
+import { PostTagItem } from "@/app/ui/posts/general/post-tag";
+import { PostCard } from "@/app/lib/definitions";
+import { useLocaleContext } from "@/app/components/context/locale-provider";
+import { getFormatDateByLocale } from "@/app/lib/utils";
 
-export default function PostItem({
-  post,
-}: {
-  post: PostCard;
-}) {
+export default function PostItem({ post }: { post: PostCard }) {
   const { lang } = useLocaleContext();
   const urlRegex = /\s/g;
-  const url_title = post.title.toLowerCase().replace(urlRegex, '-');
-
+  const url_title = post.title.toLowerCase().replace(urlRegex, "-");
 
   return (
-    <li className="post-item mb-6 flex min-h-[400px] w-1/3 max-w-400px basis-1/3 list-none flex-col px-11px">
+    <li className="post-item mb-6 flex min-h-[400px] w-1/3 max-w-400px basis-1/3 list-none flex-col px-11px xs:min-w-[300px] sm:min-w-[358px]">
       <article className="block h-full flex-row">
         <Link
           href={`${lang}/posts/${url_title}/${post.id}#blog-title`}
           className="article-link flex h-full flex-row"
         >
-          <div className="post-article flex h-full w-full flex-col justify-between rounded-xl bg-white px-3 pb-4 pt-6 font-bold shadow-0550 xs:w-[300px] md:w-auto">
+          <div className="post-article flex h-full w-full flex-col justify-between rounded-xl bg-white px-3 pb-4 pt-6 font-bold shadow-0550 xs:w-[300px] sm:w-[358px]">
             <Image
               src={post.thumbnail_img}
               width={333}
@@ -36,7 +31,7 @@ export default function PostItem({
               {post.title}
             </span>
             <span className="relative mb-0 flex flex-row justify-between ">
-              <span className="article-date flex h-full items-end px-1em text-left text-14px/[1.5] font-normal text-nowrap">
+              <span className="article-date flex h-full items-end text-nowrap px-1em text-left text-14px/[1.5] font-normal">
                 {getFormatDateByLocale(post.create_date, lang)}
               </span>
               <span className="flex w-3/5 flex-wrap justify-end">
