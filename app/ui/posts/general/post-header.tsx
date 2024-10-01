@@ -1,18 +1,18 @@
-'use client';
-import PostSearch from './post-search';
-import { CreatePostButton, LanguageButton, TagButton } from '@/app/ui/button';
-import { NotificationButton } from './notification-button';
-import { UserButton } from './user-button';
-import { useEffect, useState } from 'react';
-import { sniglet } from '@/app/ui/fonts';
-import Link from 'next/link';
-import { keyEmail } from '@/app/lib/constants';
-import { useLocaleContext } from '@/app/components/context/locale-provider';
-import { useSessionContext } from '@/app/components/context/session-provider';
-import { useNotificationContext } from '@/app/components/context/notification-provider';
+"use client";
+import PostSearch from "./post-search";
+import { CreatePostButton, LanguageButton, TagButton } from "@/app/ui/button";
+import { NotificationButton } from "./notification-button";
+import { UserButton } from "./user-button";
+import { useEffect, useState } from "react";
+import { sniglet } from "@/app/ui/fonts";
+import Link from "next/link";
+import { keyEmail } from "@/app/lib/constants";
+import { useLocaleContext } from "@/app/components/context/locale-provider";
+import { useSessionContext } from "@/app/components/context/session-provider";
+import { useNotificationContext } from "@/app/components/context/notification-provider";
 
 function useScrollDirection() {
-  const [scrollDirection, setScrollDirection] = useState<null | 'down' | 'up'>(
+  const [scrollDirection, setScrollDirection] = useState<null | "down" | "up">(
     null,
   );
   const [lastScrollY, setLastScrollY] = useState(0);
@@ -24,7 +24,7 @@ function useScrollDirection() {
 
     const updateScrollDirection = () => {
       const scrollY = window.scrollY;
-      const direction = scrollY > lastY ? 'down' : 'up';
+      const direction = scrollY > lastY ? "down" : "up";
       if (
         direction !== scrollDirection &&
         (scrollY - lastY > 10 || scrollY - lastY < -10)
@@ -35,12 +35,12 @@ function useScrollDirection() {
       lastY = scrollY > 0 ? scrollY : 0;
     };
 
-    window.addEventListener('scroll', updateScrollDirection); // add event listener
+    window.addEventListener("scroll", updateScrollDirection); // add event listener
     // setTimeout(() => {
     setLastScrollY(window.scrollY);
     // }, 0);
     return () => {
-      window.removeEventListener('scroll', updateScrollDirection); // clean up
+      window.removeEventListener("scroll", updateScrollDirection); // clean up
     };
   }, [scrollDirection]);
 
@@ -56,21 +56,22 @@ export default function PostHeader({
   const { lang, dict } = useLocaleContext();
   const { lastScrollY, isLoaded } = useScrollDirection();
 
-
   const isHidden = lastScrollY < groundPosHeight || !isLoaded;
   const blogUrl = `/${lang}`;
 
   return (
     <div
       className={`options fixed z-30 mx-auto flex h-14 w-full flex-row  bg-white/95
-    ${isHidden ? '-top-24' : 'top-0'}`}
+    ${isHidden ? "-top-24" : "top-0"}`}
     >
       <div className="flex w-1/2 flex-row">
         <Link
           href={blogUrl}
-          className={`blog-title flex ${sniglet.className} my-2 ml-4 text-4xl font-semibold`}
+          className={`blog-title  ${sniglet.className} my-2 ml-4 flex `}
         >
-          <p className="flex xs:max-w-[80px] sm:max-h-11">Key</p>
+          <p className="relative flex font-semibold xs:max-w-[80px] xs:text-3xl sm:text-4xl">
+            Key
+          </p>
         </Link>
         <PostSearch placeholder={dict.header.searchPost} />
       </div>
