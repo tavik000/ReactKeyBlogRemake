@@ -89,7 +89,7 @@ export function UserButton() {
         isOpen={isOpen || isLoginOpenFromPost}
         onOpenChange={onOpenChange}
         placement="top-center"
-        className="rounded-lg bg-white  "
+        className="rounded-lg bg-white xs:top-80 md:top-auto"
       >
         <ModalContent>
           {(onClose) => (
