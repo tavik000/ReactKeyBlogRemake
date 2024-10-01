@@ -11,8 +11,9 @@ const config: Config = {
 	theme: {
 		extend: {
 			screens: {
+				'xxs': '0px',
 				'xs': '320px',
-			  },
+			},
 			fontSize: {
 				'13px': '13px',
 				'14px': '14px',
