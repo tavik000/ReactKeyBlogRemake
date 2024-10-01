@@ -12,13 +12,13 @@ export default function PostItem({ post }: { post: PostCard }) {
   const url_title = post.title.toLowerCase().replace(urlRegex, "-");
 
   return (
-    <li className="post-item mb-6 flex min-h-[400px] w-1/3 max-w-400px basis-1/3 list-none flex-col px-11px xs:min-w-[300px] sm:min-w-[358px]">
-      <article className="block h-full flex-row">
+    <li className="post-item mx-auto mb-6 flex min-h-[400px] w-full max-w-[400px] md:basis-1/2 lg:basis-1/3 list-none flex-col px-[11px] sm:w-1/3 md:w-1/2 md:max-w-none">
+      <article className="mx-auto block h-full w-full flex-row">
         <Link
           href={`${lang}/posts/${url_title}/${post.id}#blog-title`}
-          className="article-link flex h-full flex-row"
+          className="article-link mx-auto flex h-full flex-row"
         >
-          <div className="post-article flex h-full w-full flex-col justify-between rounded-xl bg-white px-3 pb-4 pt-6 font-bold shadow-0550 xs:w-[300px] sm:w-[358px]">
+          <div className="post-article flex h-full w-full flex-col justify-between rounded-xl bg-white px-3 pb-4 pt-6 font-bold shadow-0550 ">
             <Image
               src={post.thumbnail_img}
               width={333}
