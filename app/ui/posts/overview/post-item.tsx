@@ -23,7 +23,7 @@ export default function PostItem({
           href={`${lang}/posts/${url_title}/${post.id}#blog-title`}
           className="article-link flex h-full flex-row"
         >
-          <div className="post-article flex h-full w-full flex-col justify-between rounded-xl bg-white px-3 pb-4 pt-6 font-bold shadow-0550">
+          <div className="post-article flex h-full w-full flex-col justify-between rounded-xl bg-white px-3 pb-4 pt-6 font-bold shadow-0550 xs:w-[300px] md:w-auto">
             <Image
               src={post.thumbnail_img}
               width={333}
