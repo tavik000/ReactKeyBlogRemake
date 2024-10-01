@@ -70,7 +70,7 @@ export default function PostHeader({
           href={blogUrl}
           className={`blog-title flex ${sniglet.className} my-2 ml-4 text-4xl font-semibold`}
         >
-          Key
+          <p className="flex xs:max-w-[80px] sm:max-h-11">Key</p>
         </Link>
         <PostSearch placeholder={dict.header.searchPost} />
       </div>

@@ -98,7 +98,9 @@ export default function Sky() {
       // bear
       const scrollOffset = 516;
 
-      console.log("scrollOffset", scrollOffset, "groundPosHeight", groundPosHeight);
+      // console.log("scrollOffset", scrollOffset, "groundPosHeight", groundPosHeight);
+      const deviceWidthType = getCurrentDeviceWidthType(window.innerWidth);
+      console.log("deviceWidthType", deviceWidthType, "deviceWidth", window.innerWidth);
 
       if (window.scrollY + scrollOffset >= groundPosHeight) {
         if (!curiousBearRef.current.classList.contains('is-sitting')) {

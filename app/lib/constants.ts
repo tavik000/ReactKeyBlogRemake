@@ -52,6 +52,7 @@ export function GetLocaleFromLang(lang: string) {
 
 
 export const DeviceWidth = {
+  xs: 320,
   sm: 640,
   md: 768,
   lg: 1024,

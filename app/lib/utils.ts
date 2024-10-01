@@ -87,8 +87,11 @@ export const getFormatDateByLocale = (date: Date, lang: string) => {
   }).format(new Date(date))
 }
 
-type DeviceWidthType = 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+type DeviceWidthType = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 export const getCurrentDeviceWidthType = (width: number): DeviceWidthType => {
+  if (width < DeviceWidth.xs) {
+    return 'xs';
+  }
   if (width < DeviceWidth.sm) {
     return 'sm';
   }
