@@ -9,7 +9,6 @@ import Link from "next/link";
 import { keyEmail } from "@/app/lib/constants";
 import { useLocaleContext } from "@/app/components/context/locale-provider";
 import { useSessionContext } from "@/app/components/context/session-provider";
-import { useNotificationContext } from "@/app/components/context/notification-provider";
 
 function useScrollDirection() {
   const [scrollDirection, setScrollDirection] = useState<null | "down" | "up">(
@@ -77,10 +76,10 @@ export default function PostHeader({
       </div>
       <div className="flex w-1/2 flex-row justify-end">
         {session?.user?.email === keyEmail ? (
-          <>
+          <div className="xs:hidden md:block">
             <CreatePostButton />
             <TagButton href="/en/tag/manage" />
-          </>
+          </div>
         ) : null}
 
         <LanguageButton isHidden={isHidden} />
