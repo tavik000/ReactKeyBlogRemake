@@ -202,7 +202,7 @@ importers:
         specifier: 9.0.0
         version: 9.0.0(eslint@8.57.0)
       prettier:
-        specifier: ^3.0.3
+        specifier: ^3.3.2
         version: 3.3.2
       prettier-plugin-tailwindcss:
         specifier: 0.5.4
