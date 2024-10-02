@@ -13,7 +13,6 @@ interface Props {
   searchParams: Record<string, string | string[] | undefined>;
 }
 
-
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
@@ -41,7 +40,7 @@ export async function generateMetadata(
       site: '@kiikey4',
       title: title,
       description: limitedContent,
-    }
+    },
   };
 }
 

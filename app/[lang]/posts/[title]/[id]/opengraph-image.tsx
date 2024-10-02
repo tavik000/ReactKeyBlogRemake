@@ -39,50 +39,52 @@ export default async function Image({ params }: Props) {
 
   return new ImageResponse(
     (
-        <section
+      <section
         style={{
-          position: 'relative',
-          display: 'flex',
-          height: '100%',
-          width: '100%',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          borderBottom: '8px solid #f97316', // border-orange-500
-          borderTop: '8px solid #f97316', // border-orange-500
-          backgroundColor: 'white',
-          padding: '12px',
-          fontSize: '64px'
+          position: "relative",
+          display: "flex",
+          height: "100%",
+          width: "100%",
+          flexDirection: "column",
+          alignItems: "flex-start", // Align items to the left
+          justifyContent: "space-between",
+          borderBottom: "16px solid #f97316", // border-orange-500
+          borderTop: "16px solid #f97316", // border-orange-500
+          backgroundColor: "white",
+          padding: "48px",
+          fontSize: "64px",
         }}
       >
         <p
           style={{
-            fontSize: '2rem', // text-2xl
-            fontWeight: 'bold',
-            lineHeight: '2.5rem', // leading-10
-            letterSpacing: '-0.025em', // tracking-tight
-            color: '#f97316' // text-orange-500
+            fontSize: "8rem",
+            fontWeight: "bold",
+            lineHeight: "2.5rem", // leading-10
+            letterSpacing: "-0.025em", // tracking-tight
+            color: "#f97316", // text-orange-500
+            textAlign: "left", // Align text to the left
           }}
         >
           Key Blog
         </p>
         <div
           style={{
-            display: 'flex',
+            display: "flex",
             flex: 1,
-            alignItems: 'center',
-            fontSize: '6rem', // text-6xl
-            fontWeight: 800, // font-extrabold
-            letterSpacing: '-0.025em' // tracking-tight
+            alignItems: "center",
+            fontSize: "6rem", // text-6xl
+            fontWeight: 600,
+            letterSpacing: "-0.025em", // tracking-tight
           }}
         >
           {postTitle}
         </div>
         <footer
           style={{
-            fontSize: '1.25rem', // text-xl
+            fontSize: "4rem",
             fontWeight: 500, // font-medium
-            color: '#d1d5db' // text-gray-300
+            color: "#d1d5db", // text-gray-300
+            textAlign: "left", // Align text to the left
           }}
         >
           @{keyTwitterId}
