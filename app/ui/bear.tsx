@@ -9,7 +9,10 @@ interface CuriousBearProps {
   isActive: boolean;
 }
 
-export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(function CuriousBear({ isSitting, isActive }, ref) {
+export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(function CuriousBear(
+  { isSitting, isActive },
+  ref,
+) {
   const className = clsx("curious-bear", {
     "is-sitting": isSitting,
     hidden: !isActive,
@@ -58,8 +61,12 @@ export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(function
       const centerX = elOffset.x + elOffset.width / 2;
       const centerY = elOffset.y + elOffset.height / 2;
       const distanceLeft = Math.round(((cursorPos.current.x - centerX) * 100) / window.innerWidth);
-      const distanceTop = Math.min(Math.round(((cursorPos.current.y - centerY) * 100) / window.innerHeight), 90);
-      (el as HTMLElement).style.transform = `translate(${distanceLeft / xRatio}px, ${distanceTop / yRatio}px)`;
+      const distanceTop = Math.min(
+        Math.round(((cursorPos.current.y - centerY) * 100) / window.innerHeight),
+        90,
+      );
+      (el as HTMLElement).style.transform =
+        `translate(${distanceLeft / xRatio}px, ${distanceTop / yRatio}px)`;
     };
 
     const mousemove = (e: { clientX: any; clientY: any }) => {
@@ -82,11 +89,12 @@ export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(function
 
 interface BearProps {
   isSitting: boolean;
+  scale?: number;
 }
 
-export const Bear: React.FC<BearProps> = ({ isSitting }) => {
+export const Bear: React.FC<BearProps> = ({ isSitting, scale }) => {
   return (
-    <div className="bear">
+    <div className="bear" style={{ transform: scale ? `scale(${scale})` : undefined }}>
       <div className="ballon">
         <div className="ball translate-x-6 rotate-12">
           <div className="rope"></div>
@@ -102,7 +110,9 @@ export const Bear: React.FC<BearProps> = ({ isSitting }) => {
       <svg className="w-32" xmlns="http://www.w3.org/2000/svg" viewBox="0 -20 446.4 686.5">
         <title>Curious Bear</title>
         <g id="bear">
-          {isSitting && <ellipse cx="223.2" cy="637.6" rx="223.2" ry="29" fill="#F1C0C" opacity="0.3" />}
+          {isSitting && (
+            <ellipse cx="223.2" cy="637.6" rx="223.2" ry="29" fill="#F1C0C" opacity="0.3" />
+          )}
           <g id="body">
             <path
               d="M376.3,460.3c0,63.2-17.1,120.3-44.7,161.4h0l-4.5,6.5a18.9,18.9,0,0,1-13,5.1H260.5a19.1,19.1,0,0,1-19-19V553.2a124.2,124.2,0,0,1-30.5.3v62a19.1,19.1,0,0,1-19,19H138.5a19,19,0,0,1-15.2-7.6l-0.5-.7C93.4,584.6,75.1,525.7,75.1,460.3c0-125.3,67.4-226.9,150.6-226.9S376.3,335,376.3,460.3Z"
@@ -167,25 +177,55 @@ export const Bear: React.FC<BearProps> = ({ isSitting }) => {
               strokeMiterlimit="10"
               strokeWidth="10"
             />
-            <path id="belly" d="M304.8,435.8c0,46.9-36.5,85-81.5,85s-81.5-38-81.5-85S179.5,332,224.5,332,304.8,388.9,304.8,435.8Z" fill="#ffeed5" />
+            <path
+              id="belly"
+              d="M304.8,435.8c0,46.9-36.5,85-81.5,85s-81.5-38-81.5-85S179.5,332,224.5,332,304.8,388.9,304.8,435.8Z"
+              fill="#ffeed5"
+            />
             <path
               d="M299.4,504.7a33,33,0,0,1-.4,4.9c-3.7,24.9-35.1,44.4-73.4,44.4s-69.8-19.5-73.4-44.5a32.7,32.7,0,0,1-.3-4.8h0a2.4,2.4,0,0,1,4.5-1.2c10.3,18.9,37.4,32.4,69.3,32.4s58.9-13.5,69.3-32.4a2.4,2.4,0,0,1,4.5,1.2h0Z"
               fill="#b97f1c"
             />
-            <path d="M165.7,533.3c39.9,27.3,80.5,27.7,120,0" fill="none" stroke="#3f1c0d" strokeLinecap="round" strokeMiterlimit="10" strokeWidth="10" />
+            <path
+              d="M165.7,533.3c39.9,27.3,80.5,27.7,120,0"
+              fill="none"
+              stroke="#3f1c0d"
+              strokeLinecap="round"
+              strokeMiterlimit="10"
+              strokeWidth="10"
+            />
           </g>
           <g id="head" className="head">
             <g id="ears" className="ears">
               <g>
-                <circle cx="92.2" cy="53.9" r="48.9" fill="#f6ac29" stroke="#3f1c0d" strokeMiterlimit="10" strokeWidth="10" />
+                <circle
+                  cx="92.2"
+                  cy="53.9"
+                  r="48.9"
+                  fill="#f6ac29"
+                  stroke="#3f1c0d"
+                  strokeMiterlimit="10"
+                  strokeWidth="10"
+                />
                 <circle cx="93.1" cy="53.9" r="31.9" fill="#ffeed5" />
               </g>
               <g>
-                <circle cx="351.6" cy="53.9" r="48.9" fill="#f6ac29" stroke="#3f1c0d" strokeMiterlimit="10" strokeWidth="10" />
+                <circle
+                  cx="351.6"
+                  cy="53.9"
+                  r="48.9"
+                  fill="#f6ac29"
+                  stroke="#3f1c0d"
+                  strokeMiterlimit="10"
+                  strokeWidth="10"
+                />
                 <circle cx="352.5" cy="53.9" r="31.9" fill="#ffeed5" />
               </g>
             </g>
-            <path d="M409.6,176.9c0,94.7-83.5,130.1-186.4,130.1S36.8,271.6,36.8,176.9,120.3,5.4,223.2,5.4,409.6,82.2,409.6,176.9Z" fill="#f6ac29" />
+            <path
+              d="M409.6,176.9c0,94.7-83.5,130.1-186.4,130.1S36.8,271.6,36.8,176.9,120.3,5.4,223.2,5.4,409.6,82.2,409.6,176.9Z"
+              fill="#f6ac29"
+            />
             <path
               id="head-stroke"
               d="M409.6,176.9c0,94.7-83.5,130.1-186.4,130.1S36.8,271.6,36.8,176.9,120.3,5.4,223.2,5.4,409.6,82.2,409.6,176.9Z"
@@ -203,9 +243,16 @@ export const Bear: React.FC<BearProps> = ({ isSitting }) => {
                                     <path d="M323.4,109.2l-1.2-1.9-0.6-1-0.7-.9-0.8-1.1-1-1.2-1-1.3-1.2-1.3-0.6-.7-0.7-.6-1.4-1.3a31.6,31.6,0,0,0-10.7-5.8c-1.3-.5-2.6-0.7-3.8-1.1l-1.9-.3-0.9-.2h-0.9l-1.7-.2h-6.9l-2,.2h-0.4a3.2,3.2,0,0,1-1.7-6l2.2-1.1,1.2-.5,1.5-.5,1.7-.5,1.9-.4,2.1-.4h4.8l2.6,0.2a36.2,36.2,0,0,1,5.3,1.1,35.1,35.1,0,0,1,14.1,8.3l1.7,1.9,0.8,0.9,0.7,1,1.3,1.9,1.1,1.9a23.6,23.6,0,0,1,1.6,3.5l0.6,1.5,0.3,1.1,0.5,2.2A3.2,3.2,0,0,1,323.4,109.2Z" fill="#3f1c0d" />
                                 </g> */}
             <g>
-              <path className="snout" d="M308.5,230c0,43.6-40.2,52.6-87.3,52.6s-83.3-9-83.3-52.6,38.2-79,85.3-79S308.5,186.3,308.5,230Z" fill="#ffeed5" />
+              <path
+                className="snout"
+                d="M308.5,230c0,43.6-40.2,52.6-87.3,52.6s-83.3-9-83.3-52.6,38.2-79,85.3-79S308.5,186.3,308.5,230Z"
+                fill="#ffeed5"
+              />
               <g className="nose">
-                <path d="M197.6,187.5c0-11.1,11.5-11.7,25.6-11.7s25.6,0.7,25.6,11.7-11.5,20-25.6,20S197.6,198.6,197.6,187.5Z" fill="#3f1c0c" />
+                <path
+                  d="M197.6,187.5c0-11.1,11.5-11.7,25.6-11.7s25.6,0.7,25.6,11.7-11.5,20-25.6,20S197.6,198.6,197.6,187.5Z"
+                  fill="#3f1c0c"
+                />
                 <path
                   d="M227.5,201a13.9,13.9,0,0,1,.2,1.7v4.6a109.6,109.6,0,0,1-.4,14.3c-0.1,1.3-.3,2.6-0.5,3.9s-0.4,2.6-.7,3.8a34.2,34.2,0,0,1-.9,3.5,32.6,32.6,0,0,1-1.2,3,23.6,23.6,0,0,1-1.3,2.4l-1.2,1.8-1.2,1.4a2,2,0,0,1-3.5-1.6v-0.2s0.1-.6.3-1.7,0.2-1.1.3-1.8,0.3-1.5.4-2.4,0.1-.9.2-1.3,0.2-.9.2-1.4,0.3-2,.4-3.1,0.3-2.2.3-3.3,0.1-2.3.1-3.5a101.1,101.1,0,0,0-1-13.1q-0.4-2.7-.6-4.3a13.9,13.9,0,0,1-.2-1.7A5,5,0,0,1,227.5,201Z"
                   fill="#3f1c0d"

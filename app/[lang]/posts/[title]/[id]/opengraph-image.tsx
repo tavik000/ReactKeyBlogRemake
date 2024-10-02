@@ -1,5 +1,6 @@
 import { GetLocaleFromLang, keyEmail, keyTwitterId } from "@/app/lib/constants";
 import { fetchPostById } from "@/app/lib/data";
+import { Bear } from "@/app/ui/bear";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
@@ -46,10 +47,10 @@ export default async function Image({ params }: Props) {
           height: "100%",
           width: "100%",
           flexDirection: "column",
-          alignItems: "flex-start", // Align items to the left
+          alignItems: "flex-start",
           justifyContent: "space-between",
-          borderBottom: "16px solid #f97316", // border-orange-500
-          borderTop: "16px solid #f97316", // border-orange-500
+          borderBottom: "16px solid #ffbd15",
+          borderTop: "16px solid #ffbd15",
           backgroundColor: "white",
           padding: "48px",
           fontSize: "64px",
@@ -57,16 +58,18 @@ export default async function Image({ params }: Props) {
       >
         <p
           style={{
-            fontSize: "8rem",
+            fontSize: "3rem",
             fontWeight: "bold",
-            lineHeight: "2.5rem", // leading-10
+            lineHeight: "2.5rem",
             letterSpacing: "-0.025em", // tracking-tight
-            color: "#f97316", // text-orange-500
+            color: "#ffbd15",
             textAlign: "left", // Align text to the left
+            marginBottom: "24px",
           }}
         >
           Key Blog
         </p>
+        <Bear isSitting={false} scale={0.25} />
         <div
           style={{
             display: "flex",
@@ -75,16 +78,17 @@ export default async function Image({ params }: Props) {
             fontSize: "6rem", // text-6xl
             fontWeight: 600,
             letterSpacing: "-0.025em", // tracking-tight
+            marginBottom: "24px",
           }}
         >
           {postTitle}
         </div>
         <footer
           style={{
-            fontSize: "4rem",
+            fontSize: "2rem",
             fontWeight: 500, // font-medium
-            color: "#d1d5db", // text-gray-300
-            textAlign: "left", // Align text to the left
+            color: "#6b7280", // text-gray-500
+            textAlign: "left",
           }}
         >
           @{keyTwitterId}
