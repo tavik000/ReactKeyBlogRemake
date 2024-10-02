@@ -12,6 +12,7 @@ export default function PostInteraction({
   isShowingClickEffect,
   postLikes,
   handleClickLike,
+  postTitle,
 }: {
   likeCount: number;
   commentCount: number;
@@ -20,6 +21,7 @@ export default function PostInteraction({
   isShowingClickEffect: boolean;
   postLikes: string[];
   handleClickLike: () => void;
+  postTitle: string;
 }) {
   const { dict } = useLocaleContext();
 
@@ -77,7 +79,7 @@ export default function PostInteraction({
       </div>
       <div className="flex content-center">
         <div className="mr-0 inline-block flex-shrink-0">
-          <PostShareButton />
+          <PostShareButton postTitle={postTitle}/>
         </div>
       </div>
     </div>

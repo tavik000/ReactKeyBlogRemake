@@ -14,10 +14,7 @@ import { useLocaleContext } from "@/app/components/context/locale-provider";
 import { useSessionContext } from "@/app/components/context/session-provider";
 import { useLoginOpenFromPostContext } from "@/app/components/context/login-open-from-post-provider";
 import { useState } from "react";
-import {
-  likePostWithAllLanguages,
-  unlikePostWithAllLanguages,
-} from "@/app/lib/actions";
+import { likePostWithAllLanguages, unlikePostWithAllLanguages } from "@/app/lib/actions";
 import { getFormatDateByLocale } from "@/app/lib/utils";
 
 export default function PostViewClient({
@@ -32,8 +29,7 @@ export default function PostViewClient({
   const sessionContext = useSessionContext();
   const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
   const isLikedBefore: boolean =
-    !!sessionContext.session &&
-    post.likes.includes(sessionContext.session?.user?.name ?? "");
+    !!sessionContext.session && post.likes.includes(sessionContext.session?.user?.name ?? "");
   const [isLiked, setIsLiked] = useState<boolean>(isLikedBefore);
   const [isLikeDisabled, setIsLikeDisabled] = useState(false);
   const [isShowingClickEffect, setIsShowingClickEffect] = useState(false);
@@ -85,10 +81,7 @@ export default function PostViewClient({
       <PostContentContainer>
         <div className="mb-12 flex flex-col">
           <AuthorInfo post={post} />
-          <h1
-            id="post-title"
-            className="mt-2 flex text-28px font-semibold leading-normal"
-          >
+          <h1 id="post-title" className="mt-2 flex text-28px font-semibold leading-normal">
             {post.title}
           </h1>
           <span className="3/5 mt-2 flex flex-wrap justify-start">
@@ -101,11 +94,7 @@ export default function PostViewClient({
           <PostInteraction
             likeCount={
               post.likes.length +
-              (isLiked && !isLikedBefore
-                ? 1
-                : isLikedBefore && !isLiked
-                  ? -1
-                  : 0)
+              (isLiked && !isLikedBefore ? 1 : isLikedBefore && !isLiked ? -1 : 0)
             }
             commentCount={post.comment_id_list.length}
             isSelfPost={isSelfPost}
@@ -113,13 +102,13 @@ export default function PostViewClient({
             isShowingClickEffect={isShowingClickEffect}
             postLikes={post.likes}
             handleClickLike={handleClickLike}
+            postTitle={post.title}
           />
         </div>
         <PostContent post={post} />
         <PostInteraction
           likeCount={
-            post.likes.length +
-            (isLiked && !isLikedBefore ? 1 : isLikedBefore && !isLiked ? -1 : 0)
+            post.likes.length + (isLiked && !isLikedBefore ? 1 : isLikedBefore && !isLiked ? -1 : 0)
           }
           commentCount={post.comment_id_list.length}
           isSelfPost={isSelfPost}
@@ -127,6 +116,7 @@ export default function PostViewClient({
           isShowingClickEffect={isShowingClickEffect}
           postLikes={post.likes}
           handleClickLike={handleClickLike}
+          postTitle={post.title}
         />
         {sessionContext.session &&
         sessionContext.session?.user &&
@@ -139,18 +129,14 @@ export default function PostViewClient({
 
       <div className="mt-6">
         <PostContentContainer>
-          <h2 className="mt-2 text-lg font-semibold leading-normal">
-            {dict.comment.commentTitle}
-          </h2>
+          <h2 className="mt-2 text-lg font-semibold leading-normal">{dict.comment.commentTitle}</h2>
           {post.comment_id_list.length > 0 ? (
             <div className="mt-6 border-t-[1px]">
               {post.comment_id_list.map((commentId) => (
                 <CommentItem
                   key={commentId}
                   commentId={commentId}
-                  comment={
-                    comments.find((comment) => comment.id === commentId) ?? null
-                  }
+                  comment={comments.find((comment) => comment.id === commentId) ?? null}
                   postTitle={post.title}
                   postId={postId}
                 />
@@ -205,8 +191,7 @@ function PostDate({ post }: { post: Post }) {
       {post.modify_date > post.create_date ? (
         <div className="flex flex-row">
           <p className="flex text-nowrap">
-            {dict.post.lastUpdatedOn}{" "}
-            {getFormatDateByLocale(post.modify_date, lang)}
+            {dict.post.lastUpdatedOn} {getFormatDateByLocale(post.modify_date, lang)}
           </p>
           <p className="ml-2 flex text-nowrap">
             {dict.post.postOn} {getFormatDateByLocale(post.create_date, lang)}
