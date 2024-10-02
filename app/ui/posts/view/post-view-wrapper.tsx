@@ -1,5 +1,6 @@
 import { fetchPostById, fetchPostCommentByPostId } from '@/app/lib/data';
 import PostViewClient from './post-view-client';
+import Head from 'next/head';
 
 export default async function PostViewWrapper({
   postId,
@@ -19,8 +20,16 @@ export default async function PostViewWrapper({
   }
 
   const flattenedComments = comments.flat();
-    
+  const { title, content } = post;
+  const limitedContent = content.split(' ').slice(0, 200).join(' ');
+
   return (
-    <PostViewClient post={post} comments={flattenedComments} />
+    <>
+      <Head>
+        <title>{title}</title>
+        <meta name="description" content={limitedContent} />
+      </Head>
+      <PostViewClient post={post} comments={flattenedComments} />
+    </>
   );
 }

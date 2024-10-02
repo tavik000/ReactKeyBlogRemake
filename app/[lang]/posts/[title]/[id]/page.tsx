@@ -4,9 +4,6 @@ import PostViewWrapper from '@/app/ui/posts/view/post-view-wrapper';
 import { Suspense } from 'react';
 import PostViewWrapperSkeleton from '@/app/ui/posts/view/post-view-wrapper-skeleton';
 
-export const metadata: Metadata = {
-  title: 'post',
-};
 
 export default function Page({
   params,

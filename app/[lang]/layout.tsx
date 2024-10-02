@@ -21,7 +21,7 @@ export const experimental_ppr = true;
 export const metadata: Metadata = {
   metadataBase: new URL("https://react-key-blog-remake.vercel.app/"),
   title: {
-    template: "%s | Key Blog",
+    template: "%s - Key Blog",
     default: "Key Blog",
   },
   description: "Key Personal Blog for Game Development and Programming",
