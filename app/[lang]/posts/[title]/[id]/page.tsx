@@ -1,4 +1,4 @@
-import { GetLocaleFromLang } from '@/app/lib/constants';
+import { GetLocaleFromLang, keyTwitterId } from '@/app/lib/constants';
 import type { Metadata, ResolvingMetadata } from 'next'
 import PostViewWrapper from '@/app/ui/posts/view/post-view-wrapper';
 import { Suspense } from 'react';
@@ -37,7 +37,7 @@ export async function generateMetadata(
     description: limitedContent,
     twitter: {
       card: 'summary_large_image',
-      site: '@kiikey4',
+      site: keyTwitterId,
       title: `${title} - Key Blog`,
       description: limitedContent,
     },

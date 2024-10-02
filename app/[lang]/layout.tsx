@@ -5,7 +5,7 @@ import Sky from "@/app/ui/sky";
 import PostSection from "@/app/ui/posts/general/post-section";
 import { getDictionary } from "@/app/components/localization/dictionaries";
 import { DictStructure } from "@/app/components/localization/dict-store";
-import { GetLocaleFromLang } from "@/app/lib/constants";
+import { GetLocaleFromLang, keyTwitterId } from "@/app/lib/constants";
 import { auth } from "@/auth";
 import { NextUIProviderWrapper } from "@/app/components/NextUI/next-ui-providers-wrapper";
 import { LoginOpenFromPostProvider } from "@/app/components/context/login-open-from-post-provider";
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@kiikey4",
+    site: keyTwitterId,
     title: "Key Blog",
     description: "Key Personal Blog for Game Development and Programming",
     images: "/opengraph-image.png",
