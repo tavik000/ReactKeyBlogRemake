@@ -20,7 +20,8 @@
     "postOn": "게시일",
     "lastUpdatedOn": "마지막 업데이트 날짜",
     "copyLink": "링크 복사",
-    "shareToTwitter": "X 에 공유"
+    "shareToTwitter": "X 에 공유",
+    "linkCopied": "링크가 복사되었습니다"
   },
   "comment": {
     "commentTitle": "댓글",

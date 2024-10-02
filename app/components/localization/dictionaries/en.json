@@ -20,7 +20,8 @@
     "postOn": "Posted on",
     "lastUpdatedOn": "Last updated on",
     "copyLink": "Copy link",
-    "shareToTwitter": "Share on X"
+    "shareToTwitter": "Share on X",
+    "linkCopied": "Link copied"
   },
   "comment": {
     "commentTitle": "Comments",

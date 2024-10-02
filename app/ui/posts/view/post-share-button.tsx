@@ -76,8 +76,8 @@ export function PostShareButton({ postTitle }: { postTitle: string }) {
         </DropdownMenuContent>
       </DropdownMenu>
       {showPopup && (
-        <div className="z-50 fixed left-1/2 top-16 -translate-x-1/2 transform justify-center rounded bg-gray-800 px-4 py-2 text-white">
-          Link copied
+        <div className="fixed left-1/2 top-16 z-50 -translate-x-1/2 transform justify-center rounded bg-gray-800 px-4 py-2 text-white">
+          {dict.post.linkCopied}
         </div>
       )}
     </span>

@@ -20,7 +20,8 @@
     "postOn": "投稿日",
     "lastUpdatedOn": "最終更新日",
     "copyLink": "リンクをコピー",
-    "shareToTwitter": "X でポスト"
+    "shareToTwitter": "X でポスト",
+    "linkCopied": "リンクがコピーされました"
   },
   "comment": {
     "commentTitle": "コメント",

@@ -20,7 +20,8 @@
     "postOn": "發佈日期",
     "lastUpdatedOn": "最後更新日期",
     "copyLink": "複製連結",
-    "shareToTwitter": "分享到 X"
+    "shareToTwitter": "分享到 X",
+    "linkCopied": "連結已複製"
   },
   "comment": {
     "commentTitle": "評論",
