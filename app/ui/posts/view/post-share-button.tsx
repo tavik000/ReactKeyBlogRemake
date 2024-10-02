@@ -1,3 +1,4 @@
+"use client";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,9 +15,21 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { ArrowUpOnSquareIcon, LinkIcon } from "@heroicons/react/24/outline";
 import { useLocaleContext } from "@/app/components/context/locale-provider";
+import { useState } from "react";
 
 export function PostShareButton() {
   const { dict } = useLocaleContext();
+  const [showPopup, setShowPopup] = useState(false);
+
+  const copyToClipboard = (e: React.MouseEvent<HTMLButtonElement>) => {
+    navigator.clipboard.writeText(window.location.toString());
+
+    setShowPopup(true);
+    setTimeout(() => {
+      setShowPopup(false);
+    }, 2000);
+  };
+
   return (
     <span>
       <DropdownMenu modal={false}>
@@ -26,14 +39,17 @@ export function PostShareButton() {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="center" className="p-4 shadow-lg">
-          <DropdownMenuLabel key="copy-link" className="h-10 hover:bg-gray-200">
-            <div className="flex flex-row items-center hover:cursor-pointer">
+          <DropdownMenuItem asChild key="copy-link" className="h-10 hover:bg-gray-200">
+            <button
+              className="flex flex-row items-center hover:cursor-pointer"
+              onClick={copyToClipboard}
+            >
               <LinkIcon className="h-6 w-6" color="#6b6b6b" title="Copy link" />
               <p className="ml-4 font-medium text-gray-500">{dict.post.copyLink}</p>
-            </div>
-          </DropdownMenuLabel>
+            </button>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuLabel key="share-twitter" className="h-10 hover:bg-gray-200">
+          <DropdownMenuItem asChild key="share-twitter" className="h-10 hover:bg-gray-200">
             <div className="flex flex-row items-center hover:cursor-pointer">
               <span className="flex justify-center align-middle">
                 <svg
@@ -41,7 +57,7 @@ export function PostShareButton() {
                   width="32"
                   height="32"
                   fill="currentColor"
-                  className="pt-1 bi bi-twitter-x flex h-full w-full items-center justify-center text-gray-500"
+                  className="bi bi-twitter-x flex h-full w-full items-center justify-center pt-1 text-gray-500"
                   viewBox="0 0 22 22"
                 >
                   <path
@@ -52,9 +68,14 @@ export function PostShareButton() {
               </span>
               <p className="ml-4 font-medium text-gray-500">{dict.post.shareToTwitter}</p>
             </div>
-          </DropdownMenuLabel>
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      {showPopup && (
+        <div className="fixed left-1/2 top-16 -translate-x-1/2 transform justify-center rounded bg-gray-800 px-4 py-2 text-white">
+          Link copied
+        </div>
+      )}
     </span>
   );
 }
