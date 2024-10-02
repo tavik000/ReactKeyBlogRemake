@@ -21,8 +21,10 @@ async function seedUsers(client) {
         id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
         name VARCHAR(255) NOT NULL,
         email TEXT NOT NULL UNIQUE,
-        twitter_id TEXT NOT NULL UNIQUE,
-        password TEXT NOT NULL
+        img VARCHAR(255) NOT NULL,
+        theme VARCHAR(255) NOT NULL,
+        last_login_date DATE NOT NULL,
+        create_date DATE NOT NULL
       );
     `;
 
@@ -31,10 +33,10 @@ async function seedUsers(client) {
     // Insert data into the "users" table
     const insertedUsers = await Promise.all(
       users.map(async (user) => {
-        const hashedPassword = await bcrypt.hash(user.password, 10);
+        // const hashedPassword = await bcrypt.hash(user.password, 10);
         return client.sql`
-        INSERT INTO users (id, name, email, twitter_id, password)
-        VALUES (${user.id}, ${user.name}, ${user.email}, ${user.twitter_id}, ${hashedPassword})
+        INSERT INTO users (id, name, email, img, theme, last_login_date, create_date)
+        VALUES (${user.id}, ${user.name}, ${user.email}, ${user.img}, ${user.theme}, ${user.last_login_date}, ${user.create_date})
         ON CONFLICT (id) DO NOTHING;
       `;
       }),

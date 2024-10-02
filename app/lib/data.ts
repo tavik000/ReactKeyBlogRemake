@@ -1,5 +1,5 @@
 import { sql, db } from '@vercel/postgres';
-import { User, } from './definitions_backup';
+import { User, } from './definitions';
 import { Post, PostCard, PostComment } from './definitions';
 import { unstable_noStore as noStore } from 'next/cache';
 import format from 'pg-format';
@@ -223,9 +223,23 @@ export async function fetchFilteredPosts(
   }
 }
 
-export async function getUser(email: string) {
+export async function isValidUser(name: string, email: string): Promise<boolean> {
+  noStore();
   try {
-    const user = await sql`SELECT * FROM users WHERE email=${email}`;
+    const result = await sql`
+    SELECT * FROM users WHERE name=${name} AND email=${email}
+  `;
+    return (result.rowCount ?? 0) > 0;
+  } catch (error) {
+    console.error('Database Error:', error);
+    throw new Error('Failed to validate user.');
+  }
+}
+
+export async function fetchUser(name: string, email: string): Promise<User> {
+  noStore();
+  try {
+    const user = await sql`SELECT * FROM users WHERE name=${name} AND email=${email}`;
     return user.rows[0] as User;
   } catch (error) {
     console.error('Failed to fetch user:', error);

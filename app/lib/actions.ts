@@ -11,6 +11,7 @@ import { keyName } from './constants';
 import { isRedirectError } from 'next/dist/client/components/redirect';
 import { getDictionary } from '@/app/components/localization/dictionaries';
 import { create } from 'domain';
+import { User } from './definitions';
 
 const format = require('pg-format');
 const { db } = require('@vercel/postgres');
@@ -130,6 +131,66 @@ export type CommentState = {
   };
   message?: string | null;
 };
+
+
+export async function createUser(
+  name: string,
+  theme: string,
+  email?: string,
+  img?: string,
+): Promise<User> {
+  if (!email) {
+    email = '';
+  }
+
+  const create_date = new Date().toISOString().split('T')[0];
+  const last_login_date = create_date;
+
+  const id = require('uuid').v4();
+  try {
+    console.log('create user: ' + name);
+    const client = await db.connect();
+    const createUserQuery = format(
+      `
+      INSERT INTO users (id, name, email, img, theme, last_login_date, create_date)
+      VALUES (%L, %L, %L, %L, %L, %L, %L)
+      ON CONFLICT (name) DO NOTHING;
+      `,
+      id,
+      name,
+      email,
+      img,
+      theme,
+      last_login_date,
+      create_date,
+    );
+
+    const createUser = await client.query(createUserQuery);
+    console.log('createUser success: ' + createUser);
+
+    return {
+      id,
+      name,
+      email,
+      img,
+      theme,
+      last_login_date: new Date(last_login_date),
+      create_date: new Date(create_date),
+    };
+  }
+  catch (error) {
+    console.error(error);
+    return {
+      id: '',
+      name: '',
+      email: '',
+      img: '',
+      theme: '',
+      last_login_date: new Date(),
+      create_date: new Date(),
+    };
+  }
+}
 
 export async function createPost(
   id: string,

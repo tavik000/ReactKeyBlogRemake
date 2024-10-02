@@ -7,8 +7,10 @@ export type User = {
   id: string;
   name: string;
   email: string;
-  twitter?: string;
-  password?: string;
+  img?: string;
+  theme: string;
+  last_login_date: Date;
+  create_date: Date;
 };
 
 export interface PostComment {

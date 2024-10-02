@@ -8,8 +8,10 @@ const users = [
     id: '410544b2-4001-4271-9855-fec4b6a6442a',
     name: 'User',
     email: 'user@nextmail.com',
-    twitter_id: 'kiikey4',
-    password: '123456',
+    img: '',
+    theme: 'light',
+    last_login_date: '2022-12-06',
+    create_date: '2022-12-06',
   },
 ];
 

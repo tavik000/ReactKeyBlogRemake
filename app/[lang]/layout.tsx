@@ -12,24 +12,26 @@ import { LoginOpenFromPostProvider } from "@/app/components/context/login-open-f
 import { LocaleProvider } from "@/app/components/context/locale-provider";
 import { SessionProvider } from "@/app/components/context/session-provider";
 import LoginSuccessfulBanner from "@/app/ui/login-successful-banner";
-import { fetchAllNotificationByTargetUserName } from "../lib/data";
+import { fetchAllNotificationByTargetUserName, fetchUser, isValidUser } from "../lib/data";
 import { NotificationProvider } from "@/app/components/context/notification-provider";
 import { Notification } from "@/app/lib/definitions";
+import { createUser } from "../lib/actions";
+import { User } from "../lib/definitions";
 
 export const experimental_ppr = true;
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://react-key-blog-remake.vercel.app/"),
-  applicationName: 'Key Blog',
+  applicationName: "Key Blog",
   title: {
     template: "%s - Key Blog",
     default: "Key Blog",
   },
   description: "Key Personal Blog for Game Development and Programming",
   openGraph: {
-    title: 'Key Blog',
-    description: 'Key Personal Blog for Game Development and Programming',
-    images: '/opengraph-image.png'
+    title: "Key Blog",
+    description: "Key Personal Blog for Game Development and Programming",
+    images: "/opengraph-image.png",
   },
   twitter: {
     card: "summary_large_image",
@@ -38,9 +40,8 @@ export const metadata: Metadata = {
     description: "Key Personal Blog for Game Development and Programming",
     images: "/opengraph-image.png",
   },
-  creator: 'Key',
+  creator: "Key",
 };
-
 
 export default async function RootLayout({
   children,
@@ -54,7 +55,16 @@ export default async function RootLayout({
   const dict = (await getDictionary(locale)) as DictStructure;
   const session = await auth();
   let notifications: Notification[] = [];
+  let currentUser: User | null = null;
   if (session?.user) {
+    if (session.user.name && session.user.email) {
+      const isValid = isValidUser(session.user.name, session.user.email);
+      if (!isValid) {
+        currentUser = await createUser(session.user.name, session.user.email);
+      } else {
+        currentUser = await fetchUser(session.user.name, session.user.email);
+      }
+    }
     notifications = session?.user?.name
       ? ((await fetchAllNotificationByTargetUserName(
           session.user.name,
@@ -69,7 +79,7 @@ export default async function RootLayout({
           <NextUIProviderWrapper>
             <LoginOpenFromPostProvider>
               <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
-                <SessionProvider inSession={session || null}>
+                <SessionProvider inSession={session || null} inLocalUser={currentUser}>
                   <NotificationProvider inNotifications={notifications || []}>
                     <LoginSuccessfulBanner />
                     <Sky />
