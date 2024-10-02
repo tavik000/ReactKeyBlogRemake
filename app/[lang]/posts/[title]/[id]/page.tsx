@@ -34,12 +34,14 @@ export async function generateMetadata(
   const limitedContent = content.split(" ").slice(0, 80).join(" ");
 
   const previousImages = (await parent).openGraph?.images || [];
+  const openGraphImageUrl = `/opengraph-image?lang=${params.lang}&id=${params.id}`;
+
 
   return {
     title: title,
     description: limitedContent,
     openGraph: {
-      images: ['/some-specific-page-image.jpg', ...previousImages],
+      images: [openGraphImageUrl, ...previousImages],
     },
   };
 }
