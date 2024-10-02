@@ -69,13 +69,12 @@ export default async function Image({ params }: Props) {
         >
           Key Blog
         </p>
-        <Bear isSitting={false} scale={0.25} />
         <div
           style={{
             display: "flex",
             flex: 1,
             alignItems: "center",
-            fontSize: "6rem", // text-6xl
+            fontSize: "4rem", 
             fontWeight: 600,
             letterSpacing: "-0.025em", // tracking-tight
             marginBottom: "24px",
