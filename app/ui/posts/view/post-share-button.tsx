@@ -48,7 +48,7 @@ export function PostShareButton({ postTitle }: { postTitle: string }) {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="center" className="p-4 shadow-lg">
-          <DropdownMenuItem asChild key="copy-link" className="w-full h-10 hover:bg-gray-200">
+          <DropdownMenuItem asChild key="copy-link" className="ml-1 h-10 w-full hover:bg-gray-200">
             <button
               className="flex flex-row items-center hover:cursor-pointer"
               onClick={copyToClipboard}
@@ -58,7 +58,7 @@ export function PostShareButton({ postTitle }: { postTitle: string }) {
             </button>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem asChild key="share-twitter" className="w-full h-10 hover:bg-gray-200">
+          <DropdownMenuItem asChild key="share-twitter" className="h-10 w-full hover:bg-gray-200">
             <div className="h-full w-full">
               <TwitterShareButton url={currentUrl + " via @" + keyTwitterId} title={postTitle}>
                 <div className="flex flex-row items-center hover:cursor-pointer">
