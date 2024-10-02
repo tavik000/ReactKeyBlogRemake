@@ -14,23 +14,28 @@ export default async function PostCategory({ locale }: { locale: string }) {
 
   return (
     <div className="category mt-6 flex md:flex-row">
-      <div className="flex w-10/12 max-w-1140px basis-2/3 rounded-xl bg-white px-12 pb-8 pt-8 shadow-0550 xs:min-w-[300px]">
+      <div className="flex max-w-1140px rounded-xl bg-white px-12 pb-8 pt-8 shadow-0550 xs:w-11/12 xs:min-w-[300px] xl:w-10/12 xl:basis-2/3">
         <div className="flex flex-col">
           <p className="flex pb-4 text-xl tracking-widest">{dict.category}</p>
           <div className="flex flex-col">
             <div className="flex xs:flex-col md:flex-row">
-              <ul className="w-80">
+              <ul className="w-72">
                 <PostTagItem tag="All" isLabel={false} />
                 {firstPart.map((tag) => (
                   <PostTagItem key={tag} tag={tag} isLabel={false} />
                 ))}
+                <div className="xs:hidden md:block xl:hidden">
+                  {secondPart.map((tag) => (
+                    <PostTagItem key={tag} tag={tag} isLabel={false} />
+                  ))}
+                </div>
               </ul>
-              <ul className="w-80">
+              <ul className="w-72 md:hidden xl:block">
                 {secondPart.map((tag) => (
                   <PostTagItem key={tag} tag={tag} isLabel={false} />
                 ))}
               </ul>
-              <ul className="w-80">
+              <ul className="w-72">
                 {thirdPart.map((tag) => (
                   <PostTagItem key={tag} tag={tag} isLabel={false} />
                 ))}

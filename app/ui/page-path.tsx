@@ -1,20 +1,19 @@
-'use client';
+"use client";
 
-import { homepageURL, GetLangFromLocale } from '@/app/lib/constants';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { useLocaleContext } from '@/app/components/context/locale-provider';
+import { homepageURL, GetLangFromLocale } from "@/app/lib/constants";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useLocaleContext } from "@/app/components/context/locale-provider";
 
 export function PagePath() {
-
   const { lang, dict } = useLocaleContext();
   const pathname = usePathname();
-  const pathArray = pathname.split('/').filter(Boolean);
-  let postTitle: string = '';
+  const pathArray = pathname.split("/").filter(Boolean);
+  let postTitle: string = "";
 
   const isOnPost = pathArray.length >= 4;
   if (isOnPost) {
-    pathArray[2] = pathArray[2].replace(/-/g, ' ');
+    pathArray[2] = pathArray[2].replace(/-/g, " ");
     postTitle = decodeURIComponent(pathArray[2]);
   }
 
@@ -26,7 +25,7 @@ export function PagePath() {
         id="page-path"
         className="page-path relative z-10 mb-0 flex justify-center py-3"
       >
-        <div className="mx-auto flex w-10/12 max-w-1140px basis-2/3 list-none flex-row rounded-md bg-white px-2.5 py-1">
+        <div className="mx-auto flex max-w-1140px list-none flex-row rounded-md bg-white px-2.5 py-1 xs:w-11/12 xl:w-10/12 xl:basis-2/3">
           <PagePathItem url={homepageURL} shouldShowArrow={true} isPost={false}>
             {dict.overview.homepage}
           </PagePathItem>
