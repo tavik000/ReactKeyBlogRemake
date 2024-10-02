@@ -1,6 +1,6 @@
-import { DictStructure } from '@/app/components/localization/dict-store';
-import { lusitana, sniglet } from '@/app/ui/fonts';
-import { PagePath } from '@/app/ui/page-path';
+import { DictStructure } from "@/app/components/localization/dict-store";
+import { lusitana, sniglet } from "@/app/ui/fonts";
+import { PagePath } from "@/app/ui/page-path";
 
 export default function PostSection({
   children,

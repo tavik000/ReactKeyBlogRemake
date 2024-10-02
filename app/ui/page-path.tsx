@@ -25,12 +25,12 @@ export function PagePath() {
         id="page-path"
         className="page-path relative z-10 mb-0 flex justify-center py-3"
       >
-        <div className="mx-auto flex max-w-1140px list-none flex-row rounded-md bg-white px-2.5 py-1 xs:w-11/12 xl:w-10/12 xl:basis-2/3">
+        <div className="mx-auto flex max-w-1140px list-none xs:flex-col md:flex-row rounded-md bg-white px-2.5 py-1 xs:w-11/12 xl:w-10/12 xl:basis-2/3">
           <PagePathItem url={homepageURL} shouldShowArrow={true} isPost={false}>
             {dict.overview.homepage}
           </PagePathItem>
           {pathArray.length >= 3 ? (
-            <div className="flex flex-row">
+            <div className="flex xs:flex-col md:flex-row">
               <PagePathItem url={blogUrl} shouldShowArrow={true} isPost={false}>
                 {dict.overview.blog}
               </PagePathItem>
@@ -61,7 +61,7 @@ function PagePathItem({
   isPost: boolean;
 }) {
   return !isPost ? (
-    <li className="flex items-start text-sm">
+    <li className="flex items-start text-sm text-nowrap">
       <Link href={url} className="text-orange-400 hover:underline">
         <span className="whitespace-nowrap">{children}</span>
       </Link>
