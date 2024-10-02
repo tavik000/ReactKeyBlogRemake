@@ -4407,7 +4407,7 @@ packages:
 
   next@14.2.5:
     resolution: {integrity: sha512-0f8aRfBVL+mpzfBjYfQuLWh2WyAwtJXCRfkPF4UJ5qd2YwrHczsrSzXU4tRMV0OAxR8ZJZWPFn6uhSC56UTsLA==}
-    engines: {node: '>=18.17.0'}
+    engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
       '@opentelemetry/api': ^1.1.0
