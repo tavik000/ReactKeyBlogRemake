@@ -41,6 +41,10 @@ export async function generateMetadata(
       title: title,
       description: limitedContent,
     },
+    openGraph: {
+      title: title,
+      description: limitedContent,
+    },
   };
 }
 
