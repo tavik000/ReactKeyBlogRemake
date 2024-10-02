@@ -33,16 +33,16 @@ export async function generateMetadata(
   const limitedContent = content.split(" ").slice(0, 80).join(" ");
 
   return {
-    title: title,
+    title: `${title} - Key Blog`,
     description: limitedContent,
     twitter: {
       card: 'summary_large_image',
       site: '@kiikey4',
-      title: title,
+      title: `${title} - Key Blog`,
       description: limitedContent,
     },
     openGraph: {
-      title: title,
+      title: `${title} - Key Blog`,
       description: limitedContent,
     },
   };
