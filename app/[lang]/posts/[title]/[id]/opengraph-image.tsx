@@ -23,9 +23,9 @@ interface Props {
 }
 
 export default async function Image({ params }: Props) {
-  //   const interSemiBold = fetch(new URL("./Inter-SemiBold.ttf", import.meta.url)).then((res) =>
-  //     res.arrayBuffer(),
-  //   );
+    const interSemiBold = fetch(new URL("./Inter_24pt-SemiBold.ttf", import.meta.url)).then((res) =>
+      res.arrayBuffer(),
+    );
 
   const postId = params.id;
   const locale = GetLocaleFromLang(params.lang);
@@ -40,40 +40,27 @@ export default async function Image({ params }: Props) {
 
   return new ImageResponse(
     (
-      <div
-        style={{
-          fontSize: 64,
-          background: "white",
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          borderTop: "10px solid orange",
-          borderBottom: "10px solid orange",
-          position: "relative",
-        }}
+        <div
+        className="flex flex-col items-center justify-center w-full h-full bg-white border-t-8 border-b-8 border-orange-500 relative"
+        style={{ fontSize: 64 }}
       >
-        <div style={{ flex: 1, display: "flex", alignItems: "center" }}>{postTitle}</div>
-        <p style={{ position: "absolute", bottom: 10 }}>@{keyTwitterId}</p>
-        <p
-          className={`blog-title ${sniglet.className} absolute bottom-0 right-0 mb-10 mr-10 text-3xl font-extrabold`}
-        >
+        <div className="mx-14 flex-1 flex items-center">{postTitle}</div>
+        <p className="mx-14 absolute bottom-2">@{keyTwitterId}</p>
+        <p className={`${sniglet.className} absolute bottom-0 right-0 mb-10 mr-10 text-3xl font-extrabold text-orange-500`}>
           Key Blog
         </p>
       </div>
     ),
     {
       ...size,
-      //   fonts: [
-      //     {
-      //       name: "Inter",
-      //       data: await interSemiBold,
+        fonts: [
+          {
+            name: "Inter",
+            data: await interSemiBold,
 
-      //       weight: 400,
-      //     },
-      //   ],
+            weight: 400,
+          },
+        ],
     },
   );
 }
