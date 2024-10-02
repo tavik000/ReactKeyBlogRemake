@@ -45,6 +45,7 @@ export default function Sky() {
       // Waddle dee
       // const sitTopOffset = 0;
       const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
+      console.log("sitPosY", sitPosY, "groundPosHeight", groundPosHeight, "curiousBearTopCache.current", curiousBearTopCache.current);
 
       if (value) {
         curiousBearRef.current.style.top =
