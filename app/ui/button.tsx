@@ -83,19 +83,19 @@ export function CreatePostButton() {
 
   return (
     <Link
-      className="my-2 mr-4 flex h-10 w-10 items-center justify-center rounded-md"
+      className="my-2 mr-4 flex h-10 w-10 items-center justify-center rounded-md xs:hidden md:flex"
       href={{
         pathname: `/${lang}/posts/create`,
       }}
     >
-      <PencilSquareIcon className="h-6 w-6 text-gray-500 hover:text-orange-500" />
+      <PencilSquareIcon className="flex h-6 w-6 text-gray-500 hover:text-orange-500" />
     </Link>
   );
 }
 
 export function TagButton({ href }: { href: string }) {
   return (
-    <Link className="my-2 mr-6 flex h-10 w-10 items-center justify-center rounded-md" href={href}>
+    <Link className="my-2 mr-6 flex h-10 w-10 items-center justify-center rounded-md xs:hidden md:flex" href={href}>
       <TagIcon className="h-6 w-6 text-gray-500 hover:text-orange-500" />
     </Link>
   );

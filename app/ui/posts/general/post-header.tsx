@@ -11,81 +11,75 @@ import { useLocaleContext } from "@/app/components/context/locale-provider";
 import { useSessionContext } from "@/app/components/context/session-provider";
 
 function useScrollDirection() {
-    const [scrollDirection, setScrollDirection] = useState<
-        null | "down" | "up"
-    >(null);
-    const [lastScrollY, setLastScrollY] = useState(0);
-    const [isLoaded, setIsLoaded] = useState(false);
+  const [scrollDirection, setScrollDirection] = useState<null | "down" | "up">(null);
+  const [lastScrollY, setLastScrollY] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-    useEffect(() => {
-        setIsLoaded(true);
-        let lastY = window.scrollY;
+  useEffect(() => {
+    setIsLoaded(true);
+    let lastY = window.scrollY;
 
-        const updateScrollDirection = () => {
-            const scrollY = window.scrollY;
-            const direction = scrollY > lastY ? "down" : "up";
-            if (
-                direction !== scrollDirection &&
-                (scrollY - lastY > 10 || scrollY - lastY < -10)
-            ) {
-                setScrollDirection(direction);
-            }
-            setLastScrollY(lastY);
-            lastY = scrollY > 0 ? scrollY : 0;
-        };
+    const updateScrollDirection = () => {
+      const scrollY = window.scrollY;
+      const direction = scrollY > lastY ? "down" : "up";
+      if (
+        direction !== scrollDirection &&
+        (scrollY - lastY > 10 || scrollY - lastY < -10)
+      ) {
+        setScrollDirection(direction);
+      }
+      setLastScrollY(lastY);
+      lastY = scrollY > 0 ? scrollY : 0;
+    };
 
-        window.addEventListener("scroll", updateScrollDirection); // add event listener
-        // setTimeout(() => {
-        setLastScrollY(window.scrollY);
-        // }, 0);
-        return () => {
-            window.removeEventListener("scroll", updateScrollDirection); // clean up
-        };
-    }, [scrollDirection]);
+    window.addEventListener("scroll", updateScrollDirection); // add event listener
+    // setTimeout(() => {
+    setLastScrollY(window.scrollY);
+    // }, 0);
+    return () => {
+      window.removeEventListener("scroll", updateScrollDirection); // clean up
+    };
+  }, [scrollDirection]);
 
-    return { scrollDirection, lastScrollY, isLoaded };
+  return { scrollDirection, lastScrollY, isLoaded };
 }
 
-export default function PostHeader({
-    groundPosHeight,
-}: {
-    groundPosHeight: number;
-}) {
-    const { session } = useSessionContext();
-    const { lang, dict } = useLocaleContext();
-    const { lastScrollY, isLoaded } = useScrollDirection();
+export default function PostHeader({ groundPosHeight }: { groundPosHeight: number }) {
+  const { session } = useSessionContext();
+  const { lang, dict } = useLocaleContext();
+  const { lastScrollY, isLoaded } = useScrollDirection();
 
-    const isHidden = lastScrollY < groundPosHeight || !isLoaded;
-    const blogUrl = `/${lang}`;
+  const isHidden = lastScrollY < groundPosHeight || !isLoaded;
+  const blogUrl = `/${lang}`;
 
-    return (
-        <div
-            className={`options fixed z-30 mx-auto flex h-14 w-full flex-row  bg-white/95
+  return (
+    <div
+      className={`options fixed z-30 mx-auto flex h-14 w-full flex-row  bg-white/95
     ${isHidden ? "-top-24" : "top-0"}`}
+    >
+      <div className="flex w-1/2 flex-row">
+        <Link
+          href={blogUrl}
+          className={`blog-title  ${sniglet.className} my-2 ml-4 flex `}
         >
-            <div className="flex w-1/2 flex-row">
-                <Link
-                    href={blogUrl}
-                    className={`blog-title  ${sniglet.className} my-2 ml-4 flex `}
-                >
-                    <p className="relative flex font-semibold xs:max-w-[80px] xs:text-3xl sm:text-4xl">
-                        Key
-                    </p>
-                </Link>
-                <PostSearch placeholder={dict.header.searchPost} />
-            </div>
-            <div className="flex w-1/2 flex-row justify-end">
-                {session?.user?.email === keyEmail ? (
-                    <div className="xs:hidden md:block">
-                        <CreatePostButton />
-                        <TagButton href="/en/tag/manage" />
-                    </div>
-                ) : null}
+          <p className="relative flex font-semibold xs:max-w-[80px] xs:text-3xl sm:text-4xl">
+            Key
+          </p>
+        </Link>
+        <PostSearch placeholder={dict.header.searchPost} />
+      </div>
+      <div className="flex w-1/2 flex-row justify-end">
+        {session?.user?.email === keyEmail ? (
+          <div className="flex h-full flex-row items-center justify-center align-middle">
+            <CreatePostButton />
+            <TagButton href="/en/tag/manage" />
+          </div>
+        ) : null}
 
-                <LanguageButton isHidden={isHidden} />
-                <NotificationButton isHidden={isHidden} />
-                <UserButton />
-            </div>
-        </div>
-    );
+        <LanguageButton isHidden={isHidden} />
+        <NotificationButton isHidden={isHidden} />
+        <UserButton />
+      </div>
+    </div>
+  );
 }
