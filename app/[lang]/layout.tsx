@@ -32,11 +32,12 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@eMartiiin94",
+    site: "@kiikey4",
     title: "Key Blog",
     description: "Key Personal Blog for Game Development and Programming",
     images: "/opengraph-image.png",
   },
+  creator: 'Key',
 };
 
 
