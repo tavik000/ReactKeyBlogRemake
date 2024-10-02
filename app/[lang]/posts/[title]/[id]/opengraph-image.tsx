@@ -39,15 +39,54 @@ export default async function Image({ params }: Props) {
 
   return new ImageResponse(
     (
-      <section
-        className="relative flex h-full w-full flex-col items-center justify-between border-b-8 border-t-8 border-orange-500 bg-white p-12"
-        style={{ fontSize: 64 }}
+        <section
+        style={{
+          position: 'relative',
+          display: 'flex',
+          height: '100%',
+          width: '100%',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          borderBottom: '8px solid #f97316', // border-orange-500
+          borderTop: '8px solid #f97316', // border-orange-500
+          backgroundColor: 'white',
+          padding: '12px',
+          fontSize: '64px'
+        }}
       >
-        <p className="text-2xl font-bold leading-10 tracking-tight text-orange-500">Key Blog</p>
-        <div className="flex flex-1 items-center text-6xl font-extrabold tracking-tight">
+        <p
+          style={{
+            fontSize: '2rem', // text-2xl
+            fontWeight: 'bold',
+            lineHeight: '2.5rem', // leading-10
+            letterSpacing: '-0.025em', // tracking-tight
+            color: '#f97316' // text-orange-500
+          }}
+        >
+          Key Blog
+        </p>
+        <div
+          style={{
+            display: 'flex',
+            flex: 1,
+            alignItems: 'center',
+            fontSize: '6rem', // text-6xl
+            fontWeight: 800, // font-extrabold
+            letterSpacing: '-0.025em' // tracking-tight
+          }}
+        >
           {postTitle}
         </div>
-        <footer className="text-xl font-medium text-gray-300">@{keyTwitterId}</footer>
+        <footer
+          style={{
+            fontSize: '1.25rem', // text-xl
+            fontWeight: 500, // font-medium
+            color: '#d1d5db' // text-gray-300
+          }}
+        >
+          @{keyTwitterId}
+        </footer>
       </section>
     ),
     {
