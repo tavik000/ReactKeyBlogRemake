@@ -26,7 +26,6 @@ export default function PostItem({ post }: { post: PostCard }) {
               alt="thumbnail image"
               className="post-article-thumbnail mb-3 block w-full flex-row rounded-xl"
               priority={true}
-              layout="responsive"
             />
             <span className="article-title flex-grow items-start px-4 pb-3 text-[18px] font-bold">
               {post.title}
