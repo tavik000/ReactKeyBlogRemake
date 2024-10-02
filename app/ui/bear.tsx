@@ -61,7 +61,7 @@ export const CuriousBear = forwardRef<HTMLDivElement, CuriousBearProps>(
                 const centerX = elOffset.x + elOffset.width / 2;
                 const centerY = elOffset.y + elOffset.height / 2;
                 const distanceLeft = Math.round(((cursorPos.current.x - centerX) * 100) / window.innerWidth);
-                const distanceTop = Math.round(((cursorPos.current.y - centerY) * 100) / window.innerHeight);
+                const distanceTop = Math.min(Math.round(((cursorPos.current.y - centerY) * 100) / window.innerHeight), 90);
                 (el as HTMLElement).style.transform = `translate(${distanceLeft / xRatio}px, ${distanceTop / yRatio}px)`;
             }
 
