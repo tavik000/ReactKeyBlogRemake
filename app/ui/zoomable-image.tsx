@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 const ZoomableImage = (props: { src: string; alt?: string }) => {
   const imgRef = useRef<HTMLImageElement>(null);
@@ -32,16 +32,20 @@ const ZoomableImage = (props: { src: string; alt?: string }) => {
     }
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     const handleMouseMoveDocument = (event: MouseEvent) => handleMouseMove(event);
     const handleMouseUpDocument = () => handleMouseUp();
 
     document.addEventListener('mousemove', handleMouseMoveDocument);
     document.addEventListener('mouseup', handleMouseUpDocument);
 
+    const handleTouchStart = (event: TouchEvent) => event.preventDefault();
+    document.addEventListener('touchstart', handleTouchStart, { passive: false });
+
     return () => {
       document.removeEventListener('mousemove', handleMouseMoveDocument);
       document.removeEventListener('mouseup', handleMouseUpDocument);
+      document.removeEventListener('touchstart', handleTouchStart);
     };
   }, [isDragging]);
 
