@@ -18,7 +18,9 @@
     "likes": "讚好",
     "comment": "評論",
     "postOn": "發佈日期",
-    "lastUpdatedOn": "最後更新日期"
+    "lastUpdatedOn": "最後更新日期",
+    "copyLink": "複製連結",
+    "shareToTwitter": "分享到 X"
   },
   "comment": {
     "commentTitle": "評論",

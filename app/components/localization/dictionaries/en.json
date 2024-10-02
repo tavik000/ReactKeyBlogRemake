@@ -18,7 +18,9 @@
     "likes": "Likes",
     "comment": "Comment",
     "postOn": "Posted on",
-    "lastUpdatedOn": "Last updated on"
+    "lastUpdatedOn": "Last updated on",
+    "copyLink": "Copy link",
+    "shareToTwitter": "Share on X"
   },
   "comment": {
     "commentTitle": "Comments",

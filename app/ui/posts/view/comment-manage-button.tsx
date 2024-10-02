@@ -47,7 +47,7 @@ export default function CommentManageButton({ authorName, commentContent, onEdit
                 <Dropdown
                     radius="sm"
                     classNames={{
-                        content: "py-1 px-1 border border-default-200 rounded-lg border-spacing-4 bg-gradient-to-br from-white to-gray-100",
+                        content: "py-1 px-1 border border-default-200 rounded-lg border-spacing-4 bg-white",
                     }}
                 >
                     <DropdownTrigger>

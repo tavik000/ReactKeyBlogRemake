@@ -19,6 +19,8 @@ export interface DictStructure {
     comment: string;
     postOn: string;
     lastUpdatedOn: string;
+    copyLink: string;
+    shareToTwitter: string;
   };
   comment: {
     commentTitle: string;

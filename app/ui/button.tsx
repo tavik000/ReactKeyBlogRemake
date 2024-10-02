@@ -1,14 +1,9 @@
-import clsx from 'clsx';
-import Link from 'next/link';
-import {
-  ArrowUpOnSquareIcon,
-  TagIcon,
-  PencilSquareIcon,
-} from '@heroicons/react/24/outline';
-import { BellIcon } from '@heroicons/react/24/solid';
-import LanguageDropdown, { LanguageItem } from './language-dropdown';
-import { useLocaleContext } from '../components/context/locale-provider';
-import { GetLanguageName } from '../lib/constants';
+import clsx from "clsx";
+import Link from "next/link";
+import { TagIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import LanguageDropdown, { LanguageItem } from "./language-dropdown";
+import { useLocaleContext } from "../components/context/locale-provider";
+import { GetLanguageName } from "../lib/constants";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
@@ -19,7 +14,7 @@ export function Button({ children, className, ...rest }: ButtonProps) {
     <button
       {...rest}
       className={clsx(
-        'flex h-10 items-center justify-center rounded-lg px-4 text-center text-sm font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  aria-disabled:cursor-not-allowed aria-disabled:opacity-50',
+        "flex h-10 items-center justify-center rounded-lg px-4 text-center text-sm font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2  aria-disabled:cursor-not-allowed aria-disabled:opacity-50",
         className,
       )}
     >
@@ -33,7 +28,7 @@ export function RoundButton({ children, className, ...rest }: ButtonProps) {
     <button
       {...rest}
       className={clsx(
-        'round-button relative z-auto m-5 w-full max-w-md items-center overflow-hidden rounded-3xl text-lg font-bold text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50',
+        "round-button relative z-auto m-5 w-full max-w-md items-center overflow-hidden rounded-3xl text-lg font-bold text-white transition-colors hover:bg-blue-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 active:bg-blue-600 aria-disabled:cursor-not-allowed aria-disabled:opacity-50",
         className,
       )}
     >
@@ -44,12 +39,7 @@ export function RoundButton({ children, className, ...rest }: ButtonProps) {
   );
 }
 
-export function LanguageButton({
-  isHidden,
-}: {
-  isHidden: boolean;
-}) {
-
+export function LanguageButton({ isHidden }: { isHidden: boolean }) {
   const { locale } = useLocaleContext();
 
   const languageItems: LanguageItem = {
@@ -58,30 +48,30 @@ export function LanguageButton({
     isCurrentLocale: true,
     children: [
       {
-        title: 'English',
-        locale: 'en',
-        isCurrentLocale: locale === 'en',
+        title: "English",
+        locale: "en",
+        isCurrentLocale: locale === "en",
       },
       {
-        title: '日本語',
-        locale: 'ja',
-        isCurrentLocale: locale === 'ja',
+        title: "日本語",
+        locale: "ja",
+        isCurrentLocale: locale === "ja",
       },
       {
-        title: '한국어',
-        locale: 'kr',
-        isCurrentLocale: locale === 'kr',
+        title: "한국어",
+        locale: "kr",
+        isCurrentLocale: locale === "kr",
       },
       {
-        title: '繁體中文',
-        locale: 'zh-HK',
-        isCurrentLocale: locale === 'hk',
+        title: "繁體中文",
+        locale: "zh-HK",
+        isCurrentLocale: locale === "hk",
       },
     ],
   };
   return (
     <>
-      <div className="xs:mr-3 md:mr-8 flex items-center gap-8 text-black text-nowrap">
+      <div className="flex items-center gap-8 text-nowrap text-black xs:mr-3 md:mr-8">
         <LanguageDropdown item={languageItems} isHidden={isHidden} />
       </div>
     </>
@@ -89,7 +79,6 @@ export function LanguageButton({
 }
 
 export function CreatePostButton() {
-
   const { lang } = useLocaleContext();
 
   return (
@@ -106,20 +95,8 @@ export function CreatePostButton() {
 
 export function TagButton({ href }: { href: string }) {
   return (
-    <Link
-      className="my-2 mr-6 flex h-10 w-10 items-center justify-center rounded-md"
-      href={href}
-    >
+    <Link className="my-2 mr-6 flex h-10 w-10 items-center justify-center rounded-md" href={href}>
       <TagIcon className="h-6 w-6 text-gray-500 hover:text-orange-500" />
     </Link>
-  );
-}
-
-
-export function ShareButton({ ...rest }: ButtonProps) {
-  return (
-    <button {...rest} className="px-0.5 py-2">
-      <ArrowUpOnSquareIcon className="h-6 w-6" color="#6b6b6b" title="Share" />
-    </button>
   );
 }
