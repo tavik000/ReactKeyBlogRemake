@@ -25,8 +25,7 @@ export default function Sky() {
       if (!curiousBearRef.current) {
         throw new Error("toggleSit: curiousBearRef is not defined");
       }
-      const groundPosHeight =
-        skyBackgroundRef.current.getBoundingClientRect().height;
+      const groundPosHeight = skyBackgroundRef.current.getBoundingClientRect().height;
 
       const curiousBearTop = curiousBearRef.current.getBoundingClientRect().top;
       if (curiousBearTopCache.current === 0) {
@@ -41,18 +40,7 @@ export default function Sky() {
 
       // Waddle dee
       // const sitTopOffset = 0;
-      const sitPosY =
-        groundPosHeight - curiousBearTopCache.current + sitTopOffset;
-      console.log(
-        "sitPosY",
-        sitPosY,
-        "groundPosHeight",
-        groundPosHeight,
-        "curiousBearTopCache.current",
-        curiousBearTopCache.current,
-        "sitTopOffset",
-        sitTopOffset,
-      );
+      const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
 
       if (value) {
         curiousBearRef.current.style.top = sitPosY + "px";
@@ -76,21 +64,9 @@ export default function Sky() {
         throw new Error("checkAndToggleSit: curiousBearRef is not defined");
       }
       if (curiousBearRef.current.classList.contains("is-sitting")) {
-        const groundPosHeight =
-          skyBackgroundRef.current.getBoundingClientRect().height;
+        const groundPosHeight = skyBackgroundRef.current.getBoundingClientRect().height;
 
-        const sitPosY =
-          groundPosHeight - curiousBearTopCache.current + sitTopOffset;
-        console.log(
-          "resize sitPosY",
-          sitPosY,
-          "groundPosHeight",
-          groundPosHeight,
-          "curiousBearTopCache.current",
-          curiousBearTopCache.current,
-          "sitTopOffset",
-          sitTopOffset,
-        );
+        const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
         curiousBearRef.current.style.top = sitPosY + "px";
       }
     };
@@ -105,8 +81,7 @@ export default function Sky() {
         throw new Error("checkAndToggleSit: curiousBearRef is not defined");
       }
 
-      const groundPosHeight =
-        skyBackgroundRef.current.getBoundingClientRect().height;
+      const groundPosHeight = skyBackgroundRef.current.getBoundingClientRect().height;
       setGroundPosHeight(groundPosHeight);
 
       // Waddle dee
@@ -118,12 +93,7 @@ export default function Sky() {
 
       // console.log("scrollOffset", scrollOffset, "groundPosHeight", groundPosHeight);
       const deviceWidthType = getCurrentDeviceWidthType(window.innerWidth);
-      console.log(
-        "deviceWidthType",
-        deviceWidthType,
-        "deviceWidth",
-        window.innerWidth,
-      );
+      console.log("deviceWidthType", deviceWidthType, "deviceWidth", window.innerWidth);
 
       if (window.scrollY + scrollOffset >= groundPosHeight) {
         if (!curiousBearRef.current.classList.contains("is-sitting")) {
@@ -158,11 +128,7 @@ export default function Sky() {
           isActive={isBearActive}
           ref={curiousBearRef}
         /> */}
-        <CuriousBear
-          isSitting={isSitting}
-          isActive={isBearActive}
-          ref={curiousBearRef}
-        />
+        <CuriousBear isSitting={isSitting} isActive={isBearActive} ref={curiousBearRef} />
         <SkyBackground ref={skyBackgroundRef} />
       </main>
     </>
