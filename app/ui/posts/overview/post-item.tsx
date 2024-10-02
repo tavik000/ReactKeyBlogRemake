@@ -12,7 +12,7 @@ export default function PostItem({ post }: { post: PostCard }) {
   const url_title = post.title.toLowerCase().replace(urlRegex, "-");
 
   return (
-    <li className="post-item mx-auto mb-6 flex min-h-[400px] w-full max-w-[400px] md:basis-1/2 lg:basis-1/3 list-none flex-col px-[11px] sm:w-1/3 md:w-1/2 md:max-w-none">
+  <li className="post-item mx-auto mb-6 flex min-h-[300px] w-full max-w-[400px] list-none flex-col px-[11px] sm:w-1/3 md:w-1/2 md:max-w-none md:basis-1/2 lg:basis-1/3">
       <article className="mx-auto block h-full w-full flex-row">
         <Link
           href={`${lang}/posts/${url_title}/${post.id}#blog-title`}
