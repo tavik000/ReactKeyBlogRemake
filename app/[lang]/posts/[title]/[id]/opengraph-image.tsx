@@ -64,7 +64,7 @@ export default async function Image({ params }: Props) {
             letterSpacing: "-0.025em", // tracking-tight
             color: "#ffbd15",
             textAlign: "left", // Align text to the left
-            marginBottom: "12px",
+            marginBottom: "6px",
           }}
         >
           Key Blog
