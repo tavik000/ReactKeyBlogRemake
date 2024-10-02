@@ -138,7 +138,7 @@ export async function createUser(
   theme: string,
   email?: string,
   img?: string,
-): Promise<User> {
+): Promise<User | null> {
   if (!email) {
     email = '';
   }
@@ -154,7 +154,7 @@ export async function createUser(
       `
       INSERT INTO users (id, name, email, img, theme, last_login_date, create_date)
       VALUES (%L, %L, %L, %L, %L, %L, %L)
-      ON CONFLICT (name) DO NOTHING;
+      ON CONFLICT (id) DO NOTHING;
       `,
       id,
       name,
@@ -166,7 +166,7 @@ export async function createUser(
     );
 
     const createUser = await client.query(createUserQuery);
-    console.log('createUser success: ' + createUser);
+    console.log('createUser success: ' + createUser[0].name);
 
     return {
       id,
@@ -180,15 +180,7 @@ export async function createUser(
   }
   catch (error) {
     console.error(error);
-    return {
-      id: '',
-      name: '',
-      email: '',
-      img: '',
-      theme: '',
-      last_login_date: new Date(),
-      create_date: new Date(),
-    };
+    return null
   }
 }
 

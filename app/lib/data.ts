@@ -240,6 +240,7 @@ export async function fetchUser(name: string, email: string): Promise<User> {
   noStore();
   try {
     const user = await sql`SELECT * FROM users WHERE name=${name} AND email=${email}`;
+    console.log('fetched user:', user.rows[0]);
     return user.rows[0] as User;
   } catch (error) {
     console.error('Failed to fetch user:', error);

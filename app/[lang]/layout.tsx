@@ -12,7 +12,11 @@ import { LoginOpenFromPostProvider } from "@/app/components/context/login-open-f
 import { LocaleProvider } from "@/app/components/context/locale-provider";
 import { SessionProvider } from "@/app/components/context/session-provider";
 import LoginSuccessfulBanner from "@/app/ui/login-successful-banner";
-import { fetchAllNotificationByTargetUserName, fetchUser, isValidUser } from "../lib/data";
+import {
+  fetchAllNotificationByTargetUserName,
+  fetchUser,
+  isValidUser,
+} from "../lib/data";
 import { NotificationProvider } from "@/app/components/context/notification-provider";
 import { Notification } from "@/app/lib/definitions";
 import { createUser } from "../lib/actions";
@@ -58,9 +62,17 @@ export default async function RootLayout({
   let currentUser: User | null = null;
   if (session?.user) {
     if (session.user.name && session.user.email) {
-      const isValid = isValidUser(session.user.name, session.user.email);
+      const isValid = await isValidUser(session.user.name, session.user.email);
+      console.log("isValid", isValid);
       if (!isValid) {
-        currentUser = await createUser(session.user.name, session.user.email);
+        // TODO theme
+        const image = session.user.image || "";
+        currentUser = await createUser(
+          session.user.name,
+          "light",
+          session.user.email,
+          image,
+        );
       } else {
         currentUser = await fetchUser(session.user.name, session.user.email);
       }
