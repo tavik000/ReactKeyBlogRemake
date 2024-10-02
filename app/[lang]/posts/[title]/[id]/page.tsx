@@ -33,16 +33,15 @@ export async function generateMetadata(
   const { title, content } = post;
   const limitedContent = content.split(" ").slice(0, 80).join(" ");
 
-  const previousImages = (await parent).openGraph?.images || [];
-  const openGraphImageUrl = `/opengraph-image?lang=${params.lang}&id=${params.id}`;
-
-
   return {
     title: title,
     description: limitedContent,
-    openGraph: {
-      images: [openGraphImageUrl, ...previousImages],
-    },
+    twitter: {
+      card: 'summary_large_image',
+      site: '@kiikey4',
+      title: title,
+      description: limitedContent,
+    }
   };
 }
 
