@@ -1,9 +1,47 @@
 import { GetLocaleFromLang } from '@/app/lib/constants';
-import { Metadata } from 'next';
+import type { Metadata, ResolvingMetadata } from 'next'
 import PostViewWrapper from '@/app/ui/posts/view/post-view-wrapper';
 import { Suspense } from 'react';
 import PostViewWrapperSkeleton from '@/app/ui/posts/view/post-view-wrapper-skeleton';
+import { fetchPostById } from '@/app/lib/data';
 
+interface Props {
+  params: {
+    postId: string;
+    locale: string;
+  };
+  searchParams: Record<string, string | string[] | undefined>;
+}
+
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  const { postId, locale } = params;
+
+  const post = await fetchPostById(postId, locale);
+
+  if (!post) {
+    return {
+      title: 'Post not found',
+      description: 'The requested post could not be found.',
+    };
+  }
+
+  const { title, content } = post;
+  const limitedContent = content.split(" ").slice(0, 200).join(" ");
+
+  const previousImages = (await parent).openGraph?.images || [];
+
+  return {
+    title: title,
+    description: limitedContent,
+    openGraph: {
+      images: ['/some-specific-page-image.jpg', ...previousImages],
+    },
+  };
+}
 
 export default function Page({
   params,
