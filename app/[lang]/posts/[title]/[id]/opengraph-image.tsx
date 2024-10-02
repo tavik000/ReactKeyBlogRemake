@@ -52,7 +52,7 @@ export default async function Image({ params }: Props) {
           borderBottom: "16px solid #ffbd15",
           borderTop: "16px solid #ffbd15",
           backgroundColor: "white",
-          padding: "48px",
+          padding: "24px 48px 48px 48px",
           fontSize: "64px",
         }}
       >
