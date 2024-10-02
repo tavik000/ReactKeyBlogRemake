@@ -1102,9 +1102,11 @@ blockquote {
   transition: transform 0.5s ease;
 }
 
-.zoom-image:active {
-  transform: scale(2);
-  z-index: 10;
+@media (pointer: fine) {
+  .zoom-image:active {
+    transform: scale(2);
+    z-index: 10;
+  }
 }
 
 .click-effect {
