@@ -1,6 +1,5 @@
 import { GetLocaleFromLang, keyEmail, keyTwitterId } from "@/app/lib/constants";
 import { fetchPostById } from "@/app/lib/data";
-import { sniglet } from "@/app/ui/fonts";
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
@@ -23,9 +22,9 @@ interface Props {
 }
 
 export default async function Image({ params }: Props) {
-    const interSemiBold = fetch(new URL("./Inter_24pt-SemiBold.ttf", import.meta.url)).then((res) =>
-      res.arrayBuffer(),
-    );
+  const interSemiBold = fetch(new URL("./Inter_24pt-SemiBold.ttf", import.meta.url)).then((res) =>
+    res.arrayBuffer(),
+  );
 
   const postId = params.id;
   const locale = GetLocaleFromLang(params.lang);
@@ -40,27 +39,27 @@ export default async function Image({ params }: Props) {
 
   return new ImageResponse(
     (
-        <div
-        className="flex flex-col items-center justify-center w-full h-full bg-white border-t-8 border-b-8 border-orange-500 relative"
+      <section
+        className="relative flex h-full w-full flex-col items-center justify-between border-b-8 border-t-8 border-orange-500 bg-white p-12"
         style={{ fontSize: 64 }}
       >
-        <div className="mx-14 flex-1 flex items-center">{postTitle}</div>
-        <p className="mx-14 absolute bottom-2">@{keyTwitterId}</p>
-        <p className={`${sniglet.className} absolute bottom-0 right-0 mb-10 mr-10 text-3xl font-extrabold text-orange-500`}>
-          Key Blog
-        </p>
-      </div>
+        <p className="text-2xl font-bold leading-10 tracking-tight text-orange-500">Key Blog</p>
+        <div className="flex flex-1 items-center text-6xl font-extrabold tracking-tight">
+          {postTitle}
+        </div>
+        <footer className="text-xl font-medium text-gray-300">@{keyTwitterId}</footer>
+      </section>
     ),
     {
       ...size,
-        fonts: [
-          {
-            name: "Inter",
-            data: await interSemiBold,
+      fonts: [
+        {
+          name: "Inter",
+          data: await interSemiBold,
 
-            weight: 400,
-          },
-        ],
+          weight: 400,
+        },
+      ],
     },
   );
 }
