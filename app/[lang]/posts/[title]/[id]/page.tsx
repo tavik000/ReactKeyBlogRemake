@@ -31,7 +31,7 @@ export async function generateMetadata(
   }
 
   const { title, content } = post;
-  const limitedContent = content.split(" ").slice(0, 200).join(" ");
+  const limitedContent = content.split(" ").slice(0, 80).join(" ");
 
   const previousImages = (await parent).openGraph?.images || [];
 
