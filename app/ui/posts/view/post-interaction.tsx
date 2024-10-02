@@ -37,7 +37,7 @@ export default function PostInteraction({
   };
 
   return (
-    <div className="mt-6 flex  justify-between border-b-2 border-t-2 border-gray-100">
+    <div className="mt-6 flex justify-between border-b-2 border-t-2 border-gray-100">
       <div className="flex content-center">
         <InteractIcon count={likeCount} shouldShowCount={true} tooltipContent={truncatedLikeTooltipContent}>
           <HeartIcon

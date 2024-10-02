@@ -1,46 +1,46 @@
-'use client'
+"use client";
+import { keyEmail, keyName, keyTwitterId } from "@/app/lib/constants";
+import PostContent from "@/app/ui/posts/view/post-content";
+import { PostTagItem } from "@/app/ui/posts/general/post-tag";
+import PostInteraction from "@/app/ui/posts/view/post-interaction";
+import Link from "next/link";
+import Image from "next/image";
+import PostContentContainer from "./post-content-container";
+import CommentItem from "./comment-item";
+import CommentEditForm from "@/app/ui/posts/view/comment-edit-form";
+import { Post, PostComment } from "@/app/lib/definitions";
+import PostManage from "./post-manage";
+import { useLocaleContext } from "@/app/components/context/locale-provider";
+import { useSessionContext } from "@/app/components/context/session-provider";
+import { useLoginOpenFromPostContext } from "@/app/components/context/login-open-from-post-provider";
+import { useState } from "react";
 import {
-  keyEmail,
-  keyName,
-  keyTwitterId,
-} from '@/app/lib/constants';
-import PostContent from '@/app/ui/posts/view/post-content';
-import { PostTagItem } from '@/app/ui/posts/general/post-tag';
-import PostInteraction from '@/app/ui/posts/view/post-interaction';
-import Link from 'next/link';
-import Image from 'next/image';
-import PostContentContainer from './post-content-container';
-import CommentItem from './comment-item';
-import CommentEditForm from '@/app/ui/posts/view/comment-edit-form';
-import { Post, PostComment } from '@/app/lib/definitions';
-import PostManage from './post-manage';
-import { useLocaleContext } from '@/app/components/context/locale-provider';
-import { useSessionContext } from '@/app/components/context/session-provider';
-import { useLoginOpenFromPostContext } from '@/app/components/context/login-open-from-post-provider';
-import { useState } from 'react';
-import { likePostWithAllLanguages, unlikePostWithAllLanguages } from '@/app/lib/actions';
-import { getFormatDateByLocale } from '@/app/lib/utils';
+  likePostWithAllLanguages,
+  unlikePostWithAllLanguages,
+} from "@/app/lib/actions";
+import { getFormatDateByLocale } from "@/app/lib/utils";
 
 export default function PostViewClient({
   post,
-  comments
+  comments,
 }: {
-  post: Post
-  comments: PostComment[]
-}
-) {
-
+  post: Post;
+  comments: PostComment[];
+}) {
   const postId = post.id;
   const { locale, dict } = useLocaleContext();
   const sessionContext = useSessionContext();
   const { setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
-  const isLikedBefore: boolean = !!sessionContext.session && post.likes.includes(sessionContext.session?.user?.name ?? '');
+  const isLikedBefore: boolean =
+    !!sessionContext.session &&
+    post.likes.includes(sessionContext.session?.user?.name ?? "");
   const [isLiked, setIsLiked] = useState<boolean>(isLikedBefore);
   const [isLikeDisabled, setIsLikeDisabled] = useState(false);
   const [isShowingClickEffect, setIsShowingClickEffect] = useState(false);
   const isSelfPost = sessionContext.session?.user?.name === post.author;
-  const notifyTargetUserList = Array.from(new Set([keyName, ...comments.map(comment => comment.user_name)]));
-
+  const notifyTargetUserList = Array.from(
+    new Set([keyName, ...comments.map((comment) => comment.user_name)]),
+  );
 
   const handleClickLike = () => {
     if (isSelfPost) return;
@@ -55,21 +55,27 @@ export default function PostViewClient({
       if (sessionContext.session?.user?.name) {
         const userName = sessionContext.session.user.name;
         const userImage = sessionContext.session.user.image;
-        likePostWithAllLanguages(sessionContext.session.user.name, postId, userImage ?? '', post.title, locale);
+        likePostWithAllLanguages(
+          sessionContext.session.user.name,
+          postId,
+          userImage ?? "",
+          post.title,
+          locale,
+        );
         setIsLiked(true);
         setIsShowingClickEffect(true);
         setTimeout(() => setIsShowingClickEffect(false), 200);
         setIsLikeDisabled(true);
         setTimeout(() => setIsLikeDisabled(false), 5000);
       } else {
-        console.error('User name is not found');
+        console.error("User name is not found");
       }
     } else {
       if (sessionContext.session?.user?.name) {
         unlikePostWithAllLanguages(sessionContext.session.user.name, postId);
         setIsLiked(false);
       } else {
-        console.error('User name is not found');
+        console.error("User name is not found");
       }
     }
   };
@@ -93,9 +99,14 @@ export default function PostViewClient({
           <PostDate post={post} />
 
           <PostInteraction
-            likeCount={post.likes.length +
-              ((isLiked && !isLikedBefore) ? 1 :
-                (isLikedBefore && !isLiked) ? -1 : 0)}
+            likeCount={
+              post.likes.length +
+              (isLiked && !isLikedBefore
+                ? 1
+                : isLikedBefore && !isLiked
+                  ? -1
+                  : 0)
+            }
             commentCount={post.comment_id_list.length}
             isSelfPost={isSelfPost}
             isLiked={isLiked}
@@ -106,9 +117,10 @@ export default function PostViewClient({
         </div>
         <PostContent post={post} />
         <PostInteraction
-          likeCount={post.likes.length +
-            ((isLiked && !isLikedBefore) ? 1 :
-              (isLikedBefore && !isLiked) ? -1 : 0)}
+          likeCount={
+            post.likes.length +
+            (isLiked && !isLikedBefore ? 1 : isLikedBefore && !isLiked ? -1 : 0)
+          }
           commentCount={post.comment_id_list.length}
           isSelfPost={isSelfPost}
           isLiked={isLiked}
@@ -116,7 +128,9 @@ export default function PostViewClient({
           postLikes={post.likes}
           handleClickLike={handleClickLike}
         />
-        {sessionContext.session && sessionContext.session?.user && sessionContext.session.user.email === keyEmail ? (
+        {sessionContext.session &&
+        sessionContext.session?.user &&
+        sessionContext.session.user.email === keyEmail ? (
           <PostManage postId={postId} postTitle={post.title} />
         ) : (
           <> </>
@@ -131,11 +145,19 @@ export default function PostViewClient({
           {post.comment_id_list.length > 0 ? (
             <div className="mt-6 border-t-[1px]">
               {post.comment_id_list.map((commentId) => (
-                <CommentItem key={commentId} commentId={commentId} comment={comments.find(comment => comment.id === commentId) ?? null} postTitle={post.title} postId={postId} />
+                <CommentItem
+                  key={commentId}
+                  commentId={commentId}
+                  comment={
+                    comments.find((comment) => comment.id === commentId) ?? null
+                  }
+                  postTitle={post.title}
+                  postId={postId}
+                />
               ))}
             </div>
           ) : (
-            <div className="mt-4 pt-8 border-t-2 border-gray-100">
+            <div className="mt-4 border-t-2 border-gray-100 pt-8">
               <p>{dict.comment.noComment}</p>
             </div>
           )}
@@ -154,8 +176,6 @@ export default function PostViewClient({
     </div>
   );
 }
-
-
 
 function AuthorInfo({ post }: { post: Post }) {
   return (
@@ -183,23 +203,20 @@ function PostDate({ post }: { post: Post }) {
   return (
     <div className="mt-2 flex text-sm text-gray-500">
       {post.modify_date > post.create_date ? (
-        <div className="flex-row flex">
+        <div className="flex flex-row">
           <p className="flex text-nowrap">
-            {dict.post.lastUpdatedOn}{' '}
+            {dict.post.lastUpdatedOn}{" "}
             {getFormatDateByLocale(post.modify_date, lang)}
           </p>
           <p className="ml-2 flex text-nowrap">
-            {dict.post.postOn}{' '}
-            {getFormatDateByLocale(post.create_date, lang)}
+            {dict.post.postOn} {getFormatDateByLocale(post.create_date, lang)}
           </p>
         </div>
       ) : (
         <p className="text-nowrap">
-          {dict.post.postOn}{' '}
-            {getFormatDateByLocale(post.create_date, lang)}
+          {dict.post.postOn} {getFormatDateByLocale(post.create_date, lang)}
         </p>
       )}
-
     </div>
   );
 }
