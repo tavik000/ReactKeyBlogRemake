@@ -7,8 +7,8 @@ import { fetchPostById } from '@/app/lib/data';
 
 interface Props {
   params: {
-    postId: string;
-    locale: string;
+    lang: string;
+    id: string;
   };
   searchParams: Record<string, string | string[] | undefined>;
 }
@@ -18,7 +18,8 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const { postId, locale } = params;
+  const postId = params.id;
+  const locale = GetLocaleFromLang(params.lang);
 
   const post = await fetchPostById(postId, locale);
 
