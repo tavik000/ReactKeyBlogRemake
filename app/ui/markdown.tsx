@@ -9,6 +9,7 @@ import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import CopyButton from '../components/utils/copy';
 import { escapeHtml } from '../lib/escapeHtml';
 import Image from 'next/image';
+import ZoomableImage from './zoomable-image';
 
 type MarkdownRendererProps = {
   children: string;
@@ -94,10 +95,9 @@ export function MarkdownRenderer({
         },
         img: (props) => {
           return (
-            <img
-              className="relative w-auto h-auto aspect-video zoom-image cursor-pointer"
-              src={props.src as string}
-              alt={props.alt || ''}
+            <ZoomableImage 
+              src={props.src ?? ''} 
+              alt={props.alt ?? ''} 
             />
           );
         },

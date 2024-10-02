@@ -1098,11 +1098,13 @@ blockquote {
   }
 }
 
+.zoom-image {
+  transition: transform 0.5s ease;
+}
 
 .zoom-image:active {
   transform: scale(2);
   z-index: 10;
-  transition: transform 0.5s ease;
 }
 
 .click-effect {
@@ -1113,9 +1115,11 @@ blockquote {
   0% {
     transform: scale(1);
   }
+
   50% {
     transform: scale(1.2);
   }
+
   100% {
     transform: scale(1);
   }
@@ -1149,6 +1153,7 @@ blockquote {
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -1181,6 +1186,7 @@ blockquote {
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
   }
