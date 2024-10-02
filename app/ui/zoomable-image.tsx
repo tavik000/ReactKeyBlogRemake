@@ -39,13 +39,10 @@ const ZoomableImage = (props: { src: string; alt?: string }) => {
     document.addEventListener('mousemove', handleMouseMoveDocument);
     document.addEventListener('mouseup', handleMouseUpDocument);
 
-    const handleTouchStart = (event: TouchEvent) => event.preventDefault();
-    document.addEventListener('touchstart', handleTouchStart, { passive: false });
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMoveDocument);
       document.removeEventListener('mouseup', handleMouseUpDocument);
-      document.removeEventListener('touchstart', handleTouchStart);
     };
   }, [isDragging]);
 
@@ -56,7 +53,6 @@ const ZoomableImage = (props: { src: string; alt?: string }) => {
       src={props.src}
       alt={props.alt || ''}
       onMouseDown={handleMouseDown}
-      onTouchStart={(e) => e.preventDefault()} // Prevent touch interactions
     />
   );
 };
