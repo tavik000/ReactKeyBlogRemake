@@ -1,14 +1,9 @@
-'user client';
-import { UserCircleIcon } from '@heroicons/react/24/outline';
-import {
-  Dropdown,
-  DropdownTrigger,
-  DropdownMenu,
-  DropdownItem,
-} from '@nextui-org/react';
-import { signInAction, signOutAction } from '@/app/lib/actions';
-import { AuthError } from 'next-auth';
-import { Avatar } from '@nextui-org/react';
+"user client";
+import { UserCircleIcon } from "@heroicons/react/24/outline";
+import { Dropdown, DropdownTrigger, DropdownMenu, DropdownItem } from "@nextui-org/react";
+import { signInAction, signOutAction } from "@/app/lib/actions";
+import { AuthError } from "next-auth";
+import { Avatar } from "@nextui-org/react";
 import {
   Modal,
   ModalContent,
@@ -17,25 +12,26 @@ import {
   ModalFooter,
   Button,
   useDisclosure,
-} from '@nextui-org/react';
-import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
-import { useLoginOpenFromPostContext } from '@/app/components/context/login-open-from-post-provider';
-import { useLocaleContext } from '@/app/components/context/locale-provider';
-import { useSessionContext } from '@/app/components/context/session-provider';
+} from "@nextui-org/react";
+import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
+import { useLoginOpenFromPostContext } from "@/app/components/context/login-open-from-post-provider";
+import { useLocaleContext } from "@/app/components/context/locale-provider";
+import { useSessionContext } from "@/app/components/context/session-provider";
 
 export function UserButton() {
-
   const { session, setSession } = useSessionContext();
   const { dict } = useLocaleContext();
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [isSignInLoadingGoogle, setIsSignInLoadingGoogle] =
-    useState<boolean>(false);
-  const [isSignInLoadingTwitter, setIsSignInLoadingTwitter] =
-    useState<boolean>(false);
+  const [isSignInLoadingGoogle, setIsSignInLoadingGoogle] = useState<boolean>(false);
+  const [isSignInLoadingTwitter, setIsSignInLoadingTwitter] = useState<boolean>(false);
   const pathname = usePathname();
   const { isLoginOpenFromPost, setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
+
+  if (session?.user) {
+    console.log("user image: ", session.user.image);
+  }
 
   // Sync login context with modal
   useEffect(() => {
@@ -65,11 +61,11 @@ export function UserButton() {
           aria-label="Static Actions"
           onAction={(key) => {
             const actionKey = key.toString();
-            if (actionKey === 'SignIn') {
+            if (actionKey === "SignIn") {
               onOpen();
             }
-            if (actionKey === 'SignOut') {
-              setSession(null)
+            if (actionKey === "SignOut") {
+              setSession(null);
               signOutAction(pathname);
             }
           }}
@@ -105,18 +101,18 @@ export function UserButton() {
                     variant="flat"
                     className={
                       isSignInLoadingGoogle
-                        ? 'mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300'
-                        : 'mb-4 flex w-full rounded-lg bg-white outline-gray-300 hover:outline-orange-200'
+                        ? "mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300"
+                        : "mb-4 flex w-full rounded-lg bg-white outline-gray-300 hover:outline-orange-200"
                     }
                     onClick={() => {
                       try {
                         setIsSignInLoadingGoogle(true);
-                        signInAction('google', pathname);
+                        signInAction("google", pathname);
                         onClose();
                       } catch (error) {
                         setIsSignInLoadingGoogle(false);
                         if (error instanceof AuthError) {
-                          throw new Error('AuthError: ' + error.message);
+                          throw new Error("AuthError: " + error.message);
                         }
                       } finally {
                         setIsSignInLoadingGoogle(false);
@@ -125,7 +121,7 @@ export function UserButton() {
                   >
                     {isSignInLoadingGoogle ? (
                       <svg
-                        className="-ml-1 mr-3 h-5 w-5 animate-spin"
+                        className="animate-spin -ml-1 mr-3 h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -169,9 +165,7 @@ export function UserButton() {
                         ></path>
                       </svg>
                     </span>
-                    <p className="font-semibold">
-                      {dict.header.signInWithGoogle}
-                    </p>
+                    <p className="font-semibold">{dict.header.signInWithGoogle}</p>
                   </Button>
 
                   <Button
@@ -180,18 +174,18 @@ export function UserButton() {
                     variant="flat"
                     className={
                       isSignInLoadingTwitter
-                        ? 'mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300'
-                        : 'mb-4 flex w-full rounded-lg bg-white outline-gray-300 hover:outline-orange-200'
+                        ? "mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300"
+                        : "mb-4 flex w-full rounded-lg bg-white outline-gray-300 hover:outline-orange-200"
                     }
                     onClick={() => {
                       try {
                         setIsSignInLoadingTwitter(true);
-                        signInAction('twitter', pathname);
+                        signInAction("twitter", pathname);
                         onClose();
                       } catch (error) {
                         setIsSignInLoadingTwitter(false);
                         if (error instanceof AuthError) {
-                          throw new Error('AuthError: ' + error.message);
+                          throw new Error("AuthError: " + error.message);
                         }
                       } finally {
                         setIsSignInLoadingTwitter(false);
@@ -200,7 +194,7 @@ export function UserButton() {
                   >
                     {isSignInLoadingTwitter ? (
                       <svg
-                        className="-ml-1 mr-3 h-5 w-5 animate-spin"
+                        className="animate-spin -ml-1 mr-3 h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
                         viewBox="0 0 24 24"
@@ -234,16 +228,18 @@ export function UserButton() {
                         <path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z" />
                       </svg>
                     </span>
-                    <p className="font-semibold">
-                      {dict.header.signInWithTwitter}
-                    </p>
+                    <p className="font-semibold">{dict.header.signInWithTwitter}</p>
                   </Button>
                 </div>
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="flat" onPress={() => {
-                  onClose();
-                }}>
+                <Button
+                  color="danger"
+                  variant="flat"
+                  onPress={() => {
+                    onClose();
+                  }}
+                >
                   {dict.header.close}
                 </Button>
               </ModalFooter>
@@ -251,7 +247,7 @@ export function UserButton() {
           )}
         </ModalContent>
       </Modal>
-      {(isOpen || isLoginOpenFromPost) ? (
+      {isOpen || isLoginOpenFromPost ? (
         <div className="fixed bottom-0 left-0 right-0 top-0 z-20 bg-black/40"></div>
       ) : (
         <></>
