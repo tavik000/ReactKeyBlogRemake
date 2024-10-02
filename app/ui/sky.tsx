@@ -50,6 +50,8 @@ export default function Sky() {
         groundPosHeight,
         "curiousBearTopCache.current",
         curiousBearTopCache.current,
+        "sitTopOffset",
+        sitTopOffset,
       );
 
       if (value) {
