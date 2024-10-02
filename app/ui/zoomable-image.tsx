@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 
 const ZoomableImage = (props: { src: string; alt?: string }) => {
   const imgRef = useRef<HTMLImageElement>(null);
@@ -10,15 +10,15 @@ const ZoomableImage = (props: { src: string; alt?: string }) => {
     updateTransformOrigin(event.nativeEvent);
   };
 
-  const handleMouseMove = (event: MouseEvent) => {
+  const handleMouseMove = useCallback((event: MouseEvent) => {
     if (isDragging) {
       updateTransformOrigin(event);
     }
-  };
+  }, [isDragging]);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     setIsDragging(false);
-  };
+  }, []);
 
   const updateTransformOrigin = (event: MouseEvent | React.MouseEvent<HTMLImageElement>) => {
     const img = imgRef.current;
@@ -39,12 +39,11 @@ const ZoomableImage = (props: { src: string; alt?: string }) => {
     document.addEventListener('mousemove', handleMouseMoveDocument);
     document.addEventListener('mouseup', handleMouseUpDocument);
 
-
     return () => {
       document.removeEventListener('mousemove', handleMouseMoveDocument);
       document.removeEventListener('mouseup', handleMouseUpDocument);
     };
-  }, [isDragging]);
+  }, [handleMouseMove, handleMouseUp]);
 
   return (
     <img
