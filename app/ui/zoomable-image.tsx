@@ -5,7 +5,7 @@ const ZoomableImage = (props: { src: string; alt?: string }) => {
   const [isDragging, setIsDragging] = useState(false);
 
   const handleMouseDown = (event: React.MouseEvent<HTMLImageElement>) => {
-    event.preventDefault(); 
+    event.preventDefault();
     setIsDragging(true);
     updateTransformOrigin(event.nativeEvent);
   };
@@ -52,6 +52,7 @@ const ZoomableImage = (props: { src: string; alt?: string }) => {
       src={props.src}
       alt={props.alt || ''}
       onMouseDown={handleMouseDown}
+      onTouchStart={(e) => e.preventDefault()} // Prevent touch interactions
     />
   );
 };
