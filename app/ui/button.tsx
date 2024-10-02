@@ -40,31 +40,31 @@ export function RoundButton({ children, className, ...rest }: ButtonProps) {
 }
 
 export function LanguageButton({ isHidden }: { isHidden: boolean }) {
-  const { locale } = useLocaleContext();
+  const { lang, locale } = useLocaleContext();
 
   const languageItems: LanguageItem = {
     title: GetLanguageName(locale),
-    locale: locale,
+    lang: lang,
     isCurrentLocale: true,
     children: [
       {
         title: "English",
-        locale: "en",
+        lang: "en",
         isCurrentLocale: locale === "en",
       },
       {
         title: "日本語",
-        locale: "ja",
+        lang: "ja",
         isCurrentLocale: locale === "ja",
       },
       {
         title: "한국어",
-        locale: "kr",
+        lang: "kr",
         isCurrentLocale: locale === "kr",
       },
       {
         title: "繁體中文",
-        locale: "zh-HK",
+        lang: "zh-HK",
         isCurrentLocale: locale === "hk",
       },
     ],
