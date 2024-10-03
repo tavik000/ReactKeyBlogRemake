@@ -17,11 +17,8 @@ function debounce(func: Function, wait: number) {
 
 export function DarkModeSwitch() {
   const { setTheme } = useTheme();
-  const { session, localUser } = useSessionContext();
+  const { session, localUser, setLocalUser } = useSessionContext();
   const [isChecked, setIsChecked] = useState(localUser?.theme === "dark");
-
-  const themeValue = isChecked ? "dark" : "light";
-  setTheme(themeValue);
 
   const debouncedSetUserTheme = useCallback(
     debounce((userId: string, theme: string) => {
@@ -36,7 +33,7 @@ export function DarkModeSwitch() {
       const themeValue = isChecked ? "dark" : "light";
       console.log("themeValue ", themeValue);
       setTheme(themeValue);
-      localUser.theme = themeValue;
+      setLocalUser({ ...localUser, theme: themeValue });
       if (session?.user) {
         debouncedSetUserTheme(localUser.id, localUser.theme);
       }
