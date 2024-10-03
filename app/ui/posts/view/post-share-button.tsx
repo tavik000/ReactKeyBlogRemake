@@ -60,8 +60,8 @@ export function PostShareButton({ postTitle }: { postTitle: string }) {
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild key="share-twitter" className="h-10 w-full hover:bg-gray-200">
             <div className="h-full w-full">
-              <TwitterShareButton url={currentUrl + " via @" + keyTwitterId} title={postTitle}>
-                <div className="flex flex-row items-center w-full hover:cursor-pointer">
+              <TwitterShareButton url={currentUrl + " via @" + keyTwitterId} title={postTitle} className="w-full h-full">
+                <div className="flex flex-row items-center w-full h-full hover:cursor-pointer">
                   <TwitterIcon
                     bgStyle={{ fill: "none" }}
                     iconFillColor="#6b6b6b"
