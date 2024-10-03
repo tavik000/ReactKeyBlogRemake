@@ -9,6 +9,7 @@ import Link from "next/link";
 import { keyEmail } from "@/app/lib/constants";
 import { useLocaleContext } from "@/app/components/context/locale-provider";
 import { useSessionContext } from "@/app/components/context/session-provider";
+import { useTheme } from "next-themes";
 
 function useScrollDirection() {
   const [scrollDirection, setScrollDirection] = useState<null | "down" | "up">(null);
@@ -54,8 +55,8 @@ export default function PostHeader({ groundPosHeight }: { groundPosHeight: numbe
 
   return (
     <div
-      className={`options fixed z-30 mx-auto flex h-14 w-full flex-row  bg-white/95
-    ${isHidden ? "-top-24" : "top-0"}`}
+      className={`options fixed z-30 mx-auto flex h-14 w-full flex-row 
+      bg-white/95 dark:bg-black ${isHidden ? "-top-24" : "top-0"}`}
     >
       <div className="flex w-1/2 flex-row">
         <Link

@@ -6,6 +6,7 @@ import { useSessionContext } from "@/app/components/context/session-provider";
 import { setUserTheme } from "@/app/lib/actions";
 import { useCallback, useState } from "react";
 import { set } from "zod";
+import { useTheme } from "next-themes";
 
 function debounce(func: Function, wait: number) {
   let timeout: NodeJS.Timeout;
@@ -16,8 +17,11 @@ function debounce(func: Function, wait: number) {
 }
 
 export function DarkModeSwitch() {
+  const { setTheme } = useTheme();
   const { session, localUser } = useSessionContext();
   const [isChecked, setIsChecked] = useState(localUser?.theme === "dark");
+
+  setTheme(isChecked ? "dark" : "light");
 
   const debouncedSetUserTheme = useCallback(
     debounce((userId: string, theme: string) => {
@@ -29,7 +33,10 @@ export function DarkModeSwitch() {
   const onCheckedChange = (isChecked: boolean) => {
     if (localUser) {
       setIsChecked(isChecked);
-      localUser.theme = isChecked ? "dark" : "light";
+      const themeValue = isChecked ? "dark" : "light";
+      console.log("themeValue ", themeValue);
+      setTheme(themeValue);
+      localUser.theme = themeValue;
       if (session?.user) {
         debouncedSetUserTheme(localUser.id, localUser.theme);
       }

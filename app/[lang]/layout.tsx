@@ -21,6 +21,7 @@ import { NotificationProvider } from "@/app/components/context/notification-prov
 import { Notification } from "@/app/lib/definitions";
 import { createUser } from "../lib/actions";
 import { User } from "../lib/definitions";
+import { ThemeProvider } from "../components/context/theme-provider";
 
 export const experimental_ppr = true;
 
@@ -97,17 +98,24 @@ export default async function RootLayout({
       <body className={`${inter.className} w-full antialiased`}>
         <div id="body-wrapper" className="relative overflow-hidden">
           <NextUIProviderWrapper>
-            <LoginOpenFromPostProvider>
-              <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
-                <SessionProvider inSession={session || null} inLocalUser={currentUser}>
-                  <NotificationProvider inNotifications={notifications || []}>
-                    <LoginSuccessfulBanner />
-                    <Sky />
-                    <PostSection>{children}</PostSection>
-                  </NotificationProvider>
-                </SessionProvider>
-              </LocaleProvider>
-            </LoginOpenFromPostProvider>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <LoginOpenFromPostProvider>
+                <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
+                  <SessionProvider inSession={session || null} inLocalUser={currentUser}>
+                    <NotificationProvider inNotifications={notifications || []}>
+                      <LoginSuccessfulBanner />
+                      <Sky />
+                      <PostSection>{children}</PostSection>
+                    </NotificationProvider>
+                  </SessionProvider>
+                </LocaleProvider>
+              </LoginOpenFromPostProvider>
+            </ThemeProvider>
           </NextUIProviderWrapper>
         </div>
       </body>
