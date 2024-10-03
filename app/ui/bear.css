@@ -218,12 +218,12 @@ svg {
     bottom: calc(100% - 0.75rem);
     padding: 0.3rem 0.3rem;
     border-radius: 1rem;
-    border: solid 5px #e2940a;
-    background-color: #ffeed5;
+    /* border: solid 5px #e2940a; */
+    /* background-color: #ffeed5; */
     font-size: 2.5rem;
     line-height: 1;
     text-transform: uppercase;
-    color: #f6ac29;
+    /* color: #f6ac29; */
     /* transform: rotate(20deg); */
     /* transform-origin: -6rem -5rem;
   animation: sign-flick 0.3s 1s forwards; */

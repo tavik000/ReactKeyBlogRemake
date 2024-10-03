@@ -13,7 +13,12 @@ export const SkyBackground = forwardRef<HTMLDivElement, React.PropsWithChildren<
       >
         <div className="cloud cloud-large cloud-1 bg-custom-cloud before:bg-custom-cloud after:bg-custom-cloud dark:bg-custom-dark-cloud dark:before:bg-custom-dark-cloud dark:after:bg-custom-dark-cloud"></div>
         <div className="cloud cloud-medium cloud-2 bg-custom-cloud before:bg-custom-cloud after:bg-custom-cloud dark:bg-custom-dark-cloud dark:before:bg-custom-dark-cloud dark:after:bg-custom-dark-cloud">
-          <div className={`${sniglet.className} scroll-sign`}>scroll</div>
+          <div
+            className={`${sniglet.className} scroll-sign border-[5px] border-solid border-[#e2940a] bg-[#ffeed5] text-[#f6ac29]
+                        dark:border-blue-500 dark:bg-blue-300 dark:text-gray-100`}
+          >
+            scroll
+          </div>
           {/* <div className="waddle-dee-the-second">
                     <div className={`${sniglet.className} sign`}>
                         scroll
