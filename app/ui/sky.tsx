@@ -117,7 +117,7 @@ export default function Sky() {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
     };
-  }, [groundPosHeight, isBearActive]);
+  }, [groundPosHeight, isBearActive, sitTopOffset]);
 
   return (
     <>
