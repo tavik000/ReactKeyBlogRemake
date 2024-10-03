@@ -236,12 +236,18 @@ export async function isValidUser(name: string, email: string): Promise<boolean>
   }
 }
 
-export async function fetchUser(name: string, email: string): Promise<User> {
+export async function fetchUserAndUpdateLoginDate(name: string, email: string): Promise<User> {
   noStore();
+  console.log('fetched user:', name);
   try {
     const user = await sql`SELECT * FROM users WHERE name=${name} AND email=${email}`;
-    console.log('fetched user:', user.rows[0]);
-    return user.rows[0] as User;
+    if ((user.rowCount ?? 0) > 0) {
+      await sql`UPDATE users SET last_login_date = NOW() WHERE name=${name} AND email=${email}`;
+      console.log('fetched success, updated login date, ', name);
+      return user.rows[0] as User;
+    } else {
+      throw new Error('User not found.');
+    }
   } catch (error) {
     console.error('Failed to fetch user:', error);
     throw new Error('Failed to fetch user.');

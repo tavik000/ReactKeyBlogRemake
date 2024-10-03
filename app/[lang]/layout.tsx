@@ -14,7 +14,7 @@ import { SessionProvider } from "@/app/components/context/session-provider";
 import LoginSuccessfulBanner from "@/app/ui/login-successful-banner";
 import {
   fetchAllNotificationByTargetUserName,
-  fetchUser,
+  fetchUserAndUpdateLoginDate,
   isValidUser,
 } from "../lib/data";
 import { NotificationProvider } from "@/app/components/context/notification-provider";
@@ -70,8 +70,9 @@ export default async function RootLayout({
     create_date: new Date(),
   };
   if (session?.user) {
-    if (session.user.name && session.user.email) {
-      const isValid = await isValidUser(session.user.name, session.user.email);
+    if (session.user.name) {
+      const userEmail = session.user.email || "";
+      const isValid = await isValidUser(session.user.name, userEmail);
       console.log("isValid", isValid);
       if (!isValid) {
         const currentTheme = currentUser.theme || "light";
@@ -79,11 +80,14 @@ export default async function RootLayout({
         currentUser = await createUser(
           session.user.name,
           currentTheme,
-          session.user.email,
+          userEmail,
           image,
         );
       } else {
-        currentUser = await fetchUser(session.user.name, session.user.email);
+        currentUser = await fetchUserAndUpdateLoginDate(
+          session.user.name,
+          userEmail,
+        );
       }
     }
     notifications = session?.user?.name
