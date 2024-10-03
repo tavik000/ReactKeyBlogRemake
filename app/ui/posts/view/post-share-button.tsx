@@ -50,18 +50,18 @@ export function PostShareButton({ postTitle }: { postTitle: string }) {
         <DropdownMenuContent align="center" className="p-4 shadow-lg">
           <DropdownMenuItem asChild key="copy-link" className="ml-1 h-10 w-full hover:bg-gray-200">
             <button
-              className="flex flex-row items-center hover:cursor-pointer"
+              className="flex flex-row items-center w-full hover:cursor-pointer"
               onClick={copyToClipboard}
             >
-              <LinkIcon className="ml-2 h-6 w-6" color="#6b6b6b" title="Copy link" />
-              <p className="ml-4 font-medium text-gray-500">{dict.post.copyLink}</p>
+              <LinkIcon className="ml-[6px] h-[23px] w-[23px]" color="#6b6b6b" title="Copy link" />
+              <p className="ml-5 font-medium text-gray-500">{dict.post.copyLink}</p>
             </button>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild key="share-twitter" className="h-10 w-full hover:bg-gray-200">
             <div className="h-full w-full">
               <TwitterShareButton url={currentUrl + " via @" + keyTwitterId} title={postTitle}>
-                <div className="flex flex-row items-center hover:cursor-pointer">
+                <div className="flex flex-row items-center w-full hover:cursor-pointer">
                   <TwitterIcon
                     bgStyle={{ fill: "none" }}
                     iconFillColor="#6b6b6b"
