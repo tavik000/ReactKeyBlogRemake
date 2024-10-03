@@ -2,6 +2,7 @@ import type { Config } from 'tailwindcss';
 const { nextui } = require('@nextui-org/react');
 
 const config: Config = {
+	darkMode: 'class',
 	content: [
 		'./pages/**/*.{js,ts,jsx,tsx,mdx}',
 		'./components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -143,7 +144,6 @@ const config: Config = {
 			'slide-up': 'slide-up 0.5s ease-in'
 		}
 	},
-	darkMode: ['class', 'class'],
 	plugins: [
 		require('@tailwindcss/forms'),
 		require('@tailwindcss/typography'),

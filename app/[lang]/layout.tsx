@@ -98,12 +98,7 @@ export default async function RootLayout({
       <body className={`${inter.className} w-full antialiased`}>
         <div id="body-wrapper" className="relative overflow-hidden">
           <NextUIProviderWrapper>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
+            <ThemeProvider>
               <LoginOpenFromPostProvider>
                 <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
                   <SessionProvider inSession={session || null} inLocalUser={currentUser}>

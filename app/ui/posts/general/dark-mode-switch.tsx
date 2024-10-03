@@ -5,8 +5,7 @@ import { SunIcon } from "@heroicons/react/20/solid";
 import { useSessionContext } from "@/app/components/context/session-provider";
 import { setUserTheme } from "@/app/lib/actions";
 import { useCallback, useState } from "react";
-import { set } from "zod";
-import { useTheme } from "next-themes";
+import { useTheme } from "@/app/components/context/theme-provider";
 
 function debounce(func: Function, wait: number) {
   let timeout: NodeJS.Timeout;
