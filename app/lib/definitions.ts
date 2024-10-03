@@ -8,7 +8,7 @@ export type User = {
   name: string;
   email: string;
   img?: string;
-  theme: string;
+  theme: "light" | "dark";
   last_login_date: Date;
   create_date: Date;
 };

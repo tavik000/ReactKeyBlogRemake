@@ -135,10 +135,10 @@ export type CommentState = {
 
 export async function createUser(
   name: string,
-  theme: string,
+  theme: "light" | "dark",
   email?: string,
   img?: string,
-): Promise<User | null> {
+): Promise<User> {
   if (!email) {
     email = '';
   }
@@ -180,7 +180,15 @@ export async function createUser(
   }
   catch (error) {
     console.error(error);
-    return null
+    return {
+      id: '',
+      name: '',
+      email: '',
+      img: '',
+      theme: 'light',
+      last_login_date: new Date(),
+      create_date: new Date(),
+    }
   }
 }
 
@@ -198,7 +206,7 @@ export async function setUserTheme(id: string, theme: string) {
       id,
     );
     const updateTheme = await client.query(updateThemeQuery);
-    console.log('updateTheme success: ' + updateTheme[0].name);
+    console.log('updateTheme success: ' + theme);
   } catch (error) {
     console.error(error);
     return {

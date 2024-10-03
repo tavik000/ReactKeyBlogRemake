@@ -59,7 +59,15 @@ export default async function RootLayout({
   const dict = (await getDictionary(locale)) as DictStructure;
   const session = await auth();
   let notifications: Notification[] = [];
-  let currentUser: User | null = null;
+  let currentUser: User = {
+    id: "",
+    name: "",
+    email: "",
+    img: "",
+    theme: "light",
+    last_login_date: new Date(),
+    create_date: new Date(),
+  };
   if (session?.user) {
     if (session.user.name && session.user.email) {
       const isValid = await isValidUser(session.user.name, session.user.email);
