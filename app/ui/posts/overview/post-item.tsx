@@ -5,12 +5,9 @@ import { PostTagItem } from "@/app/ui/posts/general/post-tag";
 import { PostCard } from "@/app/lib/definitions";
 import { useLocaleContext } from "@/app/components/context/locale-provider";
 import { getFormatDateByLocale } from "@/app/lib/utils";
-import { useSessionContext } from "@/app/components/context/session-provider";
 
 export default function PostItem({ post }: { post: PostCard }) {
   const { lang } = useLocaleContext();
-  const { localUser } = useSessionContext();
-  console.log("theme: ", localUser.theme);
   const urlRegex = /\s/g;
   const url_title = post.title.toLowerCase().replace(urlRegex, "-");
 
