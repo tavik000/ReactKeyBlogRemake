@@ -19,10 +19,9 @@ import {
 } from "../lib/data";
 import { NotificationProvider } from "@/app/components/context/notification-provider";
 import { Notification } from "@/app/lib/definitions";
-import { createUser } from "../lib/actions";
+import { createUser, getThemeCookie } from "../lib/actions";
 import { User } from "../lib/definitions";
 import { ThemeProvider } from "../components/context/theme-provider";
-import { getCookie } from "cookies-next";
 
 export const experimental_ppr = true;
 
@@ -71,7 +70,8 @@ export default async function RootLayout({
     create_date: new Date(),
   };
   let currentTheme: "light" | "dark" = "light";
-  currentTheme = getCookie("theme") === "dark" ? "dark" : "light";
+  const themeCookie = await getThemeCookie();
+  currentTheme = themeCookie?.value === "dark" ? "dark" : "light";
   if (session?.user) {
     if (session.user.name) {
       const userEmail = session.user.email || "";
@@ -91,9 +91,11 @@ export default async function RootLayout({
           session.user.name,
         )) as unknown as Notification[])
       : [];
+  } else {
+    currentUser.theme = currentTheme;
   }
   console.log("layout currentTheme", currentTheme);
-  console.log("getCookie", getCookie("theme"));
+  // console.log("getCookie", themeCookie);
 
   return (
     <html lang={lang}>
@@ -106,7 +108,7 @@ export default async function RootLayout({
                   <SessionProvider inSession={session || null} inLocalUser={currentUser}>
                     <NotificationProvider inNotifications={notifications || []}>
                       <LoginSuccessfulBanner />
-                      <Sky/>
+                      <Sky />
                       <PostSection>{children}</PostSection>
                     </NotificationProvider>
                   </SessionProvider>

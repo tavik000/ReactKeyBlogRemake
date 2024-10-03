@@ -4,10 +4,9 @@ import { Switch } from "@/components/ui/switch";
 import { MoonIcon } from "@heroicons/react/24/solid";
 import { SunIcon } from "@heroicons/react/20/solid";
 import { useSessionContext } from "@/app/components/context/session-provider";
-import { setUserTheme } from "@/app/lib/actions";
+import { setThemeCookie, setUserTheme } from "@/app/lib/actions";
 import { useCallback, useState } from "react";
 import { useTheme } from "@/app/components/context/theme-provider";
-import { setCookie } from "cookies-next";
 
 function debounce(func: Function, wait: number) {
   let timeout: NodeJS.Timeout;
@@ -17,7 +16,7 @@ function debounce(func: Function, wait: number) {
   };
 }
 
-export function DarkModeSwitch() {
+export default function DarkModeSwitch() {
   const { setTheme } = useTheme();
   const { session, localUser, setLocalUser } = useSessionContext();
   const [isChecked, setIsChecked] = useState(localUser?.theme === "dark");
@@ -30,6 +29,8 @@ export function DarkModeSwitch() {
   );
 
   const onCheckedChange = (isChecked: boolean) => {
+    console.log("switched to ", isChecked ? "dark" : "light");
+    setThemeCookie(isChecked ? "dark" : "light");
     if (localUser) {
       setIsChecked(isChecked);
       const themeValue = isChecked ? "dark" : "light";
@@ -37,11 +38,9 @@ export function DarkModeSwitch() {
       setTheme(themeValue);
       setLocalUser({ ...localUser, theme: themeValue });
       if (session?.user) {
-        debouncedSetUserTheme(localUser.id, localUser.theme);
+        debouncedSetUserTheme(localUser.id, themeValue);
       }
     }
-    setCookie("theme", isChecked ? "dark" : "light");
-    console.log("set cookie", isChecked ? "dark" : "light");
   };
 
   return (

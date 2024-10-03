@@ -1,86 +1,86 @@
-'use server';
-import { GetLangFromLocale } from '@/app/lib/constants';
+"use server";
+import { GetLangFromLocale } from "@/app/lib/constants";
 
-import { z } from 'zod';
-import { VercelPoolClient } from '@vercel/postgres';
-import { revalidatePath } from 'next/cache';
-import { redirect } from 'next/navigation';
-import { signIn, signOut } from '@/auth';
-import { AuthError } from 'next-auth';
-import { keyName } from './constants';
-import { isRedirectError } from 'next/dist/client/components/redirect';
-import { getDictionary } from '@/app/components/localization/dictionaries';
-import { create } from 'domain';
-import { User } from './definitions';
+import { z } from "zod";
+import { VercelPoolClient } from "@vercel/postgres";
+import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
+import { signIn, signOut } from "@/auth";
+import { AuthError } from "next-auth";
+import { keyName } from "./constants";
+import { isRedirectError } from "next/dist/client/components/redirect";
+import { getDictionary } from "@/app/components/localization/dictionaries";
+import { User } from "./definitions";
+import { cookies } from "next/headers";
 
-const format = require('pg-format');
-const { db } = require('@vercel/postgres');
+const format = require("pg-format");
+const { db } = require("@vercel/postgres");
 
 const FormSchema = z.object({
   id: z.string(),
   title_en: z
     .string({
-      invalid_type_error: 'Please enter a title (en).',
+      invalid_type_error: "Please enter a title (en).",
     })
-    .min(1, { message: 'Please enter a title (en).' }),
+    .min(1, { message: "Please enter a title (en)." }),
   title_ja: z
     .string({
-      invalid_type_error: 'Please enter a title (ja).',
+      invalid_type_error: "Please enter a title (ja).",
     })
-    .min(1, { message: 'Please enter a title (ja).' }),
+    .min(1, { message: "Please enter a title (ja)." }),
   title_kr: z
     .string({
-      invalid_type_error: 'Please enter a title (kr).',
+      invalid_type_error: "Please enter a title (kr).",
     })
-    .min(1, { message: 'Please enter a title (kr).' }),
+    .min(1, { message: "Please enter a title (kr)." }),
   title_hk: z
     .string({
-      invalid_type_error: 'Please enter a title (hk).',
+      invalid_type_error: "Please enter a title (hk).",
     })
-    .min(1, { message: 'Please enter a title (hk).' }),
+    .min(1, { message: "Please enter a title (hk)." }),
   thumbnail_img: z
     .string({
-      invalid_type_error: 'Please upload a thumbnail image.',
+      invalid_type_error: "Please upload a thumbnail image.",
     })
-    .min(1, { message: 'Please upload a thumbnail image.' }),
+    .min(1, { message: "Please upload a thumbnail image." }),
   tags: z
     .array(
       z.string({
-        invalid_type_error: 'Please enter valid tags.',
+        invalid_type_error: "Please enter valid tags.",
       }),
     )
-    .min(1, 'Please enter at least one tag.'),
+    .min(1, "Please enter at least one tag."),
   content_en: z
     .string({
-      invalid_type_error: 'Please enter content. (en)',
+      invalid_type_error: "Please enter content. (en)",
     })
-    .min(1, { message: 'Please enter content. (en)' })
+    .min(1, { message: "Please enter content. (en)" })
     .refine((val) => val.trim().length > 0, {
-      message: 'Please enter content. (en)',
+      message: "Please enter content. (en)",
     }),
   content_ja: z
     .string({
-      invalid_type_error: 'Please enter content. (ja)',
+      invalid_type_error: "Please enter content. (ja)",
     })
-    .min(1, { message: 'Please enter content. (ja)' })
+    .min(1, { message: "Please enter content. (ja)" })
     .refine((val) => val.trim().length > 0, {
-      message: 'Please enter content. (ja)',
+      message: "Please enter content. (ja)",
     }),
   content_kr: z
     .string({
-      invalid_type_error: 'Please enter content. (kr)',
+      invalid_type_error: "Please enter content. (kr)",
     })
-    .min(1, { message: 'Please enter content. (kr)' })
+    .min(1, { message: "Please enter content. (kr)" })
     .refine((val) => val.trim().length > 0, {
-      message: 'Please enter content. (kr)',
+      message: "Please enter content. (kr)",
     }),
   content_hk: z
     .string({
-      invalid_type_error: 'Please enter content. (hk)',
+      invalid_type_error: "Please enter content. (hk)",
     })
-    .min(1, { message: 'Please enter content. (hk)' })
+    .min(1, { message: "Please enter content. (hk)" })
     .refine((val) => val.trim().length > 0, {
-      message: 'Please enter content. (hk)',
+      message: "Please enter content. (hk)",
     }),
   modify_date: z.string(),
 });
@@ -89,11 +89,11 @@ const CommentSchema = z.object({
   id: z.string(),
   commentContent: z
     .string({
-      invalid_type_error: 'dict.comment.pleaseEnterComment',
+      invalid_type_error: "dict.comment.pleaseEnterComment",
     })
-    .min(1, { message: 'dict.comment.pleaseEnterComment' })
+    .min(1, { message: "dict.comment.pleaseEnterComment" })
     .refine((val) => val.trim().length > 0, {
-      message: 'dict.comment.pleaseEnterComment',
+      message: "dict.comment.pleaseEnterComment",
     }),
 });
 
@@ -132,7 +132,6 @@ export type CommentState = {
   message?: string | null;
 };
 
-
 export async function createUser(
   name: string,
   theme: "light" | "dark",
@@ -140,15 +139,15 @@ export async function createUser(
   img?: string,
 ): Promise<User> {
   if (!email) {
-    email = '';
+    email = "";
   }
 
-  const create_date = new Date().toISOString().split('T')[0];
+  const create_date = new Date().toISOString().split("T")[0];
   const last_login_date = create_date;
 
-  const id = require('uuid').v4();
+  const id = require("uuid").v4();
   try {
-    console.log('create user: ' + name);
+    console.log("create user: " + name);
     const client = await db.connect();
     const createUserQuery = format(
       `
@@ -166,7 +165,7 @@ export async function createUser(
     );
 
     const createUser = await client.query(createUserQuery);
-    console.log('createUser success: ' + createUser[0].name);
+    console.log("createUser success: " + createUser[0].name);
 
     return {
       id,
@@ -177,24 +176,23 @@ export async function createUser(
       last_login_date: new Date(last_login_date),
       create_date: new Date(create_date),
     };
-  }
-  catch (error) {
+  } catch (error) {
     console.error(error);
     return {
-      id: '',
-      name: '',
-      email: '',
-      img: '',
-      theme: 'light',
+      id: "",
+      name: "",
+      email: "",
+      img: "",
+      theme: "light",
       last_login_date: new Date(),
       create_date: new Date(),
-    }
+    };
   }
 }
 
 export async function setUserTheme(id: string, theme: string) {
   try {
-    console.log('set user theme: ' + theme);
+    console.log("set user theme: " + theme);
     const client = await db.connect();
     const updateThemeQuery = format(
       `
@@ -206,11 +204,11 @@ export async function setUserTheme(id: string, theme: string) {
       id,
     );
     const updateTheme = await client.query(updateThemeQuery);
-    console.log('updateTheme success: ' + theme);
+    console.log("updateTheme success: " + theme);
   } catch (error) {
     console.error(error);
     return {
-      message: 'Failed to update theme',
+      message: "Failed to update theme",
     };
   }
 }
@@ -225,13 +223,13 @@ export async function createPost(
   client: VercelPoolClient,
 ) {
   let content = postContent;
-  console.log('id : ' + id);
-  console.log('title: ' + postTitle);
-  console.log('content: ' + content);
-  console.log('tags: ' + tags);
-  console.log('locale: ' + locale);
-  console.log('\n');
-  const create_date = new Date().toISOString().split('T')[0];
+  console.log("id : " + id);
+  console.log("title: " + postTitle);
+  console.log("content: " + content);
+  console.log("tags: " + tags);
+  console.log("locale: " + locale);
+  console.log("\n");
+  const create_date = new Date().toISOString().split("T")[0];
   const modify_date = create_date;
   const postAuthor = keyName;
   const comment_id_list: string[] = [];
@@ -254,14 +252,14 @@ export async function createPost(
       comment_id_list,
       create_date,
       modify_date,
-      likes
+      likes,
     );
 
     const createPost = await client.query(createPostQuery);
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to add new post (' + locale + ')',
+      message: "Failed to add new post (" + locale + ")",
     };
   }
 }
@@ -277,17 +275,17 @@ export async function createPostWithAllLanguages(
   prevState: State,
   formData: FormData,
 ) {
-  const id = require('uuid').v4();
-  console.log('create: ' + id);
+  const id = require("uuid").v4();
+  console.log("create: " + id);
 
   try {
     const client = await db.connect();
 
     const validatedFields = CreatePost.safeParse({
-      title_en: formData.get('title_en'),
-      title_ja: formData.get('title_ja'),
-      title_kr: formData.get('title_kr'),
-      title_hk: formData.get('title_hk'),
+      title_en: formData.get("title_en"),
+      title_ja: formData.get("title_ja"),
+      title_kr: formData.get("title_kr"),
+      title_hk: formData.get("title_hk"),
       thumbnail_img: thumbnail_img,
       tags: postTags,
       content_en: postContent_en,
@@ -299,76 +297,44 @@ export async function createPostWithAllLanguages(
     if (!validatedFields.success) {
       return {
         errors: validatedFields.error ? validatedFields.error.flatten().fieldErrors : {},
-        message: 'Missing Fields. Failed to Add New Post.',
+        message: "Missing Fields. Failed to Add New Post.",
       };
     }
 
     const { title_en, title_ja, title_kr, title_hk } = validatedFields.data;
 
     const addResult = await Promise.all([
-      createPost(
-        id,
-        thumbnail_img,
-        postTags,
-        title_en,
-        postContent_en,
-        'en',
-        client,
-      ),
-      createPost(
-        id,
-        thumbnail_img,
-        postTags,
-        title_ja,
-        postContent_ja,
-        'ja',
-        client,
-      ),
-      createPost(
-        id,
-        thumbnail_img,
-        postTags,
-        title_kr,
-        postContent_kr,
-        'kr',
-        client,
-      ),
-      createPost(
-        id,
-        thumbnail_img,
-        postTags,
-        title_hk,
-        postContent_hk,
-        'hk',
-        client,
-      ),
+      createPost(id, thumbnail_img, postTags, title_en, postContent_en, "en", client),
+      createPost(id, thumbnail_img, postTags, title_ja, postContent_ja, "ja", client),
+      createPost(id, thumbnail_img, postTags, title_kr, postContent_kr, "kr", client),
+      createPost(id, thumbnail_img, postTags, title_hk, postContent_hk, "hk", client),
     ]);
   } catch (error) {
     console.error(error);
     return {
-      message: 'Failed to update post',
+      message: "Failed to update post",
     };
   }
 
   const lang = GetLangFromLocale(currentLocale);
   const urlRegex = /\s/g;
-  let title = formData.get('title_en') as string;
+  let title = formData.get("title_en") as string;
   switch (currentLocale) {
-    case 'en':
-      title = formData.get('title_en') as string;
+    case "en":
+      title = formData.get("title_en") as string;
       break;
-    case 'ja':
-      title = encodeURI(formData.get('title_ja') as string);
+    case "ja":
+      title = encodeURI(formData.get("title_ja") as string);
       break;
-    case 'kr':
-      title = encodeURI(formData.get('title_kr') as string);
+    case "kr":
+      title = encodeURI(formData.get("title_kr") as string);
       break;
-    case 'hk':
-      title = encodeURI(formData.get('title_hk') as string);
+    case "hk":
+      title = encodeURI(formData.get("title_hk") as string);
       break;
   }
 
-  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const url_title = title.toLowerCase().replace(urlRegex, "-");
   const redirectUrl = `/${lang}/posts/${url_title}/${id}`;
 
   revalidatePath(redirectUrl);
@@ -385,11 +351,11 @@ export async function updatePost(
   client: VercelPoolClient,
 ) {
   let content = postContent;
-  console.log('id : ' + id);
-  console.log('title: ' + postTitle);
-  console.log('content: ' + content);
-  console.log('tags: ' + tags);
-  const modify_date = new Date().toISOString().split('T')[0];
+  console.log("id : " + id);
+  console.log("title: " + postTitle);
+  console.log("content: " + content);
+  console.log("tags: " + tags);
+  const modify_date = new Date().toISOString().split("T")[0];
 
   try {
     const updatePostQuery = format(
@@ -408,11 +374,11 @@ export async function updatePost(
     );
 
     const updatePost = await client.query(updatePostQuery);
-    console.log('updatePost: ' + updatePost);
+    console.log("updatePost: " + updatePost);
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to update post (' + locale + ')',
+      message: "Failed to update post (" + locale + ")",
     };
   }
 }
@@ -429,16 +395,16 @@ export async function updatePostWithAllLanguages(
   prevState: State,
   formData: FormData,
 ) {
-  console.log('updatePost: ' + id);
+  console.log("updatePost: " + id);
 
   try {
     const client = await db.connect();
 
     const validatedFields = UpdatePost.safeParse({
-      title_en: formData.get('title_en'),
-      title_ja: formData.get('title_ja'),
-      title_kr: formData.get('title_kr'),
-      title_hk: formData.get('title_hk'),
+      title_en: formData.get("title_en"),
+      title_ja: formData.get("title_ja"),
+      title_kr: formData.get("title_kr"),
+      title_hk: formData.get("title_hk"),
       thumbnail_img: thumbnail_img,
       tags: postTags,
       content_en: postContent_en,
@@ -450,88 +416,52 @@ export async function updatePostWithAllLanguages(
     if (!validatedFields.success) {
       return {
         errors: validatedFields.error ? validatedFields.error.flatten().fieldErrors : {},
-        message: 'Missing Fields. Failed to Update Post.',
+        message: "Missing Fields. Failed to Update Post.",
       };
     }
 
     const { title_en, title_ja, title_kr, title_hk } = validatedFields.data;
 
     const updateResult = await Promise.all([
-      updatePost(
-        id,
-        thumbnail_img,
-        postTags,
-        title_en,
-        postContent_en,
-        'en',
-        client,
-      ),
-      updatePost(
-        id,
-        thumbnail_img,
-        postTags,
-        title_ja,
-        postContent_ja,
-        'ja',
-        client,
-      ),
-      updatePost(
-        id,
-        thumbnail_img,
-        postTags,
-        title_kr,
-        postContent_kr,
-        'kr',
-        client,
-      ),
-      updatePost(
-        id,
-        thumbnail_img,
-        postTags,
-        title_hk,
-        postContent_hk,
-        'hk',
-        client,
-      ),
+      updatePost(id, thumbnail_img, postTags, title_en, postContent_en, "en", client),
+      updatePost(id, thumbnail_img, postTags, title_ja, postContent_ja, "ja", client),
+      updatePost(id, thumbnail_img, postTags, title_kr, postContent_kr, "kr", client),
+      updatePost(id, thumbnail_img, postTags, title_hk, postContent_hk, "hk", client),
     ]);
   } catch (error) {
     console.error(error);
     return {
-      message: 'Failed to update post',
+      message: "Failed to update post",
     };
   }
 
   const lang = GetLangFromLocale(currentLocale);
   const urlRegex = /\s/g;
-  let title = formData.get('title_en') as string;
+  let title = formData.get("title_en") as string;
   switch (currentLocale) {
-    case 'en':
-      title = formData.get('title_en') as string;
+    case "en":
+      title = formData.get("title_en") as string;
       break;
-    case 'ja':
-      title = encodeURI(formData.get('title_ja') as string);
+    case "ja":
+      title = encodeURI(formData.get("title_ja") as string);
       break;
-    case 'kr':
-      title = encodeURI(formData.get('title_kr') as string);
+    case "kr":
+      title = encodeURI(formData.get("title_kr") as string);
       break;
-    case 'hk':
-      title = encodeURI(formData.get('title_hk') as string);
+    case "hk":
+      title = encodeURI(formData.get("title_hk") as string);
       break;
   }
 
-  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const url_title = title.toLowerCase().replace(urlRegex, "-");
   const redirectUrl = `/${lang}/posts/${url_title}/${id}`;
 
   revalidatePath(redirectUrl);
   redirect(redirectUrl);
 }
 
-export async function deletePost(
-  id: string,
-  locale: string,
-  client: VercelPoolClient,
-) {
-  console.log('id : ' + id);
+export async function deletePost(id: string, locale: string, client: VercelPoolClient) {
+  console.log("id : " + id);
 
   try {
     const deletePostQuery = format(
@@ -544,34 +474,31 @@ export async function deletePost(
     );
 
     const deletePost = await client.query(deletePostQuery);
-    console.log('deletePost: ' + deletePost);
+    console.log("deletePost: " + deletePost);
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to delete post (' + locale + ')',
+      message: "Failed to delete post (" + locale + ")",
     };
   }
 }
 
-export async function deletePostWithAllLanguages(
-  currentLocale: string,
-  id: string,
-) {
-  console.log('deletePost: ' + id);
+export async function deletePostWithAllLanguages(currentLocale: string, id: string) {
+  console.log("deletePost: " + id);
 
   try {
     const client = await db.connect();
 
     const updateResult = await Promise.all([
-      deletePost(id, 'en', client),
-      deletePost(id, 'ja', client),
-      deletePost(id, 'kr', client),
-      deletePost(id, 'hk', client),
+      deletePost(id, "en", client),
+      deletePost(id, "ja", client),
+      deletePost(id, "kr", client),
+      deletePost(id, "hk", client),
     ]);
   } catch (error) {
     console.error(error);
     return {
-      message: 'Failed to update post',
+      message: "Failed to update post",
     };
   }
 
@@ -597,7 +524,7 @@ export async function addNewTag(tag: string) {
   } catch (error) {
     console.error(error);
     return {
-      message: 'Failed to add tag',
+      message: "Failed to add tag",
     };
   }
 
@@ -621,7 +548,7 @@ export async function deleteTag(tag: string) {
   } catch (error) {
     console.error(error);
     return {
-      message: 'Failed to delete tag',
+      message: "Failed to delete tag",
     };
   }
 
@@ -640,10 +567,10 @@ export async function signInAction(provider: string, pathname: string) {
   } catch (error) {
     if (error instanceof AuthError) {
       switch (error.type) {
-        case 'CredentialsSignin':
-          return 'Invalid credentials.';
+        case "CredentialsSignin":
+          return "Invalid credentials.";
         default:
-          return 'Something went wrong.';
+          return "Something went wrong.";
       }
     }
     throw error;
@@ -669,9 +596,8 @@ export async function createComment(
   userImage: string,
   client: VercelPoolClient,
 ) {
-
   let content = commentContent;
-  const create_date = new Date().toISOString().split('T')[0];
+  const create_date = new Date().toISOString().split("T")[0];
   const modify_date = create_date;
   const likes: string[] = [];
 
@@ -682,16 +608,22 @@ export async function createComment(
       VALUES (%L, %L, %L, %L, %L, %L, %L, ARRAY[%L]::VARCHAR[])
       ON CONFLICT (id) DO NOTHING;
       `,
-      id, postId, userName, userImage, commentContent, create_date, modify_date, likes
+      id,
+      postId,
+      userName,
+      userImage,
+      commentContent,
+      create_date,
+      modify_date,
+      likes,
     );
 
-
     const createComment = await client.query(createCommentQuery);
-    console.log('createComment: ' + createComment);
+    console.log("createComment: " + createComment);
   } catch (error) {
     console.log(error);
     return {
-      message: 'dict.comment.failAddComment',
+      message: "dict.comment.failAddComment",
     };
   }
 }
@@ -707,9 +639,8 @@ export async function updateComment(
 ) {
   const client = await db.connect();
   let content = commentContent;
-  console.log('update comment id : ' + commentId);
-  console.log('update comment content: ' + content);
-
+  console.log("update comment id : " + commentId);
+  console.log("update comment content: " + content);
 
   try {
     const validatedFields = UpdateComment.safeParse({
@@ -720,7 +651,7 @@ export async function updateComment(
     if (!validatedFields.success) {
       return {
         errors: validatedFields.error.flatten().fieldErrors,
-        message: 'dict.comment.pleaseEnterComment',
+        message: "dict.comment.pleaseEnterComment",
       };
     }
 
@@ -736,11 +667,11 @@ export async function updateComment(
     );
 
     const updateComment = await client.query(updateCommentQuery);
-    console.log('updateComment success with content: ' + content);
+    console.log("updateComment success with content: " + content);
   } catch (error) {
     console.log(error);
     return {
-      message: 'dict.comment.failUpdateComment',
+      message: "dict.comment.failUpdateComment",
     };
   }
 
@@ -748,20 +679,20 @@ export async function updateComment(
   const urlRegex = /\s/g;
   let title = postTitle;
   switch (currentLocale) {
-    case 'en':
+    case "en":
       break;
-    case 'ja':
+    case "ja":
       title = encodeURI(title);
       break;
-    case 'kr':
+    case "kr":
       title = encodeURI(title);
       break;
-    case 'hk':
+    case "hk":
       title = encodeURI(title);
       break;
   }
 
-  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const url_title = title.toLowerCase().replace(urlRegex, "-");
   const redirectUrl = `/${lang}/posts/${url_title}/${postId}`;
 
   revalidatePath(redirectUrl);
@@ -772,9 +703,8 @@ export async function addCommentToPost(
   postId: string,
   commentId: string,
   postLocale: string,
-  client: VercelPoolClient
+  client: VercelPoolClient,
 ) {
-
   try {
     const addCommentQuery = format(
       `
@@ -788,12 +718,18 @@ export async function addCommentToPost(
     );
 
     const addCommentToPost = await client.query(addCommentQuery);
-    console.log('addCommentToPost in ' + postLocale + ': postId: ' + postId + ', commentId: ' + commentId);
-
+    console.log(
+      "addCommentToPost in " +
+        postLocale +
+        ": postId: " +
+        postId +
+        ", commentId: " +
+        commentId,
+    );
   } catch (error) {
     console.log(error);
     return {
-      message: 'dict.comment.failAddComment',
+      message: "dict.comment.failAddComment",
     };
   }
 }
@@ -809,23 +745,22 @@ export async function createCommentWithAllLanguagesAndNotifications(
   prevState: CommentState,
   formData: FormData,
 ) {
-
-  const id = require('uuid').v4();
-  console.log('create comment all language: ' + id);
-  console.log('comment content: ' + commentContent);
+  const id = require("uuid").v4();
+  console.log("create comment all language: " + id);
+  console.log("comment content: " + commentContent);
 
   let client: VercelPoolClient | null = null;
   try {
     const connectionResult = await Promise.race([
       db.connect(),
       new Promise((_, reject) =>
-        setTimeout(() => reject(new Error('Database connection timeout')), 5000)
+        setTimeout(() => reject(new Error("Database connection timeout")), 5000),
       ),
     ]);
 
     client = connectionResult as VercelPoolClient;
 
-    console.log('Database connected');
+    console.log("Database connected");
     const validatedFields = CreateComment.safeParse({
       commentContent: commentContent,
     });
@@ -833,54 +768,26 @@ export async function createCommentWithAllLanguagesAndNotifications(
     if (!validatedFields.success) {
       return {
         errors: validatedFields.error.flatten().fieldErrors,
-        message: 'dict.comment.pleaseEnterComment',
+        message: "dict.comment.pleaseEnterComment",
       };
     }
 
-
-    console.log('Fields validated');
+    console.log("Fields validated");
     const addResults = await Promise.allSettled([
-      createComment(
-        id,
-        commentContent,
-        postId,
-        userName,
-        userImage,
-        client,
-      ),
-      addCommentToPost(
-        postId,
-        id,
-        'en',
-        client,
-      ),
-      addCommentToPost(
-        postId,
-        id,
-        'ja',
-        client,
-      ),
-      addCommentToPost(
-        postId,
-        id,
-        'kr',
-        client,
-      ),
-      addCommentToPost(
-        postId,
-        id,
-        'hk',
-        client,
-      ),
+      createComment(id, commentContent, postId, userName, userImage, client),
+      addCommentToPost(postId, id, "en", client),
+      addCommentToPost(postId, id, "ja", client),
+      addCommentToPost(postId, id, "kr", client),
+      addCommentToPost(postId, id, "hk", client),
     ]);
 
     for (const result of addResults) {
-      if (result.status === 'rejected') {
+      if (result.status === "rejected") {
         throw new Error(result.reason);
       }
     }
 
-    console.log('Comments added to all languages successfully');
+    console.log("Comments added to all languages successfully");
 
     createCommentNotificationForTargetUserList(
       notifyTargetUserList,
@@ -894,40 +801,38 @@ export async function createCommentWithAllLanguagesAndNotifications(
       client,
     );
   } catch (error) {
-    console.error('Error in createCommentWithAllLanguages:', error);
+    console.error("Error in createCommentWithAllLanguages:", error);
     return {
-      errors: { commentContent: ['Network Error'] },
-      message: 'dict.comment.failAddComment',
+      errors: { commentContent: ["Network Error"] },
+      message: "dict.comment.failAddComment",
     };
   } finally {
     if (client !== null) {
       client.release();
-      console.log('Database connection closed');
+      console.log("Database connection closed");
     }
   }
-
-
 
   const lang = GetLangFromLocale(currentLocale);
   const urlRegex = /\s/g;
   let title = postTitle;
   switch (currentLocale) {
-    case 'en':
+    case "en":
       break;
-    case 'ja':
+    case "ja":
       title = encodeURI(title);
       break;
-    case 'kr':
+    case "kr":
       title = encodeURI(title);
       break;
-    case 'hk':
+    case "hk":
       title = encodeURI(title);
       break;
   }
 
-  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const url_title = title.toLowerCase().replace(urlRegex, "-");
   const redirectUrl = `/${lang}/posts/${url_title}/${postId}`;
-  console.log('added comment redirectUrl: ' + redirectUrl);
+  console.log("added comment redirectUrl: " + redirectUrl);
 
   revalidatePath(redirectUrl);
   redirect(redirectUrl);
@@ -939,7 +844,7 @@ export async function deleteComment(
   client: VercelPoolClient,
 ) {
   const dict = getDictionary(currentLocale);
-  console.log('delete comment id : ' + commentId);
+  console.log("delete comment id : " + commentId);
 
   try {
     const deleteCommentQuery = format(
@@ -951,11 +856,11 @@ export async function deleteComment(
     );
 
     const deleteComment = await client.query(deleteCommentQuery);
-    console.log('deleteComment successful id: ' + commentId);
+    console.log("deleteComment successful id: " + commentId);
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to delete comment (' + commentId + ')',
+      message: "Failed to delete comment (" + commentId + ")",
     };
   }
 }
@@ -968,7 +873,14 @@ export async function deleteCommentFromPost(
   client: VercelPoolClient,
 ) {
   const dict = getDictionary(currentLocale);
-  console.log('deleteCommentFromPost: locale: (' + postLocale + ') postId: ' + postId + ', commentId: ' + commentId);
+  console.log(
+    "deleteCommentFromPost: locale: (" +
+      postLocale +
+      ") postId: " +
+      postId +
+      ", commentId: " +
+      commentId,
+  );
 
   try {
     const deleteCommentQuery = format(
@@ -983,11 +895,18 @@ export async function deleteCommentFromPost(
     );
 
     const deleteCommentFromPost = await client.query(deleteCommentQuery);
-    console.log('deleteCommentFromPost successfully in ' + postLocale + ': postId: ' + postId + ', commentId: ' + commentId);
+    console.log(
+      "deleteCommentFromPost successfully in " +
+        postLocale +
+        ": postId: " +
+        postId +
+        ", commentId: " +
+        commentId,
+    );
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to delete comment from post',
+      message: "Failed to delete comment from post",
     };
   }
 }
@@ -998,50 +917,48 @@ export async function deleteCommentWithAllLanguages(
   postId: string,
   postTitle: string,
 ) {
-  console.log('deleteComment: ' + commentId);
+  console.log("deleteComment: " + commentId);
 
   try {
     const client = await db.connect();
 
     const deleteResult = await Promise.all([
       deleteComment(commentId, currentLocale, client),
-      deleteCommentFromPost(postId, commentId, 'en', currentLocale, client),
-      deleteCommentFromPost(postId, commentId, 'ja', currentLocale, client),
-      deleteCommentFromPost(postId, commentId, 'kr', currentLocale, client),
-      deleteCommentFromPost(postId, commentId, 'hk', currentLocale, client),
+      deleteCommentFromPost(postId, commentId, "en", currentLocale, client),
+      deleteCommentFromPost(postId, commentId, "ja", currentLocale, client),
+      deleteCommentFromPost(postId, commentId, "kr", currentLocale, client),
+      deleteCommentFromPost(postId, commentId, "hk", currentLocale, client),
     ]);
   } catch (error) {
     console.error(error);
     return {
-      message: 'Failed to delete comment',
+      message: "Failed to delete comment",
     };
   }
-
 
   const lang = GetLangFromLocale(currentLocale);
   const urlRegex = /\s/g;
   let title = postTitle;
   switch (currentLocale) {
-    case 'en':
+    case "en":
       break;
-    case 'ja':
+    case "ja":
       title = encodeURI(title);
       break;
-    case 'kr':
+    case "kr":
       title = encodeURI(title);
       break;
-    case 'hk':
+    case "hk":
       title = encodeURI(title);
       break;
   }
 
-  const url_title = title.toLowerCase().replace(urlRegex, '-');
+  const url_title = title.toLowerCase().replace(urlRegex, "-");
   const redirectUrl = `/${lang}/posts/${url_title}/${postId}`;
-  console.log('added comment redirectUrl: ' + redirectUrl);
+  console.log("added comment redirectUrl: " + redirectUrl);
 
   revalidatePath(redirectUrl);
   redirect(redirectUrl);
-
 }
 
 export async function likeComment(
@@ -1054,9 +971,8 @@ export async function likeComment(
   commentContent: string,
   userLocale: string,
 ) {
-
   try {
-    console.log('like comment id : ' + commentId);
+    console.log("like comment id : " + commentId);
     const client = await db.connect();
     const likeCommentQuery = format(
       `
@@ -1069,7 +985,7 @@ export async function likeComment(
     );
 
     const likeComment = await client.query(likeCommentQuery);
-    console.log('likeComment successfully userName: ' + sourceUserName);
+    console.log("likeComment successfully userName: " + sourceUserName);
 
     createLikeCommentNotificationForCommentAuthor(
       targetUserName,
@@ -1080,24 +996,19 @@ export async function likeComment(
       commentId,
       commentContent,
       userLocale,
-      client
+      client,
     );
-
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to like comment (' + commentId + ')',
+      message: "Failed to like comment (" + commentId + ")",
     };
   }
 }
 
-export async function unlikeComment(
-  userName: string,
-  commentId: string,
-) {
-
+export async function unlikeComment(userName: string, commentId: string) {
   try {
-    console.log('unlike comment id : ' + commentId);
+    console.log("unlike comment id : " + commentId);
     const client = await db.connect();
     const unlikeCommentQuery = format(
       `
@@ -1110,11 +1021,11 @@ export async function unlikeComment(
     );
 
     const unlikeComment = await client.query(unlikeCommentQuery);
-    console.log('unlikeComment successfully userName: ' + userName);
+    console.log("unlikeComment successfully userName: " + userName);
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to unlike comment (' + commentId + ')',
+      message: "Failed to unlike comment (" + commentId + ")",
     };
   }
 }
@@ -1125,9 +1036,8 @@ export async function likePost(
   postLocale: string,
   client: VercelPoolClient,
 ) {
-
   try {
-    console.log('like post id : ' + postId + ' in ' + postLocale);
+    console.log("like post id : " + postId + " in " + postLocale);
     const likePostQuery = format(
       `
       UPDATE posts_%s
@@ -1140,13 +1050,14 @@ export async function likePost(
     );
 
     const likePost = await client.query(likePostQuery);
-    console.log('likePost successfully userName: ' + userName, + ' in ' + postLocale + ' postId: ' + postId);
-
-
+    console.log(
+      "likePost successfully userName: " + userName,
+      +" in " + postLocale + " postId: " + postId,
+    );
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to like post (' + postId + ')',
+      message: "Failed to like post (" + postId + ")",
     };
   }
 }
@@ -1157,9 +1068,8 @@ export async function unlikePost(
   postLocale: string,
   client: VercelPoolClient,
 ) {
-
   try {
-    console.log('unlike post id : ' + postId + ' in ' + postLocale);
+    console.log("unlike post id : " + postId + " in " + postLocale);
     const unlikePostQuery = format(
       `
       UPDATE posts_%s
@@ -1172,11 +1082,14 @@ export async function unlikePost(
     );
 
     const unlikePost = await client.query(unlikePostQuery);
-    console.log('unlikePost successfully userName: ' + userName, + ' in ' + postLocale + ' postId: ' + postId);
+    console.log(
+      "unlikePost successfully userName: " + userName,
+      +" in " + postLocale + " postId: " + postId,
+    );
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to unlike post (' + postId + ')',
+      message: "Failed to unlike post (" + postId + ")",
     };
   }
 }
@@ -1188,19 +1101,19 @@ export async function likePostWithAllLanguages(
   postTitle: string,
   userLocale: string,
 ) {
-  console.log('likePost: ' + postId);
+  console.log("likePost: " + postId);
 
   try {
     const client = await db.connect();
 
     const likeResult = await Promise.all([
-      likePost(userName, postId, 'en', client),
-      likePost(userName, postId, 'ja', client),
-      likePost(userName, postId, 'kr', client),
-      likePost(userName, postId, 'hk', client),
+      likePost(userName, postId, "en", client),
+      likePost(userName, postId, "ja", client),
+      likePost(userName, postId, "kr", client),
+      likePost(userName, postId, "hk", client),
     ]);
 
-    console.log('likePostWithAllLanguages successfully ' + postId);
+    console.log("likePostWithAllLanguages successfully " + postId);
 
     createLikePostNotificationForPostAuthor(
       userName,
@@ -1208,36 +1121,32 @@ export async function likePostWithAllLanguages(
       postId,
       postTitle,
       userLocale,
-      client
+      client,
     );
-
   } catch (error) {
     console.error(error);
     return {
-      message: 'Failed to like post',
+      message: "Failed to like post",
     };
   }
 }
 
-export async function unlikePostWithAllLanguages(
-  userName: string,
-  postId: string,
-) {
-  console.log('unlikePost: ' + postId);
+export async function unlikePostWithAllLanguages(userName: string, postId: string) {
+  console.log("unlikePost: " + postId);
 
   try {
     const client = await db.connect();
 
     const unlikeResult = await Promise.all([
-      unlikePost(userName, postId, 'en', client),
-      unlikePost(userName, postId, 'ja', client),
-      unlikePost(userName, postId, 'kr', client),
-      unlikePost(userName, postId, 'hk', client),
+      unlikePost(userName, postId, "en", client),
+      unlikePost(userName, postId, "ja", client),
+      unlikePost(userName, postId, "kr", client),
+      unlikePost(userName, postId, "hk", client),
     ]);
   } catch (error) {
     console.error(error);
     return {
-      message: 'Failed to unlike post',
+      message: "Failed to unlike post",
     };
   }
 }
@@ -1250,12 +1159,19 @@ export async function createLikePostNotificationForPostAuthor(
   sourceLocale: string,
   client: VercelPoolClient,
 ) {
-  console.log('createLikePostNotificationForAuthor, postTitle: ' + postTitle + ', postId: ' + postId + ', sourceUserName: ' + sourceUserName);
+  console.log(
+    "createLikePostNotificationForAuthor, postTitle: " +
+      postTitle +
+      ", postId: " +
+      postId +
+      ", sourceUserName: " +
+      sourceUserName,
+  );
 
   try {
-    const type = 'like';
-    const create_date = new Date().toISOString().split('T')[0];
-    const id = require('uuid').v4();
+    const type = "like";
+    const create_date = new Date().toISOString().split("T")[0];
+    const id = require("uuid").v4();
     const targetUserName = keyName;
     const commentId = null;
     const commentContent = null;
@@ -1266,15 +1182,27 @@ export async function createLikePostNotificationForPostAuthor(
         VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
         ON CONFLICT (id) DO NOTHING;
         `,
-      id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date,
+      id,
+      sourceUserName,
+      sourceUserImage,
+      targetUserName,
+      postId,
+      postTitle,
+      commentId,
+      commentContent,
+      type,
+      sourceLocale,
+      create_date,
     );
 
     const createNotification = await client.query(createNotificationQuery);
-    console.log('create like post notification successfully sourceUserName: ' + sourceUserName);
+    console.log(
+      "create like post notification successfully sourceUserName: " + sourceUserName,
+    );
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to create notification',
+      message: "Failed to create notification",
     };
   }
 }
@@ -1290,16 +1218,29 @@ export async function createCommentNotificationForTargetUserList(
   sourceLocale: string,
   client: VercelPoolClient,
 ) {
-  console.log('createCommentNotificationForTargetUserList, postTitle: ' + postTitle + ', postId: ' + postId + ', commentId: ' + commentId + ', commentContent: ' + commentContent + ', sourceUserName: ' + sourceUserName + ', targetUserNameList: ' + targetUserNameList);
+  console.log(
+    "createCommentNotificationForTargetUserList, postTitle: " +
+      postTitle +
+      ", postId: " +
+      postId +
+      ", commentId: " +
+      commentId +
+      ", commentContent: " +
+      commentContent +
+      ", sourceUserName: " +
+      sourceUserName +
+      ", targetUserNameList: " +
+      targetUserNameList,
+  );
 
   try {
-    const type = 'comment';
-    const create_date = new Date().toISOString().split('T')[0];
+    const type = "comment";
+    const create_date = new Date().toISOString().split("T")[0];
     for (const targetUserName of targetUserNameList) {
       if (targetUserName === sourceUserName) {
         continue;
       }
-      const id = require('uuid').v4();
+      const id = require("uuid").v4();
 
       const createNotificationQuery = format(
         `
@@ -1307,16 +1248,28 @@ export async function createCommentNotificationForTargetUserList(
         VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
         ON CONFLICT (id) DO NOTHING;
         `,
-        id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date,
+        id,
+        sourceUserName,
+        sourceUserImage,
+        targetUserName,
+        postId,
+        postTitle,
+        commentId,
+        commentContent,
+        type,
+        sourceLocale,
+        create_date,
       );
 
       const createNotification = await client.query(createNotificationQuery);
-      console.log('create comment notification successfully targetUserName: ' + targetUserName);
+      console.log(
+        "create comment notification successfully targetUserName: " + targetUserName,
+      );
     }
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to create notification',
+      message: "Failed to create notification",
     };
   }
 }
@@ -1330,12 +1283,12 @@ export async function createLikeCommentNotificationForCommentAuthor(
   commentId: string,
   commentContent: string,
   sourceLocale: string,
-  client: VercelPoolClient
+  client: VercelPoolClient,
 ) {
   try {
-    const type = 'like';
-    const create_date = new Date().toISOString().split('T')[0];
-    const id = require('uuid').v4();
+    const type = "like";
+    const create_date = new Date().toISOString().split("T")[0];
+    const id = require("uuid").v4();
 
     const createNotificationQuery = format(
       `
@@ -1343,25 +1296,34 @@ export async function createLikeCommentNotificationForCommentAuthor(
         VALUES (%L, %L, %L, %L, %L, %L, %L, %L, %L, %L, %L, FALSE)
         ON CONFLICT (id) DO NOTHING;
         `,
-      id, sourceUserName, sourceUserImage, targetUserName, postId, postTitle, commentId, commentContent, type, sourceLocale, create_date,
+      id,
+      sourceUserName,
+      sourceUserImage,
+      targetUserName,
+      postId,
+      postTitle,
+      commentId,
+      commentContent,
+      type,
+      sourceLocale,
+      create_date,
     );
 
-
-    console.log('createNotificationQuery:', createNotificationQuery);
+    console.log("createNotificationQuery:", createNotificationQuery);
 
     const createNotification = await client.query(createNotificationQuery);
-    console.log('create like comment notification successfully targetUserName: ' + targetUserName);
+    console.log(
+      "create like comment notification successfully targetUserName: " + targetUserName,
+    );
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to create notification',
+      message: "Failed to create notification",
     };
   }
 }
 
-export async function setNotificationIsRead(
-  notificationId: string,
-) {
+export async function setNotificationIsRead(notificationId: string) {
   try {
     const client = await db.connect();
     const updateNotificationQuery = format(
@@ -1374,20 +1336,16 @@ export async function setNotificationIsRead(
     );
 
     const updateNotification = await client.query(updateNotificationQuery);
-    console.log('updateNotification is_read successfully id: ' + notificationId);
-
-
+    console.log("updateNotification is_read successfully id: " + notificationId);
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to update notification (' + notificationId + ')',
+      message: "Failed to update notification (" + notificationId + ")",
     };
   }
 }
 
-export async function deleteAllNotificationByTargetUserName(
-  targetUserName: string
-) {
+export async function deleteAllNotificationByTargetUserName(targetUserName: string) {
   try {
     const client = await db.connect();
     const deleteNotificationQuery = format(
@@ -1399,11 +1357,20 @@ export async function deleteAllNotificationByTargetUserName(
     );
 
     const deleteNotification = await client.query(deleteNotificationQuery);
-    console.log('deleteNotification successfully targetUserName: ' + targetUserName);
+    console.log("deleteNotification successfully targetUserName: " + targetUserName);
   } catch (error) {
     console.log(error);
     return {
-      message: 'Failed to delete notification',
+      message: "Failed to delete notification",
     };
   }
+}
+
+
+export async function setThemeCookie(theme: string) {
+  cookies().set("theme", theme);
+}
+
+export async function getThemeCookie() {
+  return cookies().get("theme");
 }

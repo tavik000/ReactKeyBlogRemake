@@ -18,7 +18,7 @@ import { usePathname } from "next/navigation";
 import { useLoginOpenFromPostContext } from "@/app/components/context/login-open-from-post-provider";
 import { useLocaleContext } from "@/app/components/context/locale-provider";
 import { useSessionContext } from "@/app/components/context/session-provider";
-import { DarkModeSwitch } from "./dark-mode-switch";
+import DarkModeSwitch from "./dark-mode-switch";
 
 export function UserButton() {
   const { session, setSession } = useSessionContext();
