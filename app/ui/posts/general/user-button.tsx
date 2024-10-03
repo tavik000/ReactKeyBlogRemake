@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import { useLoginOpenFromPostContext } from "@/app/components/context/login-open-from-post-provider";
 import { useLocaleContext } from "@/app/components/context/locale-provider";
 import { useSessionContext } from "@/app/components/context/session-provider";
+import { DarkModeSwitch } from "./dark-mode-switch";
 
 export function UserButton() {
   const { session, setSession } = useSessionContext();
@@ -69,14 +70,26 @@ export function UserButton() {
               signOutAction(pathname);
             }
           }}
+          closeOnSelect={false}
         >
+          <DropdownItem
+            closeOnSelect={false}
+            className="hover:bg-gray-100 h-10"
+            key="DarkModeSwitch"
+          >
+            <DarkModeSwitch />
+          </DropdownItem>
           {session?.user ? (
-            <DropdownItem className="hover:bg-gray-100" key="SignOut">
-              {dict.header.signOut}
+            <DropdownItem
+              closeOnSelect={true}
+              className="hover:bg-gray-100"
+              key="SignOut"
+            >
+              <div className="flex justify-center">{dict.header.signOut}</div>
             </DropdownItem>
           ) : (
-            <DropdownItem className="hover:bg-gray-100" key="SignIn">
-              {dict.header.signIn}
+            <DropdownItem closeOnSelect={true} className="hover:bg-gray-100" key="SignIn">
+              <div className="flex justify-center">{dict.header.signIn}</div>
             </DropdownItem>
           )}
         </DropdownMenu>
