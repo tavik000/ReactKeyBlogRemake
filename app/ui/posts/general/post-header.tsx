@@ -9,7 +9,6 @@ import Link from "next/link";
 import { keyEmail } from "@/app/lib/constants";
 import { useLocaleContext } from "@/app/components/context/locale-provider";
 import { useSessionContext } from "@/app/components/context/session-provider";
-import { useTheme } from "next-themes";
 
 function useScrollDirection() {
   const [scrollDirection, setScrollDirection] = useState<null | "down" | "up">(null);
