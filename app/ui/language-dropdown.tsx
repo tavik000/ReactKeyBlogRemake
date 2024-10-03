@@ -33,19 +33,22 @@ export default function LanguageDropdown(props: Props) {
   return (
     <>
       <div className="relative">
-        <button className="group flex items-center hover:text-orange-500" onClick={toggle}>
+        <button
+          className="group flex items-center hover:text-orange-500"
+          onClick={toggle}
+        >
           <GlobeAltIcon className="h-6 w-6 text-gray-500 group-hover:text-orange-500" />
           <div className="ml-2 xs:hidden md:block">{item.title}</div>
           <ChevronDownIcon className="ml-2 h-4 w-4 text-gray-500 group-hover:text-orange-500 xs:hidden md:block" />
         </button>
         <div
-          className={`absolute -inset-x-5 inset-y-10 z-30 flex min-h-[210px] flex-col rounded-md bg-white py-4 shadow-lg ${transClass} xs:w-32 xs:-translate-x-6 md:w-40 md:translate-x-0`}
+          className={`absolute -inset-x-5 inset-y-10 z-30 flex min-h-[210px] flex-col rounded-md bg-white py-4 shadow-lg ${transClass} xs:w-32 xs:-translate-x-6 md:w-40 md:translate-x-0 dark:bg-zinc-800`}
         >
           {languageItems.map((item) =>
             item.isCurrentLocale ? (
               <div
                 key={`${item.title}-${item.lang}`}
-                className="justify-left flex items-center rounded-sm px-6 py-1"
+                className="justify-left flex items-center rounded-sm px-6 py-1 text-gray-900 dark:text-white"
               >
                 {item.title}
                 <GlobeAltIcon className="w-6, ml-6 h-6 text-gray-500" />
@@ -53,13 +56,13 @@ export default function LanguageDropdown(props: Props) {
             ) : (
               <Link
                 key={`${item.title}-${item.lang}`}
-                className="justify-left flex items-center rounded-sm px-6 py-1 hover:bg-zinc-300 hover:text-zinc-500"
+                className="justify-left flex items-center rounded-sm px-6 py-1 hover:bg-zinc-300 hover:text-zinc-500 dark:hover:bg-zinc-700"
                 href={{
                   pathname: `/${item.lang}/${pathWithoutLocale}`,
                 }}
                 onClick={toggle}
               >
-                {item.title}
+                <p className="text-gray-900 dark:text-white">{item.title}</p>
               </Link>
             ),
           )}

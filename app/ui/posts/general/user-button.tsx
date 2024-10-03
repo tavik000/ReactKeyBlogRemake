@@ -58,7 +58,7 @@ export function UserButton() {
           </button>
         </DropdownTrigger>
         <DropdownMenu
-          className="max-h-96 overflow-y-auto rounded-lg bg-white"
+          className="max-h-96 overflow-y-auto rounded-lg bg-white dark:bg-zinc-900"
           aria-label="Static Actions"
           onAction={(key) => {
             const actionKey = key.toString();
@@ -74,7 +74,7 @@ export function UserButton() {
         >
           <DropdownItem
             closeOnSelect={false}
-            className="hover:bg-gray-100 h-10"
+            className="hover:bg-gray-100 h-10 dark:hover:bg-zinc-700"
             key="DarkModeSwitch"
           >
             <DarkModeSwitch />
@@ -82,13 +82,13 @@ export function UserButton() {
           {session?.user ? (
             <DropdownItem
               closeOnSelect={true}
-              className="hover:bg-gray-100"
+              className="hover:bg-gray-100 dark:hover:bg-zinc-700"
               key="SignOut"
             >
               <div className="flex justify-center">{dict.header.signOut}</div>
             </DropdownItem>
           ) : (
-            <DropdownItem closeOnSelect={true} className="hover:bg-gray-100" key="SignIn">
+            <DropdownItem closeOnSelect={true} className="hover:bg-gray-100 dark:hover:bg-zinc-700" key="SignIn">
               <div className="flex justify-center">{dict.header.signIn}</div>
             </DropdownItem>
           )}
@@ -98,7 +98,7 @@ export function UserButton() {
         isOpen={isOpen || isLoginOpenFromPost}
         onOpenChange={onOpenChange}
         placement="top-center"
-        className="rounded-lg bg-white xs:top-80 md:top-auto"
+        className="rounded-lg bg-white xs:top-80 md:top-auto dark:bg-zinc-900"
       >
         <ModalContent>
           {(onClose) => (
@@ -114,8 +114,8 @@ export function UserButton() {
                     variant="flat"
                     className={
                       isSignInLoadingGoogle
-                        ? "mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300"
-                        : "mb-4 flex w-full rounded-lg bg-white outline-gray-300 hover:outline-orange-200"
+                        ? "mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300 dark:bg-zinc-700"
+                        : "mb-4 flex w-full rounded-lg bg-white outline-gray-300 hover:outline-orange-200 dark:bg-zinc-900"
                     }
                     onClick={() => {
                       try {
@@ -187,8 +187,8 @@ export function UserButton() {
                     variant="flat"
                     className={
                       isSignInLoadingTwitter
-                        ? "mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300"
-                        : "mb-4 flex w-full rounded-lg bg-white outline-gray-300 hover:outline-orange-200"
+                        ? "mb-4 flex w-full rounded-lg bg-gray-300 outline-gray-300 dark:bg-zinc-900"
+                        : "mb-4 flex w-full rounded-lg bg-white outline-gray-300 hover:outline-orange-200 dark:bg-zinc-900"
                     }
                     onClick={() => {
                       try {
@@ -252,6 +252,7 @@ export function UserButton() {
                   onPress={() => {
                     onClose();
                   }}
+                  className="hover:scale-105"
                 >
                   {dict.header.close}
                 </Button>

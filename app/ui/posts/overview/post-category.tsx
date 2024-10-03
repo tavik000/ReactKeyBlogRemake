@@ -14,7 +14,7 @@ export default async function PostCategory({ locale }: { locale: string }) {
 
   return (
     <div className="category mt-6 flex md:flex-row">
-      <div className="flex max-w-1140px rounded-xl bg-white px-12 pb-8 pt-8 shadow-0550 xs:w-11/12 xs:min-w-[300px] xl:w-10/12 xl:basis-2/3">
+      <div className="flex max-w-1140px rounded-xl bg-white px-12 pb-8 pt-8 shadow-0550 xs:w-11/12 xs:min-w-[300px] xl:w-10/12 xl:basis-2/3 dark:bg-zinc-900">
         <div className="flex flex-col">
           <p className="flex pb-4 text-xl tracking-widest">{dict.category}</p>
           <div className="flex flex-col">

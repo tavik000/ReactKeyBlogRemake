@@ -26,12 +26,8 @@ export function PagePath() {
         className="page-path relative z-10 mb-0 flex justify-center py-3"
       >
         {pathArray.length >= 3 ? (
-          <div className="mx-auto flex max-w-1140px list-none rounded-md bg-white px-2.5 py-1 xs:w-11/12 xs:flex-col md:flex-row xl:w-10/12 xl:basis-2/3">
-            <PagePathItem
-              url={homepageURL}
-              shouldShowArrow={true}
-              isPost={false}
-            >
+          <div className="mx-auto flex max-w-1140px list-none rounded-md bg-white px-2.5 py-1 xs:w-11/12 xs:flex-col md:flex-row xl:w-10/12 xl:basis-2/3 dark:bg-zinc-900">
+            <PagePathItem url={homepageURL} shouldShowArrow={true} isPost={false}>
               {dict.overview.homepage}
             </PagePathItem>
             <PagePathItem url={blogUrl} shouldShowArrow={true} isPost={false}>
@@ -42,20 +38,12 @@ export function PagePath() {
             </PagePathItem>
           </div>
         ) : (
-          <div className="mx-auto flex max-w-1140px list-none flex-row rounded-md bg-white px-2.5 py-1 xs:w-11/12 xl:w-10/12 xl:basis-2/3">
-            <PagePathItem
-              url={homepageURL}
-              shouldShowArrow={true}
-              isPost={false}
-            >
+          <div className="mx-auto flex max-w-1140px list-none flex-row rounded-md bg-white px-2.5 py-1 xs:w-11/12 xl:w-10/12 xl:basis-2/3 dark:bg-zinc-900">
+            <PagePathItem url={homepageURL} shouldShowArrow={true} isPost={false}>
               {dict.overview.homepage}
             </PagePathItem>
             <div className="flex xs:flex-col md:flex-row">
-              <PagePathItem
-                url={blogUrl}
-                shouldShowArrow={false}
-                isPost={false}
-              >
+              <PagePathItem url={blogUrl} shouldShowArrow={false} isPost={false}>
                 {dict.overview.blog}
               </PagePathItem>
             </div>

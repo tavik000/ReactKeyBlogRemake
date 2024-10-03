@@ -79,8 +79,8 @@ function PaginationNumber({
       'rounded-l-md': position === 'first' || position === 'single',
       'rounded-r-md': position === 'last' || position === 'single',
       'z-10 bg-orange-500 border-orange-500 text-white': isActive,
-      'bg-white hover:bg-orange-100': !isActive && position !== 'middle',
-      'bg-white text-sky-400/75': position === 'middle',
+      'bg-white dark:bg-zinc-900 hover:bg-orange-100 dark:hover:bg-zinc-600': !isActive && position !== 'middle',
+      'bg-white dark:bg-zinc-900 text-sky-400/75': position === 'middle',
     },
   );
 
@@ -103,10 +103,10 @@ function PaginationArrow({
   isDisabled?: boolean;
 }) {
   const className = clsx(
-    'flex h-10 w-10 bg-white items-center justify-center rounded-md border',
+    'flex h-10 w-10 bg-white items-center justify-center rounded-md border dark:bg-zinc-900',
     {
       'pointer-events-none text-gray-300': isDisabled,
-      'hover:bg-orange-100': !isDisabled,
+      'hover:bg-orange-100 dark:hover:bg-zinc-600': !isDisabled,
       'mr-2 md:mr-4': direction === 'left',
       'ml-2 md:ml-4': direction === 'right',
     },
