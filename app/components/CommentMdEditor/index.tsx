@@ -1,10 +1,11 @@
-'use client';
-import { useState, useEffect, useContext } from 'react';
-import onMediaPasted from '../utils/onMediaPasted';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
+"use client";
+import { useState, useEffect, useContext } from "react";
+import onMediaPasted from "../utils/onMediaPasted";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
 import MDEditor, { ICommand, commands, EditorContext, help } from "@uiw/react-md-editor";
-import { useLocaleContext } from '../context/locale-provider';
+import { useLocaleContext } from "../context/locale-provider";
+import { useTheme } from "../context/theme-provider";
 
 const CommentMdEditor = ({
   isNewComment,
@@ -19,6 +20,7 @@ const CommentMdEditor = ({
 }) => {
   const { dict } = useLocaleContext();
   const [markdown, setMarkdown] = useState<string | undefined>(content);
+  const { theme } = useTheme();
 
   useEffect(() => {
     onMarkdownChange?.(markdown);
@@ -26,12 +28,12 @@ const CommentMdEditor = ({
 
   useEffect(() => {
     if (isNewComment) {
-      setMarkdown('');
+      setMarkdown("");
     }
   }, [shouldClearToggle, isNewComment]);
 
   return (
-    <div className="container" data-color-mode="light">
+    <div className="container" data-color-mode={theme}>
       <MDEditor
         value={markdown}
         textareaProps={{
@@ -59,5 +61,3 @@ const CommentMdEditor = ({
 };
 
 export default CommentMdEditor;
-
-

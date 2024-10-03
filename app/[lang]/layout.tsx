@@ -74,11 +74,11 @@ export default async function RootLayout({
       const isValid = await isValidUser(session.user.name, session.user.email);
       console.log("isValid", isValid);
       if (!isValid) {
-        // TODO theme
+        const currentTheme = currentUser.theme || "light";
         const image = session.user.image || "";
         currentUser = await createUser(
           session.user.name,
-          "light",
+          currentTheme,
           session.user.email,
           image,
         );

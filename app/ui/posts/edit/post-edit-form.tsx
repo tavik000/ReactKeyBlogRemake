@@ -1,33 +1,32 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import Image from 'next/image';
-import { Button } from '@/app/ui/button';
-import { useFormState } from 'react-dom';
-import { Post } from '@/app/lib/definitions';
+import Link from "next/link";
+import Image from "next/image";
+import { Button } from "@/app/ui/button";
+import { useFormState } from "react-dom";
+import { Post } from "@/app/lib/definitions";
 import {
   createPostWithAllLanguages,
   State,
   updatePostWithAllLanguages,
-} from '@/app/lib/actions';
-import '@uiw/react-md-editor/markdown-editor.css';
-import '@uiw/react-markdown-preview/markdown.css';
-import dynamic from 'next/dynamic';
-import { useState } from 'react';
-import { CldUploadWidget } from 'next-cloudinary';
-import { GetLangFromLocale } from '@/app/lib/constants';
-import { PostTagItem } from '@/app/ui/posts/general/post-tag';
+} from "@/app/lib/actions";
+import "@uiw/react-md-editor/markdown-editor.css";
+import "@uiw/react-markdown-preview/markdown.css";
+import dynamic from "next/dynamic";
+import { useState } from "react";
+import { CldUploadWidget } from "next-cloudinary";
+import { GetLangFromLocale } from "@/app/lib/constants";
+import { PostTagItem } from "@/app/ui/posts/general/post-tag";
 import {
   Dropdown,
   DropdownTrigger,
   DropdownMenu,
   DropdownItem,
   Button as NextUIButton,
-} from '@nextui-org/react';
-import { ChevronDownIcon, XMarkIcon } from '@heroicons/react/24/outline';
+} from "@nextui-org/react";
+import { ChevronDownIcon, XMarkIcon } from "@heroicons/react/24/outline";
 
-
-const MDEditor = dynamic(() => import('@/app/components/MdEditor'), {
+const MDEditor = dynamic(() => import("@/app/components/MdEditor"), {
   ssr: false,
   loading: () => <p>Loading...</p>,
 });
@@ -57,28 +56,28 @@ export default function PostEditForm({
   const [editPostTags, setEditPostTag] = useState(post_en.tags);
   const [isExceedFiveTag, setIsExceedFiveTag] = useState(false);
 
-  const [markdownValue_en, setMarkdownValue_en] = useState('');
+  const [markdownValue_en, setMarkdownValue_en] = useState("");
 
   const handleMarkdownChange_en = (value: string | undefined) => {
-    setMarkdownValue_en(value || '');
+    setMarkdownValue_en(value || "");
   };
 
-  const [markdownValue_ja, setMarkdownValue_ja] = useState('');
+  const [markdownValue_ja, setMarkdownValue_ja] = useState("");
 
   const handleMarkdownChange_ja = (value: string | undefined) => {
-    setMarkdownValue_ja(value || '');
+    setMarkdownValue_ja(value || "");
   };
 
-  const [markdownValue_kr, setMarkdownValue_kr] = useState('');
+  const [markdownValue_kr, setMarkdownValue_kr] = useState("");
 
   const handleMarkdownChange_kr = (value: string | undefined) => {
-    setMarkdownValue_kr(value || '');
+    setMarkdownValue_kr(value || "");
   };
 
-  const [markdownValue_hk, setMarkdownValue_hk] = useState('');
+  const [markdownValue_hk, setMarkdownValue_hk] = useState("");
 
   const handleMarkdownChange_hk = (value: string | undefined) => {
-    setMarkdownValue_hk(value || '');
+    setMarkdownValue_hk(value || "");
   };
 
   const [thumbnailImage, setThumbnailImage] = useState(post_en.thumbnail_img);
@@ -107,19 +106,13 @@ export default function PostEditForm({
         markdownValue_hk,
       );
 
-  const [state, dispatch] = useFormState<State, FormData>(
-    formStateParams,
-    initialState,
-  );
+  const [state, dispatch] = useFormState<State, FormData>(formStateParams, initialState);
 
   return (
     <form action={dispatch}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6 dark:bg-zinc-800">
         <div className="mb-4">
-          <label
-            htmlFor="thumbnail_img"
-            className="mb-2 block text-base font-medium"
-          >
+          <label htmlFor="thumbnail_img" className="mb-2 block text-base font-medium">
             Thumbnail Image (333 x 188)
           </label>
           <div className="flex flex-col items-baseline">
@@ -175,25 +168,17 @@ export default function PostEditForm({
 
         <div className="mb-4">
           <div className="flex flex-row">
-            <label
-              htmlFor="content"
-              className="mb-2 flex text-base font-medium"
-            >
+            <label htmlFor="content" className="mb-2 flex text-base font-medium">
               Category
             </label>
             {isExceedFiveTag ? (
-              <p className="mb-2 ml-2 flex text-base text-red-500">
-                (Maximum of 5 tags)
-              </p>
+              <p className="mb-2 ml-2 flex text-base text-red-500">(Maximum of 5 tags)</p>
             ) : (
               <></>
             )}
             {state.errors?.tags &&
               state.errors.tags.map((error: string) => (
-                <p
-                  className="mb-2 ml-2 flex text-base text-red-500"
-                  key={error}
-                >
+                <p className="mb-2 ml-2 flex text-base text-red-500" key={error}>
                   {error}
                 </p>
               ))}
@@ -203,7 +188,7 @@ export default function PostEditForm({
               <DropdownTrigger>
                 <NextUIButton
                   variant="bordered"
-                  className="rounded-lg border border-gray-200 bg-white hover:bg-gray-100 dark:bg-zinc-900 dark:border-zinc-700 dark:hover:bg-zinc-800"
+                  className="rounded-lg border border-gray-200 bg-white hover:bg-gray-100 dark:border-zinc-700 dark:bg-zinc-900 dark:hover:bg-zinc-800"
                 >
                   Add Tag
                   <ChevronDownIcon className="ml-2 h-4 w-4 text-gray-500 hover:text-gray-100 dark:hover:text-zinc-700" />
@@ -225,7 +210,10 @@ export default function PostEditForm({
                 }}
               >
                 {allPostTags.map((tag: string) => (
-                  <DropdownItem className="hover:bg-gray-100 dark:hover:bg-zinc-700" key={tag}>
+                  <DropdownItem
+                    className="hover:bg-gray-100 dark:hover:bg-zinc-700"
+                    key={tag}
+                  >
                     {tag}
                   </DropdownItem>
                 ))}
@@ -269,7 +257,7 @@ export default function PostEditForm({
             name="title_en"
             type="text"
             defaultValue={post_en.title}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:bg-zinc-900 dark:border-zinc-700"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:border-zinc-700 dark:bg-zinc-900"
             aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
@@ -308,7 +296,7 @@ export default function PostEditForm({
             name="title_ja"
             type="text"
             defaultValue={post_ja.title}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:bg-zinc-900 dark:border-zinc-700"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:border-zinc-700 dark:bg-zinc-900"
             aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
@@ -347,7 +335,7 @@ export default function PostEditForm({
             name="title_kr"
             type="text"
             defaultValue={post_kr.title}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:bg-zinc-900 dark:border-zinc-700"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:border-zinc-700 dark:bg-zinc-900"
             aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
@@ -386,8 +374,8 @@ export default function PostEditForm({
             name="title_hk"
             type="text"
             defaultValue={post_hk.title}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:bg-zinc-900 dark:border-zinc-700"
-             aria-describedby="title-error"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:border-zinc-700 dark:bg-zinc-900"
+            aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
             {state.errors?.title_hk &&

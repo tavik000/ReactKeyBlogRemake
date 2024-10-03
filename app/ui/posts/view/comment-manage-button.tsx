@@ -53,7 +53,7 @@ export default function CommentManageButton({
           radius="sm"
           classNames={{
             content:
-              "py-1 px-1 border border-default-200 rounded-lg border-spacing-4 bg-white",
+              "py-1 px-1 border border-default-200 rounded-lg border-spacing-4 bg-white dark:bg-zinc-900",
           }}
         >
           <DropdownTrigger>
@@ -76,18 +76,18 @@ export default function CommentManageButton({
             }}
           >
             {isAuthor ? (
-              <DropdownItem key="edit" className="hover:bg-gray-200">
+              <DropdownItem key="edit" className="hover:bg-gray-200 dark:hover:bg-zinc-700">
                 {dict.comment.edit}
               </DropdownItem>
             ) : (
               <DropdownItem
                 key="edit"
-                className="hidden text-gray-500 hover:bg-gray-200"
+                className="hidden text-gray-500 hover:bg-gray-200 dark:hover:bg-zinc-700"
               />
             )}
             <DropdownItem
               key="delete"
-              className="text-red-500 hover:bg-gray-200"
+              className="text-red-500 hover:bg-gray-200 dark:hover:bg-zinc-700"
               color="danger"
             >
               {dict.comment.delete}

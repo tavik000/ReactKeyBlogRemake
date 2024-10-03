@@ -15,13 +15,10 @@ import {
 } from "@/app/lib/actions";
 import { useFormState } from "react-dom";
 
-const CommentMDEditor = dynamic(
-  () => import("@/app/components/CommentMdEditor"),
-  {
-    ssr: false,
-    loading: () => <p>Loading...</p>,
-  },
-);
+const CommentMDEditor = dynamic(() => import("@/app/components/CommentMdEditor"), {
+  ssr: false,
+  loading: () => <p>Loading...</p>,
+});
 
 export default function CommentEditForm({
   isNewComment,
@@ -68,14 +65,7 @@ export default function CommentEditForm({
         session?.user?.image ?? "",
         notifyTargetUserList ?? [],
       )
-    : updateComment.bind(
-        null,
-        commentId ?? "",
-        locale,
-        markdownValue,
-        postId,
-        postTitle,
-      );
+    : updateComment.bind(null, commentId ?? "", locale, markdownValue, postId, postTitle);
 
   const [state, dispatch] = useFormState<CommentState, FormData>(
     formStateParams,
@@ -127,7 +117,7 @@ export default function CommentEditForm({
                 </div>
               ) : (
                 <div className="flex w-full flex-row justify-between">
-                  <p className="ml-2 justify-center text-center align-middle text-nowrap">
+                  <p className="ml-2 justify-center text-nowrap text-center align-middle">
                     {dict.comment.editComment}
                   </p>
                   <p className="mt-1 flex justify-end align-bottom text-sm text-gray-400">
@@ -150,10 +140,7 @@ export default function CommentEditForm({
               }}
             >
               <div className="flex w-full flex-col justify-between">
-                <label
-                  htmlFor="content"
-                  className="mb-2 block text-base font-medium"
-                />
+                <label htmlFor="content" className="mb-2 block text-base font-medium" />
                 <CommentMDEditor
                   isNewComment={isNewComment}
                   content={markdownValue}
@@ -176,14 +163,15 @@ export default function CommentEditForm({
                     {!isNewComment && (
                       <Button
                         className="box-border flex justify-center border-2 border-gray-300 
-                                                bg-white hover:bg-gray-200 focus-visible:outline-gray-200 active:bg-gray-300"
+                                                bg-white hover:bg-gray-200 focus-visible:outline-gray-200 active:bg-gray-300
+                                                dark:border-zinc-600 dark:bg-zinc-900 dark:hover:bg-zinc-700"
                         onClick={() => {
                           if (onCancel) {
                             onCancel();
                           }
                         }}
                       >
-                        <p className="flex whitespace-nowrap font-bold text-gray-500">
+                        <p className="flex whitespace-nowrap font-bold text-gray-500 dark:text-gray-200">
                           {dict.comment.cancel}
                         </p>
                       </Button>
@@ -195,9 +183,7 @@ export default function CommentEditForm({
                       type="submit"
                     >
                       <p className="font-bold">
-                        {isNewComment
-                          ? dict.comment.respond
-                          : dict.comment.update}
+                        {isNewComment ? dict.comment.respond : dict.comment.update}
                       </p>
                     </Button>
                   </div>
