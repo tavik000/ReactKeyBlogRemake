@@ -30,10 +30,6 @@ export function UserButton() {
   const pathname = usePathname();
   const { isLoginOpenFromPost, setIsLoginOpenFromPost } = useLoginOpenFromPostContext();
 
-  if (session?.user) {
-    console.log("user image: ", session.user.image);
-  }
-
   // Sync login context with modal
   useEffect(() => {
     if (isLoginOpenFromPost) {
