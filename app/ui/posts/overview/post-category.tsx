@@ -19,7 +19,7 @@ export default async function PostCategory({ locale }: { locale: string }) {
           <p className="flex pb-4 text-xl tracking-widest">{dict.category}</p>
           <div className="flex flex-col">
             <div className="flex xs:flex-col md:flex-row">
-              <ul className="w-72">
+              <ul className="w-72 2xl:w-80">
                 <PostTagItem tag="All" isLabel={false} />
                 {firstPart.map((tag) => (
                   <PostTagItem key={tag} tag={tag} isLabel={false} />
@@ -30,12 +30,12 @@ export default async function PostCategory({ locale }: { locale: string }) {
                   ))}
                 </div>
               </ul>
-              <ul className="w-72 md:hidden xl:block">
+              <ul className="w-72 2xl:w-80 md:hidden xl:block">
                 {secondPart.map((tag) => (
                   <PostTagItem key={tag} tag={tag} isLabel={false} />
                 ))}
               </ul>
-              <ul className="w-72">
+              <ul className="w-72 2xl:w-80">
                 {thirdPart.map((tag) => (
                   <PostTagItem key={tag} tag={tag} isLabel={false} />
                 ))}
