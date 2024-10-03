@@ -114,7 +114,7 @@ export default function PostEditForm({
 
   return (
     <form action={dispatch}>
-      <div className="rounded-md bg-gray-50 p-4 md:p-6">
+      <div className="rounded-md bg-gray-50 p-4 md:p-6 dark:bg-zinc-800">
         <div className="mb-4">
           <label
             htmlFor="thumbnail_img"
@@ -203,14 +203,14 @@ export default function PostEditForm({
               <DropdownTrigger>
                 <NextUIButton
                   variant="bordered"
-                  className="rounded-lg border border-gray-200 bg-white hover:bg-gray-100"
+                  className="rounded-lg border border-gray-200 bg-white hover:bg-gray-100 dark:bg-zinc-900 dark:border-zinc-700 dark:hover:bg-zinc-800"
                 >
                   Add Tag
-                  <ChevronDownIcon className="ml-2 h-4 w-4 text-gray-500 hover:text-gray-100" />
+                  <ChevronDownIcon className="ml-2 h-4 w-4 text-gray-500 hover:text-gray-100 dark:hover:text-zinc-700" />
                 </NextUIButton>
               </DropdownTrigger>
               <DropdownMenu
-                className="max-h-96 overflow-y-auto rounded-lg bg-white"
+                className="max-h-96 overflow-y-auto rounded-lg bg-white dark:bg-zinc-800"
                 aria-label="Static Actions"
                 onAction={(key) => {
                   const newTag = key.toString();
@@ -225,7 +225,7 @@ export default function PostEditForm({
                 }}
               >
                 {allPostTags.map((tag: string) => (
-                  <DropdownItem className="hover:bg-gray-100" key={tag}>
+                  <DropdownItem className="hover:bg-gray-100 dark:hover:bg-zinc-700" key={tag}>
                     {tag}
                   </DropdownItem>
                 ))}
@@ -269,7 +269,7 @@ export default function PostEditForm({
             name="title_en"
             type="text"
             defaultValue={post_en.title}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:bg-zinc-900 dark:border-zinc-700"
             aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
@@ -308,7 +308,7 @@ export default function PostEditForm({
             name="title_ja"
             type="text"
             defaultValue={post_ja.title}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:bg-zinc-900 dark:border-zinc-700"
             aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
@@ -347,7 +347,7 @@ export default function PostEditForm({
             name="title_kr"
             type="text"
             defaultValue={post_kr.title}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:bg-zinc-900 dark:border-zinc-700"
             aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
@@ -386,8 +386,8 @@ export default function PostEditForm({
             name="title_hk"
             type="text"
             defaultValue={post_hk.title}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
-            aria-describedby="title-error"
+            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:bg-zinc-900 dark:border-zinc-700"
+             aria-describedby="title-error"
           />
           <div id="title-error" aria-live="polite" aria-atomic="true">
             {state.errors?.title_hk &&

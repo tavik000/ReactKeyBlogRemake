@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import onMediaPasted from '../utils/onMediaPasted';
 import '@uiw/react-md-editor/markdown-editor.css';
 import '@uiw/react-markdown-preview/markdown.css';
+import { useTheme } from '../context/theme-provider';
 
 const MdEditor = ({
   content,
@@ -12,13 +13,14 @@ const MdEditor = ({
   onMarkdownChange?: (value: string | undefined) => void;
 }) => {
   const [markdown, setMarkdown] = useState<string | undefined>(content);
+  const { theme } = useTheme();
 
   useEffect(() => {
     onMarkdownChange?.(markdown);
   }, [markdown, onMarkdownChange]);
 
   return (
-    <div className="container" data-color-mode="light">
+    <div className="container" data-color-mode={theme}>
       <MDEditor
         value={markdown}
         onChange={(value) => {

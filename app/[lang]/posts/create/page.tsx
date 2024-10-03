@@ -36,7 +36,7 @@ export default async function Page({ params }: { params: { lang: string } }) {
     <main>
       <div className="flex min-h-screen flex-col">
         <div className="relative mt-6 flex justify-center md:flex-row">
-          <div className="flex w-full max-w-[1700px] basis-full rounded-xl bg-white px-12 pb-8 pt-8 shadow-0550">
+          <div className="flex w-full max-w-[1700px] basis-full rounded-xl bg-white px-12 pb-8 pt-8 shadow-0550 dark:bg-zinc-900">
             <div className="flex w-full flex-col">
               <h1 className="mb-6 mt-2 flex text-28px font-semibold leading-normal">
                 Edit

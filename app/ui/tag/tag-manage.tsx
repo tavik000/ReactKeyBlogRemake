@@ -60,7 +60,7 @@ export default function TagManage({ postTags }: { postTags: string[] }) {
             type="text"
             value={newTag}
             onChange={(e) => setNewTag(e.target.value)}
-            className="peer block h-10 w-2/5 rounded-md border border-gray-500 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500"
+            className="peer block h-10 w-2/5 rounded-md border border-gray-500 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:bg-zinc-800"
             aria-describedby="title-error"
           />
           <Button
@@ -96,7 +96,7 @@ const ManageTag = ({ tag }: { tag: string }) => {
           className="flex"
         />
         <button className="ml-1 flex hover:scale-125" onClick={onOpen}>
-          <XMarkIcon className="h-4 w-4 text-gray-500 hover:text-red-500" />
+          <XMarkIcon className="h-4 w-4 text-gray-500 hover:text-red-500 dark:text-white" />
         </button>
       </div>
 

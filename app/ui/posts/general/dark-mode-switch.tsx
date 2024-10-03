@@ -20,7 +20,8 @@ export function DarkModeSwitch() {
   const { session, localUser } = useSessionContext();
   const [isChecked, setIsChecked] = useState(localUser?.theme === "dark");
 
-  setTheme(isChecked ? "dark" : "light");
+  const themeValue = isChecked ? "dark" : "light";
+  setTheme(themeValue);
 
   const debouncedSetUserTheme = useCallback(
     debounce((userId: string, theme: string) => {
