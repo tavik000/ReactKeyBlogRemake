@@ -74,7 +74,7 @@ function PagePathItem({
     </li>
   ) : (
     <li className="inline text-sm">
-      <div className="text-black">
+      <div className="text-black dark:text-white">
         <span>{children}</span>
       </div>
     </li>

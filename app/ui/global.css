@@ -368,7 +368,7 @@ body {
   border-top-right-radius: 50% 100%;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
-  background-color: #ffeed5;
+  /* background-color: #ffeed5; */
   transform: scale(0.8);
 }
 
@@ -379,7 +379,7 @@ body {
   border-top-right-radius: 50% 100%;
   border-bottom-left-radius: 1rem;
   border-bottom-right-radius: 1rem;
-  background-color: #ffeed5;
+  /* background-color: #ffeed5; */
 }
 
 .cloud-medium {
@@ -929,7 +929,7 @@ img {
 
 .sky-background {
   height: 700vh;
-  background-color: #f9c872;
+  /* background-color: #f9c872; */
 }
 
 .post-section::before {
@@ -943,8 +943,14 @@ img {
   overflow-x: hidden;
 }
 
+@media (prefers-color-scheme: dark) {
+  .post-section::before {
+    background: transparent url(/ground-cloud-dark.png) left top;
+  }
+}
+
 .post-section {
-  background-image: linear-gradient(-180deg, #ffbd15 0%, #ffc862 100%);
+  /* background-image: linear-gradient(-180deg, #ffbd15 0%, #ffc862 100%); */
   padding: 60px 0 205px 0;
   position: relative;
 }
