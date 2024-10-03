@@ -22,6 +22,7 @@ import { Notification } from "@/app/lib/definitions";
 import { createUser } from "../lib/actions";
 import { User } from "../lib/definitions";
 import { ThemeProvider } from "../components/context/theme-provider";
+import { getCookie } from "cookies-next";
 
 export const experimental_ppr = true;
 
@@ -69,25 +70,20 @@ export default async function RootLayout({
     last_login_date: new Date(),
     create_date: new Date(),
   };
+  let currentTheme: "light" | "dark" = "light";
+  currentTheme = getCookie("theme") === "dark" ? "dark" : "light";
   if (session?.user) {
     if (session.user.name) {
       const userEmail = session.user.email || "";
       const isValid = await isValidUser(session.user.name, userEmail);
       console.log("isValid", isValid);
+
       if (!isValid) {
-        const currentTheme = currentUser.theme || "light";
         const image = session.user.image || "";
-        currentUser = await createUser(
-          session.user.name,
-          currentTheme,
-          userEmail,
-          image,
-        );
+        currentUser = await createUser(session.user.name, currentTheme, userEmail, image);
       } else {
-        currentUser = await fetchUserAndUpdateLoginDate(
-          session.user.name,
-          userEmail,
-        );
+        currentUser = await fetchUserAndUpdateLoginDate(session.user.name, userEmail);
+        currentTheme = currentUser.theme;
       }
     }
     notifications = session?.user?.name
@@ -96,19 +92,21 @@ export default async function RootLayout({
         )) as unknown as Notification[])
       : [];
   }
+  console.log("layout currentTheme", currentTheme);
+  console.log("getCookie", getCookie("theme"));
 
   return (
     <html lang={lang}>
       <body className={`${inter.className} w-full antialiased`}>
         <div id="body-wrapper" className="relative overflow-hidden">
           <NextUIProviderWrapper>
-            <ThemeProvider>
+            <ThemeProvider inTheme={currentTheme}>
               <LoginOpenFromPostProvider>
                 <LocaleProvider inLocale={locale} inLang={lang} inDict={dict}>
                   <SessionProvider inSession={session || null} inLocalUser={currentUser}>
                     <NotificationProvider inNotifications={notifications || []}>
                       <LoginSuccessfulBanner />
-                      <Sky />
+                      <Sky/>
                       <PostSection>{children}</PostSection>
                     </NotificationProvider>
                   </SessionProvider>

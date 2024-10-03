@@ -1,3 +1,4 @@
+"use client";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { MoonIcon } from "@heroicons/react/24/solid";
@@ -6,6 +7,7 @@ import { useSessionContext } from "@/app/components/context/session-provider";
 import { setUserTheme } from "@/app/lib/actions";
 import { useCallback, useState } from "react";
 import { useTheme } from "@/app/components/context/theme-provider";
+import { setCookie } from "cookies-next";
 
 function debounce(func: Function, wait: number) {
   let timeout: NodeJS.Timeout;
@@ -38,6 +40,8 @@ export function DarkModeSwitch() {
         debouncedSetUserTheme(localUser.id, localUser.theme);
       }
     }
+    setCookie("theme", isChecked ? "dark" : "light");
+    console.log("set cookie", isChecked ? "dark" : "light");
   };
 
   return (
