@@ -184,6 +184,29 @@ export async function createUser(
   }
 }
 
+export async function setUserTheme(id: string, theme: string) {
+  try {
+    console.log('set user theme: ' + theme);
+    const client = await db.connect();
+    const updateThemeQuery = format(
+      `
+      UPDATE users
+      SET theme = %L
+      WHERE id = %L
+      `,
+      theme,
+      id,
+    );
+    const updateTheme = await client.query(updateThemeQuery);
+    console.log('updateTheme success: ' + updateTheme[0].name);
+  } catch (error) {
+    console.error(error);
+    return {
+      message: 'Failed to update theme',
+    };
+  }
+}
+
 export async function createPost(
   id: string,
   thumbnail_img: string,
