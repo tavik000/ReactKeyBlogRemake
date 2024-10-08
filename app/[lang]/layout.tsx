@@ -76,7 +76,7 @@ export default async function RootLayout({
     if (session.user.name) {
       const userEmail = session.user.email || "";
       const isValid = await isValidUser(session.user.name, userEmail);
-      console.log("isValid", isValid);
+      console.log("IsUserExist: ", isValid);
 
       if (!isValid) {
         const image = session.user.image || "";

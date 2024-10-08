@@ -149,11 +149,13 @@ export async function createUser(
   try {
     console.log("create user: " + name);
     const client = await db.connect();
+
     const createUserQuery = format(
       `
       INSERT INTO users (id, name, email, img, theme, last_login_date, create_date)
       VALUES (%L, %L, %L, %L, %L, %L, %L)
-      ON CONFLICT (id) DO NOTHING;
+      ON CONFLICT (id) DO NOTHING
+      RETURNING *;
       `,
       id,
       name,
@@ -164,20 +166,26 @@ export async function createUser(
       create_date,
     );
 
-    const createUser = await client.query(createUserQuery);
-    console.log("createUser success: " + createUser[0].name);
+    const result = await client.query(createUserQuery);
+    const createdUser = result.rows[0];
+
+    if (!createdUser) {
+      throw new Error("User creation failed.");
+    }
+
+    console.log("createUser success: " + createdUser.name);
 
     return {
-      id,
-      name,
-      email,
-      img,
-      theme,
-      last_login_date: new Date(last_login_date),
-      create_date: new Date(create_date),
+      id: createdUser.id,
+      name: createdUser.name,
+      email: createdUser.email,
+      img: createdUser.img,
+      theme: createdUser.theme,
+      last_login_date: new Date(createdUser.last_login_date),
+      create_date: new Date(createdUser.create_date),
     };
   } catch (error) {
-    console.error(error);
+    console.error("Error creating user:", error);
     return {
       id: "",
       name: "",
