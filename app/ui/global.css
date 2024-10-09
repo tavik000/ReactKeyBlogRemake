@@ -978,6 +978,17 @@ img {
   opacity: 1;
 }
 
+.footer-divider {
+  background: url(/zig-zag-border.png);
+  width: 100%;
+  height: 35px;
+  content: '';
+  left: 0;
+  bottom: -0.1rem;
+  z-index: 3;
+  opacity: 1;
+}
+
 .category {
   justify-content: center;
   position: relative;

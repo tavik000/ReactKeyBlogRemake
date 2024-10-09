@@ -22,6 +22,7 @@ import { Notification } from "@/app/lib/definitions";
 import { createUser, getThemeCookie } from "../lib/actions";
 import { User } from "../lib/definitions";
 import { ThemeProvider } from "../components/context/theme-provider";
+import Footer from "@/app/ui/footer";
 
 export const experimental_ppr = true;
 
@@ -117,6 +118,7 @@ export default async function RootLayout({
             </ThemeProvider>
           </NextUIProviderWrapper>
         </div>
+        <Footer />
       </body>
     </html>
   );
