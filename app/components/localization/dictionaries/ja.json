@@ -22,7 +22,8 @@
     "lastUpdatedOn": "最終更新日",
     "copyLink": "リンクをコピー",
     "shareToTwitter": "X でポスト",
-    "linkCopied": "リンクがコピーされました"
+    "linkCopied": "リンクがコピーされました",
+    "postNotFound": "記事が見つかりませんでした"
   },
   "comment": {
     "commentTitle": "コメント",

@@ -22,7 +22,8 @@
     "lastUpdatedOn": "Last updated on",
     "copyLink": "Copy link",
     "shareToTwitter": "Share on X",
-    "linkCopied": "Link copied"
+    "linkCopied": "Link copied",
+    "postNotFound": "Post not found"
   },
   "comment": {
     "commentTitle": "Comments",

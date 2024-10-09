@@ -22,7 +22,8 @@
     "lastUpdatedOn": "最後更新日期",
     "copyLink": "複製連結",
     "shareToTwitter": "分享到 X",
-    "linkCopied": "連結已複製"
+    "linkCopied": "連結已複製",
+    "postNotFound": "找不到文章"
   },
   "comment": {
     "commentTitle": "評論",

@@ -59,8 +59,6 @@ export default function Page({
   const id = params.id;
   const locale = GetLocaleFromLang(params.lang);
 
-  // TODO: post not found
-
   return (
     <main>
       <>

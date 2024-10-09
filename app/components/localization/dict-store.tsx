@@ -23,6 +23,7 @@ export interface DictStructure {
     copyLink: string;
     shareToTwitter: string;
     linkCopied: string;
+    postNotFound: string;
   };
   comment: {
     commentTitle: string;
