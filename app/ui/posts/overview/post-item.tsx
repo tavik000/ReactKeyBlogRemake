@@ -17,6 +17,7 @@ export default function PostItem({ post }: { post: PostCard }) {
         <Link
           href={`${lang}/posts/${url_title}/${post.id}#blog-title`}
           className="article-link mx-auto flex h-full flex-row"
+          prefetch={true}
         >
           <div className="post-article flex h-full w-full flex-col justify-between rounded-xl dark:bg-zinc-900 bg-white px-3 pb-4 pt-6 font-bold shadow-0550 ">
             <Image
