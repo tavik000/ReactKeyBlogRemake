@@ -19,7 +19,7 @@ export default function NotFound() {
           </span>
         </section>
         <div className="link-container">
-          <Link className={buttonVariants({ variant: "outline" })} href={"/"}>Visit the Blog Homepage</Link>
+          <Link className={buttonVariants({ variant: "outline" })} href={"/"}>Back to Top</Link>
         </div>
       </div>
     </main>
