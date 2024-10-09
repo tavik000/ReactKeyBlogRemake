@@ -22,7 +22,7 @@ export default async function PostOverview({
   return (
     <>
       <div className="post-overview">
-        <PostCategory locale={locale} />
+        <PostCategory locale={locale} currentTag={tag}/>
         <PostWrapper tag={tag} query={query} currentPage={currentPage} locale={locale} />
         <Pagination totalPages={totalPages} />
       </div>

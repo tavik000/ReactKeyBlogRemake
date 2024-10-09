@@ -3,7 +3,13 @@ import { getDictionary } from "@/app/components/localization/dictionaries";
 import { fetchPostTags } from "@/app/lib/data";
 import { PostTagItem } from "@/app/ui/posts/general/post-tag";
 
-export default async function PostCategory({ locale }: { locale: string }) {
+export default async function PostCategory({
+  locale,
+  currentTag,
+}: {
+  locale: string;
+  currentTag: string;
+}) {
   const dict = (await getDictionary(locale)) as DictStructure;
 
   const postTags: string[] = await fetchPostTags();
@@ -22,22 +28,42 @@ export default async function PostCategory({ locale }: { locale: string }) {
               <ul className="w-72 2xl:w-80">
                 <PostTagItem tag="All" isLabel={false} />
                 {firstPart.map((tag) => (
-                  <PostTagItem key={tag} tag={tag} isLabel={false} />
+                  <PostTagItem
+                    key={tag}
+                    tag={tag}
+                    isLabel={false}
+                    isClickable={currentTag != tag}
+                  />
                 ))}
                 <div className="xs:hidden md:block xl:hidden">
                   {secondPart.map((tag) => (
-                    <PostTagItem key={tag} tag={tag} isLabel={false} />
+                    <PostTagItem
+                      key={tag}
+                      tag={tag}
+                      isLabel={false}
+                      isClickable={currentTag != tag}
+                    />
                   ))}
                 </div>
               </ul>
-              <ul className="w-72 2xl:w-80 md:hidden xl:block">
+              <ul className="w-72 md:hidden xl:block 2xl:w-80">
                 {secondPart.map((tag) => (
-                  <PostTagItem key={tag} tag={tag} isLabel={false} />
+                  <PostTagItem
+                    key={tag}
+                    tag={tag}
+                    isLabel={false}
+                    isClickable={currentTag != tag}
+                  />
                 ))}
               </ul>
               <ul className="w-72 2xl:w-80">
                 {thirdPart.map((tag) => (
-                  <PostTagItem key={tag} tag={tag} isLabel={false} />
+                  <PostTagItem
+                    key={tag}
+                    tag={tag}
+                    isLabel={false}
+                    isClickable={currentTag != tag}
+                  />
                 ))}
               </ul>
             </div>
