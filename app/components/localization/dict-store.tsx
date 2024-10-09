@@ -11,6 +11,7 @@ export interface DictStructure {
   overview: {
     homepage: string;
     blog: string;
+    cannotFoundSearch: string;
   };
   category: string;
   post: {

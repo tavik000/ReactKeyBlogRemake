@@ -10,7 +10,8 @@
   },
   "overview": {
     "homepage": "Key Homepage",
-    "blog": "Blog"
+    "blog": "Blog",
+    "cannotFoundSearch": "We couldn't find any post matching"
   },
   "category": "CATEGORY",
   "post": {

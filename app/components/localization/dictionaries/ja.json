@@ -10,7 +10,8 @@
   },
   "overview": {
     "homepage": "Key ホームページ",
-    "blog": "ブログ"
+    "blog": "ブログ",
+    "cannotFoundSearch": "検索と一致する記事が見つかりませんでした"
   },
   "category": "CATEGORY",
   "post": {

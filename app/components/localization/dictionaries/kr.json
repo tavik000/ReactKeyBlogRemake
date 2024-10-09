@@ -10,7 +10,8 @@
   },
   "overview": {
     "homepage": "Key 홈페이지",
-    "blog": "블로그"
+    "blog": "블로그",
+    "cannotFoundSearch": "일치하는 게시물을 찾을 수 없습니다"
   },
   "category": "카테고리",
   "post": {

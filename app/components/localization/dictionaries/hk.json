@@ -10,7 +10,8 @@
   },
   "overview": {
     "homepage": "Key 主頁",
-    "blog": "博客"
+    "blog": "博客",
+    "cannotFoundSearch": "找不到任何符合的文章"
   },
   "category": "類別",
   "post": {
