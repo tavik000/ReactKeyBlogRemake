@@ -1,3 +1,4 @@
+import AudioButton from "./audio-button";
 import { Bear } from "./bear";
 import { sniglet } from "./fonts";
 import { forwardRef } from "react";
@@ -11,6 +12,7 @@ export const SkyBackground = forwardRef<HTMLDivElement, React.PropsWithChildren<
         w-full duration-300 dark:bg-gradient-to-b"
         ref={ref}
       >
+        <AudioButton />
         <div className="cloud cloud-large cloud-1 bg-custom-cloud before:bg-custom-cloud after:bg-custom-cloud dark:bg-custom-dark-cloud dark:before:bg-custom-dark-cloud dark:after:bg-custom-dark-cloud"></div>
         <div className="cloud cloud-medium cloud-2 bg-custom-cloud before:bg-custom-cloud after:bg-custom-cloud dark:bg-custom-dark-cloud dark:before:bg-custom-dark-cloud dark:after:bg-custom-dark-cloud">
           <div
