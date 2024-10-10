@@ -38,7 +38,7 @@ export default function AudioButton() {
   return (
     <div>
       <button
-        className="absolute right-0 top-[200px] z-30 h-[40px] w-[70px] cursor-pointer items-center justify-center rounded-full rounded-r-md bg-white px-[15px] shadow-lg hover:shadow-xl dark:bg-black"
+        className="absolute right-0 top-[200px] z-30 h-[40px] w-[70px] cursor-pointer items-center justify-center rounded-full rounded-r-md bg-white px-[15px] shadow-lg translate-x-2 hover:shadow-xl hover:-translate-x-0 dark:bg-black"
         onClick={() => {
           isPlaying ? pauseAudio() : playAudio();
         }}
