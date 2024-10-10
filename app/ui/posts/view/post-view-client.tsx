@@ -171,7 +171,7 @@ function AuthorInfo({ post }: { post: Post }) {
       passHref={true}
     >
       <Image
-        src="https://pbs.twimg.com/profile_images/1786593978907017216/lkgFHOOf_400x400.jpg"
+        src="https://pbs.twimg.com/profile_images/1840348077443698688/ARb3XHml_400x400.jpg"
         alt={post.title}
         width={24}
         height={24}
