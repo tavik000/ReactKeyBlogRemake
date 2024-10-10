@@ -8,7 +8,7 @@
 * [繁體中文](#繁體中文)
 
 ### Keyword
-> `Nextjs` `React` `Vercel` `Typescript` `Blog` `Tailwind CSS` `next-auth` 
+> `Nextjs` `React` `Vercel` `Typescript` `Blog` `Tailwind CSS` `next-auth` `Cloudinary`
 
 
 ## Contents 
