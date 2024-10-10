@@ -1,226 +1,237 @@
-## Next.js App Router Course - Final
-
-This is the final template for the Next.js App Router Course. It contains the final code for the dashboard application.
-
-For more information, see the [course curriculum](https://nextjs.org/learn) on the Next.js Website.
-
+<p align="center">
+  <h1 align="center">React Key Blog (Remake)</h1>
+  <p align="center">A React + Nextjs + Vercel Game Development Technical Blog Webpage</p>
+</p> 
 
 
+* [日本語](#日本語)
+* [繁體中文](#繁體中文)
+
+### Keyword
+> `Nextjs` `React` `Vercel` `Typescript` `Blog` `Tailwind CSS` `next-auth` 
 
 
+## Contents 
+<!-- toc -->
+* [Introduction](#introduction)
+* [Environment](#environment)
+* [Feature](#feature)
+* [Contact](#contact)
+* [License](#license)
 
-## Example Post:
-
-Protecting user rights in the context of AI and data usage is a critical ethical issue...111111111111111111111
-
-```cpp
-int32 largetNumber = 50;
-private:
-    UPROPERTY(EditAnywhere)
-    AActor* OsuCharacter;
-```
-
-> WWWE
+<!-- toc stop -->
 
 
+## Introduction
+
+Check out my blog here: <b>[Key Blog](https://reactkeyblog.com)</b>
+
+This is a React remake of the AngularFire Blog that I built in 2019.
+[Old AngualrFire Key Blog](https://github.com/tavik000/AngularFireBlog)
+
+Deployed on [Vercel](https://vercel.com)
+
+Here is the refined version of your text:
 
 ---
-~~***asdsa***~~
+
+Check out my blog here: **[Key Blog](https://reactkeyblog.com)**
+
+This is a React remake of the AngularFire Blog that I built in 2019.
+[Old AngularFire Key Blog](https://github.com/tavik000/AngularFireBlog)
+
+Deployed on [Vercel](https://vercel.com)
+
+The main reasons I wanted to remake the blog in React + Next.js from Angular + Firebase are:
+- The AngularFire blog is a static single-page website
+  - It is hard to share post links with people
+- Partial rendering is not supported in Angular (or maybe I just don't know how)
+  - Every time the page refreshes, users have to scroll down again from the top
+- I did not implement localization in the old blog
+  - I write my post in English, but I want Japanese people to be able to view my posts without knowing English
+- The old UI design with a yellow background made the posts hard to read
+
+---
+
+This version improves readability and easier to use
+
+## Environment
+
+- React: 18.3.1
+- nextjs: 14.2.5
+- next-auth: 5.0.0-beta.20
+- typescript: 5.2.2
+- vercel: 32.3.0
+- tailwind css: 5.2.2
+- npm: 20.15.0
+
+## Feature
+
+- Cute bear parachuting from the sky
+- Login with Next-Auth
+- Create, edit, and delete posts (Admin only)
+- Create, edit, and delete post tags (Admin only)
+- Image upload support for posts and comments (Cloudinary)
+- Post pagination
+- Post search functionality
+- Partial rendering
+- Responsive web design (RWD)
+- Markdown support in posts and comments
+- Notifications
+- Localization: English, Japanese, Korean, Traditional Chinese
+- Skeleton loading
+- Zoomable images
+- Error handling (e.g., post not found)
+- Commenting and liking posts
+- Dark mode
+- OpenGraph support for social media sharing
+- Background music
 
 
-## ASD
+**If you like this, please leave a star.**
 
-### as
+-----
 
-# sTitle
+## 日本語
 
-
-## Title
-
-![Wo_Long__Fallen_Dynasty_2023_07_09_13_29_31_kdkyvt](https://res.cloudinary.com/diy3s3seb/image/upload/v1721312231/Wo_Long__Fallen_Dynasty_2023_07_09_13_29_31_kdkyvt.png)
-- abc
-- edf
-- ddd
-- sdf
-- -
-- 
-- 
-- 
+## 紹介
+ブログ: <b>[Key Blog](https://reactkeyblog.com)</b>
 
 
-```ts:markdown.tsx:57-85
-'use client';
-import React, { Fragment, useState } from 'react';
-import Markdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeRaw from 'rehype-raw';
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
-import CopyButton from '../components/utils/copy';
-import { escapeHtml } from '../lib/escapeHtml';
+これは、2019年に作成したAngularFireブログのReactリメイク版です。 
+[Old AngualrFire Key Blog](https://github.com/tavik000/AngularFireBlog)
 
-type MarkdownRendererProps = {
-  children: string;
-};
+[Vercel](https://vercel.com)にデプロイされています。
 
-const customStyle = {
-  fontSize: '1rem',
-  padding: '20px',
-};
+ブログをAngular + FirebaseからReact + Next.jsにリメイクした主な理由は下記になります:
 
-export function MarkdownRenderer({
-  children: markdown,
-}: MarkdownRendererProps) {
-  const [showCopyToClipboard, setShowCopyToClipboard] = useState(false);
+- AngularFireブログは静的なシングルページウェブサイトです
+  - 投稿リンクを他の人と共有するのが難しい
+- Angularでは部分レンダリングがサポートされていません（もしくは私が知らないだけかもしれません）
+  - ページをリフレッシュするたびに、ユーザーは再び上からスクロールしなければなりません
+- 旧ブログではローカリゼーションを実装していませんでした
+  - 投稿は英語で書いていますが、日本の方にも英語を知らなくても投稿を共有したいです
+- 黄色の背景を持つ旧UIデザインでは、投稿が見づらかったです
 
-  return (
-    <Markdown
-      remarkPlugins={[remarkGfm]}
-      rehypePlugins={[rehypeRaw]}
-      components={{
-        code({ node, inline, className, children, ...props }: any) {
-          const match = /language-(\w+)/.exec(className || '');
-          const code = String(children).replace(/\n$/, '');
-          const filename = match?.input.split(':')[1];
-          const linesToHighlightInput = match?.input.split(':')[2];
-          const linesToHighlight = linesToHighlightInput
-            ? linesToHighlightInput.split(',').reduce((acc, line) => {
-                if (line.includes('-')) {
-                  const [start, end] = line.split('-').map(Number);
-                  for (let i = start; i <= end; i++) {
-                    acc.push(i);
-                  }
-                } else {
-                  acc.push(Number(line));
-                }
-                return acc;
-              }, [] as number[])
-            : [];
+---
+このバージョンは読みやすさと使いやすさを向上させました。
 
-          return !inline && match ? (
-            <Fragment>
-              {filename && (
-                <div className="-mb-6 table max-w-full rounded-lg bg-slate-700 px-3 pb-4 pt-1 text-sm text-white">
-                  <span>{escapeHtml(filename)}</span>
-                </div>
-              )}
+## 環境
+ 
+- React: 18.3.1
+- nextjs: 14.2.5
+- next-auth: 5.0.0-beta.20
+- typescript: 5.2.2
+- vercel: 32.3.0
+- tailwind css: 5.2.2
+- npm: 20.15.0
 
-              <div
-                className="relative"
-                onMouseEnter={() => setShowCopyToClipboard(true)}
-                onMouseLeave={() => setShowCopyToClipboard(false)}
-              >
-                <SyntaxHighlighter
-                  style={oneDark}
-                  customStyle={customStyle}
-                  showLineNumbers
-                  PreTag="div"
-                  language={match[1]}
-                  wrapLines
-                  lineProps={(lineNumber) => {
-                    const style: any = {
-                      display: 'block',
-                      width: 'fit-content',
-                    };
-                    if (linesToHighlight.includes(lineNumber)) {
-                      style.backgroundColor = '#334155';
-                      style.borderColor = '#38bdf8';
-                    }
-                    return { style };
-                  }}
-                  {...props}
-                >
-                  {code}
-                </SyntaxHighlighter>
-                {showCopyToClipboard && <CopyButton copyContent={code} />}
-              </div>
-            </Fragment>
-          ) : (
-            <code className={className} {...props}>
-              {children}
-            </code>
-          );
-        },
-      }}
-    >
-      {markdown}
-    </Markdown>
-  );
-}
-```
+## 機能
+
+- 空から降りてくるかわいいクマ
+- Next-Authでのログイン
+- 投稿の作成、編集、削除（管理者のみ）
+- 投稿タグの作成、編集、削除（管理者のみ）
+- 投稿とコメントの画像アップロードサポート（Cloudinary）
+- 投稿のページネーション
+- 投稿検索機能
+- 部分レンダリング
+- レスポンシブウェブデザイン（RWD）
+- 投稿とコメントのMarkdownサポート
+- 通知
+- ローカリゼーション：英語、日本語、韓国語、繁体字中国語
+- スケルトンローディング
+- ズーム可能な画像
+- エラーハンドリング（例：投稿が見つからない）
+- 投稿へのコメントといいね
+- ダークモード
+- ソーシャルメディア共有のためのOpenGraphサポート
+- バックグラウンドミュージック
+
+## 繁體中文
+
+我的博客:  <b>[Key Blog](https://reactkeyblog.com)</b>
+
+這是我在2019年建立的AngularFire博客的React重製版。 
+[Old AngualrFire Key Blog](https://github.com/tavik000/AngularFireBlog)
 
 
-123
+部署在[Vercel](https://vercel.com)
 
-<iframe width="1080" height="720" src="https://www.youtube.com/embed/gb7qXLnlaB4?si=mv_BGRqvSPjle3vd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+我想將博客從Angular + Firebase重製為React + Next.js的主要原因如下:
 
-<iframe border=0 frameborder=0 height=750 width=550
- src="https://twitframe.com/show?url=https://twitter.com/Cerva_saiki/status/1812591071454699781?ref_src=twsrc%5Etfw"></iframe>
+- AngularFire博客是一個靜態的單頁網站
+  - 很難與他人分享文章鏈接
+- Angular不支持部分渲染（或者可能只是我不知道如何實現）
+  - 每次刷新頁面時，使用者都必須從頂部重新滾動
+- 舊博客中沒有實現本地化
+  - 我用英文寫文章，但我希望日本人也能在不懂英文的情況下查看我的文章
+- 舊的黃色背景UI設計使文章難以閱讀
+
+---
+ 這個版本提高了可讀性和易用性。
+
+## 環境
+ 
+- React: 18.3.1
+- nextjs: 14.2.5
+- next-auth: 5.0.0-beta.20
+- typescript: 5.2.2
+- vercel: 32.3.0
+- tailwind css: 5.2.2
+- npm: 20.15.0
+
+## 功能
+
+- 可愛的小熊從天而降
+- 使用 Next-Auth 登錄
+- 創建、編輯和刪除帖子（僅限管理員）
+- 創建、編輯和刪除帖子標籤（僅限管理員）
+- 支持帖子和評論的圖片上傳（Cloudinary）
+- 帖子分頁
+- 帖子搜索功能
+- 局部渲染
+- 響應式網頁設計（RWD）
+- 支持帖子和評論的 Markdown
+- 通知
+- 本地化：英語、日語、韓語、繁體中文
+- 骨架加載
+- 可放大的圖片
+- 錯誤處理（例如：找不到帖子）
+- 評論和點贊帖子
+- 黑暗模式
+- 支持社交媒體分享的 OpenGraph
+- 背景音樂
+
+## Contact
+
+Email:  Key <tavik002@gmail.com>
+
+-----
+## License
+MIT License
+
+Copyright (c) 2024 key
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 
-<iframe
-  src="https://player.cloudinary.com/embed/?public_id=ThePathOfOsu_-_Unreal_Editor_2024-03-03_16-25-45_dlxws7&cloud_name=diy3s3seb"
-  width="640"
-  height="360" 
-  style="height: auto; width: 100%; aspect-ratio: 640 / 360;"
-  allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
-  allowfullscreen
-  frameborder="0"
-></iframe>
+[⬆ Back to top](#contents)
 
-
-# Markdown  
-## Markdown  
-### Markdown  
-#### Markdown  
-##### Markdown  
-###### Markdown  
-
-**Bold**  
-*Italic*  
-~~Strikethrough~~  
-
-1. First item  
-2. Second item  
-3. Third item  
-
-- Unordered item  
-- Unordered item  
-- Unordered item  
-
-[Link](https://www.example.com)  
-
-![Image](https://cdn.vox-cdn.com/thumbor/6z9EcmyiAJ00A_eP5tk2DmVeYe0=/0x15:500x348/1200x800/filters:focal(0x15:500x348):no_upscale()/cdn.vox-cdn.com/uploads/chorus_image/image/36992002/tumblr_lmwsamrrxT1qagx30.0.0.gif) 
-
-![Image](https://static.zenn.studio/images/drawing/discussion.png)  
-
-```javascript  
-console.log("Hello, World!");  
-```  
-
-```cpp 
-int main() { 
-  int y = 5 + 6; 
- cout << "Hellow World! " << x << std::endl();
-} 
-```  
-
-> Blockquote  
-
----  
-
-- [ ] Task 1  
-- [x] Task 2  
-
----  
-
-| Header 1 | Header 2 |  
-| -------- | -------- |  
-| Data 1   | Data 2   |  
-
----  
-
-<details>  
-<summary>Details</summary>  
-Details content  
-</details>
+**All Copyright Reserved**
