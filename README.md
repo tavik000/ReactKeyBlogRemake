@@ -94,7 +94,7 @@ This version improves readability and easier to use
 
 ## 日本語
 
-## 紹介
+## 概要
 ブログ: <b>[Key Blog](https://reactkeyblog.com)</b>
 
 
