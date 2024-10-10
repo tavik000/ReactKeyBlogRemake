@@ -1,5 +1,6 @@
 const withMDX = require('@next/mdx')()
 const removeImports = require('next-remove-imports')();
+const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -36,6 +37,18 @@ const nextConfig = {
         ]
       }
     ]
+  },
+  webpack: (config, { isServer }) => {
+    // Resolve the correct path for babel-plugin-transform-remove-imports
+    config.resolve.alias['babel-plugin-transform-remove-imports'] = path.resolve(
+      __dirname,
+      'node_modules/babel-plugin-transform-remove-imports/lib/index.js'
+    );
+
+    return config;
+  },
+  publicRuntimeConfig: {
+    basePath: process.env.BASE_PATH || '',
   },
 };
 
