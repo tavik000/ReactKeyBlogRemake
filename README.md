@@ -107,7 +107,7 @@ This version improves readability and easier to use
 
 - AngularFireブログは静的なシングルページウェブサイトです
   - 投稿リンクを他の人と共有するのが難しい
-- Angularでは部分レンダリングがサポートされていません（もしくは私が知らないだけかもしれません）
+- AngularではPartial Renderingがサポートされていません（もしくは私が知らないだけかもしれません）
   - ページをリフレッシュするたびに、ユーザーは再び上からスクロールしなければなりません
 - 旧ブログではローカリゼーションを実装していませんでした
   - 投稿は英語で書いていますが、日本の方にも英語を知らなくても投稿を共有したいです
@@ -135,8 +135,8 @@ This version improves readability and easier to use
 - 投稿とコメントの画像アップロードサポート（Cloudinary）
 - 投稿のページネーション
 - 投稿検索機能
-- 部分レンダリング
-- レスポンシブウェブデザイン（RWD）
+- Partial Rendering
+- レスポンシブウェブデザイン（RWD）(プラットフォーム対応)
 - 投稿とコメントのMarkdownサポート
 - 通知
 - ローカリゼーション：英語、日本語、韓国語、繁体字中国語
@@ -146,7 +146,7 @@ This version improves readability and easier to use
 - 投稿へのコメントといいね
 - ダークモード
 - ソーシャルメディア共有のためのOpenGraphサポート
-- バックグラウンドミュージック
+- 音楽再生
 
 ## 繁體中文
 
@@ -190,7 +190,7 @@ This version improves readability and easier to use
 - 支持帖子和評論的圖片上傳（Cloudinary）
 - 帖子分頁
 - 帖子搜索功能
-- 局部渲染
+- 局部加載
 - 響應式網頁設計（RWD）
 - 支持帖子和評論的 Markdown
 - 通知
