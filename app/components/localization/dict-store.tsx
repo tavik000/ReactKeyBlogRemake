@@ -7,6 +7,8 @@ export interface DictStructure {
     signInWithGoogle: string;
     signInWithTwitter: string;
     close: string;
+    playAudio: string;
+    pauseAudio: string;
   };
   overview: {
     homepage: string;

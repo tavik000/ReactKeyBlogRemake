@@ -6,7 +6,9 @@
     "signInToKeyBlog": "Key Blogにログイン",
     "signInWithGoogle": "Googleでログイン",
     "signInWithTwitter": "X(Twitter)でログイン",
-    "close": "閉じる"
+    "close": "閉じる",
+    "playAudio": "音楽を再生",
+    "pauseAudio": "音楽を一時停止"
   },
   "overview": {
     "homepage": "Key ホームページ",

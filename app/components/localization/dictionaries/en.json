@@ -6,7 +6,9 @@
     "signInToKeyBlog": "Sign in to Key Blog",
     "signInWithGoogle": "Sign in with Google",
     "signInWithTwitter": "Sign in with X(Twitter)",
-    "close": "Close"
+    "close": "Close",
+    "playAudio": "Play audio",
+    "pauseAudio": "Pause audio"
   },
   "overview": {
     "homepage": "Key Homepage",

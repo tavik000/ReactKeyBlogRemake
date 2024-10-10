@@ -6,7 +6,9 @@
     "signInToKeyBlog": "Key Blog에 로그인",
     "signInWithGoogle": "Google로 로그인",
     "signInWithTwitter": "X(Twitter)로 로그인",
-    "close": "닫기"
+    "close": "닫기",
+    "playAudio": "오디오 재생",
+    "pauseAudio": "오디오 일시정지"
   },
   "overview": {
     "homepage": "Key 홈페이지",
