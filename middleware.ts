@@ -39,6 +39,10 @@ export function middleware(request: NextRequest) {
     return;
   }
 
+  if (request.nextUrl.pathname.endsWith(".mp3")) {
+    return NextResponse.next();
+  }
+
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = i18n.locales.every(
     (locale) =>
