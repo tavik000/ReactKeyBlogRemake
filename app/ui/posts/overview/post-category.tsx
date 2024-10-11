@@ -35,7 +35,7 @@ export default async function PostCategory({
                     isClickable={currentTag != tag}
                   />
                 ))}
-                <div className="xs:hidden md:block xl:hidden">
+                <div className="xs:hidden md:block lg:hidden">
                   {secondPart.map((tag) => (
                     <PostTagItem
                       key={tag}
@@ -46,7 +46,7 @@ export default async function PostCategory({
                   ))}
                 </div>
               </ul>
-              <ul className="w-72 md:hidden xl:block 2xl:w-80">
+              <ul className="w-72 md:hidden lg:block 2xl:w-80">
                 {secondPart.map((tag) => (
                   <PostTagItem
                     key={tag}
