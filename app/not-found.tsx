@@ -1,6 +1,6 @@
 import "@/app/ui/not-found.css";
 import Link from "next/link";
-import { buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button";
 
 export default function NotFound() {
   return (
@@ -19,7 +19,9 @@ export default function NotFound() {
           </span>
         </section>
         <div className="link-container">
-          <Link className={buttonVariants({ variant: "outline" })} href={"/"}>Back to Top</Link>
+          <Link className={buttonVariants({ variant: "outline" })} href={"/"}>
+            Back to Top
+          </Link>
         </div>
       </div>
     </main>
