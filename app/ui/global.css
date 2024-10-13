@@ -1077,6 +1077,10 @@ img {
   height: 50px !important;
 }
 
+.markdown a {
+  color: orange;
+}
+
 .w-md-editor-toolbar li>button {
   width: 40px !important;
   height: 40px !important;
