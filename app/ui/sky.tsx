@@ -43,17 +43,6 @@ export default function Sky() {
       const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
 
       if (newValue) {
-        console.log(
-          "toggleSit curiousBearTop",
-          "groundPosHeight",
-          groundPosHeight,
-          "curiousBearTopCache.current",
-          curiousBearTopCache.current,
-          "sitTopOffset",
-          sitTopOffset,
-          "sitPosY",
-          sitPosY,
-        );
         curiousBearRef.current.style.top = sitPosY + "px";
       } else {
         curiousBearRef.current.style.top = "";
@@ -82,17 +71,6 @@ export default function Sky() {
           const groundPosHeight = skyBackgroundRef.current.getBoundingClientRect().height;
 
           const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
-          console.log(
-            "handleResize ",
-            "groundPosHeight",
-            groundPosHeight,
-            "curiousBearTopCache.current",
-            curiousBearTopCache.current,
-            "sitTopOffset",
-            sitTopOffset,
-            "sitPosY",
-            sitPosY,
-          );
           curiousBearRef.current.style.top = sitPosY + "px";
           curiousBearRef.current.style.display = "block";
         }, 500);
