@@ -17,7 +17,7 @@ export default function Sky() {
   const sitTopOffset = -100;
 
   useEffect(() => {
-    const toggleSit = (value: boolean) => {
+    const toggleSit = (newValue: boolean) => {
       if (!skyBackgroundRef.current) {
         throw new Error("skyBackgroundRef is not defined");
       }
@@ -42,12 +42,23 @@ export default function Sky() {
       // const sitTopOffset = 0;
       const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
 
-      if (value) {
+      if (newValue) {
+        console.log(
+          "toggleSit curiousBearTop",
+          "groundPosHeight",
+          groundPosHeight,
+          "curiousBearTopCache.current",
+          curiousBearTopCache.current,
+          "sitTopOffset",
+          sitTopOffset,
+          "sitPosY",
+          sitPosY,
+        );
         curiousBearRef.current.style.top = sitPosY + "px";
       } else {
         curiousBearRef.current.style.top = "";
       }
-      setSit(value);
+      setSit(newValue);
     };
 
     const handleScroll = () => {
@@ -55,19 +66,45 @@ export default function Sky() {
     };
 
     const handleResize = () => {
-      if (!skyBackgroundRef.current) {
-        console.error("skyBackgroundRef is not defined");
-        return;
-      }
-
       if (!curiousBearRef.current) {
         throw new Error("checkAndToggleSit: curiousBearRef is not defined");
       }
       if (curiousBearRef.current.classList.contains("is-sitting")) {
-        const groundPosHeight = skyBackgroundRef.current.getBoundingClientRect().height;
+        curiousBearRef.current.style.display = "none";
+        setTimeout(() => {
+          if (!skyBackgroundRef.current) {
+            console.error("skyBackgroundRef is not defined");
+            return;
+          }
+          if (!curiousBearRef.current) {
+            throw new Error("checkAndToggleSit: curiousBearRef is not defined");
+          }
+          const groundPosHeight = skyBackgroundRef.current.getBoundingClientRect().height;
 
-        const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
-        curiousBearRef.current.style.top = sitPosY + "px";
+          const sitPosY = groundPosHeight - curiousBearTopCache.current + sitTopOffset;
+          console.log(
+            "handleResize ",
+            "groundPosHeight",
+            groundPosHeight,
+            "curiousBearTopCache.current",
+            curiousBearTopCache.current,
+            "sitTopOffset",
+            sitTopOffset,
+            "sitPosY",
+            sitPosY,
+          );
+          curiousBearRef.current.style.top = sitPosY + "px";
+          curiousBearRef.current.style.display = "block";
+        }, 500);
+      } else {
+        curiousBearRef.current.style.display = "none";
+        setTimeout(() => {
+          if (!curiousBearRef.current) {
+            throw new Error("checkAndToggleSit: curiousBearRef is not defined");
+          }
+          checkAndToggleSit();
+          curiousBearRef.current.style.display = "block";
+        }, 500);
       }
     };
 
