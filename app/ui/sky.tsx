@@ -55,6 +55,9 @@ export default function Sky() {
     };
 
     const handleResize = () => {
+      if (window.matchMedia("(pointer: coarse)").matches) {
+        return;
+      }
       if (!curiousBearRef.current) {
         throw new Error("checkAndToggleSit: curiousBearRef is not defined");
       }
