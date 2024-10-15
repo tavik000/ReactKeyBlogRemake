@@ -194,8 +194,8 @@ export default function CommentEditForm({
         </>
       ) : (
         <>
-          <div className="mt-4 flex-col rounded-lg bg-gray-200 p-6 text-center">
-            <p className="flex justify-center text-lg font-semibold text-black">
+          <div className="mt-4 flex-col rounded-lg bg-gray-200 p-6 text-center dark:bg-zinc-800">
+            <p className="flex justify-center text-lg font-semibold text-black dark:text-white">
               {dict.comment.letComment}
             </p>
             <div className="mt-4 flex w-full flex-col justify-center">
