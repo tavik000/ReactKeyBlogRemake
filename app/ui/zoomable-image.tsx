@@ -48,7 +48,7 @@ const ZoomableImage = (props: { src: string; alt?: string }) => {
   return (
     <img
       ref={imgRef}
-      className="relative w-auto h-auto aspect-video zoom-image cursor-zoom-in"
+      className="relative w-auto h-auto aspect-video zoom-image cursor-zoom-in object-contain"
       src={props.src}
       alt={props.alt || ''}
       onMouseDown={handleMouseDown}
