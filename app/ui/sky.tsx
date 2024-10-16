@@ -55,9 +55,18 @@ export default function Sky() {
     };
 
     const handleResize = () => {
-      // if (window.matchMedia("(pointer: coarse)").matches) {
-      //   return;
-      // }
+      if (window.matchMedia("(pointer: coarse)").matches) {
+        return;
+      }
+      checkAndRelocateBear();
+    };
+
+    const handleOrientationChange = () => {
+      console.log("orientationchange");
+      checkAndRelocateBear();
+    };
+
+    const checkAndRelocateBear = () => {
       if (!curiousBearRef.current) {
         throw new Error("checkAndToggleSit: curiousBearRef is not defined");
       }
@@ -131,9 +140,11 @@ export default function Sky() {
     // setTimeout(() => checkAndToggleSit(), 10);
     window.addEventListener("scroll", handleScroll);
     window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleOrientationChange);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleOrientationChange);
     };
   }, [groundPosHeight, isBearActive, sitTopOffset]);
 
