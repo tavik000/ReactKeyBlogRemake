@@ -62,7 +62,6 @@ export default function Sky() {
     };
 
     const handleOrientationChange = () => {
-      console.log("orientationchange");
       checkAndRelocateBear();
     };
 
