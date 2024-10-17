@@ -1077,10 +1077,17 @@ img {
   height: 50px !important;
 }
 
+.markdown code {
+  background-color: rgb(175, 184, 193, 0.3) !important;
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+}
+
 .markdown a {
   color: orange;
   word-break: break-word;
   overflow-wrap: break-word;
+  text-decoration: underline;
 }
 
 .w-md-editor-toolbar li>button {
