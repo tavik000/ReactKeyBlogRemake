@@ -1077,19 +1077,6 @@ img {
   height: 50px !important;
 }
 
-.markdown code {
-  background-color: rgb(175, 184, 193, 0.3) !important;
-  border-radius: 6px;
-  padding: 0.2em 0.4em;
-}
-
-.markdown a {
-  color: orange;
-  word-break: break-word;
-  overflow-wrap: break-word;
-  text-decoration: underline;
-}
-
 .w-md-editor-toolbar li>button {
   width: 40px !important;
   height: 40px !important;
@@ -1107,6 +1094,49 @@ img {
 
 .markdown>*:not(iframe):not(blockquote) {
   all: revert;
+}
+
+
+.markdown code {
+  background-color: rgb(175, 184, 193, 0.3) !important;
+  border-radius: 6px;
+  padding: 0.2em 0.4em;
+}
+
+.markdown a {
+  color: orange;
+  word-break: break-word;
+  overflow-wrap: break-word;
+  text-decoration: underline;
+}
+
+.markdown h1 {
+    margin-top: 24px !important;
+    margin-bottom: 16px !important;
+    font-weight: 600 !important;
+    line-height: 1.25 !important;
+}
+
+.markdown h2 {
+  font-weight: 600 !important;
+  padding-bottom: 0.3em !important;
+  font-size: 1.5em !important;
+  border-bottom: 1px solid hsl(210, 18%, 87%) !important;
+}
+
+.markdown h3 {
+  font-weight: 600 !important;
+  font-size: 1.25em !important;
+}
+
+.markdown h4 {
+  font-weight: 600 !important;
+  font-size: 1em !important;
+}
+
+.markdown h5 {
+  font-weight: 600 !important;
+  font-size: 0.875em !important;
 }
 
 blockquote {
