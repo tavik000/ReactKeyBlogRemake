@@ -4,6 +4,7 @@ import PostViewWrapper from "@/app/ui/posts/view/post-view-wrapper";
 import { Suspense } from "react";
 import PostViewWrapperSkeleton from "@/app/ui/posts/view/post-view-wrapper-skeleton";
 import { fetchPostById } from "@/app/lib/data";
+import { Analytics } from '@vercel/analytics/react';
 
 interface Props {
   params: {
@@ -67,6 +68,7 @@ export default function Page({
         <Suspense fallback={<PostViewWrapperSkeleton />}>
           <PostViewWrapper postId={id} locale={locale} />
         </Suspense>
+        <Analytics />
       </>
     </main>
   );
