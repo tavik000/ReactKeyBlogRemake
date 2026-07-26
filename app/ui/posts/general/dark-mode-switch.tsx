@@ -5,7 +5,7 @@ import { MoonIcon } from "@heroicons/react/24/solid";
 import { SunIcon } from "@heroicons/react/20/solid";
 import { useSessionContext } from "@/app/components/context/session-provider";
 import { setThemeCookie, setUserTheme } from "@/app/lib/actions";
-import { useCallback, useState } from "react";
+import { useRef, useState } from "react";
 import { useTheme } from "@/app/components/context/theme-provider";
 
 function debounce(func: Function, wait: number) {
@@ -21,11 +21,10 @@ export default function DarkModeSwitch() {
   const { session, localUser, setLocalUser } = useSessionContext();
   const [isChecked, setIsChecked] = useState(localUser?.theme === "dark");
 
-  const debouncedSetUserTheme = useCallback(
+  const debouncedSetUserThemeRef = useRef(
     debounce((userId: string, theme: string) => {
       setUserTheme(userId, theme);
     }, 1000),
-    [],
   );
 
   const onCheckedChange = (isChecked: boolean) => {
@@ -38,7 +37,7 @@ export default function DarkModeSwitch() {
       setTheme(themeValue);
       setLocalUser({ ...localUser, theme: themeValue });
       if (session?.user) {
-        debouncedSetUserTheme(localUser.id, themeValue);
+        debouncedSetUserThemeRef.current(localUser.id, themeValue);
       }
     }
   };
