@@ -1,9 +1,10 @@
 "use client";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useMemo } from "react";
 import onMediaPasted from "../utils/onMediaPasted";
+import createImageUploadCommand from "../utils/imageUploadCommand";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
-import MDEditor, { ICommand, commands, EditorContext, help } from "@uiw/react-md-editor";
+import MDEditor, { commands, help } from "@uiw/react-md-editor";
 import { useLocaleContext } from "../context/locale-provider";
 import { useTheme } from "../context/theme-provider";
 
@@ -32,6 +33,8 @@ const CommentMdEditor = ({
     }
   }, [shouldClearToggle, isNewComment]);
 
+  const imageUploadCommand = useMemo(() => createImageUploadCommand(setMarkdown), []);
+
   return (
     <div className="container" data-color-mode={theme}>
       <MDEditor
@@ -53,7 +56,7 @@ const CommentMdEditor = ({
         visibleDragbar={false}
         highlightEnable={false}
         preview="edit"
-        commands={[help]}
+        commands={[imageUploadCommand, help]}
         extraCommands={[commands.codeEdit, commands.codeLive]}
       />
     </div>

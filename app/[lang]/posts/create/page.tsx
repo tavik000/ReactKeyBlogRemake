@@ -9,9 +9,8 @@ export default async function Page({ params }: { params: { lang: string } }) {
   const locale = GetLocaleFromLang(params.lang);
   const emptyPost_en = createEmptyPost();
   const emptyPost_ja = createEmptyPost();
-  const emptyPost_kr = createEmptyPost();
   const emptyPost_hk = createEmptyPost();
-  const posts = [emptyPost_en, emptyPost_ja, emptyPost_kr, emptyPost_hk];
+  const posts = [emptyPost_en, emptyPost_ja, emptyPost_hk];
 
   const allPostTags: string[] = await fetchPostTags();
   const session = await auth();

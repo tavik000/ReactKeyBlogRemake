@@ -3,7 +3,6 @@ const {
   post_tags,
   posts_en,
   posts_ja,
-  posts_kr,
   posts_hk: posts_hk,
   users,
   comments,
@@ -123,9 +122,6 @@ async function seedPosts(client, locale) {
         break;
       case 'hk':
         posts = posts_hk;
-        break;
-      case 'kr':
-        posts = posts_kr;
         break;
       default:
         locale = 'en';
@@ -280,7 +276,6 @@ async function main() {
   await seedPosts(client, 'en');
   await seedPosts(client, 'ja');
   await seedPosts(client, 'hk');
-  await seedPosts(client, 'kr');
   await seedComments(client);
   await seedNotifications(client);
 

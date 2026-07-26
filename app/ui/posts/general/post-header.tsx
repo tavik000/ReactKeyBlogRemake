@@ -3,6 +3,7 @@ import PostSearch from "./post-search";
 import { CreatePostButton, LanguageButton, TagButton } from "@/app/ui/button";
 import { NotificationButton } from "./notification-button";
 import { UserButton } from "./user-button";
+import DarkModeSwitch from "./dark-mode-switch";
 import { useEffect, useState } from "react";
 import { sniglet } from "@/app/ui/fonts";
 import Link from "next/link";
@@ -76,6 +77,9 @@ export default function PostHeader({ groundPosHeight }: { groundPosHeight: numbe
           </div>
         ) : null}
 
+        <div className="flex items-center gap-8 text-nowrap text-black xs:mr-3 md:mr-8 dark:text-white">
+          <DarkModeSwitch />
+        </div>
         <LanguageButton isHidden={isHidden} />
         <NotificationButton isHidden={isHidden} />
         <UserButton />

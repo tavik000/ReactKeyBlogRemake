@@ -28,11 +28,6 @@ const FormSchema = z.object({
       invalid_type_error: "Please enter a title (ja).",
     })
     .min(1, { message: "Please enter a title (ja)." }),
-  title_kr: z
-    .string({
-      invalid_type_error: "Please enter a title (kr).",
-    })
-    .min(1, { message: "Please enter a title (kr)." }),
   title_hk: z
     .string({
       invalid_type_error: "Please enter a title (hk).",
@@ -65,14 +60,6 @@ const FormSchema = z.object({
     .min(1, { message: "Please enter content. (ja)" })
     .refine((val) => val.trim().length > 0, {
       message: "Please enter content. (ja)",
-    }),
-  content_kr: z
-    .string({
-      invalid_type_error: "Please enter content. (kr)",
-    })
-    .min(1, { message: "Please enter content. (kr)" })
-    .refine((val) => val.trim().length > 0, {
-      message: "Please enter content. (kr)",
     }),
   content_hk: z
     .string({
@@ -112,13 +99,11 @@ export type State = {
     id?: string[];
     title_en?: string[];
     title_ja?: string[];
-    title_kr?: string[];
     title_hk?: string[];
     thumbnail_img?: string[];
     tags?: string[];
     content_en?: string[];
     content_ja?: string[];
-    content_kr?: string[];
     content_hk?: string[];
   };
   message?: string | null;
@@ -128,6 +113,7 @@ export type CommentState = {
   errors?: {
     id?: string[];
     commentContent?: string[];
+    guestName?: string[];
   };
   message?: string | null;
 };
@@ -278,7 +264,6 @@ export async function createPostWithAllLanguages(
   postTags: string[],
   postContent_en: string,
   postContent_ja: string,
-  postContent_kr: string,
   postContent_hk: string,
   prevState: State,
   formData: FormData,
@@ -292,13 +277,11 @@ export async function createPostWithAllLanguages(
     const validatedFields = CreatePost.safeParse({
       title_en: formData.get("title_en"),
       title_ja: formData.get("title_ja"),
-      title_kr: formData.get("title_kr"),
       title_hk: formData.get("title_hk"),
       thumbnail_img: thumbnail_img,
       tags: postTags,
       content_en: postContent_en,
       content_ja: postContent_ja,
-      content_kr: postContent_kr,
       content_hk: postContent_hk,
     });
 
@@ -309,12 +292,11 @@ export async function createPostWithAllLanguages(
       };
     }
 
-    const { title_en, title_ja, title_kr, title_hk } = validatedFields.data;
+    const { title_en, title_ja, title_hk } = validatedFields.data;
 
     const addResult = await Promise.all([
       createPost(id, thumbnail_img, postTags, title_en, postContent_en, "en", client),
       createPost(id, thumbnail_img, postTags, title_ja, postContent_ja, "ja", client),
-      createPost(id, thumbnail_img, postTags, title_kr, postContent_kr, "kr", client),
       createPost(id, thumbnail_img, postTags, title_hk, postContent_hk, "hk", client),
     ]);
   } catch (error) {
@@ -333,9 +315,6 @@ export async function createPostWithAllLanguages(
       break;
     case "ja":
       title = encodeURI(formData.get("title_ja") as string);
-      break;
-    case "kr":
-      title = encodeURI(formData.get("title_kr") as string);
       break;
     case "hk":
       title = encodeURI(formData.get("title_hk") as string);
@@ -398,7 +377,6 @@ export async function updatePostWithAllLanguages(
   postTags: string[],
   postContent_en: string,
   postContent_ja: string,
-  postContent_kr: string,
   postContent_hk: string,
   prevState: State,
   formData: FormData,
@@ -411,13 +389,11 @@ export async function updatePostWithAllLanguages(
     const validatedFields = UpdatePost.safeParse({
       title_en: formData.get("title_en"),
       title_ja: formData.get("title_ja"),
-      title_kr: formData.get("title_kr"),
       title_hk: formData.get("title_hk"),
       thumbnail_img: thumbnail_img,
       tags: postTags,
       content_en: postContent_en,
       content_ja: postContent_ja,
-      content_kr: postContent_kr,
       content_hk: postContent_hk,
     });
 
@@ -428,12 +404,11 @@ export async function updatePostWithAllLanguages(
       };
     }
 
-    const { title_en, title_ja, title_kr, title_hk } = validatedFields.data;
+    const { title_en, title_ja, title_hk } = validatedFields.data;
 
     const updateResult = await Promise.all([
       updatePost(id, thumbnail_img, postTags, title_en, postContent_en, "en", client),
       updatePost(id, thumbnail_img, postTags, title_ja, postContent_ja, "ja", client),
-      updatePost(id, thumbnail_img, postTags, title_kr, postContent_kr, "kr", client),
       updatePost(id, thumbnail_img, postTags, title_hk, postContent_hk, "hk", client),
     ]);
   } catch (error) {
@@ -452,9 +427,6 @@ export async function updatePostWithAllLanguages(
       break;
     case "ja":
       title = encodeURI(formData.get("title_ja") as string);
-      break;
-    case "kr":
-      title = encodeURI(formData.get("title_kr") as string);
       break;
     case "hk":
       title = encodeURI(formData.get("title_hk") as string);
@@ -500,7 +472,6 @@ export async function deletePostWithAllLanguages(currentLocale: string, id: stri
     const updateResult = await Promise.all([
       deletePost(id, "en", client),
       deletePost(id, "ja", client),
-      deletePost(id, "kr", client),
       deletePost(id, "hk", client),
     ]);
   } catch (error) {
@@ -692,9 +663,6 @@ export async function updateComment(
     case "ja":
       title = encodeURI(title);
       break;
-    case "kr":
-      title = encodeURI(title);
-      break;
     case "hk":
       title = encodeURI(title);
       break;
@@ -747,12 +715,24 @@ export async function createCommentWithAllLanguagesAndNotifications(
   currentLocale: string,
   postId: string,
   postTitle: string,
-  userName: string,
-  userImage: string,
+  sessionUserName: string,
+  sessionUserImage: string,
   notifyTargetUserList: string[],
   prevState: CommentState,
   formData: FormData,
 ) {
+  const isGuest = !sessionUserName;
+  const guestName = isGuest ? ((formData.get("guestName") as string) ?? "").trim().slice(0, 100) : "";
+  const userName = isGuest ? guestName : sessionUserName;
+  const userImage = isGuest ? "" : sessionUserImage;
+
+  if (isGuest && guestName.length === 0) {
+    return {
+      errors: { guestName: ["dict.comment.pleaseEnterName"] },
+      message: "dict.comment.pleaseEnterName",
+    };
+  }
+
   const id = require("uuid").v4();
   console.log("create comment all language: " + id);
   console.log("comment content: " + commentContent);
@@ -785,7 +765,6 @@ export async function createCommentWithAllLanguagesAndNotifications(
       createComment(id, commentContent, postId, userName, userImage, client),
       addCommentToPost(postId, id, "en", client),
       addCommentToPost(postId, id, "ja", client),
-      addCommentToPost(postId, id, "kr", client),
       addCommentToPost(postId, id, "hk", client),
     ]);
 
@@ -828,9 +807,6 @@ export async function createCommentWithAllLanguagesAndNotifications(
     case "en":
       break;
     case "ja":
-      title = encodeURI(title);
-      break;
-    case "kr":
       title = encodeURI(title);
       break;
     case "hk":
@@ -934,7 +910,6 @@ export async function deleteCommentWithAllLanguages(
       deleteComment(commentId, currentLocale, client),
       deleteCommentFromPost(postId, commentId, "en", currentLocale, client),
       deleteCommentFromPost(postId, commentId, "ja", currentLocale, client),
-      deleteCommentFromPost(postId, commentId, "kr", currentLocale, client),
       deleteCommentFromPost(postId, commentId, "hk", currentLocale, client),
     ]);
   } catch (error) {
@@ -951,9 +926,6 @@ export async function deleteCommentWithAllLanguages(
     case "en":
       break;
     case "ja":
-      title = encodeURI(title);
-      break;
-    case "kr":
       title = encodeURI(title);
       break;
     case "hk":
@@ -1117,7 +1089,6 @@ export async function likePostWithAllLanguages(
     const likeResult = await Promise.all([
       likePost(userName, postId, "en", client),
       likePost(userName, postId, "ja", client),
-      likePost(userName, postId, "kr", client),
       likePost(userName, postId, "hk", client),
     ]);
 
@@ -1148,7 +1119,6 @@ export async function unlikePostWithAllLanguages(userName: string, postId: strin
     const unlikeResult = await Promise.all([
       unlikePost(userName, postId, "en", client),
       unlikePost(userName, postId, "ja", client),
-      unlikePost(userName, postId, "kr", client),
       unlikePost(userName, postId, "hk", client),
     ]);
   } catch (error) {

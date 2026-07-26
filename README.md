@@ -78,7 +78,7 @@ This version improves readability and easier to use
 - Responsive web design (RWD)
 - Markdown support in posts and comments
 - Notifications
-- Localization: English, Japanese, Korean, Traditional Chinese
+- Localization: English, Japanese, Traditional Chinese
 - Skeleton loading
 - Zoomable images
 - Error handling (e.g., post not found)

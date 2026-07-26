@@ -127,7 +127,7 @@ const CommentItemClient = ({
             name={comment.user_name}
             avatarProps={{
               size: "sm",
-              src: comment.user_img,
+              src: comment.user_img || undefined,
             }}
             className="text-nowrap"
           />

@@ -50,8 +50,7 @@ export default function PostEditForm({
   const lang = GetLangFromLocale(locale);
   const post_en = posts[0];
   const post_ja = posts[1];
-  const post_kr = posts[2];
-  const post_hk = posts[3];
+  const post_hk = posts[2];
 
   const [editPostTags, setEditPostTag] = useState(post_en.tags);
   const [isExceedFiveTag, setIsExceedFiveTag] = useState(false);
@@ -66,12 +65,6 @@ export default function PostEditForm({
 
   const handleMarkdownChange_ja = (value: string | undefined) => {
     setMarkdownValue_ja(value || "");
-  };
-
-  const [markdownValue_kr, setMarkdownValue_kr] = useState("");
-
-  const handleMarkdownChange_kr = (value: string | undefined) => {
-    setMarkdownValue_kr(value || "");
   };
 
   const [markdownValue_hk, setMarkdownValue_hk] = useState("");
@@ -91,7 +84,6 @@ export default function PostEditForm({
         editPostTags,
         markdownValue_en,
         markdownValue_ja,
-        markdownValue_kr,
         markdownValue_hk,
       )
     : updatePostWithAllLanguages.bind(
@@ -102,7 +94,6 @@ export default function PostEditForm({
         editPostTags,
         markdownValue_en,
         markdownValue_ja,
-        markdownValue_kr,
         markdownValue_hk,
       );
 
@@ -319,45 +310,6 @@ export default function PostEditForm({
           <div id="content-error" aria-live="polite" aria-atomic="true">
             {state.errors?.content_ja &&
               state.errors.content_ja.map((error: string) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))}
-          </div>
-        </div>
-
-        <div className="mb-4">
-          <label htmlFor="title_kr" className="mb-2 block text-lg font-medium">
-            Title (Korean)
-          </label>
-          <input
-            id="title_kr"
-            name="title_kr"
-            type="text"
-            defaultValue={post_kr.title}
-            className="peer block w-full rounded-md border border-gray-200 py-2 pl-3 text-28px font-semibold outline-2 placeholder:text-gray-500 dark:border-zinc-700 dark:bg-zinc-900"
-            aria-describedby="title-error"
-          />
-          <div id="title-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.title_kr &&
-              state.errors.title_kr.map((error: string) => (
-                <p className="mt-2 text-sm text-red-500" key={error}>
-                  {error}
-                </p>
-              ))}
-          </div>
-        </div>
-        <div className="mb-4">
-          <label htmlFor="content" className="mb-2 block text-base font-medium">
-            Content (Korean)
-          </label>
-          <MDEditor
-            content={post_kr.content}
-            onMarkdownChange={handleMarkdownChange_kr}
-          />
-          <div id="content-error" aria-live="polite" aria-atomic="true">
-            {state.errors?.content_kr &&
-              state.errors.content_kr.map((error: string) => (
                 <p className="mt-2 text-sm text-red-500" key={error}>
                   {error}
                 </p>

@@ -1096,6 +1096,15 @@ img {
   all: revert;
 }
 
+.markdown img {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.markdown p:has(img) {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 
 .markdown code {
   background-color: rgb(175, 184, 193, 0.3) !important;

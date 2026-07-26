@@ -38,6 +38,10 @@ export interface DictStructure {
     commentPlaceholder: string;
     respond: string;
     pleaseEnterComment: string;
+    namePlaceholder: string;
+    pleaseEnterName: string;
+    nameLabel: string;
+    or: string;
     edit: string;
     delete: string;
     editComment: string;

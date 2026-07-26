@@ -88,23 +88,6 @@ export async function fetchFilteredPosts(
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
           break;
-        case 'kr':
-          posts = await sql<PostCard>`
-          SELECT
-            id,
-            title,
-            thumbnail_img,
-            tags,
-            create_date
-          FROM posts_kr
-          WHERE
-            (title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`})
-            AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
-          ORDER BY create_date DESC
-          LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
-        `;
-          break;
         case 'hk':
           posts = await sql<PostCard>`
           SELECT
@@ -119,7 +102,7 @@ export async function fetchFilteredPosts(
             content ILIKE ${`%${query}%`})
             AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
           ORDER BY create_date DESC
-          LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
+          LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
         `;
           break;
         default:
@@ -169,27 +152,6 @@ export async function fetchFilteredPosts(
           LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
         `;
           break;
-        case 'kr':
-          posts = await sql<PostCard>`
-          SELECT
-            id,
-            title,
-            thumbnail_img,
-            tags,
-            create_date
-          FROM posts_kr
-          WHERE
-            title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`} OR
-            EXISTS (
-              SELECT 1
-              FROM UNNEST(tags) AS tag
-              WHERE tag ILIKE ${`%${query}%`}
-            )
-          ORDER BY create_date DESC
-          LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
-        `;
-          break;
         case 'hk':
           posts = await sql<PostCard>`
           SELECT
@@ -208,7 +170,7 @@ export async function fetchFilteredPosts(
               WHERE tag ILIKE ${`%${query}%`}
             )
           ORDER BY create_date DESC
-          LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset} 
+          LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
         `;
           break;
         default:
@@ -282,15 +244,6 @@ export async function fetchPostsPages(
             AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
         `;
           break;
-        case 'kr':
-          count = await sql`SELECT COUNT(*)
-          FROM posts_kr
-          WHERE
-            (title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`})
-            AND ${tag} IN (SELECT value FROM UNNEST(tags) AS value)
-        `;
-          break;
         case 'hk':
           count = await sql`SELECT COUNT(*)
           FROM posts_hk
@@ -321,19 +274,6 @@ export async function fetchPostsPages(
         case 'ja':
           count = await sql`SELECT COUNT(*)
           FROM posts_ja
-          WHERE
-            title ILIKE ${`%${query}%`} OR
-            content ILIKE ${`%${query}%`} OR
-            EXISTS (
-              SELECT 1
-              FROM UNNEST(tags) AS tag
-              WHERE tag ILIKE ${`%${query}%`}
-            )
-        `;
-          break;
-        case 'kr':
-          count = await sql`SELECT COUNT(*)
-          FROM posts_kr
           WHERE
             title ILIKE ${`%${query}%`} OR
             content ILIKE ${`%${query}%`} OR
@@ -409,23 +349,6 @@ export async function fetchPostById(id: string, locale: string) {
               modify_date,
               likes
             FROM posts_ja
-            WHERE id=${id};
-          `;
-        break;
-      case 'kr':
-        data = await sql<Post>`
-            SELECT
-              id,
-              title,
-              thumbnail_img,
-              tags,
-              content,
-              author,
-              comment_id_list,
-              create_date,
-              modify_date,
-              likes
-            FROM posts_kr
             WHERE id=${id};
           `;
         break;

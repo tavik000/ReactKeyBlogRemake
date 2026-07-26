@@ -58,11 +58,6 @@ export function LanguageButton({ isHidden }: { isHidden: boolean }) {
         isCurrentLocale: locale === "ja",
       },
       {
-        title: "한국어",
-        lang: "kr",
-        isCurrentLocale: locale === "kr",
-      },
-      {
         title: "繁體中文",
         lang: "zh-HK",
         isCurrentLocale: locale === "hk",

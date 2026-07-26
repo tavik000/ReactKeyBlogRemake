@@ -11,7 +11,6 @@ export default async function Page({ params }: { params: { lang: string, id: str
     [
       fetchPostById(id, 'en'),
       fetchPostById(id, 'ja'),
-      fetchPostById(id, 'kr'),
       fetchPostById(id, 'hk'),
     ]
   );

@@ -99,13 +99,16 @@ export default function CommentEditForm({
     };
   }, []);
 
+  const isLoggedIn = !!(session && session.user);
+  const showGuestNameInput = isNewComment && !isLoggedIn;
+
   return (
     <div>
-      {session && session?.user && session.user?.image ? (
+      {isNewComment || isLoggedIn ? (
         <>
           <div className="mt-4 flex-col">
             <div className="flex">
-              <Avatar src={session.user.image} size="sm" />
+              {isLoggedIn && <Avatar src={session?.user?.image ?? undefined} size="sm" />}
               {isNewComment ? (
                 <div className="flex w-full flex-row justify-between">
                   <p className="ml-2 flex justify-start text-nowrap">
@@ -140,6 +143,45 @@ export default function CommentEditForm({
               }}
             >
               <div className="flex w-full flex-col justify-between">
+                {showGuestNameInput && (
+                  <div className="mb-2 mt-2 flex flex-wrap items-end gap-3">
+                    <div className="flex flex-col">
+                      <label
+                        htmlFor="guestName"
+                        className="mb-1 text-sm font-medium text-gray-700 dark:text-gray-300"
+                      >
+                        {dict.comment.nameLabel}
+                      </label>
+                      <input
+                        id="guestName"
+                        name="guestName"
+                        type="text"
+                        maxLength={100}
+                        placeholder={dict.comment.namePlaceholder}
+                        className="w-full max-w-xs rounded-md border border-gray-200 px-3 py-1.5 text-sm outline-2 placeholder:text-gray-500 dark:border-zinc-700 dark:bg-zinc-900"
+                        aria-describedby="guestName-error"
+                      />
+                    </div>
+                    <p className="mb-2 text-sm text-gray-400">{dict.comment.or}</p>
+                    <Button
+                      type="button"
+                      className="mb-0.5 bg-orange-500 hover:bg-orange-600 focus-visible:outline-orange-500 active:bg-orange-600"
+                      onClick={() => {
+                        setIsLoginOpenFromPost(true);
+                      }}
+                    >
+                      <p className="font-bold">{dict.comment.login}</p>
+                    </Button>
+                    <div id="guestName-error" aria-live="polite" aria-atomic="true" className="w-full">
+                      {state?.errors?.guestName &&
+                        state.errors.guestName.map((error: string, index: number) => (
+                          <p className="mt-2 text-sm text-red-500" key={index}>
+                            {state?.message ? getDictValue(state.message) : ""}
+                          </p>
+                        ))}
+                    </div>
+                  </div>
+                )}
                 <label htmlFor="content" className="mb-2 block text-base font-medium" />
                 <CommentMDEditor
                   isNewComment={isNewComment}

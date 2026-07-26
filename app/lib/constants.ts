@@ -11,8 +11,6 @@ export function GetLanguageName(locale: string) {
       return 'English';
     case 'ja':
       return '日本語';
-    case 'kr':
-      return '한국어';
     case 'hk':
       return '繁體中文';
     default:
@@ -26,8 +24,6 @@ export function GetLangFromLocale(locale: string) {
       return 'en';
     case 'ja':
       return 'ja';
-    case 'kr':
-      return 'kr';
     case 'hk':
       return 'zh-HK';
     default:
@@ -41,8 +37,6 @@ export function GetLocaleFromLang(lang: string) {
       return 'en';
     case 'ja':
       return 'ja';
-    case 'kr':
-      return 'kr';
     case 'zh-HK':
       return 'hk';
     default:

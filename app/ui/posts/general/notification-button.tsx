@@ -82,9 +82,6 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
       case "ja":
         postTitle = encodeURI(notification.post_title as string);
         break;
-      case "kr":
-        postTitle = encodeURI(notification.post_title as string);
-        break;
       case "hk":
         postTitle = encodeURI(notification.post_title as string);
         break;
@@ -112,7 +109,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
     }
     if (notification.type === "comment") {
       if (notification.target_user_name === keyName) {
-        if (locale === "ja" || locale === "kr") {
+        if (locale === "ja") {
           return (
             <p>
               {notification.source_user_name} {dict.notification.yourPost}{" "}
@@ -141,7 +138,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
           );
         }
       } else {
-        if (locale === "ja" || locale === "kr") {
+        if (locale === "ja") {
           return (
             <p>
               {notification.source_user_name} {dict.notification.onPost}{" "}
@@ -169,7 +166,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
       }
     } else if (notification.type === "like") {
       if (notification.comment_id == null) {
-        if (locale === "ja" || locale === "kr") {
+        if (locale === "ja") {
           return (
             <p>
               {notification.source_user_name} {dict.notification.yourPost}{" "}
@@ -194,7 +191,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
           );
         }
       } else {
-        if (locale === "ja" || locale === "kr") {
+        if (locale === "ja") {
           return (
             <p>
               {notification.source_user_name} {dict.notification.yourComment} &quot;

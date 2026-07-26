@@ -63,9 +63,6 @@ export const getFormatDateByLocale = (date: Date, lang: string) => {
       .join(' ')
       .replace(/(?<=\d) /, ', ')
   }
-  if (lang === 'kr') {
-    lang = 'ko-KR'
-  }
   return new Intl.DateTimeFormat(lang, {
     year: 'numeric',
     month: 'long',
