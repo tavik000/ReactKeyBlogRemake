@@ -4,12 +4,11 @@ import Image from "next/image";
 import { PostTagItem } from "@/app/ui/posts/general/post-tag";
 import { PostCard } from "@/app/lib/definitions";
 import { useLocaleContext } from "@/app/components/context/locale-provider";
-import { getFormatDateByLocale } from "@/app/lib/utils";
+import { getFormatDateByLocale, slugifyTitle } from "@/app/lib/utils";
 
 export default function PostItem({ post }: { post: PostCard }) {
   const { lang } = useLocaleContext();
-  const urlRegex = /\s/g;
-  const url_title = post.title.toLowerCase().replace(urlRegex, "-");
+  const url_title = slugifyTitle(post.title);
 
   return (
     <li className="post-item mx-auto mb-6 flex min-h-[300px] w-full max-w-[400px] list-none flex-col px-[11px] xs:w-full sm:w-2/3 md:w-1/2 md:max-w-none md:basis-1/2 lg:basis-1/3">

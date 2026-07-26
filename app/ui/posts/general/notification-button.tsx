@@ -25,7 +25,7 @@ import { keyName } from "@/app/lib/constants";
 import { deleteAllNotificationByTargetUserName, setNotificationIsRead } from "@/app/lib/actions";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { getFormatDateByLocale } from "@/app/lib/utils";
+import { getFormatDateByLocale, slugifyTitle } from "@/app/lib/utils";
 
 export function NotificationButton({ isHidden }: { isHidden: boolean }) {
   const router = useRouter();
@@ -72,21 +72,7 @@ export function NotificationButton({ isHidden }: { isHidden: boolean }) {
   }
 
   function GetNotificationLink(notification: Notification): string {
-    const urlRegex = /\s/g;
-
-    let postTitle = "";
-    switch (notification.source_locale) {
-      case "en":
-        postTitle = notification.post_title as string;
-        break;
-      case "ja":
-        postTitle = encodeURI(notification.post_title as string);
-        break;
-      case "hk":
-        postTitle = encodeURI(notification.post_title as string);
-        break;
-    }
-    const url_title = postTitle.toLowerCase().replace(urlRegex, "-");
+    const url_title = slugifyTitle(notification.post_title as string);
     let url = "";
     if (notification.type === "comment") {
       url = `/${lang}/posts/${url_title}/${notification.post_id}#comment-${notification.comment_id}`;

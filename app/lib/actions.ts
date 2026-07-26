@@ -1,5 +1,6 @@
 "use server";
 import { GetLangFromLocale } from "@/app/lib/constants";
+import { slugifyTitle } from "@/app/lib/utils";
 
 import { z } from "zod";
 import { VercelPoolClient } from "@vercel/postgres";
@@ -307,21 +308,8 @@ export async function createPostWithAllLanguages(
   }
 
   const lang = GetLangFromLocale(currentLocale);
-  const urlRegex = /\s/g;
-  let title = formData.get("title_en") as string;
-  switch (currentLocale) {
-    case "en":
-      title = formData.get("title_en") as string;
-      break;
-    case "ja":
-      title = encodeURI(formData.get("title_ja") as string);
-      break;
-    case "hk":
-      title = encodeURI(formData.get("title_hk") as string);
-      break;
-  }
-
-  const url_title = title.toLowerCase().replace(urlRegex, "-");
+  const title = formData.get(`title_${currentLocale}`) as string;
+  const url_title = slugifyTitle(title);
   const redirectUrl = `/${lang}/posts/${url_title}/${id}`;
 
   revalidatePath(redirectUrl);
@@ -419,21 +407,8 @@ export async function updatePostWithAllLanguages(
   }
 
   const lang = GetLangFromLocale(currentLocale);
-  const urlRegex = /\s/g;
-  let title = formData.get("title_en") as string;
-  switch (currentLocale) {
-    case "en":
-      title = formData.get("title_en") as string;
-      break;
-    case "ja":
-      title = encodeURI(formData.get("title_ja") as string);
-      break;
-    case "hk":
-      title = encodeURI(formData.get("title_hk") as string);
-      break;
-  }
-
-  const url_title = title.toLowerCase().replace(urlRegex, "-");
+  const title = formData.get(`title_${currentLocale}`) as string;
+  const url_title = slugifyTitle(title);
   const redirectUrl = `/${lang}/posts/${url_title}/${id}`;
 
   revalidatePath(redirectUrl);
@@ -655,20 +630,7 @@ export async function updateComment(
   }
 
   const lang = GetLangFromLocale(currentLocale);
-  const urlRegex = /\s/g;
-  let title = postTitle;
-  switch (currentLocale) {
-    case "en":
-      break;
-    case "ja":
-      title = encodeURI(title);
-      break;
-    case "hk":
-      title = encodeURI(title);
-      break;
-  }
-
-  const url_title = title.toLowerCase().replace(urlRegex, "-");
+  const url_title = slugifyTitle(postTitle);
   const redirectUrl = `/${lang}/posts/${url_title}/${postId}`;
 
   revalidatePath(redirectUrl);
@@ -801,20 +763,7 @@ export async function createCommentWithAllLanguagesAndNotifications(
   }
 
   const lang = GetLangFromLocale(currentLocale);
-  const urlRegex = /\s/g;
-  let title = postTitle;
-  switch (currentLocale) {
-    case "en":
-      break;
-    case "ja":
-      title = encodeURI(title);
-      break;
-    case "hk":
-      title = encodeURI(title);
-      break;
-  }
-
-  const url_title = title.toLowerCase().replace(urlRegex, "-");
+  const url_title = slugifyTitle(postTitle);
   const redirectUrl = `/${lang}/posts/${url_title}/${postId}`;
   console.log("added comment redirectUrl: " + redirectUrl);
 
@@ -920,20 +869,7 @@ export async function deleteCommentWithAllLanguages(
   }
 
   const lang = GetLangFromLocale(currentLocale);
-  const urlRegex = /\s/g;
-  let title = postTitle;
-  switch (currentLocale) {
-    case "en":
-      break;
-    case "ja":
-      title = encodeURI(title);
-      break;
-    case "hk":
-      title = encodeURI(title);
-      break;
-  }
-
-  const url_title = title.toLowerCase().replace(urlRegex, "-");
+  const url_title = slugifyTitle(postTitle);
   const redirectUrl = `/${lang}/posts/${url_title}/${postId}`;
   console.log("added comment redirectUrl: " + redirectUrl);
 
