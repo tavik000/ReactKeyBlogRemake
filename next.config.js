@@ -1,4 +1,3 @@
-const withMDX = require('@next/mdx')()
 const removeImports = require('next-remove-imports')();
 const path = require('path');
 
@@ -20,7 +19,7 @@ const nextConfig = {
       },
     ],
   },
-  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
   experimental: {
     // ppr: 'incremental',
   },
@@ -55,4 +54,4 @@ const nextConfig = {
 
 
 
-module.exports = removeImports(withMDX(nextConfig));
+module.exports = removeImports(nextConfig);
