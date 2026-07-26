@@ -27,7 +27,7 @@ import Footer from "@/app/ui/footer";
 export const experimental_ppr = true;
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://react-key-blog-remake.vercel.app/"),
+  metadataBase: new URL("https://www.reactkeyblog.com"),
   applicationName: "Key Blog",
   title: {
     template: "%s - Key Blog",
